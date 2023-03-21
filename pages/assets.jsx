@@ -5,7 +5,7 @@ import { useRouter } from 'next/router'
 import { useState, useEffect } from 'react'
 import { useMoralis, useWeb3Contract } from 'react-moralis'
 import { ethers } from "ethers";
-import { Button, color } from 'web3uikit'
+import { Button, color, Blockie } from 'web3uikit'
 import marketplaceAbi from "../constants/abi.json";
 import networkMapping from "../constants/networkMapping.json"
 
@@ -31,7 +31,7 @@ export default function Home() {
 
   useEffect(() => {
     if (tokenId) {
-      fetch(`http://localhost:4002/get-asset?tokenId=${tokenId}`)
+      fetch(`http://localhost:4004/get-asset?tokenId=${tokenId}`)
         .then(response => response.json())
         .then(data => {
           const asset = {
@@ -51,7 +51,6 @@ export default function Home() {
   const chainString = chainId ? parseInt(chainId, 16).toString() : "5";
 
   const marketplaceAddress = networkMapping["Marketplace"][chainString];
-  console.log(marketplaceAddress)
   const { runContractFunction: buyItem } = useWeb3Contract({
     abi: marketplaceAbi,
     contractAddress: marketplaceAddress,
@@ -111,7 +110,9 @@ export default function Home() {
               <span className='text-slate-900 text-6xl'>{tokenName.toUpperCase()}</span>
             </div>
             <div className='flex flex-1 items-center mt-5 mb-10'>
-              <div className='border-2 rounded-full bg-black h-10 aspect-square mr-2'></div>
+              <div className='border-2 rounded-full bg-black h-10 aspect-square mr-2 flex items-center justify-center'>
+                <Blockie className='' />
+              </div>
               <div>
                 <div className='text-slate-500 text-xs'>Artist</div>
                 <div className='text-slate-700 text-sm'>{asset.seller.slice(0, 6) + "..." + asset.seller.slice(asset.seller.length - 6, asset.seller.length)}</div>
