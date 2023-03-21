@@ -25,6 +25,9 @@ export default function Home() {
   const [imageURI, setImageURI] = useState("");
   const [tokenName, setTokenName] = useState("");
   const [tokenDescription, setTokenDescription] = useState("");
+  const [collection, setCollection] = useState({
+    charityName: ""
+  });
 
   const router = useRouter();
   const tokenId = router.query.id
@@ -41,9 +44,15 @@ export default function Home() {
             charityAddress: data.activeItem.charityAddress,
             tokenUri: data.activeItem.tokenUri,
             price: data.activeItem.price,
-            availableEditions: data.activeItem.availableEditions
+            availableEditions: data.activeItem.availableEditions,
+            subcollectionId: data.activeItem.subcollectionId
           }
           setAsset(asset);
+          fetch(`http://localhost:4004/get-single-collection?id=${asset.subcollectionId}`)
+            .then(response => response.json())
+            .then(data => {
+              setCollection(data.subcollection);
+            })
         })
     }
   }, [tokenId, isWeb3Enabled])
@@ -97,13 +106,15 @@ export default function Home() {
           <div className='p-5'>
             <div className='absolute top-0 flex flex-1 items-center'>
               <div>
-                <div className='mr-5 text-xl text-slate-700'>Supporting AHBAP Foundation</div>
+                <div className='mr-5 text-xl text-slate-700'>Supporting {collection.charityName}</div>
                 <div className='mr-5 text-slate-800 mt-1'>
                   <span className='text-sm'>{asset.charityAddress.slice(0, 6) + "..." + asset.charityAddress.slice(asset.charityAddress.length - 6, asset.charityAddress.length)} </span>
                   <a href="" className='text-xs underline text-cyan-900'>view on Etherscan</a>
                 </div>
               </div>
-              <div className='h-16 aspect-square ml-5 bg-slate-800 border-2 rounded-full'></div>
+              <div className='h-16 aspect-square ml-5 bg-slate-800 border-2 rounded-full'>
+                <img className='rounded-full' src={collection.charityImage} alt={collection.charityName} />
+              </div>
             </div>
             <div className='mb-3'>
               <div className='mr-5 text-xl text-slate-400'> #{tokenId}</div>
