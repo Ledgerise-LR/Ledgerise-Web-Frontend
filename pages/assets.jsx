@@ -3,15 +3,25 @@ import Image from 'next/image'
 import { Inter } from 'next/font/google'
 import { useRouter } from 'next/router'
 import { useState, useEffect } from 'react'
-import { useMoralis } from 'react-moralis'
+import { useMoralis, useWeb3Contract } from 'react-moralis'
 import { ethers } from "ethers";
 import { Button, color } from 'web3uikit'
+import marketplaceAbi from "../constants/abi.json";
+import networkMapping from "../constants/networkMapping.json"
 
 export default function Home() {
 
-  const { isWeb3Enabled } = useMoralis();
+  const { isWeb3Enabled, chainId } = useMoralis();
 
-  const [asset, setAsset] = useState({});
+  const [asset, setAsset] = useState({
+    seller: "0x0000000",
+    nftAddress: "0x0000000",
+    tokenId: "0",
+    charityAddress: "0x0000000",
+    tokenUri: "ipfs://",
+    price: 1000000000000000,
+    availableEditions: 0,
+  });
   const [imageURI, setImageURI] = useState("");
   const [tokenName, setTokenName] = useState("");
   const [tokenDescription, setTokenDescription] = useState("");
@@ -21,16 +31,39 @@ export default function Home() {
 
   useEffect(() => {
     if (tokenId) {
-      fetch(`http://localhost:4001/get-asset?tokenId=${tokenId}`)
+      fetch(`http://localhost:4002/get-asset?tokenId=${tokenId}`)
         .then(response => response.json())
         .then(data => {
-          data.activeItem.seller = data.activeItem.seller.slice(0, 6) + "..." + data.activeItem.seller.slice(data.activeItem.seller.length - 6, data.activeItem.seller.length);
-          data.activeItem.charityAddress = data.activeItem.charityAddress.slice(0, 6) + "..." + data.activeItem.charityAddress.slice(data.activeItem.charityAddress.length - 6, data.activeItem.charityAddress.length);
-          data.activeItem.price = ethers.utils.formatEther(data.activeItem.price, "ether");
-          setAsset(data.activeItem)
+          const asset = {
+            seller: data.activeItem.seller,
+            nftAddress: data.activeItem.nftAddress,
+            tokenId: data.activeItem.tokenId,
+            charityAddress: data.activeItem.charityAddress,
+            tokenUri: data.activeItem.tokenUri,
+            price: data.activeItem.price,
+            availableEditions: data.activeItem.availableEditions
+          }
+          setAsset(asset);
         })
     }
   }, [tokenId, isWeb3Enabled])
+
+  const chainString = chainId ? parseInt(chainId, 16).toString() : "5";
+
+  const marketplaceAddress = networkMapping["Marketplace"][chainString];
+  console.log(marketplaceAddress)
+  const { runContractFunction: buyItem } = useWeb3Contract({
+    abi: marketplaceAbi,
+    contractAddress: marketplaceAddress,
+    functionName: "buyItem",
+    params: {
+      nftAddress: asset.nftAddress,
+      tokenId: asset.tokenId,
+      charityAddress: asset.charityAddress,
+      tokenUri: asset.tokenUri
+    },
+    msgValue: asset.price
+  })
 
   async function updateUI() {
     // get the token Uri
@@ -67,7 +100,7 @@ export default function Home() {
               <div>
                 <div className='mr-5 text-xl text-slate-700'>Supporting AHBAP Foundation</div>
                 <div className='mr-5 text-slate-800 mt-1'>
-                  <span className='text-sm'>{asset.charityAddress} </span>
+                  <span className='text-sm'>{asset.charityAddress.slice(0, 6) + "..." + asset.charityAddress.slice(asset.charityAddress.length - 6, asset.charityAddress.length)} </span>
                   <a href="" className='text-xs underline text-cyan-900'>view on Etherscan</a>
                 </div>
               </div>
@@ -81,7 +114,7 @@ export default function Home() {
               <div className='border-2 rounded-full bg-black h-10 aspect-square mr-2'></div>
               <div>
                 <div className='text-slate-500 text-xs'>Artist</div>
-                <div className='text-slate-700 text-sm'>{asset.seller}</div>
+                <div className='text-slate-700 text-sm'>{asset.seller.slice(0, 6) + "..." + asset.seller.slice(asset.seller.length - 6, asset.seller.length)}</div>
               </div>
             </div>
             <div className='text-slate-500'>{asset.availableEditions} editions available</div>
@@ -90,15 +123,23 @@ export default function Home() {
               <div className='text-sm text-slate-500 mt-3'>Current price:</div>
               <div className='flex items-center justify-between w-96'>
                 <div>
-                  <span className='text-3xl font-semibold'>{asset.price} </span>
+                  <span className='text-3xl font-semibold'>{ethers.utils.formatEther(asset.price, "ether")} </span>
                   <span className='text-slate-500'>ETH</span>
                 </div>
                 <div className='w-60'>
-                  <Button isFullWidth="true" theme='primary' type='button' text='Buy Item' style={{
+                  <Button isFullWidth="true" theme='primary' type='button' text='Buy Item' onClick={() => {
+                    buyItem({
+                      onSuccess: () => {
+                        console.log("success");
+                      }, onError: (err) => {
+                        console.log(err);
+                      }
+                    });
+                  }} style={{
                     border: "black",
                     height: "3rem",
                     borderRadius: "100px",
-                    fontSize: "16px",
+                    fontSize: "16px"
                   }} />
                 </div>
               </div>
