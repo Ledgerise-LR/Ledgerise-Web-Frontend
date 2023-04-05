@@ -5,13 +5,13 @@ import { useRouter } from 'next/router'
 import { useState, useEffect } from 'react'
 import { useMoralis, useWeb3Contract } from 'react-moralis'
 import { ethers } from "ethers";
-import { Button, color, Blockie } from 'web3uikit'
+import { Button, color, Blockie, useNotification } from 'web3uikit'
 import marketplaceAbi from "../constants/abi.json";
 import networkMapping from "../constants/networkMapping.json"
 
 export default function Home() {
 
-  const { isWeb3Enabled, chainId } = useMoralis();
+  const { isWeb3Enabled, chainId, account } = useMoralis();
 
   const [asset, setAsset] = useState({
     seller: "0x0000000",
@@ -31,6 +31,29 @@ export default function Home() {
 
   const router = useRouter();
   const tokenId = router.query.id
+  const dispatch = useNotification();
+
+  const handleBuyItemSuccess = async () => {
+    dispatch({
+      type: "success",
+      message: "Tx successful: item bought",
+      title: "Transaction Success",
+      position: "topR"
+    });
+
+    const urlRoot = `https://testnets.opensea.io/collection/fundraising-main-collection?search[owner][address]=`
+    const openSeaUrl = `${urlRoot}/${account}`
+    console.log(openSeaUrl);
+  }
+
+  const handleBuyItemError = async () => {
+    dispatch({
+      type: "error",
+      message: "Sorry for the error. Please refresh and try again.",
+      title: "Transaction failed",
+      position: "topR"
+    })
+  }
 
   useEffect(() => {
     if (tokenId) {
@@ -121,7 +144,7 @@ export default function Home() {
               <span className='text-slate-900 text-6xl'>{tokenName.toUpperCase()}</span>
             </div>
             <div className='flex flex-1 items-center mt-5 mb-10'>
-              <div className='border-2 rounded-full bg-black h-10 aspect-square mr-2 flex items-center justify-center'>
+              <div className='border-2 rounded-full h-10 aspect-square mr-2 flex items-center justify-center'>
                 <Blockie className='' />
               </div>
               <div>
@@ -141,11 +164,8 @@ export default function Home() {
                 <div className='w-60'>
                   <Button isFullWidth="true" theme='primary' type='button' text='Buy Item' onClick={() => {
                     buyItem({
-                      onSuccess: () => {
-                        console.log("success");
-                      }, onError: (err) => {
-                        console.log(err);
-                      }
+                      onSuccess: () => handleBuyItemSuccess(),
+                      onError: (err) => handleBuyItemError()
                     });
                   }} style={{
                     border: "black",
