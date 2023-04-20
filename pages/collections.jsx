@@ -20,7 +20,7 @@ export default function Home() {
 
   useEffect(() => {
     if (isWeb3Enabled) {
-      fetch(`http://localhost:4004/get-all-collections`)
+      fetch(`http://localhost:4000/get-all-collections`)
         .then(response => response.json())
         .then(data => {
           setCollections(data.subcollections);

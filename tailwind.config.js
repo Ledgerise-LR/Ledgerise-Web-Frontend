@@ -12,12 +12,12 @@ module.exports = {
     extend: {
       keyframes: {
         fade: {
-          '0%, 20%, 80%, 100%': { opacity: '1' },
-          '50%': { opacity: '0' },
+          '0%, 50%, 100%': { opacity: '0' },
+          '20%, 30%, 70%, 80%': { opacity: '1' },
         }
       },
       animation: {
-        fade: 'fade 3s ease-in 10000',
+        fade: 'fade 8s ease-in infinite',
       }
     },
   },

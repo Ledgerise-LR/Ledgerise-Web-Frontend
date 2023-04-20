@@ -22,8 +22,8 @@ export default function Home() {
   });
 
   useEffect(() => {
-    const randomAssetInterval = setInterval(() => {
-      fetch("http://localhost:4004/get-random-featured-nft")
+    async function fetchAsset() {
+      fetch(`http://localhost:4000/get-random-featured-nft?previousTokenId=${asset.tokenId}`)
         .then(response => response.json())
         .then(data => {
           const asset = {
@@ -36,8 +36,13 @@ export default function Home() {
           }
           setAsset(asset);
         })
-      console.log("Oye!");
-    }, 3000);
+    }
+
+    fetchAsset();
+
+    const randomAssetInterval = setInterval(() => {
+      fetchAsset();
+    }, 4000);
     return () => clearInterval(randomAssetInterval);
   }, []);
 
