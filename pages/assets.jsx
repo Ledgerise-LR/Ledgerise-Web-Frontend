@@ -77,7 +77,7 @@ export default function Home() {
     })
   }
 
-  const chainString = chainId ? parseInt(chainId, 16).toString() : "5";
+  const chainString = chainId ? parseInt(chainId, 16).toString() : "11155111";
 
   const marketplaceAddress = networkMapping["Marketplace"][chainString];
 
