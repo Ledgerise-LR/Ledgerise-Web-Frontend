@@ -298,7 +298,7 @@ export default function Home() {
                 ? (<div className='text-slate-500 w-full h-36 flex flex-1 items-center justify-center'>No NFTs found for the filters you provided.</div>)
                 : (assets.map((asset) => {
                   return (
-                    <div className='w-72 mr-5' key={`${asset.nftAddress}${asset.tokenId}`}>
+                    <div className='w-72 mr-5 mb-5' key={`${asset.nftAddress}${asset.tokenId}`}>
                       <a href={`/assets?id=${asset.tokenId}`}>
                         <NFTBox
                           marketplaceAddress={marketplaceAddress}

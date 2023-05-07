@@ -5,26 +5,31 @@ import Image from "next/image";
 import { Blockie } from "web3uikit";
 import { ethers } from "ethers";
 import { useRouter } from "next/router";
+import { getEthToUsdRate } from '@/utils/getEthToUsdRate';
 
 export default function NFTBox({ price, nftAddress, tokenId, marketplaceAddress, seller, tokenUri, history, availableEditions }) {
+
+  const [ethToUsdRate, setEthToUsdRate] = useState(null);
+
+  useEffect(() => {
+    const fetchEthToUsdRate = async () => {
+      const rate = await getEthToUsdRate();
+      setEthToUsdRate(rate);
+    };
+
+    fetchEthToUsdRate();
+  }, []);
 
   function prettyAddress(address) {
     return address.slice(0, 6) + "..." + address.slice(address.length - 6, address.length)
   }
 
   function isAssetUpdated(historyArray) {
-    let listCount = 0;
-    historyArray.map(event => {
-      if (event.key == "list") {
-        listCount++;
-      }
-    })
-
-    if (listCount > 1) {
-      return true;
-    } else {
-      return false;
+    for (let i = 0; i < historyArray.length; i++) {
+      const event = historyArray[i];
+      if (event.key.toString() === "update") return true;
     }
+    return false;
   }
 
   const { isWeb3Enabled, account } = useMoralis();
@@ -64,18 +69,18 @@ export default function NFTBox({ price, nftAddress, tokenId, marketplaceAddress,
             <div className="flex flex-col border-2">
               <div className="italic text-sm">
                 <div className="w-full h-60 flex flex-1 justify-center border-b-2">
-                  <Image loader={() => imageURI} src={imageURI} width="200" height="1" />
+                  <img src={imageURI} />
                 </div>
               </div>
               <div className="p-4">
                 <div className="text-slate-800 text-3xl uppercase font-medium mt-2">{tokenName}</div>
                 <div className="text-slate-500 mt-1 text-xs">
-                  {isAssetUpdated(history)
+                  {isAssetUpdated(history) == true
                     ? ("Updated price")
                     : ("List price")
                   }
                 </div>
-                <div className="text-slate-700 text-2xl mt-1 font-medium">{price / 1e18} Ξ <span className="text-xs text-slate-500">($10)</span></div>
+                <div className="text-slate-700 text-2xl mt-1 font-medium">{price / 1e18} Ξ <span className="text-sm text-slate-500">(${Number(ethToUsdRate * Number(ethers.utils.formatEther(price, "ether"))).toFixed(1)})</span></div>
                 <div className="text-slate-500 mt-2 mb-2 text-sm">
                   <span className="text-slate-600 font-medium">{availableEditions} </span>
                   editions available

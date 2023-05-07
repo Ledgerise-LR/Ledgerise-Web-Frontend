@@ -5,7 +5,7 @@ import { useRouter } from 'next/router'
 import { useState, useEffect } from 'react'
 import { useMoralis, useWeb3Contract } from 'react-moralis'
 import { ethers } from "ethers";
-import { Button, Modal, Blockie, useNotification } from 'web3uikit'
+import { Button, Modal, Blockie, useNotification, Loading } from 'web3uikit'
 import marketplaceAbi from "../constants/abi.json";
 import networkMapping from "../constants/networkMapping.json"
 
@@ -15,14 +15,14 @@ export default function Home() {
     return address.slice(0, 6) + "..." + address.slice(address.length - 6, address.length)
   }
 
-  const { isWeb3Enabled, chainId, account, Moralis } = useMoralis();
+  const { isWeb3Enabled, chainId, account } = useMoralis();
 
   const [asset, setAsset] = useState({
     seller: "0x0000000",
     nftAddress: "0x0000000",
     tokenId: "0",
     charityAddress: "0x0000000",
-    tokenUri: "ipfs://",
+    tokenUri: "",
     price: "1000000000000000000",
     availableEditions: 0,
     history: [{
@@ -54,18 +54,42 @@ export default function Home() {
   const dispatch = useNotification();
 
   function getOpenseaUrl(openseaTokenId) {
-    const openseaUrl = `https://testnets.opensea.io/assets/goerli/${asset.nftAddress}/${openseaTokenId}`;
+    const openseaUrl = `https://testnets.opensea.io/assets/sepolia/${asset.nftAddress}/${openseaTokenId}`;
     return openseaUrl;
   }
 
-  const handleBuyItemSuccess = async () => {
+  const [hasTxHashKey, setHasTxHashKey] = useState(false);
+
+  const handleBuyItemSuccess = async (tx) => {
     dispatch({
       type: "success",
       message: "Tx successful: item bought",
       title: "Transaction Success",
       position: "topR"
     });
+    localStorage.setItem("txHash", "example hash");
     showModal();
+    setHasTxHashKey(true);
+    updateUI();
+    await tx.wait(1);
+    localStorage.setItem("txHash", "");
+    setHasTxHashKey(false);
+    fetch(`http://localhost:4000/get-asset?tokenId=${tokenId}`)
+      .then(response => response.json())
+      .then(data => {
+        const asset = {
+          seller: data.activeItem.seller,
+          nftAddress: data.activeItem.nftAddress,
+          tokenId: data.activeItem.tokenId,
+          charityAddress: data.activeItem.charityAddress,
+          tokenUri: data.activeItem.tokenUri,
+          price: data.activeItem.price,
+          availableEditions: data.activeItem.availableEditions,
+          subcollectionId: data.activeItem.subcollectionId,
+          history: data.activeItem.history
+        }
+        setAsset(asset);
+      })
   }
 
   const handleBuyItemError = async () => {
@@ -117,15 +141,7 @@ export default function Home() {
       charityAddress: asset.charityAddress,
       tokenUri: asset.tokenUri
     },
-    msgValue: asset.price,
-    onTransactionHash: (txHash) => {
-      const txHashArray = localStorage.getItem("txHash");
-      if (!txHashArray || txHashArray == undefined) {
-        localStorage.setItem("txHash", []);
-      }
-      txHashArray.push(txHash);
-      localStorage.setItem("txHash", txHashArray);
-    }
+    msgValue: asset.price
   })
 
   async function updateUI() {
@@ -133,10 +149,11 @@ export default function Home() {
     // using the image tag from tokenURI, get the image
 
     const tokenUri = asset.tokenUri;
-    if (tokenUri && asset) {
+    if (tokenUri && asset && asset.tokenUri) {
       // IPFS Gateway: return ipfs files from a normal url
       const requestUrl = tokenUri.replace("ipfs://", "https://ipfs.io/ipfs/");
       const tokenUriResponse = await (await fetch(requestUrl)).json();
+      console.log(tokenUriResponse)
       const imageURI = tokenUriResponse.image
       const imageURIURL = imageURI.replace("ipfs://", "https://ipfs.io/ipfs/");
       setImageURI(imageURIURL);
@@ -149,15 +166,8 @@ export default function Home() {
     if (isWeb3Enabled && asset) {
       updateUI();
     }
-  }, [isWeb3Enabled, asset, isModalOpen])
+  }, [isWeb3Enabled, asset, isModalOpen]);
 
-  const [hasTxHashKey, setHasTxHashKey] = useState(false);
-
-  useEffect(() => {
-    const key = 'txHash';
-    const isKeyAvailable = typeof window !== 'undefined' && localStorage.getItem(key);
-    setHasTxHashKey(isKeyAvailable);
-  }, []);
 
   return (
     <>
@@ -166,13 +176,14 @@ export default function Home() {
           ? (<Modal visible={isModalOpen} onCloseButtonPressed={hideModal} onOk={hideModal} onCancel={hideModal} okText='Continue' title={<h1 className='text-3xl text-slate-900'>Thank you for your contribution!!! 🎉 🎉</h1>}>
             <div className='p-5'>
               <div className='mb-12'>
-                <div className='text-2xl'>Completed transactions</div>
+                <div className='text-2xl'>Completed transactions </div>
                 <hr className='mb-3' />
                 <ul>
                   {
                     asset.history.map(event => {
-                      if (event.buyer.toLowerCase() == account) {
-                        return (<li>Bought by you at {event.date}. <a className='underline hover:text-slate-700' href={getOpenseaUrl(event.openseaTokenId)}>See in opensea</a>. Verify the <strong>donation transaction</strong> at <a className='underline hover:text-slate-800 font-bold' href="">Etherscan</a>. </li>)
+                      if (event.buyer && event.buyer.toLowerCase() == account) {
+                        // https://sepolia.etherscan.io/tx/0x0f10b50aad6b472a42910bfa4a1664989486bf917486a97ebc24f98a3f71bf39
+                        return (<li>Bought by you at {event.date}. <a target='_blank' className='underline hover:text-slate-700' href={getOpenseaUrl(event.openseaTokenId - 1)}>See in opensea</a>. Verify the <strong>donation transaction</strong> at <a href={`https://sepolia.etherscan.io/tx/${event.transactionHash}`} target='_blank' className='underline hover:text-slate-800 font-bold'>Etherscan</a>. Id #{event.openseaTokenId - 1}</li>)
                       }
                     })}
                 </ul>
@@ -183,12 +194,8 @@ export default function Home() {
                   <div className='text-2xl'>Pending</div>
                   <hr className='mb-3' />
                   <ul>
-                    {
-                      localStorage.getItem("txHash").map(event => {
-                        if (event.buyer.toLowerCase() == account) {
-                          return (<li>Buy transaction pending. See on <a className='underline hover:text-slate-700' href={getOpenseaUrl(event.openseaTokenId)}>Etherscan</a>. Verify the <strong>donation transaction</strong> at <a className='underline hover:text-slate-800 font-bold' href="">Etherscan</a>. </li>)
-                        }
-                      })}
+                    <li>Buy transaction pending, please wait. <strong>Don't close this tab.</strong></li>
+                    <li><Loading spinnerColor='gray' spinnerType='wave' /></li>
                   </ul>
                 </div>)
                 : ("")}
@@ -196,9 +203,9 @@ export default function Home() {
           </Modal>)
           : ("")}
 
-        <div className='flex flex-1 items-end relative'>
-          <div className='border-2'>
-            <Image loader={() => imageURI} src={imageURI} width="500" height="100" />
+        <div className='flex flex-1 items-end relative h-full'>
+          <div className='border-2 h-full flex flex-col justify-center'>
+            <Image loader={() => imageURI} src={imageURI} width="500" height="1" />
           </div>
           <div className='p-5'>
             <div className='absolute top-0 flex flex-1 items-center'>
@@ -206,17 +213,17 @@ export default function Home() {
                 <div className='mr-5 text-xl text-slate-700'>Supporting {collection.charityName}</div>
                 <div className='mr-5 text-slate-800 mt-1'>
                   <span className='text-sm'>{prettyAddress(asset.charityAddress)} </span>
-                  <a href="" className='text-xs underline text-cyan-900'>view on Etherscan</a>
+                  <a target='_blank' href={`https://sepolia.etherscan.io/address/${asset.charityAddress}`} className='text-xs underline text-cyan-900'>view on Etherscan</a>
                 </div>
                 <div className='mt-5'>
                   <Button
                     theme='secondary'
-                    text='View My Donation Information'
+                    text='View My Donation History On This Item'
                     onClick={() => showModal()}
                   />
                 </div>
               </div>
-              <div className='h-16 aspect-square ml-5 bg-slate-800 border-2 rounded-full'>
+              <div className='h-16 aspect-square ml-5 bg-slate-50 border-2 rounded-full flex flex-1 justify-center items-center p-1'>
                 <img className='rounded-full' src={collection.charityImage} alt={collection.charityName} />
               </div>
             </div>
@@ -245,7 +252,7 @@ export default function Home() {
                 <div className='w-60'>
                   <Button isFullWidth="true" theme='primary' type='button' text='Buy Item' onClick={() => {
                     buyItem({
-                      onSuccess: () => handleBuyItemSuccess(),
+                      onSuccess: handleBuyItemSuccess,
                       onError: (err) => handleBuyItemError()
                     });
                   }} style={{
@@ -270,68 +277,87 @@ export default function Home() {
               <div className='text-3xl text-slate-900 mb-3'>Distribution Of Earnings</div>
               <hr className='mb-3' />
               <div>
-                <div className='flex flex-1 mb-5'>
-                  <div className='text-sm flex flex-1 flex-col justify-center px-10 w-1/2 mr-3 text-slate-800 bg-blue-50 h-12 rounded-3xl'>
-                    <div>{collection.charityName}</div>
-                    <a href='' className='text-xs underline text-slate-600'>{prettyAddress(asset.charityAddress)}</a>
+
+                <div className='flex flex-1 mb-5 border h-24 justify-between rounded'>
+                  <div className='flex flex-1 items-center'>
+                    <div className='h-full aspect-square flex items-center justify-center bg-slate-50 border-r border-blue-900'>
+                      <img className='p-2' src={collection.charityImage} alt={collection.charityName} />
+                    </div>
+                    <div className='ml-4 text-lg'>{collection.charityName}</div>
                   </div>
-                  <div className='w-1/2 bg-blue-50 h-12 rounded-3xl px-10 py-2'>
+                  <div className='flex flex-1 flex-col justify-center items-end mr-4'>
                     <div>
-                      <span className='text-slate-800 text-xl font-medium'>{ethers.utils.formatEther((parseInt(asset.price) * 0.7).toString(), "ether")} </span>
-                      <span className='text-slate-700 text-xs'>ETH </span>
-                      <span className='text-slate-600 text-sm mr-4'>(100$) </span>
-                      <span className='text-slate-700'>70%</span>
+                      <span className='font-semibold text-lg'>70% </span>
+                      <span className='text-sm text-slate-700'>of the proceeds</span>
                     </div>
                   </div>
                 </div>
-                <div className='flex flex-1 mb-5'>
-                  <div className='text-sm flex flex-1 flex-col justify-center px-10 w-1/2 mr-3 text-slate-800 bg-blue-50 h-12 rounded-3xl'>
-                    <div>Creator</div>
-                    <a href='' className='text-xs underline text-slate-600'>{prettyAddress(asset.seller)}</a>
+
+                <div className='flex flex-1 mb-5 border h-24 justify-between rounded'>
+                  <div className='flex flex-1 items-center'>
+                    <div className='h-full aspect-square flex items-center justify-center bg-slate-50 border-r border-blue-900'>
+                      <Blockie seed={asset.seller} size={12} />
+                    </div>
+                    <div className='ml-4 text-lg'>Creator</div>
                   </div>
-                  <div className='w-1/2 bg-blue-50 h-12 rounded-3xl px-10 py-2'>
+                  <div className='flex flex-1 flex-col justify-center items-end mr-4'>
                     <div>
-                      <span className='text-slate-800 text-xl font-medium'>{ethers.utils.formatEther((parseInt(asset.price) * 0.2).toString(), "ether")} </span>
-                      <span className='text-slate-700 text-xs'>ETH </span>
-                      <span className='text-slate-600 text-sm mr-4'>(100$) </span>
-                      <span className='text-slate-700'>20%</span>
+                      <span className='font-semibold text-lg'>20% </span>
+                      <span className='text-sm text-slate-700'>of the proceeds</span>
                     </div>
                   </div>
                 </div>
-                <div className='flex flex-1'>
-                  <div className='text-sm flex flex-1 flex-col justify-center px-10 w-1/2 mr-3 text-slate-800 bg-blue-50 h-12 rounded-3xl'>
-                    <div>Transaction Fee</div>
-                    <a href='' className='text-xs underline text-slate-600'>{prettyAddress(marketplaceAddress)}</a>
+
+                <div className='flex flex-1 mb-5 border h-24 justify-between rounded'>
+                  <div className='flex flex-1 items-center'>
+                    <div className='h-full aspect-square flex items-center justify-center bg-slate-50 border-r border-blue-900'>
+                      <Blockie seed={marketplaceAddress} size={12} />
+                    </div>
+                    <div className='ml-4 text-lg'>Contract</div>
                   </div>
-                  <div className='w-1/2 bg-blue-50 h-12 rounded-3xl px-10 py-2'>
+                  <div className='flex flex-1 flex-col justify-center items-end mr-4'>
                     <div>
-                      <span className='text-slate-800 text-xl font-medium'>{ethers.utils.formatEther((parseInt(asset.price) * 0.1).toString(), "ether")} </span>
-                      <span className='text-slate-700 text-xs'>ETH </span>
-                      <span className='text-slate-600 text-sm mr-4'>(100$) </span>
-                      <span className='text-slate-700'>10%</span>
+                      <span className='font-semibold text-lg'>10% </span>
+                      <span className='text-sm text-slate-700'>of the proceeds</span>
                     </div>
                   </div>
                 </div>
+
               </div>
             </div>
           </div>
           <div className='ml-auto'>
             <div className='text-2xl mb-2'>History</div>
             <hr className='mb-2' />
-            <div>
+            <div className='flex flex-1 flex-col-reverse relative'>
+              <div className='absolute w-px h-full ml-1.5 top-5 bg-slate-300 z-0'></div>
               {
                 asset.history.map((event) => {
                   return (
-                    <div>{
+                    <div className='mb-4'>{
                       event.key == "buy"
                         ? <div className='flex-1 flex items-center'>
-                          <div className='w-3 h-3 mr-5 rounded-full bg-slate-700'></div>
+                          <div className='w-3 h-3 mr-5 rounded-full bg-slate-700 z-50'></div>
                           <div>
                             <div className='text-slate-700'>Item is bought for {ethers.utils.formatEther(event.price, "ether")} ETH by {prettyAddress(event.buyer)}.</div>
                             <div className='text-slate-500'>{event.date}</div>
                           </div>
                         </div>
-                        : <div>Item is listed</div>
+                        : event.key == "list"
+                          ? (< div className='flex-1 flex items-center'>
+                            <div className='w-3 h-3 mr-5 rounded-full bg-slate-700 z-50'></div>
+                            <div>
+                              <div className='text-slate-700'>Item is listed for {ethers.utils.formatEther(event.price, "ether")}.</div>
+                              <div className='text-slate-500'>{event.date}</div>
+                            </div>
+                          </div>)
+                          : (< div className='flex-1 flex items-center'>
+                            <div className='w-3 h-3 mr-5 rounded-full bg-slate-700 z-50'></div>
+                            <div>
+                              <div className='text-slate-700'>Item is updated for {ethers.utils.formatEther(event.price, "ether")}.</div>
+                              <div className='text-slate-500'>{event.date}</div>
+                            </div>
+                          </div>)
                     }</div>
                   )
                 })
@@ -339,7 +365,7 @@ export default function Home() {
             </div>
           </div>
         </div>
-      </div>
+      </div >
     </>
   )
 }
