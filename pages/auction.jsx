@@ -1,4 +1,6 @@
+import Head from 'next/head'
 import Image from 'next/image'
+import { Inter } from 'next/font/google'
 import { useRouter } from 'next/router'
 import { useState, useEffect } from 'react'
 import { useMoralis, useWeb3Contract } from 'react-moralis'
@@ -7,7 +9,6 @@ import { Button, Modal, Blockie, useNotification, Loading } from 'web3uikit'
 import marketplaceAbi from "../constants/abi.json";
 import networkMapping from "../constants/networkMapping.json"
 import { calculatePercentage } from '@/utils/calculatePercentage';
-import QRCode from 'qrcode';
 
 export default function Home() {
 
@@ -23,8 +24,9 @@ export default function Home() {
     tokenId: "0",
     charityAddress: "0x0000000",
     tokenUri: "",
-    price: "1000000000000000000",
-    availableEditions: 0,
+    currentBidding: "1000000000000000000",
+    currentBidder: "0x0000000",
+    interval: "0",
     history: [{
       key: "",
       date: "",
@@ -32,7 +34,6 @@ export default function Home() {
       buyer: "",
       openseaTokenId: 0
     }],
-    attributes: []
   });
   const [imageURI, setImageURI] = useState("");
   const [tokenName, setTokenName] = useState("");
@@ -41,7 +42,7 @@ export default function Home() {
     charityName: ""
   });
   const [isModalOpen, setIsModalOpen] = useState("");
-  const [attributesPercentages, setAttributesPercentages] = useState([]);
+
 
   const hideModal = () => {
     setIsModalOpen(false);
@@ -77,7 +78,7 @@ export default function Home() {
     await tx.wait(1);
     localStorage.setItem("txHash", "");
     setHasTxHashKey(false);
-    fetch(`http://localhost:4000/get-asset?tokenId=${tokenId}`)
+    fetch(`http://localhost:4000/get-auction?tokenId=${tokenId}`)
       .then(response => response.json())
       .then(data => {
         const asset = {
@@ -90,7 +91,6 @@ export default function Home() {
           availableEditions: data.activeItem.availableEditions,
           subcollectionId: data.activeItem.subcollectionId,
           history: data.activeItem.history,
-          attributes: data.activeItem.attributes
         }
         setAsset(asset);
       })
@@ -111,27 +111,11 @@ export default function Home() {
 
   useEffect(() => {
     if (tokenId) {
-      fetch(`http://localhost:4000/get-asset?tokenId=${tokenId}`)
+      fetch(`http://localhost:4000/get-auction?tokenId=${tokenId}`)
         .then(response => response.json())
         .then(data => {
-          const asset = {
-            seller: data.activeItem.seller,
-            nftAddress: data.activeItem.nftAddress,
-            tokenId: data.activeItem.tokenId,
-            charityAddress: data.activeItem.charityAddress,
-            tokenUri: data.activeItem.tokenUri,
-            price: data.activeItem.price,
-            availableEditions: data.activeItem.availableEditions,
-            subcollectionId: data.activeItem.subcollectionId,
-            history: data.activeItem.history,
-            attributes: data.activeItem.attributes
-          }
+          const asset = data.activeItem
           setAsset(asset);
-          fetch(`http://localhost:4000/get-single-collection?id=${asset.subcollectionId}`)
-            .then(response => response.json())
-            .then(data => {
-              setCollection(data.subcollection);
-            })
         })
     }
   }, [tokenId, isWeb3Enabled])
@@ -146,7 +130,7 @@ export default function Home() {
       charityAddress: asset.charityAddress,
       tokenUri: asset.tokenUri
     },
-    msgValue: asset.price
+    msgValue: asset.currentBidding
   })
 
   async function updateUI() {
@@ -163,8 +147,6 @@ export default function Home() {
       setImageURI(imageURIURL);
       setTokenName(tokenUriResponse.name);
       setTokenDescription(tokenUriResponse.description);
-      const percentages = await calculatePercentage("advancement", asset.attributes, asset.subcollectionId, asset.tokenId);
-      setAttributesPercentages(percentages);
     }
   }
 
@@ -172,15 +154,7 @@ export default function Home() {
     if (isWeb3Enabled && asset) {
       updateUI();
     }
-  }, [isWeb3Enabled, asset, isModalOpen, asset.attributes]);
-
-
-  const retrieveQRCodeData = (nftAddress, tokenId, openseaTokenId, buyer) => {
-    console.log(openseaTokenId)
-    const qrString = `${nftAddress}-${tokenId}-${openseaTokenId}-${buyer}`;
-    const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=${qrString}`;
-    window.open(qrUrl, "_blank")
-  }
+  }, [isWeb3Enabled, asset, isModalOpen]);
 
 
   return (
@@ -197,12 +171,7 @@ export default function Home() {
                     asset.history.map(event => {
                       if (event.buyer && event.buyer.toLowerCase() == account) {
                         // https://sepolia.etherscan.io/tx/0x0f10b50aad6b472a42910bfa4a1664989486bf917486a97ebc24f98a3f71bf39
-                        return (
-                          <li className='mb-8'>- Bought by you at {event.date}. <a target='_blank' className='underline hover:text-slate-700' href={getOpenseaUrl(event.openseaTokenId - 1)}>See in opensea</a>. Verify the <strong>donation transaction</strong> at <a href={`https://sepolia.etherscan.io/tx/${event.transactionHash}`} target='_blank' className='underline hover:text-slate-800 font-bold'>Etherscan</a>. Id #{event.openseaTokenId - 1}
-                            <div><button className='underline hover:text-slate-700' target='blank' onClick={() => {
-                              retrieveQRCodeData(asset.nftAddress, asset.tokenId, event.openseaTokenId, event.buyer);
-                            }}>View the QR code</button> which is located on the real item this NFT is linked.</div>
-                          </li>)
+                        return (<li>Bought by you at {event.date}. <a target='_blank' className='underline hover:text-slate-700' href={getOpenseaUrl(event.openseaTokenId - 1)}>See in opensea</a>. Verify the <strong>donation transaction</strong> at <a href={`https://sepolia.etherscan.io/tx/${event.transactionHash}`} target='_blank' className='underline hover:text-slate-800 font-bold'>Etherscan</a>. Id #{event.openseaTokenId - 1}</li>)
                       }
                     })}
                 </ul>
@@ -270,7 +239,7 @@ export default function Home() {
               <div className='text-sm text-slate-500 mt-3'>Current price:</div>
               <div className='flex items-center justify-between w-96'>
                 <div>
-                  <span className='text-3xl font-semibold'>{ethers.utils.formatEther(asset.price, "ether")} </span>
+                  <span className='text-3xl font-semibold'>{ethers.utils.formatEther(asset.currentBidding, "ether")} </span>
                   <span className='text-slate-500'>ETH</span>
                 </div>
                 <div className='w-60'>
@@ -349,27 +318,7 @@ export default function Home() {
 
               </div>
             </div>
-            <div className='mt-16'>
-              <div className='text-3xl text-slate-900 mb-1'>Attributes</div>
-              <hr className='mb-3' />
-              <div>
-                {
-                  asset.attributes.map(trait => {
-                    return (
-                      <div className='flex flex-1 justify-between p-5 border rounded mb-4 items-center'>
-                        <div>
-                          <div className='text-slate-800'>{trait.trait_type}</div>
-                          <div className='text-slate-900 text-xl'>{trait.value}</div>
-                        </div>
-                        <div>
-                          <span className='text-sm text-slate-500'>more than</span>
-                          <span className='text-xl'> {attributesPercentages[asset.attributes.indexOf(trait)]}%</span>
-                          <span className='text-sm text-slate-500'> items in the collection</span>
-                        </div>
-                      </div>)
-                  })}
-              </div>
-            </div>
+
           </div>
           <div className='ml-auto'>
             <div className='text-2xl mb-2'>History</div>

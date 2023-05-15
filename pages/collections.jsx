@@ -42,13 +42,13 @@ export default function Home() {
                 <a href={`/collection?id=${collection.itemId}`}>
                   <div className='w-1/3 mr-5 aspect-square border-2 rounded flex flex-col p-4' key={`${collection.itemId}`}>
                     <div className='w-full aspect-video border-2'>
-                      <img src={`${collection.image}`} alt={collection.name} />
+                      <img className='w-full' src={`${collection.image}`} alt={collection.name} />
                     </div>
                     <div className='text-slate-800 text-2xl my-3 flex flex-1 justify-between items-center'>
                       <div>{collection.name}</div>
-                      <div className='w-40 h-10 rounded-3xl bg-black text-slate-50 flex items-baseline justify-center'>
+                      <div className='w-36 px-4 py-1 rounded-full bg-black flex-col text-slate-50 flex items-baseline justify-center'>
                         <span className='text-xl mt-1 mr-1'>{collection.totalRaised} </span>
-                        <span className='text-xs text-slate-300'>ETH total raised</span>
+                        <span className='text-xs mb-2 text-slate-300'>ETH total raised</span>
                       </div>
                     </div>
                     <div className=''>

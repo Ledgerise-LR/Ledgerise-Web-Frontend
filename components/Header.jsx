@@ -5,7 +5,9 @@ import Link from "next/link";
 export default function Header() {
   return (
     <nav className="p-5 border-b-2 flex flex-row justify-between items-center">
-      <h1 className="py-4 px-4 text-3xl font-thin font-serif">THE CHARITABLE</h1>
+      <h1 className="py-4 px-4 text-3xl font-playfair font-medium">
+        <a href="/">THE CHARITABLE</a>
+      </h1>
       <div className="flex flex-row justify-between items-center">
         <Link href="/" className="mr-4 p-6">
           Home

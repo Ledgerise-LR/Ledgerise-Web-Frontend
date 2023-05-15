@@ -18,6 +18,9 @@ module.exports = {
       },
       animation: {
         fade: 'fade 8s ease-in infinite',
+      },
+      fontFamily: {
+        "playfair": ["Playfair Display", "serif"]
       }
     },
   },
