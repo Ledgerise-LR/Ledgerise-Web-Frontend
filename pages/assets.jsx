@@ -7,12 +7,25 @@ import { Button, Modal, Blockie, useNotification, Loading } from 'web3uikit'
 import marketplaceAbi from "../constants/abi.json";
 import networkMapping from "../constants/networkMapping.json"
 import { calculatePercentage } from '@/utils/calculatePercentage';
-import QRCode from 'qrcode';
 
 export default function Home() {
 
   function prettyAddress(address) {
     return address.slice(0, 6) + "..." + address.slice(address.length - 6, address.length)
+  }
+
+  function prettyDate(timestamp) {
+
+    const date = new Date(timestamp * 1);
+    const formattedDate = date.toLocaleString('en-US', {
+      day: 'numeric',
+      month: 'long',
+      year: 'numeric',
+      hour: 'numeric',
+      minute: 'numeric',
+    });
+    console.log(formattedDate)
+    return formattedDate;
   }
 
   const { isWeb3Enabled, chainId, account } = useMoralis();
@@ -32,7 +45,8 @@ export default function Home() {
       buyer: "",
       openseaTokenId: 0
     }],
-    attributes: []
+    attributes: [],
+    real_item_history: []
   });
   const [imageURI, setImageURI] = useState("");
   const [tokenName, setTokenName] = useState("");
@@ -90,7 +104,8 @@ export default function Home() {
           availableEditions: data.activeItem.availableEditions,
           subcollectionId: data.activeItem.subcollectionId,
           history: data.activeItem.history,
-          attributes: data.activeItem.attributes
+          attributes: data.activeItem.attributes,
+          real_item_history: data.activeItem.real_item_history
         }
         setAsset(asset);
       })
@@ -124,7 +139,8 @@ export default function Home() {
             availableEditions: data.activeItem.availableEditions,
             subcollectionId: data.activeItem.subcollectionId,
             history: data.activeItem.history,
-            attributes: data.activeItem.attributes
+            attributes: data.activeItem.attributes,
+            real_item_history: data.activeItem.real_item_history
           }
           setAsset(asset);
           fetch(`http://localhost:4000/get-single-collection?id=${asset.subcollectionId}`)
@@ -202,6 +218,23 @@ export default function Home() {
                             <div><button className='underline hover:text-slate-700' target='blank' onClick={() => {
                               retrieveQRCodeData(asset.nftAddress, asset.tokenId, event.openseaTokenId, event.buyer);
                             }}>View the QR code</button> which is located on the real item this NFT is linked.</div>
+                            <div>
+                              {
+                                asset.real_item_history
+                                  ? (asset.real_item_history.map(realItemEvent => {
+                                    if (realItemEvent.openseaTokenId === event.openseaTokenId) {
+                                      if (realItemEvent.key == "stamp") {
+                                        return (<div>The real item this NFT represents is stamped at {prettyDate(realItemEvent.date)} at <a href={`https://www.google.com/maps/@${realItemEvent.location.latitude},${realItemEvent.location.longitude},15z`} target='_blank'>this</a> location. Click here to see the immutable photo of the real item.</div>
+                                        )
+                                      } else if (realItemEvent.key == "shipped") {
+                                        return (<div>The real item this NFT represents is shipped at {prettyDate(realItemEvent.date)} at <a href={`https://www.google.com/maps/@${realItemEvent.location.latitude},${realItemEvent.location.longitude},15z`} target='_blank'>this</a> location.</div>)
+                                      } else if (realItemEvent.key == "delivered") {
+                                        return (<div>The real item this NFT represents is delivered at {prettyDate(realItemEvent.date)} at <a href={`https://www.google.com/maps/@${realItemEvent.location.latitude},${realItemEvent.location.longitude},15z`} target='_blank'>this</a> location.</div>)
+                                      }
+                                    }
+                                  }))
+                                  : ("")}
+                            </div>
                           </li>)
                       }
                     })}
