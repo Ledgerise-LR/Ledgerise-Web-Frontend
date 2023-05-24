@@ -185,7 +185,7 @@ export default function Home() {
   }
 
   useEffect(() => {
-    if (isWeb3Enabled && asset) {
+    if (asset) {
       updateUI();
     }
   }, [isWeb3Enabled, asset, isModalOpen, asset.attributes]);

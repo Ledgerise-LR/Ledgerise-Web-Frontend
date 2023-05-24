@@ -23,7 +23,7 @@ export default function Home() {
   const [newestClicked, setNewestClicked] = useState(false);
 
   useEffect(() => {
-    if (isWeb3Enabled && itemId) {
+    if (itemId) {
       fetch(`http://localhost:4000/get-collection?subcollectionId=${itemId}`)
         .then(response => response.json())
         .then(data => {
@@ -214,7 +214,7 @@ export default function Home() {
                   className={`${checkboxClassName}`}
                   type="checkbox"
                   value="10-1000000"
-                  checked={selectedPriceCategories.includes('10+')}
+                  checked={selectedPriceCategories.includes('10-1000000')}
                   onChange={handlePriceCategoryChange}
                 />
                 {" 10+ Ξ"}
@@ -281,7 +281,7 @@ export default function Home() {
                   type="checkbox"
                   value="100-1000000"
                   onChange={handleAvailableEditionsChange}
-                  checked={availableEditions.includes('100+')}
+                  checked={availableEditions.includes('100-1000000')}
                 />
                 {" 100+"}
               </label>

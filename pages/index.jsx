@@ -79,7 +79,7 @@ export default function Home() {
   }
 
   useEffect(() => {
-    if (isWeb3Enabled && asset && asset.tokenUri) {
+    if (asset && asset.tokenUri) {
       updateUI();
     }
   }, [isWeb3Enabled, asset, asset.tokenUri])
