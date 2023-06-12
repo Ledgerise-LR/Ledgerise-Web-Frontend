@@ -33,14 +33,14 @@ export default function Home() {
 
   return (
     <>
-      <div className='px-48 py-20 w-full'>
+      <div className='px-48 py-20 w-full flex flex-1'>
         {!collections
           ? (<div>Loading...</div>)
           : (
             collections.map((collection) => {
               return (
-                <a href={`/collection?id=${collection.itemId}`}>
-                  <div className='w-1/3 mr-5 aspect-square border-2 rounded flex flex-col p-4' key={`${collection.itemId}`}>
+                <a className='w-1/3 mr-4' href={`/collection?id=${collection.itemId}`}>
+                  <div className='w-full mr-5 aspect-square border-2 rounded flex flex-col p-4' key={`${collection.itemId}`}>
                     <div className='w-full aspect-video border-2'>
                       <img className='w-full' src={`${collection.image}`} alt={collection.name} />
                     </div>

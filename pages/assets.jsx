@@ -111,7 +111,8 @@ export default function Home() {
       })
   }
 
-  const handleBuyItemError = async () => {
+  const handleBuyItemError = async (err) => {
+    console.log(err)
     dispatch({
       type: "error",
       message: "Sorry for the error. Please refresh and try again.",
@@ -224,12 +225,12 @@ export default function Home() {
                                   ? (asset.real_item_history.map(realItemEvent => {
                                     if (realItemEvent.openseaTokenId === event.openseaTokenId) {
                                       if (realItemEvent.key == "stamp") {
-                                        return (<div>The real item this NFT represents is stamped at {prettyDate(realItemEvent.date)} at <a href={`https://www.google.com/maps/@${realItemEvent.location.latitude},${realItemEvent.location.longitude},15z`} target='_blank'>this</a> location. Click here to see the immutable photo of the real item.</div>
+                                        return (<div>The real item this NFT represents is stamped at {prettyDate(realItemEvent.date)} at <a href={`https://www.google.com/maps/@${realItemEvent.location.latitude},${realItemEvent.location.longitude},15z`} target='_blank'>this</a> location. tx: <a href={`https://sepolia.etherscan.io/tx/${realItemEvent.transactionHash}`} target="_blank" >{realItemEvent.transactionHash}</a></div>
                                         )
                                       } else if (realItemEvent.key == "shipped") {
-                                        return (<div>The real item this NFT represents is shipped at {prettyDate(realItemEvent.date)} at <a href={`https://www.google.com/maps/@${realItemEvent.location.latitude},${realItemEvent.location.longitude},15z`} target='_blank'>this</a> location.</div>)
+                                        return (<div>The real item this NFT represents is shipped at {prettyDate(realItemEvent.date)} at <a href={`https://www.google.com/maps/@${realItemEvent.location.latitude},${realItemEvent.location.longitude},15z`} target='_blank'>this</a> location. tx: <a href={`https://sepolia.etherscan.io/tx/${realItemEvent.transactionHash}`} target="_blank" >{realItemEvent.transactionHash}</a></div>)
                                       } else if (realItemEvent.key == "delivered") {
-                                        return (<div>The real item this NFT represents is delivered at {prettyDate(realItemEvent.date)} at <a href={`https://www.google.com/maps/@${realItemEvent.location.latitude},${realItemEvent.location.longitude},15z`} target='_blank'>this</a> location.</div>)
+                                        return (<div>The real item this NFT represents is delivered at {prettyDate(realItemEvent.date)} at <a href={`https://www.google.com/maps/@${realItemEvent.location.latitude},${realItemEvent.location.longitude},15z`} target='_blank'>this</a> location. tx: <a href={`https://sepolia.etherscan.io/tx/${realItemEvent.transactionHash}`} target="_blank" >{realItemEvent.transactionHash}</a></div>)
                                       }
                                     }
                                   }))
@@ -310,7 +311,7 @@ export default function Home() {
                   <Button isFullWidth="true" theme='primary' type='button' text='Buy Item' onClick={() => {
                     buyItem({
                       onSuccess: handleBuyItemSuccess,
-                      onError: (err) => handleBuyItemError()
+                      onError: (err) => handleBuyItemError(err)
                     });
                   }} style={{
                     border: "black",

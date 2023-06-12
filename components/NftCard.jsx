@@ -1,7 +1,6 @@
 
 import { useEffect, useState } from "react";
-import { useMoralis, useWeb3Contract } from "react-moralis";
-import Image from "next/image";
+import { useMoralis } from "react-moralis";
 import { Blockie } from "web3uikit";
 import { ethers } from "ethers";
 import { useRouter } from "next/router";
