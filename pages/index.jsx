@@ -90,8 +90,8 @@ export default function Home() {
         <div className='flex flex-1 w-3/5 h-4/5 justify-between'>
           <div className='flex-col'>
             <div>
-              <div className='text-6xl w-1/2 font-playfair'>Collect NFTs Saving The World</div>
-              <div className='text-2xl text-slate-500 mt-12 font-serif'>Start collecting digital art that raise funds for charities.</div>
+              <div className='text-6xl w-1/2 font-playfair'>Trustworthy,{"\n"}Tranparent,{"\n"}Immutable</div>
+              <div className='text-2xl text-slate-500 mt-12 font-serif'>Join the decentralized fund-delivering traffic. See your donation meeting beneficiaries.</div>
             </div>
             <div className='w-1/2 mt-16'>
               <a href="/collections">
@@ -105,7 +105,7 @@ export default function Home() {
                     color: "white"
                   }}
                   isFullWidth="true"
-                  text='Browse Collections'
+                  text='Browse Campaigns'
                   theme='custom'
                   size='xl'
                 />
