@@ -5,6 +5,7 @@ import { useMoralis, useWeb3Contract } from 'react-moralis'
 import { ethers } from "ethers";
 import { Button, Modal, Blockie, useNotification, Loading } from 'web3uikit'
 import marketplaceAbi from "../constants/abi.json";
+import mainCollectionAbi from "../constants/mainCollectionAbi.json";
 import networkMapping from "../constants/networkMapping.json"
 import NFTBox from '../components/NftCard'
 
@@ -51,12 +52,18 @@ export default function Home() {
   const mainCollectionAddress = networkMapping["MainCollection"][chainString];
 
   const [assets, setAssets] = useState([]);
+  const [collections, setCollections] = useState([]);
 
   useEffect(() => {
     fetch(`http://localhost:4000/get-all-active-items`)
       .then(response => response.json())
       .then(data => {
         setAssets(data.activeItems);
+        fetch(`http://localhost:4000/get-all-collections`)
+          .then(response => response.json())
+          .then(data => {
+            setCollections(data.subcollections);
+          })
       })
   }, []);
 
@@ -75,6 +82,41 @@ export default function Home() {
     contractAddress: marketplaceAddress,
     functionName: "owner",
     params: {},
+    msgValue: ""
+  })
+
+  const [addCreatorCreatorAddress, setAddCreatorCreatorAddress] = useState("");
+
+  const [addingCreatorStatus, setAddingCreatorStatus] = useState(false);
+  const [addingCreatorTransactionHash, setAddingCreatorTransactionHash] = useState(false)
+
+
+  const { runContractFunction: addCreator } = useWeb3Contract({
+    abi: marketplaceAbi,
+    contractAddress: marketplaceAddress,
+    functionName: "addCreator",
+    params: {
+      creatorAddress: addCreatorCreatorAddress
+    },
+    msgValue: ""
+  })
+
+  const [createSubcollectionName, setCreateSubcollectionName] = useState("");
+  const [createSubcollectionCharityAddress, setCreateSubcollectionCharityAddress] = useState("");
+  const [createSubcollectionProperties, setCreateSubcollectionProperties] = useState("0,0");
+
+  const [creatingSubcollectionStatus, setCreatingSubcollectionStatus] = useState(false);
+  const [creatingSubcollectionTransactionHash, setCreatingSubcollectionTransactionHash] = useState(false)
+
+  const { runContractFunction: createSubcollection } = useWeb3Contract({
+    abi: mainCollectionAbi,
+    contractAddress: mainCollectionAddress,
+    functionName: "createSubcollection",
+    params: {
+      name: createSubcollectionName,
+      charityAddress: createSubcollectionCharityAddress,
+      properties: createSubcollectionProperties.split(",")
+    },
     msgValue: ""
   })
 
@@ -104,7 +146,31 @@ export default function Home() {
     })
   }
 
-  const [listItemNftAddress, setListItemNftAddress] = useState("");
+  const [updateTokenId, setUpdateTokenId] = useState("1");
+  const [updateItemPrice, setUpdateItemPrice] = useState("1");
+  const [updateItemTokenUri, setUpdateItemTokenUri] = useState("");
+  const [updateItemCharityAddress, setUpdateItemCharityAddress] = useState("");
+
+  const [updatingStatus, setUpdatingStatus] = useState(false);
+  const [updatingTransactionHash, setUpdatingTransactionHash] = useState(false)
+
+
+  const { runContractFunction: updateListing } = useWeb3Contract({
+    abi: marketplaceAbi,
+    contractAddress: marketplaceAddress,
+    functionName: "updateListing",
+    params: {
+      nftAddress: mainCollectionAddress,
+      tokenId: updateTokenId,
+      price: ethers.utils.parseEther(updateItemPrice || "0") || "0",
+      tokenUri: updateItemTokenUri,
+      charityAddress: updateItemCharityAddress,
+    },
+    msgValue: ""
+  })
+
+
+  const [listItemNftAddress, setListItemNftAddress] = useState("");  // unused
   const [listItemPrice, setListItemPrice] = useState("1");
   const [listItemTokenUri, setListItemTokenUri] = useState("");
   const [listItemCharityAddress, setListItemCharityAddress] = useState("");
@@ -152,23 +218,39 @@ export default function Home() {
               <div>
                 {!assets ? (<div>Assets couldn't fetched</div>) : (<div>
                   <div>
-                    <div className="flex">
-                      {assets.map(asset => {
+                    <div className="flex flex-col">
+
+                      {collections.map(collection => {
+
                         return (
-                          <div className='w-72 mr-5 mb-5' key={`${asset.nftAddress}${asset.tokenId}`}>
-                            <a href={`/assets?id=${asset.tokenId}`}>
-                              <NFTBox
-                                marketplaceAddress={marketplaceAddress}
-                                nftAddress={asset.nftAddress}
-                                tokenId={asset.tokenId}
-                                seller={asset.seller}
-                                price={asset.price}
-                                tokenUri={asset.tokenUri}
-                                history={asset.history}
-                                availableEditions={asset.availableEditions}
-                              />
-                              <div>tokenId {asset.tokenId}, subcollectionId {asset.subcollectionId}, charityAddress {asset.charityAddress}</div>
-                            </a>
+                          <div className="flex flex-1 mb-4">
+                            <div>{collection.name}</div>
+                            <div>{collection.itemId}</div>
+                            {assets.map(asset => {
+                              if (asset.subcollectionId == collection.itemId) {
+                                return (
+                                  <div className='w-72 mr-5 mb-5' key={`${asset.nftAddress}${asset.tokenId}`}>
+                                    <a href={`/assets?id=${asset.tokenId}`}>
+                                      <NFTBox
+                                        marketplaceAddress={marketplaceAddress}
+                                        nftAddress={asset.nftAddress}
+                                        tokenId={asset.tokenId}
+                                        seller={asset.seller}
+                                        price={asset.price}
+                                        tokenUri={asset.tokenUri}
+                                        history={asset.history}
+                                        availableEditions={asset.availableEditions}
+                                      />
+                                      <div className="flex-1 flex-wrap flex flex-col">
+                                        <span>tokenId {asset.tokenId}, </span>
+                                        <span>subcollectionId {asset.subcollectionId}, </span>
+                                        <span className="text-xs">charityAddress {asset.charityAddress}</span>
+                                      </div>
+                                    </a>
+                                  </div>
+                                )
+                              }
+                            })}
                           </div>
                         )
                       })}
@@ -198,29 +280,64 @@ export default function Home() {
                   }}
                 />
               </div>
-              <div>
+              <div className="flex flex-1 flex-col mt-8 mb-8">
                 <h1>Add creator</h1>
-                <input type="text" />
-                <input type="text" />
-                <input type="text" />
-                <input type="text" />
-                <input type="text" />
+                <div className="mt-4 mb-4">{addingCreatorStatus ? (<div>
+                  Listing in progress. Follow from <a target="_blank" className="underline hover:text-slate-500" href={`https://sepolia.etherscan.io/tx/${addingCreatorTransactionHash}`}>{prettyAddress(addingCreatorTransactionHash)}</a>
+                </div>) : (<div>No listing on progress</div>)}</div>
+                <input className="p-2 border-2 w-auto mb-4" type="text" placeholder="Creator Address" onChange={(e) => { setAddCreatorCreatorAddress(e.currentTarget.value) }} />
+                <Button
+                  theme="primary"
+                  text="Add creator"
+                  isFullWidth="true" type='button'
+                  onClick={() => {
+                    addCreator({
+                      onSuccess: handleAddCreatorSuccess,
+                      onError: (err) => handleAddCreatorError(err)
+                    });
+                  }}
+                />
               </div>
-              <div>
+              <div className="flex flex-1 flex-col mt-8 mb-8">
                 <h1>Create subcollection</h1>
-                <input type="text" />
-                <input type="text" />
-                <input type="text" />
-                <input type="text" />
-                <input type="text" />
+                <div className="mt-4 mb-4">{creatingSubcollectionStatus ? (<div>
+                  Listing in progress. Follow from <a target="_blank" className="underline hover:text-slate-500" href={`https://sepolia.etherscan.io/tx/${creatingSubcollectionTransactionHash}`}>{prettyAddress(creatingSubcollectionTransactionHash)}</a>
+                </div>) : (<div>No listing on progress</div>)}</div>
+                <input className="p-2 border-2 w-auto mb-4" type="number" placeholder="Name" onChange={(e) => { setCreateSubcollectionName(e.currentTarget.value.toString()) }} />
+                <input className="p-2 border-2 w-auto mb-4" type="text" placeholder="charityAddress" onChange={(e) => { setCreateSubcollectionCharityAddress(e.currentTarget.value) }} />
+                <input className="p-2 border-2 w-auto mb-4" type="text" placeholder="Properties (split with ,)" onChange={(e) => { setCreateSubcollectionProperties(e.currentTarget.value) }} />
+                <Button
+                  theme="primary"
+                  text="Create subcollection"
+                  isFullWidth="true" type='button'
+                  onClick={() => {
+                    createSubcollection({
+                      onSuccess: handleCreateSubcollectionSuccess,
+                      onError: (err) => handleCreateSubcollectionError(err)
+                    });
+                  }}
+                />
               </div>
-              <div>
+              <div className="flex flex-1 flex-col mt-8 mb-8">
                 <h1>Update item</h1>
-                <input type="text" />
-                <input type="text" />
-                <input type="text" />
-                <input type="text" />
-                <input type="text" />
+                <div className="mt-4 mb-4">{updatingStatus ? (<div>
+                  Listing in progress. Follow from <a target="_blank" className="underline hover:text-slate-500" href={`https://sepolia.etherscan.io/tx/${updatingTransactionHash}`}>{prettyAddress(updatingTransactionHash)}</a>
+                </div>) : (<div>No listing on progress</div>)}</div>
+                <input className="p-2 border-2 w-auto mb-4" type="number" placeholder="price (ETH)" onChange={(e) => { setUpdateItemPrice(e.currentTarget.value.toString()) }} />
+                <input className="p-2 border-2 w-auto mb-4" type="text" placeholder="Token Id" onChange={(e) => { setUpdateTokenId(e.currentTarget.value) }} />
+                <input className="p-2 border-2 w-auto mb-4" type="text" placeholder="charityAddress" onChange={(e) => { setUpdateItemCharityAddress(e.currentTarget.value) }} />
+                <input className="p-2 border-2 w-auto mb-4" type="text" placeholder="tokenUri" onChange={(e) => { setUpdateItemTokenUri(e.currentTarget.value) }} />
+                <Button
+                  theme="primary"
+                  text="Update item"
+                  isFullWidth="true" type='button'
+                  onClick={() => {
+                    listItem({
+                      onSuccess: handleListItemSuccess,
+                      onError: (err) => handleListItemError(err)
+                    });
+                  }}
+                />
               </div>
             </div>
           </div>
