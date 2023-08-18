@@ -123,7 +123,7 @@ export default function Home() {
   const handleListItemSuccess = async (tx) => {
     dispatch({
       type: "success",
-      message: "Tx successful: item bought",
+      message: "Tx successful: item listed",
       title: "Transaction Success",
       position: "topR"
     });
@@ -136,7 +136,55 @@ export default function Home() {
     setListingStatus(false);
   }
 
-  const handleListItemError = async (err) => {
+  const handleAddCreatorSuccess = async (tx) => {
+    dispatch({
+      type: "success",
+      message: "Tx successful: creator added",
+      title: "Transaction Success",
+      position: "topR"
+    });
+
+    setAddingCreatorStatus(true);
+    setAddingCreatorTransactionHash(tx.hash);
+
+    await tx.wait(1);
+
+    setAddingCreatorStatus(false);
+  }
+
+  const handleCreateSubcollectionSuccess = async (tx) => {
+    dispatch({
+      type: "success",
+      message: "Tx successful: item bought",
+      title: "Transaction Success",
+      position: "topR"
+    });
+
+    setCreatingSubcollectionStatus(true);
+    setCreatingSubcollectionTransactionHash(tx.hash);
+
+    await tx.wait(1);
+
+    setCreatingSubcollectionStatus(false);
+  }
+
+  const handleUpdateListingSuccess = async (tx) => {
+    dispatch({
+      type: "success",
+      message: "Tx successful: item updated",
+      title: "Transaction Success",
+      position: "topR"
+    });
+
+    setUpdatingStatus(true);
+    setUpdatingTransactionHash(tx.hash);
+
+    await tx.wait(1);
+
+    setUpdatingStatus(false);
+  }
+
+  const handleTransactionError = async (err) => {
     console.log(err)
     dispatch({
       type: "error",
@@ -241,12 +289,13 @@ export default function Home() {
                                         history={asset.history}
                                         availableEditions={asset.availableEditions}
                                       />
-                                      <div className="flex-1 flex-wrap flex flex-col">
-                                        <span>tokenId {asset.tokenId}, </span>
-                                        <span>subcollectionId {asset.subcollectionId}, </span>
-                                        <span className="text-xs">charityAddress {asset.charityAddress}</span>
-                                      </div>
                                     </a>
+                                    <div className="flex-1 flex-wrap flex flex-col">
+                                      <span>tokenId {asset.tokenId}, </span>
+                                      <span>subcollectionId {asset.subcollectionId}, </span>
+                                      <span className="text-xs break-all">charityAddress {asset.charityAddress}</span>
+                                      <span className="text-xs break-all">tokenUri {asset.tokenUri}</span>
+                                    </div>
                                   </div>
                                 )
                               }
@@ -275,7 +324,7 @@ export default function Home() {
                   onClick={() => {
                     listItem({
                       onSuccess: handleListItemSuccess,
-                      onError: (err) => handleListItemError(err)
+                      onError: (err) => handleTransactionError(err)
                     });
                   }}
                 />
@@ -284,7 +333,7 @@ export default function Home() {
                 <h1>Add creator</h1>
                 <div className="mt-4 mb-4">{addingCreatorStatus ? (<div>
                   Listing in progress. Follow from <a target="_blank" className="underline hover:text-slate-500" href={`https://sepolia.etherscan.io/tx/${addingCreatorTransactionHash}`}>{prettyAddress(addingCreatorTransactionHash)}</a>
-                </div>) : (<div>No listing on progress</div>)}</div>
+                </div>) : (<div>No adding creator on progress</div>)}</div>
                 <input className="p-2 border-2 w-auto mb-4" type="text" placeholder="Creator Address" onChange={(e) => { setAddCreatorCreatorAddress(e.currentTarget.value) }} />
                 <Button
                   theme="primary"
@@ -293,7 +342,7 @@ export default function Home() {
                   onClick={() => {
                     addCreator({
                       onSuccess: handleAddCreatorSuccess,
-                      onError: (err) => handleAddCreatorError(err)
+                      onError: (err) => handleTransactionError(err)
                     });
                   }}
                 />
@@ -302,7 +351,7 @@ export default function Home() {
                 <h1>Create subcollection</h1>
                 <div className="mt-4 mb-4">{creatingSubcollectionStatus ? (<div>
                   Listing in progress. Follow from <a target="_blank" className="underline hover:text-slate-500" href={`https://sepolia.etherscan.io/tx/${creatingSubcollectionTransactionHash}`}>{prettyAddress(creatingSubcollectionTransactionHash)}</a>
-                </div>) : (<div>No listing on progress</div>)}</div>
+                </div>) : (<div>No creating subcollection on progress</div>)}</div>
                 <input className="p-2 border-2 w-auto mb-4" type="number" placeholder="Name" onChange={(e) => { setCreateSubcollectionName(e.currentTarget.value.toString()) }} />
                 <input className="p-2 border-2 w-auto mb-4" type="text" placeholder="charityAddress" onChange={(e) => { setCreateSubcollectionCharityAddress(e.currentTarget.value) }} />
                 <input className="p-2 border-2 w-auto mb-4" type="text" placeholder="Properties (split with ,)" onChange={(e) => { setCreateSubcollectionProperties(e.currentTarget.value) }} />
@@ -313,28 +362,28 @@ export default function Home() {
                   onClick={() => {
                     createSubcollection({
                       onSuccess: handleCreateSubcollectionSuccess,
-                      onError: (err) => handleCreateSubcollectionError(err)
+                      onError: (err) => handleTransactionError(err)
                     });
                   }}
                 />
               </div>
               <div className="flex flex-1 flex-col mt-8 mb-8">
-                <h1>Update item</h1>
+                <h1>Update listing</h1>
                 <div className="mt-4 mb-4">{updatingStatus ? (<div>
                   Listing in progress. Follow from <a target="_blank" className="underline hover:text-slate-500" href={`https://sepolia.etherscan.io/tx/${updatingTransactionHash}`}>{prettyAddress(updatingTransactionHash)}</a>
-                </div>) : (<div>No listing on progress</div>)}</div>
+                </div>) : (<div>No updating on progress</div>)}</div>
                 <input className="p-2 border-2 w-auto mb-4" type="number" placeholder="price (ETH)" onChange={(e) => { setUpdateItemPrice(e.currentTarget.value.toString()) }} />
                 <input className="p-2 border-2 w-auto mb-4" type="text" placeholder="Token Id" onChange={(e) => { setUpdateTokenId(e.currentTarget.value) }} />
                 <input className="p-2 border-2 w-auto mb-4" type="text" placeholder="charityAddress" onChange={(e) => { setUpdateItemCharityAddress(e.currentTarget.value) }} />
                 <input className="p-2 border-2 w-auto mb-4" type="text" placeholder="tokenUri" onChange={(e) => { setUpdateItemTokenUri(e.currentTarget.value) }} />
                 <Button
                   theme="primary"
-                  text="Update item"
+                  text="Update listing"
                   isFullWidth="true" type='button'
                   onClick={() => {
-                    listItem({
-                      onSuccess: handleListItemSuccess,
-                      onError: (err) => handleListItemError(err)
+                    updateListing({
+                      onSuccess: handleUpdateListingSuccess,
+                      onError: (err) => handleTransactionError(err)
                     });
                   }}
                 />
