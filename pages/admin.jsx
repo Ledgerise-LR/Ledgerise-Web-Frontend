@@ -1,13 +1,14 @@
-import Image from 'next/image'
-import { useRouter } from 'next/router'
-import { useState, useEffect } from 'react'
-import { useMoralis, useWeb3Contract } from 'react-moralis'
+
+import { useRouter } from 'next/router';
+import { useState, useEffect } from 'react';
+import { useMoralis, useWeb3Contract } from 'react-moralis';
 import { ethers } from "ethers";
 import { Button, Modal, Blockie, useNotification, Loading } from 'web3uikit'
 import marketplaceAbi from "../constants/abi.json";
 import mainCollectionAbi from "../constants/mainCollectionAbi.json";
-import networkMapping from "../constants/networkMapping.json"
-import NFTBox from '../components/NftCard'
+import networkMapping from "../constants/networkMapping.json";
+import NFTBox from '../components/NftCard';
+import axios from "axios";
 
 export default function Home() {
 
@@ -64,6 +65,16 @@ export default function Home() {
           .then(data => {
             setCollections(data.subcollections);
           })
+      })
+  }, []);
+
+  const [tokenUris, setTokenUris] = useState([]);
+
+  useEffect(() => {
+    fetch(`http://localhost:4000/admin/pinata/tokenuri`)
+      .then(response => response.json())
+      .then(data => {
+        setTokenUris(data.data);
       })
   }, []);
 
@@ -194,6 +205,44 @@ export default function Home() {
     })
   }
 
+  const [selectedImage, setSelectedImage] = useState(null);
+  const [pinataName, setPinataName] = useState("");
+  const [pinataDescription, setPinataDescription] = useState("");
+  const [pinataAttributesString, setPinataAttributesString] = useState("");
+
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        setSelectedImage(event.target.result);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const [uploadingToPinataStatus, setUploadingToPinataStatus] = useState(false);
+
+  const handleUploadClick = () => {
+    if (selectedImage) {
+      setUploadingToPinataStatus(true);
+      const formData = new FormData();
+      formData.append('image', selectedImage);
+      formData.append('name', pinataName);
+      formData.append('description', pinataDescription);
+      formData.append('attributes', pinataAttributesString);
+
+      axios.post('http://localhost:4000/admin/pinata/upload', formData)
+        .then((response) => {
+          alert(response.data);
+          setUploadingToPinataStatus(false)
+        })
+        .catch((error) => {
+          alert(error);
+        });
+    }
+  }
+
   const [updateTokenId, setUpdateTokenId] = useState("1");
   const [updateItemPrice, setUpdateItemPrice] = useState("1");
   const [updateItemTokenUri, setUpdateItemTokenUri] = useState("");
@@ -254,8 +303,6 @@ export default function Home() {
   useEffect(() => {
     updateUI();
   }, [isWeb3Enabled, assets, listingStatus, listItemPrice]);
-
-  console.log(mainCollectionAddress)
 
   return (
     <div>
@@ -332,7 +379,7 @@ export default function Home() {
               <div className="flex flex-1 flex-col mt-8 mb-8">
                 <h1>Add creator</h1>
                 <div className="mt-4 mb-4">{addingCreatorStatus ? (<div>
-                  Listing in progress. Follow from <a target="_blank" className="underline hover:text-slate-500" href={`https://sepolia.etherscan.io/tx/${addingCreatorTransactionHash}`}>{prettyAddress(addingCreatorTransactionHash)}</a>
+                  Adding a creator in progress. Follow from <a target="_blank" className="underline hover:text-slate-500" href={`https://sepolia.etherscan.io/tx/${addingCreatorTransactionHash}`}>{prettyAddress(addingCreatorTransactionHash)}</a>
                 </div>) : (<div>No adding creator on progress</div>)}</div>
                 <input className="p-2 border-2 w-auto mb-4" type="text" placeholder="Creator Address" onChange={(e) => { setAddCreatorCreatorAddress(e.currentTarget.value) }} />
                 <Button
@@ -350,7 +397,7 @@ export default function Home() {
               <div className="flex flex-1 flex-col mt-8 mb-8">
                 <h1>Create subcollection</h1>
                 <div className="mt-4 mb-4">{creatingSubcollectionStatus ? (<div>
-                  Listing in progress. Follow from <a target="_blank" className="underline hover:text-slate-500" href={`https://sepolia.etherscan.io/tx/${creatingSubcollectionTransactionHash}`}>{prettyAddress(creatingSubcollectionTransactionHash)}</a>
+                  Subcollection creation in progress. Follow from <a target="_blank" className="underline hover:text-slate-500" href={`https://sepolia.etherscan.io/tx/${creatingSubcollectionTransactionHash}`}>{prettyAddress(creatingSubcollectionTransactionHash)}</a>
                 </div>) : (<div>No creating subcollection on progress</div>)}</div>
                 <input className="p-2 border-2 w-auto mb-4" type="number" placeholder="Name" onChange={(e) => { setCreateSubcollectionName(e.currentTarget.value.toString()) }} />
                 <input className="p-2 border-2 w-auto mb-4" type="text" placeholder="charityAddress" onChange={(e) => { setCreateSubcollectionCharityAddress(e.currentTarget.value) }} />
@@ -370,7 +417,7 @@ export default function Home() {
               <div className="flex flex-1 flex-col mt-8 mb-8">
                 <h1>Update listing</h1>
                 <div className="mt-4 mb-4">{updatingStatus ? (<div>
-                  Listing in progress. Follow from <a target="_blank" className="underline hover:text-slate-500" href={`https://sepolia.etherscan.io/tx/${updatingTransactionHash}`}>{prettyAddress(updatingTransactionHash)}</a>
+                  Updating in progress. Follow from <a target="_blank" className="underline hover:text-slate-500" href={`https://sepolia.etherscan.io/tx/${updatingTransactionHash}`}>{prettyAddress(updatingTransactionHash)}</a>
                 </div>) : (<div>No updating on progress</div>)}</div>
                 <input className="p-2 border-2 w-auto mb-4" type="number" placeholder="price (ETH)" onChange={(e) => { setUpdateItemPrice(e.currentTarget.value.toString()) }} />
                 <input className="p-2 border-2 w-auto mb-4" type="text" placeholder="Token Id" onChange={(e) => { setUpdateTokenId(e.currentTarget.value) }} />
@@ -387,6 +434,44 @@ export default function Home() {
                     });
                   }}
                 />
+              </div>
+              <div className="flex flex-1 flex-col mt-8 mb-8">
+                <h1>Upload image to Pinata</h1>
+                <div className="mt-4 mb-4">{uploadingToPinataStatus ? (<div>
+                  Uploading image to Pinata. Please don't quit this page.
+                </div>) : (<div>No uploading on progress</div>)}</div>
+                <div>
+                  <input type="file" accept="image/*" onChange={handleImageChange} />
+                  {selectedImage && (
+                    <div>
+                      <img src={selectedImage} alt="Selected" width={200} />
+                    </div>
+                  )}
+                </div>
+                <input className="p-2 border-2 w-auto mb-4" type="text" placeholder="Name" onChange={(e) => { setPinataName(e.currentTarget.value) }} />
+                <input className="p-2 border-2 w-auto mb-4" type="text" placeholder="tokenUri description" onChange={(e) => { setPinataDescription(e.currentTarget.value) }} />
+                <input className="p-2 border-2 w-auto mb-4" type="text" placeholder="pirinç:100,bulgur:200,un:300" onChange={(e) => { setPinataAttributesString(e.currentTarget.value) }} />
+                <Button
+                  theme="primary"
+                  text="Upload image"
+                  isFullWidth="true" type='button'
+                  onClick={handleUploadClick}
+                />
+                <div>
+                  {
+                    !tokenUris
+                      ? (<div>No tokenUris uploaded currently</div>)
+                      : (<div>
+                        {
+                          tokenUris.map(tokenUri => {
+                            return (
+                              <div>{tokenUri.name}: {tokenUri.tokenUri}</div>
+                            )
+                          })
+                        }
+                      </div>)
+                  }
+                </div>
               </div>
             </div>
           </div>
