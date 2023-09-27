@@ -1,14 +1,26 @@
 import Image from 'next/image'
 import { useRouter } from 'next/router'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useMemo } from 'react'
 import { useMoralis, useWeb3Contract } from 'react-moralis'
 import { ethers } from "ethers";
 import { Button, Modal, Blockie, useNotification, Loading } from 'web3uikit'
 import marketplaceAbi from "../constants/abi.json";
 import networkMapping from "../constants/networkMapping.json"
 import { calculatePercentage } from '@/utils/calculatePercentage';
+import dynamic from "next/dynamic"
+
+const { MapContainer, TileLayer, Popup, Marker } = dynamic(() => import("react-leaflet"), { ssr: false })
+
 
 export default function Home() {
+
+  const Map = useMemo(() => dynamic(
+    () => import('@/components/Map'),
+    {
+      loading: () => <p>The map is loading...</p>,
+      ssr: false
+    }
+  ), [])
 
   function prettyAddress(address) {
     return address.slice(0, 6) + "..." + address.slice(address.length - 6, address.length)
@@ -24,9 +36,10 @@ export default function Home() {
       hour: 'numeric',
       minute: 'numeric',
     });
-    console.log(formattedDate)
     return formattedDate;
   }
+
+  const position = [51.505, -0.09];
 
   const { isWeb3Enabled, chainId, account } = useMoralis();
 
@@ -57,6 +70,17 @@ export default function Home() {
   const [isModalOpen, setIsModalOpen] = useState("");
   const [attributesPercentages, setAttributesPercentages] = useState([]);
 
+  const idleLocation = {
+    latitude: "",
+    longtiude: ""
+  }
+
+  const [displayedStampLocation, setDisplayedStampLocation] = useState({ ...idleLocation });
+
+  const [displayedShippedLocation, setDisplayedShippedLocation] = useState({ ...idleLocation });
+
+  const [displayedDeliveredLocation, setDisplayedDeliveredLocation] = useState({ ...idleLocation });
+
   const hideModal = () => {
     setIsModalOpen(false);
   };
@@ -64,6 +88,36 @@ export default function Home() {
   const showModal = () => {
     setIsModalOpen(true);
   };
+
+  const [isLocationModalOpen, setIsLocationModalOpen] = useState("")
+
+  const hideLocationModal = () => {
+    setDisplayedStampLocation({ ...idleLocation });
+    setDisplayedShippedLocation({ ...idleLocation });
+    setDisplayedDeliveredLocation({ ...idleLocation });
+
+    setIsLocationModalOpen(false);
+    setIsModalOpen(true);
+  }
+
+  const showLocationModal = (stamp, shipped, delivered) => {
+
+    setDisplayedStampLocation({
+      latitude: stamp.latitude,
+      longitude: stamp.longitude
+    });
+    setDisplayedShippedLocation({
+      latitude: shipped.latitude,
+      longitude: shipped.longitude
+    });
+    setDisplayedDeliveredLocation({
+      latitude: delivered.latitude,
+      longitude: delivered.longitude
+    });
+
+    setIsModalOpen(false)
+    setIsLocationModalOpen(true);
+  }
 
   const router = useRouter();
   const tokenId = router.query.id
@@ -196,7 +250,9 @@ export default function Home() {
     console.log(openseaTokenId)
     const qrString = `${nftAddress}-${tokenId}-${openseaTokenId}-${buyer}`;
     const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=${qrString}`;
-    window.open(qrUrl, "_blank")
+    if (window.toString() != "undefined") {
+      window.open(qrUrl, "_blank")
+    }
   }
 
 
@@ -223,15 +279,70 @@ export default function Home() {
                               {
                                 asset.real_item_history
                                   ? (asset.real_item_history.map(realItemEvent => {
+                                    let eventTemplate = {
+                                      status: false,
+                                      date: "",
+                                      latitude: "",
+                                      longitude: "",
+                                      txHash: ""
+                                    }
+
+                                    let stamp = { ...eventTemplate }, shipped = { ...eventTemplate }, delivered = { ...eventTemplate };
+
                                     if (realItemEvent.openseaTokenId === event.openseaTokenId) {
                                       if (realItemEvent.key == "stamp") {
-                                        return (<div>The real item this NFT represents is stamped at {prettyDate(realItemEvent.date)} at <a href={`https://www.google.com/maps/@${realItemEvent.location.latitude},${realItemEvent.location.longitude},15z`} target='_blank'>this</a> location. tx: <a href={`https://sepolia.etherscan.io/tx/${realItemEvent.transactionHash}`} target="_blank" >{realItemEvent.transactionHash}</a></div>
-                                        )
+                                        stamp.status = true;
+                                        stamp.date = prettyDate(realItemEvent.date);
+                                        stamp.latitude = realItemEvent.location.latitude;
+                                        stamp.longitude = realItemEvent.location.longitude;
+                                        stamp.txHash = realItemEvent.transactionHash;
                                       } else if (realItemEvent.key == "shipped") {
-                                        return (<div>The real item this NFT represents is shipped at {prettyDate(realItemEvent.date)} at <a href={`https://www.google.com/maps/@${realItemEvent.location.latitude},${realItemEvent.location.longitude},15z`} target='_blank'>this</a> location. tx: <a href={`https://sepolia.etherscan.io/tx/${realItemEvent.transactionHash}`} target="_blank" >{realItemEvent.transactionHash}</a></div>)
+                                        shipped.status = true;
+                                        shipped.date = prettyDate(realItemEvent.date);
+                                        shipped.latitude = realItemEvent.location.latitude;
+                                        shipped.longitude = realItemEvent.location.longitude;
+                                        shipped.txHash = realItemEvent.transactionHash;
                                       } else if (realItemEvent.key == "delivered") {
-                                        return (<div>The real item this NFT represents is delivered at {prettyDate(realItemEvent.date)} at <a href={`https://www.google.com/maps/@${realItemEvent.location.latitude},${realItemEvent.location.longitude},15z`} target='_blank'>this</a> location. tx: <a href={`https://sepolia.etherscan.io/tx/${realItemEvent.transactionHash}`} target="_blank" >{realItemEvent.transactionHash}</a></div>)
+                                        delivered.status = true;
+                                        delivered.date = prettyDate(realItemEvent.date);
+                                        delivered.latitude = realItemEvent.location.latitude;
+                                        delivered.longitude = realItemEvent.location.longitude;
+                                        delivered.txHash = realItemEvent.transactionHash;
                                       }
+
+                                      return (
+                                        <div>
+                                          <div className='relative w-full justify-between flex flex-1 items-center'>
+                                            <div className='absolute w-full h-0.5 bg-slate-400'></div>
+                                            <div className='flex bg-slate-300 p-3 w-64 rounded-lg z-10'>
+                                              <div className={`h-12 aspect-square rounded-full ${stamp.status ? "bg-green-500" : "bg-slate-200"}`}></div>
+                                              <div className='flex flex-col ml-4'>
+                                                <div className='text-sm'>{stamp.status ? (stamp.date) : "waiting 🕒"}</div>
+                                                <div className='text-sm mt-2 rounded'>{stamp.status ? (<a className='p-1 rounded bg-green-800 text-slate-50' href={`https://sepolia.etherscan.io/tx/${stamp.txHash}`} target='_blank'>Verification</a>) : "waiting 🕒"}</div>
+                                              </div>
+                                            </div>
+                                            <div className='flex bg-slate-300 p-3 w-64 rounded-lg z-10'>
+                                              <div className={`h-12 aspect-square rounded-full ${shipped.status ? "bg-green-500" : "bg-slate-200"}`}></div>
+                                              <div className='flex flex-col ml-4'>
+                                                <div className='text-sm'>{shipped.status ? (shipped.date) : "waiting 🕒"}</div>
+                                                <div className='text-sm mt-2 rounded'>{shipped.status ? (<a className='p-1 rounded bg-green-800 text-slate-50' href={`https://sepolia.etherscan.io/tx/${shipped.txHash}`} target='_blank'>Verification</a>) : "waiting 🕒"}</div>
+                                              </div>
+                                            </div>
+                                            <div className='flex bg-slate-300 p-3 w-64 rounded-lg z-10'>
+                                              <div className={`h-12 aspect-square rounded-full ${delivered.status ? "bg-green-500" : "bg-slate-200"}`}></div>
+                                              <div className='flex flex-col ml-4'>
+                                                <div className='text-sm'>{delivered.status ? (delivered.date) : "waiting 🕒"}</div>
+                                                <div className='text-sm mt-2 rounded'>{delivered.status ? (<a className='p-1 rounded bg-green-800 text-slate-50' href={`https://sepolia.etherscan.io/tx/${delivered.txHash}`} target='_blank'>Verification</a>) : "waiting 🕒"}</div>
+                                              </div>
+                                            </div>
+                                          </div>
+                                          <div className='flex flex-1 mt-3 text-slate-200'>
+                                            <div onClick={() => showLocationModal(stamp, shipped, delivered)
+                                            } className='mr-5 text-sm p-2 bg-green-700 rounded cursor-pointer'>View the <strong>route</strong> of your donation</div>
+                                            <div className='p-2 text-sm bg-green-700 rounded cursor-pointer'>View the <strong>visual verifications</strong> of your donation</div>
+                                          </div>
+                                        </div>
+                                      )
                                     }
                                   }))
                                   : ("")}
@@ -258,7 +369,21 @@ export default function Home() {
                 : ("")}
             </div>
           </Modal>)
-          : ("")}
+          :
+          isLocationModalOpen
+            ? (
+              <Modal visible={isLocationModalOpen} onCloseButtonPressed={hideLocationModal} onOk={hideLocationModal} onCancel={hideLocationModal} okText='Continue' title={<h1 className='text-3xl text-slate-900'>Transparent route of your donation</h1>}>
+                <div className='h-96 w-full'>
+                  <Map
+                    stampCoordinates={displayedStampLocation}
+                    shippedCoordinates={displayedShippedLocation}
+                    deliveredCoordinates={displayedDeliveredLocation}
+                    zoom={10}
+                  />
+                </div>
+              </Modal>
+            ) : ("")
+        }
 
         <div className='flex flex-1 items-end relative h-full'>
           <div className='border-2 h-full flex flex-col justify-center'>
