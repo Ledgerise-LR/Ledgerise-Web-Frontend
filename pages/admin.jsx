@@ -1,16 +1,26 @@
 
 import { useRouter } from 'next/router';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { useMoralis, useWeb3Contract } from 'react-moralis';
 import { ethers } from "ethers";
-import { Button, Modal, Blockie, useNotification, Loading } from 'web3uikit'
+import { Button, Modal, useNotification } from 'web3uikit'
 import marketplaceAbi from "../constants/abi.json";
 import mainCollectionAbi from "../constants/mainCollectionAbi.json";
 import networkMapping from "../constants/networkMapping.json";
 import NFTBox from '../components/NftCard';
 import axios from "axios";
+import dynamic from "next/dynamic";
+
 
 export default function Home() {
+
+  const Map = useMemo(() => dynamic(
+    () => import('@/components/SelectionMap'),
+    {
+      loading: () => <p>The map is loading...</p>,
+      ssr: false
+    }
+  ), [])
 
   function prettyAddress(address) {
     return address.slice(0, 6) + "..." + address.slice(address.length - 6, address.length)
@@ -33,14 +43,14 @@ export default function Home() {
   const { isWeb3Enabled, chainId, account } = useMoralis();
 
 
-  const [isModalOpen, setIsModalOpen] = useState("");
+  const [isRouteModalOpen, setIsRouteModalOpen] = useState("");
 
-  const hideModal = () => {
-    setIsModalOpen(false);
+  const hideRouteModal = () => {
+    setIsRouteModalOpen(false);
   };
 
-  const showModal = () => {
-    setIsModalOpen(true);
+  const showRouteModal = () => {
+    setIsRouteModalOpen(true);
   };
 
   const router = useRouter();
@@ -266,7 +276,6 @@ export default function Home() {
     msgValue: ""
   })
 
-
   const [listItemNftAddress, setListItemNftAddress] = useState("");  // unused
   const [listItemPrice, setListItemPrice] = useState("1");
   const [listItemTokenUri, setListItemTokenUri] = useState("");
@@ -275,7 +284,13 @@ export default function Home() {
   const [listItemAvailableEditions, setListItemAvailableEditions] = useState("");
 
   const [listingStatus, setListingStatus] = useState(false);
-  const [listTransactionHash, setListingTransactionHash] = useState(false)
+  const [listTransactionHash, setListingTransactionHash] = useState(false);
+
+  const [tempStampLocation, setTempStampLocation] = useState([null, null]);
+  const [tempShippedLocation, setTempShippedLocation] = useState([null, null]);
+  const [tempDeliveredLocation, setTempDeliveredLocation] = useState([null, null]);
+
+  const [currentSelectingEvent, setCurrectSelectingEvent] = useState("stamp");
 
   const { runContractFunction: listItem } = useWeb3Contract({
     abi: marketplaceAbi,
@@ -306,6 +321,33 @@ export default function Home() {
 
   return (
     <div>
+      {
+        isRouteModalOpen
+          ? (
+            <Modal visible={isRouteModalOpen} onCloseButtonPressed={hideRouteModal} onOk={hideRouteModal} onCancel={hideRouteModal} okText='Continue' title={<h1 className='text-3xl text-slate-900'>Select the route for this item.</h1>}>
+              <div>
+                <div className={`p-4 cursor-pointer bg-slate-500 ${currentSelectingEvent == "stamp" ? "text-green-500" : "text-slate-50"}`} onClick={() => setCurrectSelectingEvent("stamp")}>Stamp Location</div>
+                <div className={`p-4 cursor-pointer bg-slate-500 ${currentSelectingEvent == "shipped" ? "text-green-500" : "text-slate-50"}`} onClick={() => setCurrectSelectingEvent("shipped")}>Shipping Location</div>
+                <div className={`p-4 cursor-pointer bg-slate-500 ${currentSelectingEvent == "delivered" ? "text-green-500" : "text-slate-50"}`} onClick={() => setCurrectSelectingEvent("delivered")}>Deliver Location</div>
+              </div>
+              <div className='h-96 w-full'>
+                <Map
+                  stampCoordinates={tempStampLocation}
+                  shippedCoordinates={tempShippedLocation}
+                  deliveredCoordinates={tempDeliveredLocation}
+                  zoom={10}
+                  currentSelectingEvent={currentSelectingEvent}
+                  onUpdate={(coordiantesArray) => {
+                    setTempStampLocation(coordiantesArray[0])
+                    setTempShippedLocation(coordiantesArray[1])
+                    setTempDeliveredLocation(coordiantesArray[2])
+                  }}
+                />
+              </div>
+            </Modal>
+          )
+          : ("")
+      }
       <div>{
         (owner ? `${owner.toLowerCase()}` : "") == account ? <div>
           <div>
@@ -364,6 +406,13 @@ export default function Home() {
                 <input className="p-2 border-2 w-auto mb-4" type="text" placeholder="tokenUri" onChange={(e) => { setListItemTokenUri(e.currentTarget.value) }} />
                 <input className="p-2 border-2 w-auto mb-4" type="text" placeholder="subcollectionId" onChange={(e) => { setListItemSubcollectionId(e.currentTarget.value) }} />
                 <input className="p-2 border-2 w-auto mb-4" type="text" placeholder="availableEditions" onChange={(e) => { setListItemAvailableEditions(e.currentTarget.value) }} />
+                <Button
+                  theme='secondary'
+                  text='Choose Route'
+                  isFullWidth="false"
+                  type='button'
+                  onClick={() => showRouteModal()}
+                />
                 <Button
                   theme="primary"
                   text="List item"
