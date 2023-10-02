@@ -46,6 +46,28 @@ export default function Home() {
   const [isRouteModalOpen, setIsRouteModalOpen] = useState("");
 
   const hideRouteModal = () => {
+
+    const routeData = {
+      stampLocation: {
+        latitude: parseInt(tempStampLocation[0] * 1000),
+        longitude: parseInt(tempStampLocation[1] * 1000),
+        decimals: 3
+      },
+
+      shipLocation: {
+        latitude: parseInt(tempShippedLocation[0] * 1000),
+        longitude: parseInt(tempShippedLocation[1] * 1000),
+        decimals: 3
+      },
+
+      deliverLocation: {
+        latitude: parseInt(tempDeliveredLocation[0] * 1000),
+        longitude: parseInt(tempDeliveredLocation[1] * 1000),
+        decimals: 3
+      }
+    }
+
+    setListItemRoute(routeData);
     setIsRouteModalOpen(false);
   };
 
@@ -54,7 +76,6 @@ export default function Home() {
   };
 
   const router = useRouter();
-  const tokenId = router.query.id
   const dispatch = useNotification();
 
   const chainString = chainId ? parseInt(chainId, 16).toString() : "11155111";
@@ -290,6 +311,8 @@ export default function Home() {
   const [tempShippedLocation, setTempShippedLocation] = useState([null, null]);
   const [tempDeliveredLocation, setTempDeliveredLocation] = useState([null, null]);
 
+  const [listItemRoute, setListItemRoute] = useState("");
+
   const [currentSelectingEvent, setCurrectSelectingEvent] = useState("stamp");
 
   const { runContractFunction: listItem } = useWeb3Contract({
@@ -298,12 +321,13 @@ export default function Home() {
     functionName: "listItem",
     params: {
       nftAddress: mainCollectionAddress,
-      tokenId: listTokenCounter,
+      tokenId: parseInt(listTokenCounter),
       price: ethers.utils.parseEther(listItemPrice || "0") || "0",
       tokenUri: listItemTokenUri,
       charityAddress: listItemCharityAddress,
       availableEditions: listItemAvailableEditions,
-      subCollectionId: listItemSubcollectionId
+      subCollectionId: listItemSubcollectionId,
+      route: listItemRoute
     },
     msgValue: ""
   })
@@ -448,7 +472,7 @@ export default function Home() {
                 <div className="mt-4 mb-4">{creatingSubcollectionStatus ? (<div>
                   Subcollection creation in progress. Follow from <a target="_blank" className="underline hover:text-slate-500" href={`https://sepolia.etherscan.io/tx/${creatingSubcollectionTransactionHash}`}>{prettyAddress(creatingSubcollectionTransactionHash)}</a>
                 </div>) : (<div>No creating subcollection on progress</div>)}</div>
-                <input className="p-2 border-2 w-auto mb-4" type="number" placeholder="Name" onChange={(e) => { setCreateSubcollectionName(e.currentTarget.value.toString()) }} />
+                <input className="p-2 border-2 w-auto mb-4" type="text" placeholder="Name" onChange={(e) => { setCreateSubcollectionName(e.currentTarget.value.toString()) }} />
                 <input className="p-2 border-2 w-auto mb-4" type="text" placeholder="charityAddress" onChange={(e) => { setCreateSubcollectionCharityAddress(e.currentTarget.value) }} />
                 <input className="p-2 border-2 w-auto mb-4" type="text" placeholder="Properties (split with ,)" onChange={(e) => { setCreateSubcollectionProperties(e.currentTarget.value) }} />
                 <Button
