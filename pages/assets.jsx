@@ -359,8 +359,7 @@ export default function Home() {
                                           </div>
                                           <div className='flex flex-1 mt-3 text-slate-200'>
                                             <div onClick={() => showLocationModal(stamp, shipped, delivered)
-                                            } className='mr-5 text-sm p-2 bg-green-700 rounded cursor-pointer'>View the <strong>route</strong> of your donation</div>
-                                            <div className='p-2 text-sm bg-green-700 rounded cursor-pointer'>View the <strong>visual verifications</strong> of your donation</div>
+                                            } className='mr-5 text-sm p-2 bg-green-700 rounded cursor-pointer shadow-green-600 shadow-lg'>View the <strong>route</strong> and <strong>visual verification</strong> of your donation</div>
                                           </div>
                                         </div>
                                       )
