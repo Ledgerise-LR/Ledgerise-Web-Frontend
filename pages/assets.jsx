@@ -61,6 +61,7 @@ export default function Home() {
     attributes: [],
     real_item_history: []
   });
+  const [visualVerifications, setVisualVerifications] = useState({});
   const [imageURI, setImageURI] = useState("");
   const [tokenName, setTokenName] = useState("");
   const [tokenDescription, setTokenDescription] = useState("");
@@ -81,6 +82,10 @@ export default function Home() {
 
   const [displayedDeliveredLocation, setDisplayedDeliveredLocation] = useState({ ...idleLocation });
 
+  const [displayedStampTokenId, setDisplayedStampTokenId] = useState(0);
+  const [displayedShippedTokenId, setdisplayedShippedTokenId] = useState(0);
+  const [displayedDeliveredTokenId, setDisplayedDeliveredTokenId] = useState(0);
+
   const hideModal = () => {
     setIsModalOpen(false);
   };
@@ -100,7 +105,7 @@ export default function Home() {
     setIsModalOpen(true);
   }
 
-  const showLocationModal = (stamp, shipped, delivered) => {
+  const showLocationModal = async (stamp, shipped, delivered) => {
 
     setDisplayedStampLocation({
       latitude: stamp.latitude,
@@ -114,6 +119,10 @@ export default function Home() {
       latitude: delivered.latitude,
       longitude: delivered.longitude
     });
+
+    setDisplayedStampTokenId(stamp.visualVerificationTokenId);
+    setdisplayedShippedTokenId(shipped.visualVerificationTokenId);
+    setDisplayedDeliveredTokenId(delivered.visualVerificationTokenId);
 
     setIsModalOpen(false)
     setIsLocationModalOpen(true);
@@ -159,7 +168,8 @@ export default function Home() {
           subcollectionId: data.activeItem.subcollectionId,
           history: data.activeItem.history,
           attributes: data.activeItem.attributes,
-          real_item_history: data.activeItem.real_item_history
+          real_item_history: data.activeItem.real_item_history,
+          route: data.activeItem.route
         }
         setAsset(asset);
       })
@@ -195,13 +205,21 @@ export default function Home() {
             subcollectionId: data.activeItem.subcollectionId,
             history: data.activeItem.history,
             attributes: data.activeItem.attributes,
-            real_item_history: data.activeItem.real_item_history
+            real_item_history: data.activeItem.real_item_history,
+            route: data.activeItem.route
           }
           setAsset(asset);
           fetch(`http://localhost:4000/get-single-collection?id=${asset.subcollectionId}`)
             .then(response => response.json())
             .then(data => {
               setCollection(data.subcollection);
+
+              fetch(`http://localhost:4000/get-all-visual-verifications`)
+                .then(response => response.json())
+                .then(data => {
+                  setVisualVerifications(data.data);
+                })
+
             })
         })
     }
@@ -296,18 +314,21 @@ export default function Home() {
                                         stamp.latitude = realItemEvent.location.latitude;
                                         stamp.longitude = realItemEvent.location.longitude;
                                         stamp.txHash = realItemEvent.transactionHash;
+                                        stamp.visualVerificationTokenId = realItemEvent.visualVerificationTokenId;
                                       } else if (realItemEvent.key == "shipped") {
                                         shipped.status = true;
                                         shipped.date = prettyDate(realItemEvent.date);
                                         shipped.latitude = realItemEvent.location.latitude;
                                         shipped.longitude = realItemEvent.location.longitude;
                                         shipped.txHash = realItemEvent.transactionHash;
+                                        shipped.visualVerificationTokenId = realItemEvent.visualVerificationTokenId;
                                       } else if (realItemEvent.key == "delivered") {
                                         delivered.status = true;
                                         delivered.date = prettyDate(realItemEvent.date);
                                         delivered.latitude = realItemEvent.location.latitude;
                                         delivered.longitude = realItemEvent.location.longitude;
                                         delivered.txHash = realItemEvent.transactionHash;
+                                        delivered.visualVerificationTokenId = realItemEvent.visualVerificationTokenId;
                                       }
 
                                       return (
@@ -378,6 +399,11 @@ export default function Home() {
                     stampCoordinates={displayedStampLocation}
                     shippedCoordinates={displayedShippedLocation}
                     deliveredCoordinates={displayedDeliveredLocation}
+                    deliverVisualTokenId={displayedDeliveredTokenId}
+                    shipVisualTokenId={displayedShippedTokenId}
+                    stampVisualTokenId={displayedStampTokenId}
+                    visualVerifications={visualVerifications}
+                    route={asset.route}
                     zoom={10}
                   />
                 </div>
