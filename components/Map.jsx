@@ -9,9 +9,8 @@ export default function MyMap({ stampCoordinates, shippedCoordinates, deliveredC
 
   var myIcon = L.icon({
     iconUrl: 'pinpoint.png',
-    iconSize: [20, 50],
+    iconSize: [20, 40],
     iconAnchor: [0, 0],
-    popupAnchor: [-3, -76]
   });
 
   let center = [41, 29];

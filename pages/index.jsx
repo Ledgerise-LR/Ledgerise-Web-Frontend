@@ -85,7 +85,7 @@ export default function Home() {
   }, [isWeb3Enabled, asset, asset.tokenUri])
 
   return (
-    <div className='w-full h-full p-28'>
+    <div className='w-full h-full p-28 overflow-hidden'>
       <div className='w-full h-full flex justify-center items-center'>
         <div className='flex flex-1 w-3/5 h-4/5 justify-between'>
           <div className='flex-col'>
@@ -137,6 +137,9 @@ export default function Home() {
             </a>
           </div>
         </div>
+      </div>
+      <div className='mt-16 w-screen -ml-32 overflow-hidden'>
+        <img className='w-screen' src="supplyChain.svg" alt="Supply chain" />
       </div>
     </div >
   )

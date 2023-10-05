@@ -357,9 +357,10 @@ export default function Home() {
                                               </div>
                                             </div>
                                           </div>
-                                          <div className='flex flex-1 mt-3 text-slate-200'>
+                                          <div className='flex flex-1 mt-3 text-slate-200 items-center'>
+                                            <div className='text-slate-700 mr-6'>The <strong>route</strong> and <strong>visual verification</strong> of your donation is <strong>ready.</strong></div>
                                             <div onClick={() => showLocationModal(stamp, shipped, delivered)
-                                            } className='mr-5 text-sm p-2 bg-green-700 rounded cursor-pointer shadow-green-600 shadow-lg'>View the <strong>route</strong> and <strong>visual verification</strong> of your donation</div>
+                                            } className='mr-5 p-2 w-36 flex justify-center bg-green-700 rounded cursor-pointer shadow-green-600 shadow-lg'>View verification</div>
                                           </div>
                                         </div>
                                       )
@@ -393,7 +394,7 @@ export default function Home() {
           isLocationModalOpen
             ? (
               <Modal visible={isLocationModalOpen} onCloseButtonPressed={hideLocationModal} onOk={hideLocationModal} onCancel={hideLocationModal} okText='Continue' title={<h1 className='text-3xl text-slate-900'>Transparent route of your donation</h1>}>
-                <div className='h-96 w-full'>
+                <div className='h-96 w-full z-30'>
                   <Map
                     stampCoordinates={displayedStampLocation}
                     shippedCoordinates={displayedShippedLocation}
@@ -417,7 +418,7 @@ export default function Home() {
           <div className='p-5'>
             <div className='absolute top-0 flex flex-1 items-center'>
               <div>
-                <div className='mr-5 text-xl text-slate-700'>Supporting {collection.charityName}</div>
+                <div className='mr-5 text-xl text-slate-700'>Powered by <strong>{collection.charityName}</strong></div>
                 <div className='mr-5 text-slate-800 mt-1'>
                   <span className='text-sm'>{prettyAddress(asset.charityAddress)} </span>
                   <a target='_blank' href={`https://sepolia.etherscan.io/address/${asset.charityAddress}`} className='text-xs underline text-cyan-900'>view on Etherscan</a>
@@ -444,7 +445,7 @@ export default function Home() {
                 <Blockie seed={asset.seller} />
               </div>
               <div>
-                <div className='text-slate-500 text-xs'>Artist</div>
+                <div className='text-slate-500 text-xs'>Owner</div>
                 <div className='text-slate-700 text-sm'>{prettyAddress(asset.seller)}</div>
               </div>
             </div>
@@ -566,7 +567,7 @@ export default function Home() {
                     <div className='mb-4'>{
                       event.key == "buy"
                         ? <div className='flex-1 flex items-center'>
-                          <div className='w-3 h-3 mr-5 rounded-full bg-slate-700 z-50'></div>
+                          <div className='w-3 h-3 mr-5 rounded-full bg-slate-700 z-0'></div>
                           <div>
                             <div className='text-slate-700'>Item is bought for {ethers.utils.formatEther(event.price, "ether")} ETH by {prettyAddress(event.buyer)}.</div>
                             <div className='text-slate-500'>{event.date}</div>
@@ -574,14 +575,14 @@ export default function Home() {
                         </div>
                         : event.key == "list"
                           ? (< div className='flex-1 flex items-center'>
-                            <div className='w-3 h-3 mr-5 rounded-full bg-slate-700 z-50'></div>
+                            <div className='w-3 h-3 mr-5 rounded-full bg-slate-700 z-0'></div>
                             <div>
                               <div className='text-slate-700'>Item is listed for {ethers.utils.formatEther(event.price, "ether")}.</div>
                               <div className='text-slate-500'>{event.date}</div>
                             </div>
                           </div>)
                           : (< div className='flex-1 flex items-center'>
-                            <div className='w-3 h-3 mr-5 rounded-full bg-slate-700 z-50'></div>
+                            <div className='w-3 h-3 mr-5 rounded-full bg-slate-700 z-0'></div>
                             <div>
                               <div className='text-slate-700'>Item is updated for {ethers.utils.formatEther(event.price, "ether")}.</div>
                               <div className='text-slate-500'>{event.date}</div>

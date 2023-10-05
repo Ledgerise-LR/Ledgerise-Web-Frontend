@@ -4,11 +4,10 @@ import Link from "next/link";
 
 export default function Header() {
   return (
-    <nav className="p-5 border-b-2 flex flex-row justify-between items-center">
-      <h1 className="py-4 px-4 text-4xl font-playfair font-medium">
+    <nav className="p-2 border-b-2 flex flex-row justify-between items-center">
+      <h1 className="pl-12 text-4xl font-playfair font-medium">
         <a href="/">
-          <span className="text-slate-800">Ledge</span>
-          <span className="text-blue-800">rise</span>
+          <img className="h-20" src="logo.svg" alt="Ledgerise | Decentralized Fundrasing-delivering trace protocol" />
         </a>
       </h1>
       <div className="flex flex-row justify-between items-center">
