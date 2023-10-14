@@ -265,14 +265,12 @@ export default function Home() {
 
 
   const retrieveQRCodeData = (nftAddress, tokenId, openseaTokenId, buyer) => {
-    console.log(openseaTokenId)
     const qrString = `${nftAddress}-${tokenId}-${openseaTokenId}-${buyer}`;
     const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=${qrString}`;
     if (window.toString() != "undefined") {
       window.open(qrUrl, "_blank")
     }
   }
-
 
   return (
     <>
@@ -281,7 +279,7 @@ export default function Home() {
           ? (<Modal visible={isModalOpen} onCloseButtonPressed={hideModal} onOk={hideModal} onCancel={hideModal} okText='Continue' title={<h1 className='text-3xl text-slate-900'>Thank you for your contribution!!! 🎉 🎉</h1>}>
             <div className='p-5'>
               <div className='mb-12'>
-                <div className='text-2xl'>Completed transactions </div>
+                <div className='text-2xl'>My Donations</div>
                 <hr className='mb-3' />
                 <ul>
                   {
@@ -289,14 +287,17 @@ export default function Home() {
                       if (event.buyer && event.buyer.toLowerCase() == account) {
                         // https://sepolia.etherscan.io/tx/0x0f10b50aad6b472a42910bfa4a1664989486bf917486a97ebc24f98a3f71bf39
                         return (
-                          <li className='mb-8'>- Bought by you at {event.date}. <a target='_blank' className='underline hover:text-slate-700' href={getOpenseaUrl(event.openseaTokenId - 1)}>See in opensea</a>. Verify the <strong>donation transaction</strong> at <a href={`https://sepolia.etherscan.io/tx/${event.transactionHash}`} target='_blank' className='underline hover:text-slate-800 font-bold'>Etherscan</a>. Id #{event.openseaTokenId - 1}
+                          <li className='mb-8'>
+                            <div className='text-slate-900'>Donated | <strong>{event.date}</strong></div>
+                            <a target='_blank' className='underline text-slate-800 hover:text-slate-600' href={getOpenseaUrl(event.openseaTokenId - 1)}>View certificate</a>. Verify the <strong>donation transaction</strong> <a href={`https://sepolia.etherscan.io/tx/${event.transactionHash}`} target='_blank' className='underline hover:text-slate-800 font-bold'>here</a>. Id #{event.openseaTokenId - 1}
                             <div><button className='underline hover:text-slate-700' target='blank' onClick={() => {
                               retrieveQRCodeData(asset.nftAddress, asset.tokenId, event.openseaTokenId, event.buyer);
-                            }}>View the QR code</button> which is located on the real item this NFT is linked.</div>
+                            }}>View the QR code</button> printed on your physical donation.</div>
                             <div>
                               {
                                 asset.real_item_history
-                                  ? (asset.real_item_history.map(realItemEvent => {
+                                  ? (asset.real_item_history.map(realItemCluster => {
+
                                     let eventTemplate = {
                                       status: false,
                                       date: "",
@@ -306,65 +307,79 @@ export default function Home() {
                                     }
 
                                     let stamp = { ...eventTemplate }, shipped = { ...eventTemplate }, delivered = { ...eventTemplate };
-
-                                    if (realItemEvent.openseaTokenId === event.openseaTokenId) {
-                                      if (realItemEvent.key == "stamp") {
-                                        stamp.status = true;
-                                        stamp.date = prettyDate(realItemEvent.date);
-                                        stamp.latitude = realItemEvent.location.latitude;
-                                        stamp.longitude = realItemEvent.location.longitude;
-                                        stamp.txHash = realItemEvent.transactionHash;
-                                        stamp.visualVerificationTokenId = realItemEvent.visualVerificationTokenId;
-                                      } else if (realItemEvent.key == "shipped") {
-                                        shipped.status = true;
-                                        shipped.date = prettyDate(realItemEvent.date);
-                                        shipped.latitude = realItemEvent.location.latitude;
-                                        shipped.longitude = realItemEvent.location.longitude;
-                                        shipped.txHash = realItemEvent.transactionHash;
-                                        shipped.visualVerificationTokenId = realItemEvent.visualVerificationTokenId;
-                                      } else if (realItemEvent.key == "delivered") {
-                                        delivered.status = true;
-                                        delivered.date = prettyDate(realItemEvent.date);
-                                        delivered.latitude = realItemEvent.location.latitude;
-                                        delivered.longitude = realItemEvent.location.longitude;
-                                        delivered.txHash = realItemEvent.transactionHash;
-                                        delivered.visualVerificationTokenId = realItemEvent.visualVerificationTokenId;
+                                    realItemCluster.map(realItemEvent => {
+                                      if (realItemEvent.openseaTokenId === event.openseaTokenId) {
+                                        if (realItemEvent.key == "stamp") {
+                                          stamp.status = true;
+                                          stamp.date = prettyDate(realItemEvent.date);
+                                          stamp.latitude = realItemEvent.location.latitude;
+                                          stamp.longitude = realItemEvent.location.longitude;
+                                          stamp.txHash = realItemEvent.transactionHash;
+                                          stamp.visualVerificationTokenId = realItemEvent.visualVerificationTokenId;
+                                        } else if (realItemEvent.key == "shipped") {
+                                          shipped.status = true;
+                                          shipped.date = prettyDate(realItemEvent.date);
+                                          shipped.latitude = realItemEvent.location.latitude;
+                                          shipped.longitude = realItemEvent.location.longitude;
+                                          shipped.txHash = realItemEvent.transactionHash;
+                                          shipped.visualVerificationTokenId = realItemEvent.visualVerificationTokenId;
+                                        } else if (realItemEvent.key == "delivered") {
+                                          delivered.status = true;
+                                          delivered.date = prettyDate(realItemEvent.date);
+                                          delivered.latitude = realItemEvent.location.latitude;
+                                          delivered.longitude = realItemEvent.location.longitude;
+                                          delivered.txHash = realItemEvent.transactionHash;
+                                          delivered.visualVerificationTokenId = realItemEvent.visualVerificationTokenId;
+                                        }
                                       }
+                                    })
 
-                                      return (
-                                        <div>
-                                          <div className='relative w-full justify-between flex flex-1 items-center'>
-                                            <div className='absolute w-full h-0.5 bg-slate-400'></div>
-                                            <div className='flex bg-slate-300 p-3 w-64 rounded-lg z-10'>
-                                              <div className={`h-12 aspect-square rounded-full ${stamp.status ? "bg-green-500" : "bg-slate-200"}`}></div>
-                                              <div className='flex flex-col ml-4'>
-                                                <div className='text-sm'>{stamp.status ? (stamp.date) : "waiting 🕒"}</div>
-                                                <div className='text-sm mt-2 rounded'>{stamp.status ? (<a className='p-1 rounded bg-green-800 text-slate-50' href={`https://sepolia.etherscan.io/tx/${stamp.txHash}`} target='_blank'>Verification</a>) : "waiting 🕒"}</div>
-                                              </div>
-                                            </div>
-                                            <div className='flex bg-slate-300 p-3 w-64 rounded-lg z-10'>
-                                              <div className={`h-12 aspect-square rounded-full ${shipped.status ? "bg-green-500" : "bg-slate-200"}`}></div>
-                                              <div className='flex flex-col ml-4'>
-                                                <div className='text-sm'>{shipped.status ? (shipped.date) : "waiting 🕒"}</div>
-                                                <div className='text-sm mt-2 rounded'>{shipped.status ? (<a className='p-1 rounded bg-green-800 text-slate-50' href={`https://sepolia.etherscan.io/tx/${shipped.txHash}`} target='_blank'>Verification</a>) : "waiting 🕒"}</div>
-                                              </div>
-                                            </div>
-                                            <div className='flex bg-slate-300 p-3 w-64 rounded-lg z-10'>
-                                              <div className={`h-12 aspect-square rounded-full ${delivered.status ? "bg-green-500" : "bg-slate-200"}`}></div>
-                                              <div className='flex flex-col ml-4'>
-                                                <div className='text-sm'>{delivered.status ? (delivered.date) : "waiting 🕒"}</div>
-                                                <div className='text-sm mt-2 rounded'>{delivered.status ? (<a className='p-1 rounded bg-green-800 text-slate-50' href={`https://sepolia.etherscan.io/tx/${delivered.txHash}`} target='_blank'>Verification</a>) : "waiting 🕒"}</div>
-                                              </div>
+                                    return (
+                                      <div className='mt-5'>
+                                        <div className='relative w-full justify-between flex flex-1 items-center'>
+                                          <div className='absolute w-full h-0.5 bg-slate-400'></div>
+                                          <div className='flex bg-slate-300 p-3 w-64 rounded-lg z-10'>
+                                            <div className={`h-7 my-auto border-2 aspect-square rounded-full flex items-center justify-center text-slate-200 ${stamp.status ? "bg-green-500" : "bg-slate-200"}`}>✓</div>
+                                            <div className='flex flex-col ml-4'>
+                                              <div className='text-sm'>{stamp.status ? (stamp.date) : "waiting for production 🕒"}</div>
+                                              <div className='text-xs mt-2 rounded'>{stamp.status ? (
+                                                <div>
+                                                  <span className='mr-2'>Produced</span>
+                                                  <a className='px-4 py-1 rounded bg-green-700 text-slate-50' href={`https://sepolia.etherscan.io/tx/${stamp.txHash}`} target='_blank'>Verification</a>
+                                                </div>) : "waiting 🕒"}</div>
                                             </div>
                                           </div>
-                                          <div className='flex flex-1 mt-3 text-slate-200 items-center'>
-                                            <div className='text-slate-700 mr-6'>The <strong>route</strong> and <strong>visual verification</strong> of your donation is <strong>ready.</strong></div>
-                                            <div onClick={() => showLocationModal(stamp, shipped, delivered)
-                                            } className='mr-5 p-2 w-36 flex justify-center bg-green-700 rounded cursor-pointer shadow-green-600 shadow-lg'>View verification</div>
+                                          <div className='flex bg-slate-300 p-3 w-64 rounded-lg z-10'>
+                                            <div className={`h-7 my-auto border-2 aspect-square rounded-full flex items-center justify-center text-slate-200 ${shipped.status ? "bg-green-500" : "bg-slate-200"}`}>✓</div>
+                                            <div className='flex flex-col ml-4'>
+                                              <div className='text-sm'>{shipped.status ? (shipped.date) : "waiting for shipment 🕒"}</div>
+                                              <div className='text-xs mt-2 rounded'>{shipped.status ? (
+                                                <div>
+                                                  <span className='mr-2'>Supply Center</span>
+                                                  <a className='px-4 py-1 rounded bg-green-700 text-slate-50' href={`https://sepolia.etherscan.io/tx/${shipped.txHash}`} target='_blank'>Verification</a>
+                                                </div>) : "waiting 🕒"}</div>
+                                            </div>
+                                          </div>
+                                          <div className='flex bg-slate-300 p-3 w-64 rounded-lg z-10'>
+                                            <div className={`h-7 my-auto border-2 aspect-square rounded-full flex items-center justify-center text-slate-200 ${delivered.status ? "bg-green-500" : "bg-slate-200"}`}>✓</div>
+                                            <div className='flex flex-col ml-4'>
+                                              <div className='text-sm'>{delivered.status ? (delivered.date) : "waiting for delivery 🕒"}</div>
+                                              <div className='text-xs mt-2 rounded'>{delivered.status ? (
+                                                <div>
+                                                  <span className='mr-2'>Delivered</span>
+                                                  <a className='px-4 py-1 rounded bg-green-700 text-slate-50' href={`https://sepolia.etherscan.io/tx/${delivered.txHash}`} target='_blank'>Verification</a>
+                                                </div>) : "waiting 🕒"}</div>
+                                            </div>
                                           </div>
                                         </div>
-                                      )
-                                    }
+                                        <div className='flex flex-1 mt-3 text-slate-200 items-center'>
+                                          <div className='text-slate-700 mr-6'>The <strong>route</strong> and <strong>visual verification</strong> of your donation is <strong>ready.</strong></div>
+                                          <div onClick={() => showLocationModal(stamp, shipped, delivered)
+                                          } className='mr-5 p-2 w-36 flex justify-center bg-green-700 rounded cursor-pointer shadow-green-600 shadow-lg'>View verification</div>
+                                        </div>
+                                        <hr className='mt-7' />
+                                      </div>
+                                    )
                                   }))
                                   : ("")}
                             </div>

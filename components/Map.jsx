@@ -25,12 +25,15 @@ export default function MyMap({ stampCoordinates, shippedCoordinates, deliveredC
     {
       stampCoordinates.latitude ? <Marker position={[(stampCoordinates.latitude) / 1000, (stampCoordinates.longitude) / 1000]}>
         <Popup>
-          Stamp location
           {
             visualVerifications.map(verification => {
               if (verification.visualVerificationTokenId == stampVisualTokenId) {
                 return (
-                  <img src={`https://ipfs.io/ipfs/${verification.tokenUri}`} alt="" />
+                  <div>
+                    <img src={`https://ipfs.io/ipfs/${verification.tokenUri}`} alt="" />
+                    <div className="mb-3 mt-1">Stamped</div>
+                    <a className="p-2 bg-green-700 shadow-green-500 shadow rounded" target="_blank" href={`https://sepolia.etherscan.io/tx/${verification.transactionHash}`}><span className="text-slate-50">View Certificate</span></a>
+                  </div>
                 )
               }
             })
@@ -42,12 +45,15 @@ export default function MyMap({ stampCoordinates, shippedCoordinates, deliveredC
     {
       shippedCoordinates.latitude ? <Marker position={[(shippedCoordinates.latitude) / 1000, (shippedCoordinates.longitude) / 1000]}>
         <Popup>
-          Shipped Locaton
           {
             visualVerifications.map(verification => {
               if (verification.visualVerificationTokenId == shipVisualTokenId) {
                 return (
-                  <img src={`https://ipfs.io/ipfs/${verification.tokenUri}`} alt="" />
+                  <div>
+                    <img src={`https://ipfs.io/ipfs/${verification.tokenUri}`} alt="" />
+                    <div className="mb-3 mt-1">Shipped</div>
+                    <a className="p-2 bg-green-700 shadow-green-500 shadow rounded" target="_blank" href={`https://sepolia.etherscan.io/tx/${verification.transactionHash}`}><span className="text-slate-50">View Certificate</span></a>
+                  </div>
                 )
               }
             })
@@ -59,12 +65,15 @@ export default function MyMap({ stampCoordinates, shippedCoordinates, deliveredC
     {
       deliveredCoordinates.latitude ? <Marker position={[(deliveredCoordinates.latitude) / 1000, (deliveredCoordinates.longitude) / 1000]}>
         <Popup>
-          Delivered Location
           {
             visualVerifications.map(verification => {
               if (verification.visualVerificationTokenId == deliverVisualTokenId) {
                 return (
-                  <img src={`https://ipfs.io/ipfs/${verification.tokenUri}`} alt="" />
+                  <div>
+                    <img src={`https://ipfs.io/ipfs/${verification.tokenUri}`} alt="" />
+                    <div className="mb-3 mt-1">Shipped</div>
+                    <a className="p-2 bg-green-700 shadow-green-500 shadow rounded" target="_blank" href={`https://sepolia.etherscan.io/tx/${verification.transactionHash}`}><span className="text-slate-50">View Certificate</span></a>
+                  </div>
                 )
               }
             })
@@ -87,5 +96,5 @@ export default function MyMap({ stampCoordinates, shippedCoordinates, deliveredC
         Item route destination 3
       </Popup>
     </Marker>
-  </MapContainer>
+  </MapContainer >
 }
