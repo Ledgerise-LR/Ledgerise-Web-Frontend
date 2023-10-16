@@ -3,9 +3,29 @@ import { MapContainer, Marker, TileLayer, Popup } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import "leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility.css";
 import "leaflet-defaulticon-compatibility";
-import { useEffect, useState } from "react";
+import { useMoralis } from "react-moralis"
+import networkMapping from "../constants/networkMapping.json"
 
 export default function MyMap({ stampCoordinates, shippedCoordinates, deliveredCoordinates, route, stampVisualTokenId, shipVisualTokenId, deliverVisualTokenId, visualVerifications, zoom }) {
+
+  function prettyDate(timestamp) {
+
+    const date = new Date(timestamp * 1);
+    const formattedDate = date.toLocaleString('en-US', {
+      day: 'numeric',
+      month: 'long',
+      year: 'numeric',
+      hour: 'numeric',
+      minute: 'numeric',
+    });
+    return formattedDate;
+  }
+
+  const { chainId } = useMoralis();
+
+  const chainString = chainId ? parseInt(chainId, 16).toString() : "11155111";
+
+  const ledgeriseLensNftAddress = networkMapping["LedgeriseLens"][chainString];
 
   var myIcon = L.icon({
     iconUrl: 'pinpoint.png',
@@ -29,10 +49,16 @@ export default function MyMap({ stampCoordinates, shippedCoordinates, deliveredC
             visualVerifications.map(verification => {
               if (verification.visualVerificationTokenId == stampVisualTokenId) {
                 return (
-                  <div>
-                    <img src={`https://ipfs.io/ipfs/${verification.tokenUri}`} alt="" />
-                    <div className="mb-3 mt-1">Stamped</div>
-                    <a className="p-2 bg-green-700 shadow-green-500 shadow rounded" target="_blank" href={`https://sepolia.etherscan.io/tx/${verification.transactionHash}`}><span className="text-slate-50">View Certificate</span></a>
+                  <div className="flex flex-1 w-72 items-end">
+                    <img className="w-1/2" src={`https://ipfs.io/ipfs/${verification.tokenUri}`} alt="" />
+                    <div className="ml-4 w-1/2 flex flex-col">
+                      <div className="mb-2 mt-1 text-base text-bold text-slate-800">Stamped <span className="text-xs text-slate-500">don_id: #{verification.openseaTokenId}</span></div>
+                      <hr />
+                      <div>{prettyDate(verification.date)}</div>
+                      <hr />
+                      <a className="p-2 mt-2 mb-2 bg-green-500 shadow-green-500 shadow rounded" target="_blank" href={`https://sepolia.etherscan.io/tx/${verification.transactionHash}`}><span className="text-slate-50 text-xs">View Verification</span></a>
+                      <a className="p-2 bg-blue-500 shadow-blue-500 shadow rounded" target="_blank" href={`https://testnets.opensea.io/assets/sepolia/${ledgeriseLensNftAddress}/${verification.visualVerificationTokenId}`}><span className="text-slate-50 text-xs">View Certificate</span></a>
+                    </div>
                   </div>
                 )
               }
@@ -49,10 +75,16 @@ export default function MyMap({ stampCoordinates, shippedCoordinates, deliveredC
             visualVerifications.map(verification => {
               if (verification.visualVerificationTokenId == shipVisualTokenId) {
                 return (
-                  <div>
-                    <img src={`https://ipfs.io/ipfs/${verification.tokenUri}`} alt="" />
-                    <div className="mb-3 mt-1">Shipped</div>
-                    <a className="p-2 bg-green-700 shadow-green-500 shadow rounded" target="_blank" href={`https://sepolia.etherscan.io/tx/${verification.transactionHash}`}><span className="text-slate-50">View Certificate</span></a>
+                  <div className="flex flex-1 w-72 items-end">
+                    <img className="w-1/2" src={`https://ipfs.io/ipfs/${verification.tokenUri}`} alt="" />
+                    <div className="ml-4 w-1/2 flex flex-col">
+                      <div className="mb-2 mt-1 text-base text-bold text-slate-800">Shipped <span className="text-xs text-slate-500">don_id: #{verification.openseaTokenId}</span></div>
+                      <hr />
+                      <div>{prettyDate(verification.date)}</div>
+                      <hr />
+                      <a className="p-2 mt-2 mb-2 bg-green-500 shadow-green-500 shadow rounded" target="_blank" href={`https://sepolia.etherscan.io/tx/${verification.transactionHash}`}><span className="text-slate-50 text-xs">View Verification</span></a>
+                      <a className="p-2 bg-blue-500 shadow-blue-500 shadow rounded" target="_blank" href={`https://testnets.opensea.io/assets/sepolia/${ledgeriseLensNftAddress}/${verification.visualVerificationTokenId}`}><span className="text-slate-50 text-xs">View Certificate</span></a>
+                    </div>
                   </div>
                 )
               }
@@ -69,10 +101,16 @@ export default function MyMap({ stampCoordinates, shippedCoordinates, deliveredC
             visualVerifications.map(verification => {
               if (verification.visualVerificationTokenId == deliverVisualTokenId) {
                 return (
-                  <div>
-                    <img src={`https://ipfs.io/ipfs/${verification.tokenUri}`} alt="" />
-                    <div className="mb-3 mt-1">Shipped</div>
-                    <a className="p-2 bg-green-700 shadow-green-500 shadow rounded" target="_blank" href={`https://sepolia.etherscan.io/tx/${verification.transactionHash}`}><span className="text-slate-50">View Certificate</span></a>
+                  <div className="flex flex-1 w-72 items-end">
+                    <img className="w-1/2" src={`https://ipfs.io/ipfs/${verification.tokenUri}`} alt="" />
+                    <div className="ml-4 w-1/2 flex flex-col">
+                      <div className="mb-2 mt-1 text-base text-bold text-slate-800">Delivered <span className="text-xs text-slate-500">don_id: #{verification.openseaTokenId}</span></div>
+                      <hr />
+                      <div>{prettyDate(verification.date)}</div>
+                      <hr />
+                      <a className="p-2 mt-2 mb-2 bg-green-500 shadow-green-500 shadow rounded" target="_blank" href={`https://sepolia.etherscan.io/tx/${verification.transactionHash}`}><span className="text-slate-50 text-xs">View Verification</span></a>
+                      <a className="p-2 bg-blue-500 shadow-blue-500 shadow rounded" target="_blank" href={`https://testnets.opensea.io/assets/sepolia/${ledgeriseLensNftAddress}/${verification.visualVerificationTokenId}`}><span className="text-slate-50 text-xs">View Certificate</span></a>
+                    </div>
                   </div>
                 )
               }

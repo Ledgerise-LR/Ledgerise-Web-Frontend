@@ -7,12 +7,24 @@ import { Button, Modal, Blockie, useNotification, Loading } from 'web3uikit'
 import marketplaceAbi from "../constants/abi.json";
 import networkMapping from "../constants/networkMapping.json"
 import { calculatePercentage } from '@/utils/calculatePercentage';
+import { getEthToUsdRate } from '@/utils/getEthToUsdRate';
 import dynamic from "next/dynamic"
 
 const { MapContainer, TileLayer, Popup, Marker } = dynamic(() => import("react-leaflet"), { ssr: false })
 
 
 export default function Home() {
+
+  const [ethToUsdRate, setEthToUsdRate] = useState(null);
+
+  useEffect(() => {
+    const fetchEthToUsdRate = async () => {
+      const rate = await getEthToUsdRate();
+      setEthToUsdRate(rate);
+    };
+
+    fetchEthToUsdRate();
+  }, []);
 
   const Map = useMemo(() => dynamic(
     () => import('@/components/Map'),
@@ -464,17 +476,17 @@ export default function Home() {
                 <div className='text-slate-700 text-sm'>{prettyAddress(asset.seller)}</div>
               </div>
             </div>
-            <div className='text-slate-500'>{asset.availableEditions} editions available</div>
+            <div className='text-slate-500'>{asset.availableEditions} available stocks</div>
             <hr />
             <div>
-              <div className='text-sm text-slate-500 mt-3'>Current price:</div>
+              <div className='text-sm text-slate-500 mt-3'>Current donation fee:</div>
               <div className='flex items-center justify-between w-96'>
                 <div>
-                  <span className='text-3xl font-semibold'>{ethers.utils.formatEther(asset.price, "ether")} </span>
-                  <span className='text-slate-500'>ETH</span>
+                  <span className='text-4xl font-semibold'>{(ethers.utils.formatEther(asset.price, "ether") * ethToUsdRate).toFixed(2)} </span>
+                  <span className='text-slate-500'>$</span>
                 </div>
                 <div className='w-60'>
-                  <Button isFullWidth="true" theme='primary' type='button' text='Buy Item' onClick={() => {
+                  <Button isFullWidth="true" theme='primary' type='button' text='Donate' onClick={() => {
                     buyItem({
                       onSuccess: handleBuyItemSuccess,
                       onError: (err) => handleBuyItemError(err)
@@ -584,7 +596,7 @@ export default function Home() {
                         ? <div className='flex-1 flex items-center'>
                           <div className='w-3 h-3 mr-5 rounded-full bg-slate-700 z-0'></div>
                           <div>
-                            <div className='text-slate-700'>Item is bought for {ethers.utils.formatEther(event.price, "ether")} ETH by {prettyAddress(event.buyer)}.</div>
+                            <div className='text-slate-700'>Item is <strong>donated</strong> for {ethers.utils.formatEther(event.price, "ether")} ETH by {prettyAddress(event.buyer)}.</div>
                             <div className='text-slate-500'>{event.date}</div>
                           </div>
                         </div>
