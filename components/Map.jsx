@@ -78,6 +78,16 @@ export default function MyMap({ stampCoordinates, shippedCoordinates, deliveredC
                   <div className="flex flex-1 w-72 items-end">
                     <img className="w-1/2" src={`https://ipfs.io/ipfs/${verification.tokenUri}`} alt="" />
                     <div className="ml-4 w-1/2 flex flex-col">
+                      <div className="relative mb-16">
+                        <div className="absolute w-10 h-10 border border-blue-900 bg-amber-300"></div>
+                        <div className="absolute w-6 h-10 -mt-3 ml-10 border border-red-900 -skew-y-[45deg] bg-amber-300"></div>
+                        <div className="absolute w-10 h-6 -mt-6 ml-3 border border-green-900 -skew-x-[45deg] bg-amber-300"></div>
+
+                        <span className="text-xs absolute mt-10 px-1 bg-green-400 rounded-full">29.9 cm</span>
+                        <span className="text-xs absolute ml-11 mt-2 px-1 bg-green-400 rounded-full">30 cm</span>
+                        <span className="text-xs absolute -mt-5 ml-5 px-1 bg-green-400 rounded-full">50.1 cm</span>
+                        <span className="absolute right-0 -mt-6 font-bold">Valid ✓</span>
+                      </div>
                       <div className="mb-2 mt-1 text-base text-bold text-slate-800">Shipped <span className="text-xs text-slate-500">don_id: #{verification.openseaTokenId}</span></div>
                       <hr />
                       <div>{prettyDate(verification.date)}</div>
@@ -95,7 +105,7 @@ export default function MyMap({ stampCoordinates, shippedCoordinates, deliveredC
     }
 
     {
-      deliveredCoordinates.latitude ? <Marker position={[(deliveredCoordinates.latitude) / 1000, (deliveredCoordinates.longitude) / 1000]}>
+      deliveredCoordinates.latitude ? <Marker position={[(deliveredCoordinates.latitude + 0.01) / 1000, (deliveredCoordinates.longitude + 0.01) / 1000]}>
         <Popup>
           {
             visualVerifications.map(verification => {

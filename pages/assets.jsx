@@ -149,6 +149,16 @@ export default function Home() {
     return openseaUrl;
   }
 
+  // function countNulls(collaboratorArray) {
+  //   let nullCount = 0;
+  //   for (let i = 0; i < collaboratorArray.length; i++) {
+  //     const eachCollaborator = collaboratorArray[i];
+  //     if (eachCollaborator == null || eachCollaborator == undefined) nullCount++;
+  //   }
+
+  //   return nullCount;
+  // }
+
   const [hasTxHashKey, setHasTxHashKey] = useState(false);
 
   const handleBuyItemSuccess = async (tx) => {
@@ -181,7 +191,8 @@ export default function Home() {
           history: data.activeItem.history,
           attributes: data.activeItem.attributes,
           real_item_history: data.activeItem.real_item_history,
-          route: data.activeItem.route
+          route: data.activeItem.route,
+          collaborators: data.activeItem.collaborators
         }
         setAsset(asset);
       })
@@ -206,6 +217,7 @@ export default function Home() {
       fetch(`http://localhost:4000/get-asset?tokenId=${tokenId}`)
         .then(response => response.json())
         .then(data => {
+          console.log(data.activeItem.collaborators)
           const asset = {
             seller: data.activeItem.seller,
             nftAddress: data.activeItem.nftAddress,
@@ -218,7 +230,8 @@ export default function Home() {
             history: data.activeItem.history,
             attributes: data.activeItem.attributes,
             real_item_history: data.activeItem.real_item_history,
-            route: data.activeItem.route
+            route: data.activeItem.route,
+            collaborators: data.activeItem.collaborators
           }
           setAsset(asset);
           fetch(`http://localhost:4000/get-single-collection?id=${asset.subcollectionId}`)
@@ -276,8 +289,7 @@ export default function Home() {
   }, [isWeb3Enabled, asset, isModalOpen, asset.attributes]);
 
 
-  const retrieveQRCodeData = (nftAddress, tokenId, openseaTokenId, buyer) => {
-    const qrString = `${nftAddress}-${tokenId}-${openseaTokenId}-${buyer}`;
+  const retrieveQRCodeData = (qrString) => {
     const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=${qrString}`;
     if (window.toString() != "undefined") {
       window.open(qrUrl, "_blank")
@@ -302,9 +314,52 @@ export default function Home() {
                           <li className='mb-8'>
                             <div className='text-slate-900'>Donated | <strong>{event.date}</strong></div>
                             <a target='_blank' className='underline text-slate-800 hover:text-slate-600' href={getOpenseaUrl(event.openseaTokenId - 1)}>View certificate</a>. Verify the <strong>donation transaction</strong> <a href={`https://sepolia.etherscan.io/tx/${event.transactionHash}`} target='_blank' className='underline hover:text-slate-800 font-bold'>here</a>. Id #{event.openseaTokenId - 1}
-                            <div><button className='underline hover:text-slate-700' target='blank' onClick={() => {
-                              retrieveQRCodeData(asset.nftAddress, asset.tokenId, event.openseaTokenId, event.buyer);
-                            }}>View the QR code</button> printed on your physical donation.</div>
+                            <div>
+                              {
+                                !asset.collaborators.length
+                                  ? (<div><button className='underline hover:text-slate-700' target='blank' onClick={() => {
+                                    retrieveQRCodeData([`${asset.nftAddress}-${asset.tokenId}-${event.openseaTokenId}-${event.buyer}`]);
+                                  }}>View the QR code</button> printed on your physical donation.</div>)
+
+                                  : (
+                                    <div>
+                                      {
+                                        asset.collaborators.map((eachCollaboratorCluster) => {
+
+                                          return eachCollaboratorCluster.map((eachCollaborator) => {
+
+                                            if (eachCollaborator != null) {
+
+                                              const openseaTokenId = eachCollaborator.split("_")[0];
+                                              const buyerAddress = eachCollaborator.split("_")[1];
+                                              if (openseaTokenId == event.openseaTokenId && buyerAddress == event.buyer) {
+
+                                                const numberOfCollaborators = parseInt(tokenName.split("/")[1].split(")")[0]);
+                                                if (eachCollaboratorCluster.length == numberOfCollaborators) {
+                                                  return (
+                                                    <div><button className='underline hover:text-slate-700' target='blank' onClick={() => {
+                                                      let collaboratorsDataArray = [];
+                                                      for (let i = 0; i < eachCollaboratorCluster.length; i++) {
+                                                        const eachCollaborator = eachCollaboratorCluster[i];
+                                                        collaboratorsDataArray.push(`${asset.nftAddress}-${asset.tokenId}-${event.openseaTokenId}-${eachCollaborator.split("_")[1]}`)
+                                                      }
+                                                      retrieveQRCodeData(JSON.stringify(collaboratorsDataArray));
+                                                    }}>View the QR code</button> printed on your physical donation. Belonging to <strong>{eachCollaboratorCluster.length - 1} people you collaborated.</strong></div>
+                                                  )
+                                                } else {
+                                                  return (<div>Currently waiting for donation of <strong>{numberOfCollaborators - eachCollaboratorCluster.length} more people.</strong> Thank you for your understanding.</div>)
+                                                }
+                                              }
+                                            }
+                                          })
+                                        })
+                                      }
+                                    </div>
+                                  )
+
+                              }
+                            </div>
+
                             <div>
                               {
                                 asset.real_item_history
@@ -415,8 +470,8 @@ export default function Home() {
                   </ul>
                 </div>)
                 : ("")}
-            </div>
-          </Modal>)
+            </div >
+          </Modal >)
           :
           isLocationModalOpen
             ? (
@@ -480,13 +535,27 @@ export default function Home() {
             <hr />
             <div>
               <div className='text-sm text-slate-500 mt-3'>Current donation fee:</div>
-              <div className='flex items-center justify-between w-96'>
+              <div className='flex items-center justify-between w-full mt-2'>
                 <div>
                   <span className='text-4xl font-semibold'>{(ethers.utils.formatEther(asset.price, "ether") * ethToUsdRate).toFixed(2)} </span>
                   <span className='text-slate-500'>$</span>
                 </div>
-                <div className='w-60'>
-                  <Button isFullWidth="true" theme='primary' type='button' text='Donate' onClick={() => {
+                <div className='w-fit mx-2'>
+                  <Button isFullWidth="true" theme='primary' type='button' text='Donate USD' onClick={() => {
+                    buyItem({
+                      onSuccess: handleBuyItemSuccess,
+                      onError: (err) => handleBuyItemError(err)
+                    });
+                  }} style={{
+                    border: "black",
+                    height: "3rem",
+                    borderRadius: "100px",
+                    fontSize: "16px"
+                  }} />
+                </div>
+                <div>or</div>
+                <div className='w-fit mx-2'>
+                  <Button isFullWidth="true" theme='primary' type='button' text='Donate with Crypto' onClick={() => {
                     buyItem({
                       onSuccess: handleBuyItemSuccess,
                       onError: (err) => handleBuyItemError(err)

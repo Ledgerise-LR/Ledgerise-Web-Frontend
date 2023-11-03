@@ -10,6 +10,9 @@ module.exports = {
   ],
   theme: {
     extend: {
+      skew: {
+        '45': '45deg',
+      },
       keyframes: {
         fade: {
           '0%, 50%, 100%': { opacity: '0' },

@@ -46,7 +46,8 @@ export default function Home() {
             totalRaised: data.data.totalRaised,
             collectionName: data.data.collectionName,
             charityAddress: data.data.charityAddress,
-            nftAddress: data.data.nftAddress
+            nftAddress: data.data.nftAddress,
+            totalDonated: data.data.totalDonated
           }
           setAsset(asset);
         })
@@ -91,7 +92,7 @@ export default function Home() {
           <div className='flex-col'>
             <div>
               <div className='text-6xl w-1/2 font-playfair'>Trustworthy,{"\n"}Tranparent,{"\n"}Immutable</div>
-              <div className='text-2xl text-slate-500 mt-12 font-serif'>Join the decentralized fund-delivering traffic. See your donation meeting beneficiaries.</div>
+              <div className='text-2xl text-slate-500 mt-12 font-serif'>Donate with a <strong>piece of mind</strong>. See your donation <strong>meeting beneficiaries.</strong></div>
             </div>
             <div className='w-1/2 mt-16'>
               <a href="/collections">
@@ -105,7 +106,7 @@ export default function Home() {
                     color: "white"
                   }}
                   isFullWidth="true"
-                  text='Browse Campaigns'
+                  text='Make a donation now!'
                   theme='custom'
                   size='xl'
                 />
@@ -124,10 +125,10 @@ export default function Home() {
                       <span className='uppercase text-xl text-slate-700'>{tokenName}</span>
                     </div>
                     <div className='flex-col flex items-end'>
-                      <div className='text-xs text-slate-500'>Total raised:</div>
-                      <div className='w-36 mt-1 p-2 rounded-full bg-black text-slate-100 flex justify-end items-center px-5'>
-                        <span className='text-slate-200'>{Number(asset.totalRaised).toFixed(2)} ETH</span>
-                        <span className='text-sm text-slate-400'>(${Number(ethToUsdRate * Number(asset.totalRaised)).toFixed(1)})</span>
+                      <div className='text-xs text-slate-500'>Total donated:</div>
+                      <div className='w-48 mt-1 p-2 rounded-full bg-black text-slate-100 flex justify-end items-center px-5'>
+                        <span className='text-slate-200 mr-2'>${Number(ethToUsdRate * Number(asset.totalRaised)).toFixed(1)}</span>
+                        <span className='text-xs text-slate-400'>{Number(asset.totalDonated)} donated aids</span>
                       </div>
                     </div>
                   </div>
