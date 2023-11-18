@@ -174,7 +174,7 @@ export default function Home() {
                   value="0-0.01"
                   onChange={handlePriceCategoryChange}
                 />
-                {" 0-0.01 Ξ"}
+                {" 0-5 $"}
               </label>
               <br />
               <label>
@@ -184,7 +184,7 @@ export default function Home() {
                   value="0.01-0.1"
                   onChange={handlePriceCategoryChange}
                 />
-                {" 0.01-0.1 Ξ"}
+                {" 5-20 $"}
               </label>
               <br />
               <label>
@@ -195,7 +195,7 @@ export default function Home() {
                   checked={selectedPriceCategories.includes('0.1-1')}
                   onChange={handlePriceCategoryChange}
                 />
-                {" 0.1-1 Ξ"}
+                {" 20-50 $"}
               </label>
               <br />
               <label>
@@ -206,7 +206,7 @@ export default function Home() {
                   checked={selectedPriceCategories.includes('1-10')}
                   onChange={handlePriceCategoryChange}
                 />
-                {" 1-10 Ξ"}
+                {" 50-100 $"}
               </label>
               <br />
               <label>
@@ -217,7 +217,7 @@ export default function Home() {
                   checked={selectedPriceCategories.includes('10-1000000')}
                   onChange={handlePriceCategoryChange}
                 />
-                {" 10+ Ξ"}
+                {" 100+ $"}
               </label>
               <br />
             </div>
@@ -289,7 +289,7 @@ export default function Home() {
           </div>
         </div >
         <div className='w-3/4 h-full'>
-          <div className='text-4xl w-full h-full mb-4 text-center'>{collection.name} Collection</div>
+          <div className='text-4xl w-full h-full mb-4 text-center'>{collection.name} Campaign</div>
           <hr className='mb-4' />
           <div className='flex flex-1 flex-wrap h-max'>
             {!assets

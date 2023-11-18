@@ -75,11 +75,11 @@ export default function NFTBox({ price, nftAddress, tokenId, marketplaceAddress,
                 <div className="text-slate-800 text-3xl uppercase font-medium mt-2">{tokenName}</div>
                 <div className="text-slate-500 mt-1 text-xs">
                   {isAssetUpdated(history) == true
-                    ? ("Updated price")
-                    : ("List price")
+                    ? ("Updated donation price")
+                    : ("Listed donation price")
                   }
                 </div>
-                <div className="text-slate-700 text-2xl mt-1 font-medium">{price / 1e18} Ξ <span className="text-sm text-slate-500">(${Number(ethToUsdRate * Number(ethers.utils.formatEther(price, "ether"))).toFixed(1)})</span></div>
+                <div className="text-slate-700 text-2xl mt-1 font-medium">${Number(ethToUsdRate * Number(ethers.utils.formatEther(price, "ether"))).toFixed(1)}</div>
                 <div className="text-slate-500 mt-2 mb-2 text-sm">
                   <span className="text-slate-600 font-medium">{availableEditions} </span>
                   editions available
@@ -89,7 +89,7 @@ export default function NFTBox({ price, nftAddress, tokenId, marketplaceAddress,
                     <Blockie seed={seller} size={7} />
                   </div>
                   <div className="ml-3 text-xs text-slate-500">
-                    <div>Artist</div>
+                    <div>Owner</div>
                     <div className="text-slate-600">{prettyAddress(seller)}</div>
                   </div>
                 </div>

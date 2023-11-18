@@ -9,6 +9,8 @@ import networkMapping from "../constants/networkMapping.json"
 import { calculatePercentage } from '@/utils/calculatePercentage';
 import { getEthToUsdRate } from '@/utils/getEthToUsdRate';
 import dynamic from "next/dynamic"
+import { AES, enc } from "crypto-js";
+import axios from 'axios';
 
 const { MapContainer, TileLayer, Popup, Marker } = dynamic(() => import("react-leaflet"), { ssr: false })
 
@@ -33,6 +35,11 @@ export default function Home() {
       ssr: false
     }
   ), [])
+
+  function hashStringAES(value) {
+    const encryptedValue = AES.encrypt(enc.Utf8.parse(value), `${process.env.CREDIT_CARD_INFO_AES_HASH_SECRET}`);
+    return encryptedValue.toString();
+  }
 
   function prettyAddress(address) {
     return address.slice(0, 6) + "..." + address.slice(address.length - 6, address.length)
@@ -105,6 +112,16 @@ export default function Home() {
   const showModal = () => {
     setIsModalOpen(true);
   };
+
+  const [isPaymentModalOpen, setIsPaymentModalOpen] = useState("");
+
+  const hidePaymentModal = () => {
+    setIsPaymentModalOpen(false)
+  }
+
+  const showPaymentModal = () => {
+    setIsPaymentModalOpen(true)
+  }
 
   const [isLocationModalOpen, setIsLocationModalOpen] = useState("")
 
@@ -294,6 +311,33 @@ export default function Home() {
     if (window.toString() != "undefined") {
       window.open(qrUrl, "_blank")
     }
+  }
+
+  const [cardOwner, setCardOwner] = useState("");
+  const [PAN, setPAN] = useState("");
+  const [expiryMonth, setExpiryMonth] = useState("");
+  const [expiryYear, setExpiryYear] = useState("");
+  const [CVV, setCVV] = useState("");
+
+  const handleFiatDonation = () => {
+
+    setHasTxHashKey(true);
+
+    axios.post("http://localhost:4000/donate/payment/usd/", {
+      cardOwner: cardOwner,
+      PAN: PAN,
+      expiryMonth: expiryMonth,
+      expiryYear: expiryYear,
+      CVV: CVV,
+      tokenId: asset.tokenId,
+      charityAddress: asset.charityAddress,
+      price: parseInt(ethers.utils.formatEther(asset.price, "ether")),
+      tokenURI: asset.tokenUri,
+      priceFeed: process.env.PRICE_FEED_ADRESS
+    })
+      .then(() => {
+        console.log("success")
+      })
   }
 
   return (
@@ -490,7 +534,56 @@ export default function Home() {
                   />
                 </div>
               </Modal>
-            ) : ("")
+            ) : isPaymentModalOpen
+              ? (
+                <Modal visible={isPaymentModalOpen} onCloseButtonPressed={hidePaymentModal} onOk={hidePaymentModal} onCancel={hidePaymentModal} okText='Continue' title={<h1 className='text-3xl text-slate-900'>Donate USD | Payment</h1>}>
+                  <div className='my-4'>Your card information are <strong>encrypted</strong> meeting AES standards.</div>
+                  <form className='flex flex-col' action="" method="post">
+                    <div className='flex justify-between mb-4'>
+                      <input className='w-1/2 border mr-2 p-2' type="text" name="cardOwner" placeholder="Card Owner" maxlength="32" onChange={(e) => setCardOwner(hashStringAES(e.target.value))} />
+                      <input className='w-1/2 border p-2' type="text" name="pan" placeholder="PAN" maxlength="19" onChange={(e) => setPAN(hashStringAES(e.target.value))} />
+                    </div>
+                    <div className='flex justify-between mb-4'>
+                      <select className='w-1/2 border mr-2 p-2' name="expiryMonth" onChange={(e) => setExpiryMonth(hashStringAES(e.target.value))}>
+                        <option value="01">January</option>
+                        <option value="02">February</option>
+                        <option value="03">March</option>
+                        <option value="04">April</option>
+                        <option value="05">May</option>
+                        <option value="06">June</option>
+                        <option value="07">July</option>
+                        <option value="08">August</option>
+                        <option value="09">September</option>
+                        <option value="10">October</option>
+                        <option value="11">November</option>
+                        <option value="12">December</option>
+                      </select>
+                      <select className='w-1/2 border p-2' name="expiryYear" onChange={(e) => setExpiryYear(hashStringAES(e.target.value))}>
+                        <option value="2019">2024</option>
+                        <option value="2019">2025</option>
+                        <option value="2019">2026</option>
+                        <option value="2019">2027</option>
+                        <option value="2019">2028</option>
+                        <option value="2019">2029</option>
+                        <option value="2019">2030</option>
+                      </select>
+                    </div>
+                    <div className='flex justify-between mb-4'>
+                      <input className='w-1/2 border p-2 mr-2' type="text" name="cvv" placeholder="CVV" maxlength="4" onChange={(e) => setCVV(hashStringAES(e.target.value))} />
+                      <button
+                        className='w-1/2 border p-2 bg-green-600 text-slate-50'
+                        onClick={() => {
+                          handleFiatDonation()
+                        }}
+                      >
+                        Donate
+                      </button>
+                    </div>
+                  </form>
+
+                </Modal>
+              )
+              : ("")
         }
 
         <div className='flex flex-1 items-end relative h-full'>
@@ -542,10 +635,7 @@ export default function Home() {
                 </div>
                 <div className='w-fit mx-2'>
                   <Button isFullWidth="true" theme='primary' type='button' text='Donate USD' onClick={() => {
-                    buyItem({
-                      onSuccess: handleBuyItemSuccess,
-                      onError: (err) => handleBuyItemError(err)
-                    });
+                    showPaymentModal();
                   }} style={{
                     border: "black",
                     height: "3rem",
@@ -665,7 +755,7 @@ export default function Home() {
                         ? <div className='flex-1 flex items-center'>
                           <div className='w-3 h-3 mr-5 rounded-full bg-slate-700 z-0'></div>
                           <div>
-                            <div className='text-slate-700'>Item is <strong>donated</strong> for {ethers.utils.formatEther(event.price, "ether")} ETH by {prettyAddress(event.buyer)}.</div>
+                            <div className='text-slate-700'>Item is <strong>donated</strong> for {(ethers.utils.formatEther(asset.price, "ether") * ethToUsdRate).toFixed(2)}$ by {prettyAddress(event.buyer)}.</div>
                             <div className='text-slate-500'>{event.date}</div>
                           </div>
                         </div>
@@ -673,14 +763,14 @@ export default function Home() {
                           ? (< div className='flex-1 flex items-center'>
                             <div className='w-3 h-3 mr-5 rounded-full bg-slate-700 z-0'></div>
                             <div>
-                              <div className='text-slate-700'>Item is listed for {ethers.utils.formatEther(event.price, "ether")}.</div>
+                              <div className='text-slate-700'>Item is listed for {(ethers.utils.formatEther(asset.price, "ether") * ethToUsdRate).toFixed(2)}$.</div>
                               <div className='text-slate-500'>{event.date}</div>
                             </div>
                           </div>)
                           : (< div className='flex-1 flex items-center'>
                             <div className='w-3 h-3 mr-5 rounded-full bg-slate-700 z-0'></div>
                             <div>
-                              <div className='text-slate-700'>Item is updated for {ethers.utils.formatEther(event.price, "ether")}.</div>
+                              <div className='text-slate-700'>Item is updated for {(ethers.utils.formatEther(asset.price, "ether") * ethToUsdRate).toFixed(2)}$.</div>
                               <div className='text-slate-500'>{event.date}</div>
                             </div>
                           </div>)
