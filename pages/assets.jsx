@@ -123,6 +123,18 @@ export default function Home() {
     setIsPaymentModalOpen(true)
   }
 
+  const [isReportModalOpen, setIsReportModalOpen] = useState("");
+
+  const hideReportModal = () => {
+    setIsModalOpen(true)
+    setIsReportModalOpen(false)
+  }
+
+  const showReportModal = () => {
+    setIsReportModalOpen(true)
+    setIsModalOpen(false)
+  }
+
   const [isLocationModalOpen, setIsLocationModalOpen] = useState("")
 
   const hideLocationModal = () => {
@@ -229,6 +241,8 @@ export default function Home() {
 
   const marketplaceAddress = networkMapping["Marketplace"][chainString];
 
+  const [reports, setReports] = useState([""]);
+
   useEffect(() => {
     if (tokenId) {
       fetch(`http://localhost:4000/get-asset?tokenId=${tokenId}`)
@@ -260,6 +274,14 @@ export default function Home() {
                 .then(response => response.json())
                 .then(data => {
                   setVisualVerifications(data.data);
+
+
+                  fetch(`http://localhost:4000/reports/get-past?reporter=${account}`)
+                    .then(response => response.json())
+                    .then(data => {
+                      console.log(data)
+                      setReports(data.data);
+                    })
                 })
 
             })
@@ -279,6 +301,26 @@ export default function Home() {
     },
     msgValue: asset.price
   })
+
+  const generateReportCodes = () => {
+    const reportCodesArray = [];
+
+    if (isTimeoutSelected) {
+      reportCodesArray.push(0);
+    }
+    if (isIrrelevantVisualSelected) {
+      reportCodesArray.push(1);
+    }
+    if (isIncompatibleMeasurementsSelected) {
+      reportCodesArray.push(2);
+    }
+    if (isOtherSelected) {
+      reportCodesArray.push(3);
+    }
+
+    return reportCodesArray;
+  }
+
 
   async function updateUI() {
     // get the token Uri
@@ -322,6 +364,9 @@ export default function Home() {
   const handleFiatDonation = () => {
 
     setHasTxHashKey(true);
+    hidePaymentModal();
+    hideLocationModal();
+    showModal();
 
     axios.post("http://localhost:4000/donate/payment/usd/", {
       cardOwner: cardOwner,
@@ -340,6 +385,54 @@ export default function Home() {
       })
   }
 
+  const [isTimeoutSelected, setIsTimeoutSelected] = useState("");
+  const [isIrrelevantVisualSelected, setIsIrrelevantVisualSelected] = useState("");
+  const [isIncompatibleMeasurementsSelected, setIsIncompatibleMeasurementsSelected] = useState("");
+  const [isOtherSelected, setIsOtherSelected] = useState("");
+
+  const [reportMessage, setReportMessage] = useState("");
+
+  const handleReportIssueSuccess = async (tx) => {
+    dispatch({
+      type: "success",
+      message: "Tx successful: issue reported.",
+      title: "Transaction Success",
+      position: "topR"
+    });
+    localStorage.setItem("txHash", tx.hash);
+    setHasTxHashKey(tx.hash);
+    updateUI();
+    await tx.wait(1);
+    localStorage.setItem("txHash", "");
+    setHasTxHashKey(false);
+    fetch(`http://localhost:4000/reports/get-past?reporter=${account}`)
+      .then(response => response.json())
+      .then(data => {
+        setReports(data.data);
+      })
+  }
+
+  const handleReportIssueError = (err) => {
+    console.log(err)
+    dispatch({
+      type: "error",
+      message: "Sorry for the error. Please refresh and try again.",
+      title: "Transaction failed",
+      position: "topR"
+    })
+  }
+
+  const { runContractFunction: reportIssue } = useWeb3Contract({
+    abi: marketplaceAbi,
+    contractAddress: marketplaceAddress,
+    functionName: "reportIssue",
+    params: {
+      reporter: account, // will be replaced with telephone number
+      message: reportMessage,
+      reportCodes: generateReportCodes()
+    }
+  })
+
   return (
     <>
       <div className='w-full h-screen py-20 px-40'>
@@ -347,7 +440,13 @@ export default function Home() {
           ? (<Modal visible={isModalOpen} onCloseButtonPressed={hideModal} onOk={hideModal} onCancel={hideModal} okText='Continue' title={<h1 className='text-3xl text-slate-900'>Thank you for your contribution!!! 🎉 🎉</h1>}>
             <div className='p-5'>
               <div className='mb-12'>
-                <div className='text-2xl'>My Donations</div>
+                <div className='text-2xl flex justify-between'>
+                  <div>My Donations</div>
+                  <div className='flex text-sm items-center p-2'>
+                    <div>Is there something wrong?</div>
+                    <div className='p-2 bg-blue-900 text-slate-50 rounded ml-2 cursor-pointer' onClick={() => { showReportModal() }}>Report an Issue</div>
+                  </div>
+                </div>
                 <hr className='mb-3' />
                 <ul>
                   {
@@ -583,7 +682,49 @@ export default function Home() {
 
                 </Modal>
               )
-              : ("")
+              : isReportModalOpen
+                ? <Modal visible={isReportModalOpen} onCloseButtonPressed={hideReportModal} onOk={hideReportModal} onCancel={hideReportModal} okText='Continue' title={<h1 className='text-3xl text-slate-900'>Report an Issue</h1>}>
+                  <div>Tell us what's going wrong.</div>
+                  <div>
+                    <form action="" method='POST' className='flex flex-col'>
+                      <div className='flex'>
+                        <div onClick={() => { setIsTimeoutSelected(!isTimeoutSelected) }} className={`mr-4 border rounded p-2 cursor-pointer hover:bg-slate-200 transition-all ${isTimeoutSelected ? "bg-slate-300" : "bg-slate-50"}`}>No verification for a long time</div>
+                        <div onClick={() => { setIsIrrelevantVisualSelected(!isIrrelevantVisualSelected) }} className={`mr-4 border rounded p-2 cursor-pointer hover:bg-slate-200 transition-all ${isIrrelevantVisualSelected ? "bg-slate-300" : "bg-slate-50"}`}>The image verification are irrelevant</div>
+                        <div onClick={() => { setIsIncompatibleMeasurementsSelected(!isIncompatibleMeasurementsSelected) }} className={`mr-4 border rounded p-2 cursor-pointer hover:bg-slate-200 transition-all ${isIncompatibleMeasurementsSelected ? "bg-slate-300" : "bg-slate-50"}`}>Incompatible Measurements</div>
+                        <div onClick={() => { setIsOtherSelected(!isOtherSelected) }} className={`mr-4 border rounded p-2 cursor-pointer hover:bg-slate-200 transition-all ${isOtherSelected ? "bg-slate-300" : "bg-slate-50"}`}>Other</div>
+                      </div>
+                      <div className='mt-12'>Elaborate on the issue you experience.</div>
+                      <textarea className='my-2 border outline-none p-2' name="message" id="message" cols="10" rows="5" onChange={(e) => setReportMessage(e.target.value)}></textarea>
+
+                      <div onClick={() => {
+                        reportIssue({
+                          onSuccess: handleReportIssueSuccess,
+                          onError: (err) => handleReportIssueError(err)
+                        })
+                      }} className='p-2 bg-blue-900 text-slate-50 rounded border w-fit my-2 cursor-pointer'>Send Report</div>
+                    </form>
+                  </div>
+                  <hr />
+                  <div className='p-2'>
+                    {
+                      !reports.length
+                        ? <div>No past reports. Everything works fine!</div>
+                        : reports.map(report => {
+                          return (
+                            <div className='border p-2 rounded mb-2'>
+                              <div className='flex'>
+                                <div>{prettyDate(report.timestamp)}</div>
+                                <div className='mx-4'>|</div>
+                                <div>Issue Code: {report.reportCodes}</div>
+                              </div>
+                              <div>Message: {report.message}</div>
+                            </div>
+                          )
+                        })
+                    }
+                  </div>
+                </Modal>
+                : ("")
         }
 
         <div className='flex flex-1 items-end relative h-full'>
