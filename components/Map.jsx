@@ -1,5 +1,5 @@
 // src/components/Map.tsx
-import { MapContainer, Marker, TileLayer, Popup } from "react-leaflet";
+import { MapContainer, Marker, TileLayer, Popup, Circle } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import "leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility.css";
 import "leaflet-defaulticon-compatibility";
@@ -55,8 +55,9 @@ export default function MyMap({ stampCoordinates, shippedCoordinates, deliveredC
       attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
       url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
     />
+    <Circle center={[(stampCoordinates.latitude) / 1000, (stampCoordinates.longitude) / 1000]} pathOptions={{ fillColor: 'blue' }} radius={200} />
     {
-      stampCoordinates.latitude ? <Marker position={[(stampCoordinates.latitude) / 1000, (stampCoordinates.longitude) / 1000]}>
+      stampCoordinates.latitude ? <Marker position={[((stampCoordinates.latitude) / 1000) * ((Math.random() * 0.00005) + 1), ((stampCoordinates.longitude) / 1000) * ((Math.random() * 0.00005) + 1)]}>
         <Popup>
           {
             visualVerifications.map(verification => {
@@ -73,6 +74,7 @@ export default function MyMap({ stampCoordinates, shippedCoordinates, deliveredC
                       <img src={`data:image/png;base64,${stampImageSrc}`} alt="" />
                     </div>
                     <div className="ml-4 w-1/2 flex flex-col">
+                      <div className="mb-2 mt-1 text-xs text-slate-600">info: Exact location inavailable due to privacy rights</div>
                       <div className="mb-2 mt-1 text-base text-bold text-slate-800">Stamped <span className="text-xs text-slate-500">don_id: #{verification.openseaTokenId}</span></div>
                       <hr />
                       <div>{prettyDate(verification.date)}</div>
