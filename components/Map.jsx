@@ -5,6 +5,7 @@ import "leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility
 import "leaflet-defaulticon-compatibility";
 import { useMoralis } from "react-moralis"
 import networkMapping from "../constants/networkMapping.json"
+import { useEffect, useState } from "react";
 
 export default function MyMap({ stampCoordinates, shippedCoordinates, deliveredCoordinates, route, stampVisualTokenId, shipVisualTokenId, deliverVisualTokenId, visualVerifications, zoom }) {
 
@@ -27,6 +28,20 @@ export default function MyMap({ stampCoordinates, shippedCoordinates, deliveredC
 
   const ledgeriseLensNftAddress = networkMapping["LedgeriseLens"][chainString];
 
+  const [stampImageSrc, setStampImageSrc] = useState(null);
+
+  useEffect(() => {
+    fetch(`http://localhost:4000/privacy/blur-visual?ipfsGatewayTokenUri=https://ipfs.io/ipfs/${visualVerifications[0].tokenUri}`)
+      .then(response => response.json())
+      .then(data => {
+        setStampImageSrc(data.data);
+      })
+      .catch(error => {
+        console.error('Error fetching image:', error);
+      });
+  }, []);
+
+
   var myIcon = L.icon({
     iconUrl: 'pinpoint.png',
     iconSize: [20, 40],
@@ -34,8 +49,6 @@ export default function MyMap({ stampCoordinates, shippedCoordinates, deliveredC
   });
 
   let center = [41, 29];
-
-  console.log(parseInt(route[0][0]._hex))
 
   return <MapContainer className="w-full h-full" center={center} zoom={zoom} scrollWheelZoom={true}>
     <TileLayer
@@ -50,7 +63,15 @@ export default function MyMap({ stampCoordinates, shippedCoordinates, deliveredC
               if (verification.visualVerificationTokenId == stampVisualTokenId) {
                 return (
                   <div className="flex flex-1 w-72 items-end">
-                    <img className="w-1/2" src={`https://ipfs.io/ipfs/${verification.tokenUri}`} alt="" />
+                    <div className="w-1/2 relative">
+                      <div className="absolute left-2 top-2 flex items-center">
+                        <img className="w-6" src="logocompact.svg" alt="LRLens" />
+                        <div className="text-slate-50 ml-1 text-xs">
+                          <div>LRLens</div>
+                        </div>
+                      </div>
+                      <img src={`data:image/png;base64,${stampImageSrc}`} alt="" />
+                    </div>
                     <div className="ml-4 w-1/2 flex flex-col">
                       <div className="mb-2 mt-1 text-base text-bold text-slate-800">Stamped <span className="text-xs text-slate-500">don_id: #{verification.openseaTokenId}</span></div>
                       <hr />
