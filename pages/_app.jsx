@@ -4,8 +4,12 @@ import { MoralisProvider } from "react-moralis";
 import Header from "../components/Header";
 import { NotificationProvider } from "web3uikit";
 import Head from 'next/head';
+import { useRouter } from 'next/router';
 
 export default function App({ Component, pageProps }) {
+
+  const router = useRouter();
+
   return (
     <div>
       <Head>
@@ -19,7 +23,11 @@ export default function App({ Component, pageProps }) {
       </Head>
       <MoralisProvider initializeOnMount={false}>
         <NotificationProvider>
-          <Header />
+          {
+            router.pathname != "/login" && router.pathname != "/register"
+              ? <Header />
+              : <div></div>
+          }
           <Component {...pageProps} />
         </NotificationProvider>
       </MoralisProvider>

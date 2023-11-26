@@ -484,7 +484,7 @@ export default function Home() {
                                                       let collaboratorsDataArray = [];
                                                       for (let i = 0; i < eachCollaboratorCluster.length; i++) {
                                                         const eachCollaborator = eachCollaboratorCluster[i];
-                                                        collaboratorsDataArray.push(`${asset.nftAddress}-${asset.tokenId}-${event.openseaTokenId}-${eachCollaborator.split("_")[1]}`)
+                                                        collaboratorsDataArray.push(`${asset.nftAddress}-${asset.tokenId}-${eachCollaborator.split("_")[0]}-${eachCollaborator.split("_")[1]}`)
                                                       }
                                                       retrieveQRCodeData(JSON.stringify(collaboratorsDataArray));
                                                     }}>View the QR code</button> printed on your physical donation. Belonging to <strong>{eachCollaboratorCluster.length - 1} people you collaborated.</strong></div>
@@ -518,7 +518,7 @@ export default function Home() {
 
                                     let stamp = { ...eventTemplate }, shipped = { ...eventTemplate }, delivered = { ...eventTemplate };
                                     realItemCluster.map(realItemEvent => {
-                                      if (realItemEvent.openseaTokenId === event.openseaTokenId) {
+                                      if (realItemEvent.openseaTokenId == event.openseaTokenId && realItemEvent.buyer == event.buyer) {
                                         if (realItemEvent.key == "stamp") {
                                           stamp.status = true;
                                           stamp.date = prettyDate(realItemEvent.date);
@@ -544,52 +544,54 @@ export default function Home() {
                                       }
                                     })
 
-                                    return (
-                                      <div className='mt-5'>
-                                        <div className='relative w-full justify-between flex flex-1 items-center'>
-                                          <div className='absolute w-full h-0.5 bg-slate-400'></div>
-                                          <div className='flex bg-slate-300 p-3 w-64 rounded-lg z-10'>
-                                            <div className={`h-7 my-auto border-2 aspect-square rounded-full flex items-center justify-center text-slate-200 ${stamp.status ? "bg-green-500" : "bg-slate-200"}`}>✓</div>
-                                            <div className='flex flex-col ml-4'>
-                                              <div className='text-sm'>{stamp.status ? (stamp.date) : "waiting for production 🕒"}</div>
-                                              <div className='text-xs mt-2 rounded'>{stamp.status ? (
-                                                <div>
-                                                  <span className='mr-2'>Produced</span>
-                                                  <a className='px-4 py-1 rounded bg-green-700 text-slate-50' href={`https://sepolia.etherscan.io/tx/${stamp.txHash}`} target='_blank'>Verification</a>
-                                                </div>) : "waiting 🕒"}</div>
+                                    if (stamp.status || shipped.status || delivered.status) {
+                                      return (
+                                        <div className='mt-5'>
+                                          <div className='relative w-full justify-between flex flex-1 items-center'>
+                                            <div className='absolute w-full h-0.5 bg-slate-400'></div>
+                                            <div className='flex bg-slate-300 p-3 w-64 rounded-lg z-10'>
+                                              <div className={`h-7 my-auto border-2 aspect-square rounded-full flex items-center justify-center text-slate-200 ${stamp.status ? "bg-green-500" : "bg-slate-200"}`}>✓</div>
+                                              <div className='flex flex-col ml-4'>
+                                                <div className='text-sm'>{stamp.status ? (stamp.date) : "waiting for production 🕒"}</div>
+                                                <div className='text-xs mt-2 rounded'>{stamp.status ? (
+                                                  <div>
+                                                    <span className='mr-2'>Produced</span>
+                                                    <a className='px-4 py-1 rounded bg-green-700 text-slate-50' href={`https://sepolia.etherscan.io/tx/${stamp.txHash}`} target='_blank'>Verification</a>
+                                                  </div>) : "waiting 🕒"}</div>
+                                              </div>
+                                            </div>
+                                            <div className='flex bg-slate-300 p-3 w-64 rounded-lg z-10'>
+                                              <div className={`h-7 my-auto border-2 aspect-square rounded-full flex items-center justify-center text-slate-200 ${shipped.status ? "bg-green-500" : "bg-slate-200"}`}>✓</div>
+                                              <div className='flex flex-col ml-4'>
+                                                <div className='text-sm'>{shipped.status ? (shipped.date) : "waiting for shipment 🕒"}</div>
+                                                <div className='text-xs mt-2 rounded'>{shipped.status ? (
+                                                  <div>
+                                                    <span className='mr-2'>Supply Center</span>
+                                                    <a className='px-4 py-1 rounded bg-green-700 text-slate-50' href={`https://sepolia.etherscan.io/tx/${shipped.txHash}`} target='_blank'>Verification</a>
+                                                  </div>) : "waiting 🕒"}</div>
+                                              </div>
+                                            </div>
+                                            <div className='flex bg-slate-300 p-3 w-64 rounded-lg z-10'>
+                                              <div className={`h-7 my-auto border-2 aspect-square rounded-full flex items-center justify-center text-slate-200 ${delivered.status ? "bg-green-500" : "bg-slate-200"}`}>✓</div>
+                                              <div className='flex flex-col ml-4'>
+                                                <div className='text-sm'>{delivered.status ? (delivered.date) : "waiting for delivery 🕒"}</div>
+                                                <div className='text-xs mt-2 rounded'>{delivered.status ? (
+                                                  <div>
+                                                    <span className='mr-2'>Delivered</span>
+                                                    <a className='px-4 py-1 rounded bg-green-700 text-slate-50' href={`https://sepolia.etherscan.io/tx/${delivered.txHash}`} target='_blank'>Verification</a>
+                                                  </div>) : "waiting 🕒"}</div>
+                                              </div>
                                             </div>
                                           </div>
-                                          <div className='flex bg-slate-300 p-3 w-64 rounded-lg z-10'>
-                                            <div className={`h-7 my-auto border-2 aspect-square rounded-full flex items-center justify-center text-slate-200 ${shipped.status ? "bg-green-500" : "bg-slate-200"}`}>✓</div>
-                                            <div className='flex flex-col ml-4'>
-                                              <div className='text-sm'>{shipped.status ? (shipped.date) : "waiting for shipment 🕒"}</div>
-                                              <div className='text-xs mt-2 rounded'>{shipped.status ? (
-                                                <div>
-                                                  <span className='mr-2'>Supply Center</span>
-                                                  <a className='px-4 py-1 rounded bg-green-700 text-slate-50' href={`https://sepolia.etherscan.io/tx/${shipped.txHash}`} target='_blank'>Verification</a>
-                                                </div>) : "waiting 🕒"}</div>
-                                            </div>
+                                          <div className='flex flex-1 mt-3 text-slate-200 items-center'>
+                                            <div className='text-slate-700 mr-6'>The <strong>route</strong> and <strong>visual verification</strong> of your donation is <strong>ready.</strong></div>
+                                            <div onClick={() => showLocationModal(stamp, shipped, delivered)
+                                            } className='mr-5 p-2 w-36 flex justify-center bg-green-700 rounded cursor-pointer shadow-green-600 shadow-lg'>View verification</div>
                                           </div>
-                                          <div className='flex bg-slate-300 p-3 w-64 rounded-lg z-10'>
-                                            <div className={`h-7 my-auto border-2 aspect-square rounded-full flex items-center justify-center text-slate-200 ${delivered.status ? "bg-green-500" : "bg-slate-200"}`}>✓</div>
-                                            <div className='flex flex-col ml-4'>
-                                              <div className='text-sm'>{delivered.status ? (delivered.date) : "waiting for delivery 🕒"}</div>
-                                              <div className='text-xs mt-2 rounded'>{delivered.status ? (
-                                                <div>
-                                                  <span className='mr-2'>Delivered</span>
-                                                  <a className='px-4 py-1 rounded bg-green-700 text-slate-50' href={`https://sepolia.etherscan.io/tx/${delivered.txHash}`} target='_blank'>Verification</a>
-                                                </div>) : "waiting 🕒"}</div>
-                                            </div>
-                                          </div>
+                                          <hr className='mt-7' />
                                         </div>
-                                        <div className='flex flex-1 mt-3 text-slate-200 items-center'>
-                                          <div className='text-slate-700 mr-6'>The <strong>route</strong> and <strong>visual verification</strong> of your donation is <strong>ready.</strong></div>
-                                          <div onClick={() => showLocationModal(stamp, shipped, delivered)
-                                          } className='mr-5 p-2 w-36 flex justify-center bg-green-700 rounded cursor-pointer shadow-green-600 shadow-lg'>View verification</div>
-                                        </div>
-                                        <hr className='mt-7' />
-                                      </div>
-                                    )
+                                      )
+                                    }
                                   }))
                                   : ("")}
                             </div>

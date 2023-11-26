@@ -31,14 +31,21 @@ export default function MyMap({ stampCoordinates, shippedCoordinates, deliveredC
   const [stampImageSrc, setStampImageSrc] = useState(null);
 
   useEffect(() => {
-    fetch(`http://localhost:4000/privacy/blur-visual?ipfsGatewayTokenUri=https://ipfs.io/ipfs/${visualVerifications[0].tokenUri}`)
-      .then(response => response.json())
-      .then(data => {
-        setStampImageSrc(data.data);
-      })
-      .catch(error => {
-        console.error('Error fetching image:', error);
-      });
+    visualVerifications.map(verification => {
+      console.log(verification)
+      if (verification.visualVerificationTokenId == stampVisualTokenId) {
+        console.log(verification.visualVerificationTokenId)
+        console.log(verification.tokenUri)
+        fetch(`http://localhost:4000/privacy/blur-visual?ipfsGatewayTokenUri=https://ipfs.io/ipfs/${verification.tokenUri}`)
+          .then(response => response.json())
+          .then(data => {
+            setStampImageSrc(data.data);
+          })
+          .catch(error => {
+            console.error('Error fetching image:', error);
+          });
+      }
+    })
   }, []);
 
 
