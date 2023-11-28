@@ -9,6 +9,8 @@ import { Button, color } from 'web3uikit'
 import marketplaceAbi from "../constants/abi.json";
 import networkMapping from "../constants/networkMapping.json";
 import NFTBox from '@/components/NFTCard'
+import { getEthToUsdRate } from '@/utils/getEthToUsdRate';
+
 
 export default function Home() {
 
@@ -17,6 +19,18 @@ export default function Home() {
   const [collections, setCollections] = useState([]);
 
   const router = useRouter();
+
+  const [ethToUsdRate, setEthToUsdRate] = useState(null);
+
+  useEffect(() => {
+    const fetchEthToUsdRate = async () => {
+      const rate = await getEthToUsdRate();
+      setEthToUsdRate(rate);
+    };
+
+    fetchEthToUsdRate();
+  }, []);
+
 
   useEffect(() => {
     if (isWeb3Enabled) {
@@ -47,8 +61,8 @@ export default function Home() {
                     <div className='text-slate-800 text-2xl my-3 flex flex-1 justify-between items-center'>
                       <div>{collection.name}</div>
                       <div className='w-36 px-4 py-1 rounded-full bg-black flex-col text-slate-50 flex items-baseline justify-center'>
-                        <span className='text-xl mt-1 mr-1'>{collection.totalRaised} </span>
-                        <span className='text-xs mb-2 text-slate-300'>ETH total raised</span>
+                        <span className='text-xl mt-1 mr-1'>{parseInt(collection.totalRaised) * ethToUsdRate}$</span>
+                        <span className='text-xs mb-2 text-slate-300'>total raised</span>
                       </div>
                     </div>
                     <div className=''>

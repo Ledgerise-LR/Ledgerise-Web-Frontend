@@ -73,9 +73,9 @@ export default function MyMap({ stampCoordinates, shippedCoordinates, deliveredC
                   <div className="flex flex-1 w-72 items-end">
                     <div className="w-1/2 relative">
                       <div className="absolute left-2 top-2 flex items-center">
-                        <img className="w-6" src="logocompact.svg" alt="LRLens" />
+                        <img className="w-5" src="logocompact.svg" alt="LRLens" />
                         <div className="text-slate-50 ml-1 text-xs">
-                          <div>LRLens</div>
+                          <div>Lens</div>
                         </div>
                       </div>
                       <img src={`data:image/png;base64,${stampImageSrc}`} alt="" />
