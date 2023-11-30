@@ -64,7 +64,7 @@ export default function MyMap({ stampCoordinates, shippedCoordinates, deliveredC
     />
     <Circle center={[(stampCoordinates.latitude) / 1000, (stampCoordinates.longitude) / 1000]} pathOptions={{ fillColor: 'blue' }} radius={200} />
     {
-      stampCoordinates.latitude ? <Marker position={[((stampCoordinates.latitude) / 1000) * ((Math.random() * 0.00005) + 1), ((stampCoordinates.longitude) / 1000) * ((Math.random() * 0.00005) + 1)]}>
+      stampCoordinates.latitude ? <Marker position={[((stampCoordinates.latitude) / 1000) * ((Math.random() * 0.000035) + (Math.random() > 0.5 ? ((Math.random() * 0.00003) + 1) : (1 - (Math.random() * 0.00003)))), ((stampCoordinates.longitude) / 1000) * (Math.random() > 0.5 ? ((Math.random() * 0.00003) + 1) : (1 - (Math.random() * 0.00003)))]}>
         <Popup>
           {
             visualVerifications.map(verification => {

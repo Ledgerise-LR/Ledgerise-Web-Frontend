@@ -109,6 +109,16 @@ export default function Home() {
       })
   }, []);
 
+  const [companies, setCompanies] = useState([]);
+
+  useEffect(() => {
+    fetch(`http://localhost:4000/company/get-all`)
+      .then(response => response.json())
+      .then(data => {
+        setCompanies(data.companies);
+      })
+  }, []);
+
   const { runContractFunction: getListTokenCounter } = useWeb3Contract({
     abi: marketplaceAbi,
     contractAddress: marketplaceAddress,
@@ -272,6 +282,25 @@ export default function Home() {
           alert(error);
         });
     }
+  }
+
+  const [companyName, setCompanyName] = useState("");
+  const [companyCode, setCompanyCode] = useState("");
+  const [companyEmail, setCompanyEmail] = useState("");
+  const [companyPassword, setCompanyPassword] = useState("");
+
+  const [companySuccessText, setCompanySuccessText] = useState("");
+
+  const handleCreateCompanyClick = () => {
+    axios.post("http://localhost:4000/auth/company/create", {
+      name: companyName,
+      code: companyCode,
+      email: companyEmail,
+      password: companyPassword
+    }, (res) => {
+      if (!res.success && res.err == "bad_request") return setCompanySuccessText("Couldn't create company. Please try again.");
+      else if (res.success && res.company) return setCompanySuccessText("Successfully created.");
+    });
   }
 
   const [updateTokenId, setUpdateTokenId] = useState("1");
@@ -543,6 +572,33 @@ export default function Home() {
                           })
                         }
                       </div>)
+                  }
+                </div>
+              </div>
+              <div className="flex flex-1 flex-col mt-8 mb-8">
+                <h1>Create company (doesn't include blockchain)</h1>
+                <div>{companySuccessText}</div>
+                <input className="p-2 border-2 w-auto mb-4" type="text" placeholder="Name" onChange={(e) => { setCompanyName(e.currentTarget.value) }} />
+                <input className="p-2 border-2 w-auto mb-4" type="text" placeholder="Code" onChange={(e) => { setCompanyCode(e.currentTarget.value) }} />
+                <input className="p-2 border-2 w-auto mb-4" type="text" placeholder="Email" onChange={(e) => { setCompanyEmail(e.currentTarget.value) }} />
+                <input className="p-2 border-2 w-auto mb-4" type="text" placeholder="Password" onChange={(e) => { setCompanyPassword(e.currentTarget.value) }} />
+                <Button
+                  theme="primary"
+                  text="Create Company"
+                  isFullWidth="true" type='button'
+                  onClick={handleCreateCompanyClick}
+                />
+                <div>
+                  {
+                    companies
+                      ? companies.map(company => {
+                        return (
+                          <div className='flex'>
+                            <div>{company.code} {company.name} {company.email}</div>
+                          </div>
+                        )
+                      })
+                      : ("")
                   }
                 </div>
               </div>
