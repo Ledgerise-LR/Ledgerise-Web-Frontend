@@ -462,7 +462,7 @@ export default function Home() {
                                 !asset.collaborators.length
                                   ? (<div><button className='underline hover:text-slate-700' target='blank' onClick={() => {
                                     retrieveQRCodeData([`${asset.nftAddress}-${asset.tokenId}-${event.openseaTokenId}-${event.buyer}`]);
-                                  }}>View the QR code</button> printed on your physical donation.</div>)
+                                  }}>View the QR code</button> printed on your physical donation. Click <a className='underline cursor-pointer' href="/pdf" target='_blank'>here</a> can download "Bağış Alındı Makbuzu".</div>)
 
                                   : (
                                     <div>
