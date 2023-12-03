@@ -39,7 +39,7 @@ export default function Home() {
   return (
     <div className='w-screen h-screen flex items-center justify-center'>
       <div className='w-9/12 h-5/6 flex shadow-slate-600 shadow-lg'>
-        <div className='flex flex-col w-1/2 h-full bg-blue-800 justify-between p-4'>
+        <div className='flex flex-col w-1/2 h-full bg-[linear-gradient(0deg,rgba(255,210,0,0.75)_1.82%,rgba(12,0,102,1)_25.44%)] justify-between p-4'>
           <a href='/' className='py-2 px-4 rounded bg-blue-500 w-fit text-slate-100 cursor-pointer'>← Back to main</a>
           <div className='w-full flex flex-col items-center'>
             <div className='flex items-center'>
@@ -49,8 +49,12 @@ export default function Home() {
             </div>
             <div className='text-slate-50 text-5xl my-4'>Welcome to Ledgerise</div>
             <div className='text-slate-200 text-xl'>Donate with a piece of mind. See your donation meeting beneficiaries.</div>
+            <div className='mt-4 flex items-center'>
+              <div className='mr-4 text-slate-300'>New to Ledgerise?</div>
+              <a href='/register' className='bg-blue-900 text-slate-100 py-3 px-8 rounded-lg border hover:border-blue-900 hover:bg-slate-50 hover:text-slate-900 transition-all cursor-pointer'>Sign Up</a>
+            </div>
           </div>
-          <div className='ml-auto text-slate-300'>Ledgerise 2023</div>
+          <div className='ml-auto text-slate-900'>Ledgerise 2023</div>
         </div>
         <div className='flex flex-col w-1/2 h-full p-4 px-16 justify-between'>
           <div></div>

@@ -27,6 +27,24 @@ export default function Home() {
     downloadAsPDF('main', 'UAAOAB Bağış Alındı Makbuzu.pdf');
   };
 
+  const getNumberAsWord = (number) => {
+    const step0 = ["", "BİN", "İKİBİN", "ÜÇBİN", "DÖRTBİN", "BEŞBİN", "ALTI BİN", "YEDİ BİN", "SEKİZ BİN", "DOKUZ BİN"];
+    const step1 = ["", "YÜZ", "İKİYÜZ", "ÜÇYÜZ", "DÖRTYÜZ", "BEŞYÜZ", "ALTIYÜZ", "YEDİYÜZ", "SEKİZYÜZ", "DOKUZYÜZ"];
+    const step2 = ["", "ON", "YİRMİ", "OTUZ", "KIRK", "ELLİ", "ALTMİŞ", "YETMİŞ", "SEKSEN", "DOKSAN"];
+    const step3 = ["", "BİR", "İKİ", "ÜÇ", "DÖRT", "BEŞ", "ALTI", "YEDİ", "SEKİZ", "DOKUZ"];
+
+    let numString = "";
+
+    for (let i = 0; i < number.toString().length; i++) {
+      const element = number.toString()[i];
+      console.log(element)
+      numString += eval(`step${i}`)[parseInt(element)];
+    }
+
+    numString = numString.toUpperCase();
+
+    return numString;
+  }
 
   return (
     <div>
@@ -66,18 +84,18 @@ export default function Home() {
                   <div className='border border-black w-1/3 p-1 flex justify-center items-center'>Tutar</div>
                 </div>
                 <div className='flex justify-between'>
-                  <div className='border border-black w-16 p-1 flex justify-center items-center h-8'></div>
-                  <div className='border border-black w-2/3 p-1 flex justify-center items-center'></div>
+                  <div className='border border-black w-16 p-1 flex justify-center items-center'><strong>1</strong></div>
+                  <div className='border border-black w-2/3 p-1 flex justify-center items-center h-10'><strong>TÜRK LİRASI</strong></div>
                   <div className='border border-black w-1/3 p-1 flex justify-center items-center'></div>
                 </div>
                 <div className='flex justify-between'>
-                  <div className='border border-black w-16 p-1 flex justify-center items-center h-8'></div>
-                  <div className='border border-black w-2/3 p-1 flex justify-center items-center'></div>
+                  <div className='border border-black w-16 p-1 flex justify-center items-center'></div>
+                  <div className='border border-black w-2/3 p-1 flex justify-center items-center h-10'></div>
                   <div className='border border-black w-1/3 p-1 flex justify-center items-center'></div>
                 </div>
                 <div className='flex justify-between'>
-                  <div className='border border-black w-16 p-1 flex justify-center items-center h-8'></div>
-                  <div className='border border-black w-2/3 p-1 flex justify-center items-center'></div>
+                  <div className='border border-black w-16 p-1 flex justify-center items-center'></div>
+                  <div className='border border-black w-2/3 p-1 flex justify-center items-center h-10'></div>
                   <div className='border border-black w-1/3 p-1 flex justify-center items-center'></div>
                 </div>
                 <div className='flex justify-between'>
@@ -87,7 +105,7 @@ export default function Home() {
                 </div>
                 <div className='flex justify-center mt-4'>
                   <div>Yalnız ............................................................................................. TL/Döviz tahsil edilmiştir.</div>
-                  <div className='absolute font-bold -ml-36'></div>
+                  <div className='absolute font-bold -ml-36'>{getNumberAsWord("0159")}</div>
                 </div>
               </div>
               <div>

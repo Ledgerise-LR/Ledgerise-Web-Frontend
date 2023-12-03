@@ -10,6 +10,7 @@ import marketplaceAbi from "../constants/abi.json";
 import networkMapping from "../constants/networkMapping.json";
 import NFTBox from '@/components/NFTCard'
 import { getEthToUsdRate } from '@/utils/getEthToUsdRate';
+import blockExplorerMapping from "../constants/blockExplorerMapping.json";
 
 
 export default function Home() {

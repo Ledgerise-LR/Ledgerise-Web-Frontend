@@ -5,6 +5,7 @@ import { useMoralis, useWeb3Contract } from 'react-moralis'
 import marketplaceAbi from "../constants/abi.json";
 import networkMapping from "../constants/networkMapping.json";
 import NFTBox from '../components/NftCard'
+import blockExplorerMapping from "../constants/blockExplorerMapping.json";
 
 export default function Home() {
 

@@ -8,6 +8,7 @@ import marketplaceAbi from "../constants/abi.json";
 import networkMapping from "../constants/networkMapping.json"
 import { calculatePercentage } from '@/utils/calculatePercentage';
 import { getEthToUsdRate } from '@/utils/getEthToUsdRate';
+import blockExplorerMapping from "../constants/blockExplorerMapping.json";
 import dynamic from "next/dynamic"
 import { AES, enc } from "crypto-js";
 import axios from 'axios';
@@ -35,6 +36,8 @@ export default function Home() {
       ssr: false
     }
   ), [])
+
+  const [donor, setDonor] = useState({});
 
   function hashStringAES(value) {
     const encryptedValue = AES.encrypt(enc.Utf8.parse(value), `${process.env.CREDIT_CARD_INFO_AES_HASH_SECRET}`);
@@ -188,6 +191,85 @@ export default function Home() {
   //   return nullCount;
   // }
 
+
+  const [isBuyItemPending, setIsBuyItemPending] = useState(false);
+  const [buyItemSuccessText, setBuyItemSuccessText] = useState("");
+
+
+  //////////////////////
+  // Buy Item Handler //
+  //////////////////////
+
+
+  const handleBuyItem = () => {
+    setIsModalOpen(true);
+    setIsBuyItemPending(true);
+    if (donor != {} && donor.school_number) {
+      console.log("hello")
+      axios.post(`http://localhost:4000/donate/payment`, {
+        nftAddress: asset.nftAddress,
+        tokenId: asset.tokenId,
+        charityAddress: asset.charityAddress,
+        tokenUri: asset.tokenUri,
+        price: asset.price,
+        ownerAddressString: donor.school_number,
+        currency: "crypto"
+      })
+        .then((res) => {
+          setIsBuyItemPending(false);
+          const data = res.data;
+
+          if (data.success) {
+            dispatch({
+              type: "success",
+              message: "Tx successful: Item donated.",
+              title: "Transaction Success",
+              position: "topR"
+            });
+            setBuyItemSuccessText(`Donated 1 ${tokenName} successfully. Thanks for your contribution.`);
+            fetch(`http://localhost:4000/get-asset?tokenId=${tokenId}`)
+              .then(response => response.json())
+              .then(data => {
+                const asset = {
+                  seller: data.activeItem.seller,
+                  nftAddress: data.activeItem.nftAddress,
+                  tokenId: data.activeItem.tokenId,
+                  charityAddress: data.activeItem.charityAddress,
+                  tokenUri: data.activeItem.tokenUri,
+                  price: data.activeItem.price,
+                  availableEditions: data.activeItem.availableEditions,
+                  subcollectionId: data.activeItem.subcollectionId,
+                  history: data.activeItem.history,
+                  attributes: data.activeItem.attributes,
+                  real_item_history: data.activeItem.real_item_history,
+                  route: data.activeItem.route,
+                  collaborators: data.activeItem.collaborators
+                }
+                setAsset(asset);
+              })
+          } else if (!data.success) {
+            dispatch({
+              type: "error",
+              message: "Sorry for the error. Please refresh the page and try again.",
+              title: "Transaction Failed",
+              position: "topR"
+            });
+            setBuyItemSuccessText(`An error occured. Please refresh and try again.`);
+          }
+        })
+    } else {
+      dispatch({
+        type: "info",
+        message: "Please login to donate.",
+        title: "Transaction failed",
+        position: "topR"
+      })
+    }
+  }
+
+
+  /////////////
+
   const [hasTxHashKey, setHasTxHashKey] = useState(false);
 
   const handleBuyItemSuccess = async (tx) => {
@@ -239,6 +321,13 @@ export default function Home() {
 
   const chainString = chainId ? parseInt(chainId, 16).toString() : "11155111";
 
+  const [blockExplorerUrl, setBlockExplorerUrl] = useState("");
+
+  useEffect(() => {
+    setBlockExplorerUrl(blockExplorerMapping[chainString]);
+  }, [chainString]);
+
+
   const marketplaceAddress = networkMapping["Marketplace"][chainString];
 
   const [reports, setReports] = useState([""]);
@@ -275,19 +364,32 @@ export default function Home() {
                 .then(data => {
                   setVisualVerifications(data.data);
 
-
-                  fetch(`http://localhost:4000/reports/get-past?reporter=${account}`)
-                    .then(response => response.json())
-                    .then(data => {
-                      console.log(data)
-                      setReports(data.data);
-                    })
                 })
 
             })
         })
     }
   }, [tokenId, isWeb3Enabled])
+
+  useEffect(() => {
+    const _id = localStorage.getItem("_id");
+
+    if (_id) {
+      axios.post(`http://localhost:4000/auth/authenticate`, {
+        _id: _id
+      }).then((res) => {
+        if (res.data.success) {
+          setDonor(res.data.donor);
+          fetch(`http://localhost:4000/reports/get-past?reporter=${res.data.donor.school_number}`)
+            .then(response => response.json())
+            .then(data => {
+              setReports(data.data);
+            })
+        }
+      }
+      )
+    }
+  }, [])
 
   const { runContractFunction: buyItem } = useWeb3Contract({
     abi: marketplaceAbi,
@@ -392,46 +494,33 @@ export default function Home() {
 
   const [reportMessage, setReportMessage] = useState("");
 
-  const handleReportIssueSuccess = async (tx) => {
-    dispatch({
-      type: "success",
-      message: "Tx successful: issue reported.",
-      title: "Transaction Success",
-      position: "topR"
-    });
-    localStorage.setItem("txHash", tx.hash);
-    setHasTxHashKey(tx.hash);
-    updateUI();
-    await tx.wait(1);
-    localStorage.setItem("txHash", "");
-    setHasTxHashKey(false);
-    fetch(`http://localhost:4000/reports/get-past?reporter=${account}`)
-      .then(response => response.json())
-      .then(data => {
-        setReports(data.data);
+  const [isReportIssuePending, setIsReportIssuePending] = useState(false);
+  const [reportIssueSuccessText, setReportIssueSuccessText] = useState("");
+
+  const handleReportIssue = () => {
+    const _id = localStorage.getItem("_id");
+    if (_id) {
+      axios.post(`http://localhost:4000/auth/authenticate`, {
+        _id: _id
+      }).then((res) => {
+        if (res.data.success) {
+
+          setIsReportIssuePending(true);
+
+          axios.post(`http://localhost:4000/reports/report-issue`, {
+            reporter: res.data.donor.school_number.toString(),
+            message: reportMessage,
+            reportCodes: generateReportCodes(),
+            timestamp: Date.now()
+          }).then((reportRes) => {
+            if (reportRes.data.success && reportRes.data.report) setReportIssueSuccessText("Issue successfully and transparently reported.");
+            if (!reportRes.data.success) setReportIssueSuccessText("An error occured while reporting the issue. Please try again.");
+            setIsReportIssuePending(false)
+          })
+        }
       })
-  }
-
-  const handleReportIssueError = (err) => {
-    console.log(err)
-    dispatch({
-      type: "error",
-      message: "Sorry for the error. Please refresh and try again.",
-      title: "Transaction failed",
-      position: "topR"
-    })
-  }
-
-  const { runContractFunction: reportIssue } = useWeb3Contract({
-    abi: marketplaceAbi,
-    contractAddress: marketplaceAddress,
-    functionName: "reportIssue",
-    params: {
-      reporter: account, // will be replaced with telephone number
-      message: reportMessage,
-      reportCodes: generateReportCodes()
     }
-  })
+  }
 
   return (
     <>
@@ -451,18 +540,18 @@ export default function Home() {
                 <ul>
                   {
                     asset.history.map(event => {
-                      if (event.buyer && event.buyer.toLowerCase() == account) {
+                      if (event.buyer && event.buyer.toLowerCase() == donor.school_number) {
                         // https://sepolia.etherscan.io/tx/0x0f10b50aad6b472a42910bfa4a1664989486bf917486a97ebc24f98a3f71bf39
                         return (
                           <li className='mb-8'>
                             <div className='text-slate-900'>Donated | <strong>{event.date}</strong></div>
-                            <a target='_blank' className='underline text-slate-800 hover:text-slate-600' href={getOpenseaUrl(event.openseaTokenId - 1)}>View certificate</a>. Verify the <strong>donation transaction</strong> <a href={`https://sepolia.etherscan.io/tx/${event.transactionHash}`} target='_blank' className='underline hover:text-slate-800 font-bold'>here</a>. Id #{event.openseaTokenId - 1}
+                            <a target='_blank' className='underline text-slate-800 hover:text-slate-600' href={getOpenseaUrl(event.openseaTokenId - 1)}>View certificate</a>. Verify the <strong>donation transaction</strong> <a href={`https://${blockExplorerUrl}/tx/${event.transactionHash}`} target='_blank' className='underline hover:text-slate-800 font-bold'>here</a>. Id #{event.openseaTokenId - 1}
                             <div>
                               {
                                 !asset.collaborators.length
                                   ? (<div><button className='underline hover:text-slate-700' target='blank' onClick={() => {
-                                    retrieveQRCodeData([`${asset.nftAddress}-${asset.tokenId}-${event.openseaTokenId}-${event.buyer}`]);
-                                  }}>View the QR code</button> printed on your physical donation. Click <a className='underline cursor-pointer' href="/pdf" target='_blank'>here</a> can download "Bağış Alındı Makbuzu".</div>)
+                                    retrieveQRCodeData(`["${asset.nftAddress}-${asset.tokenId}-${event.openseaTokenId}-${event.buyer}"]`);
+                                  }}>View the QR code</button> printed on your physical donation. Click <a className='underline cursor-pointer' href="/receipt" target='_blank'>here</a> can download "Bağış Alındı Makbuzu".</div>)
 
                                   : (
                                     <div>
@@ -556,7 +645,7 @@ export default function Home() {
                                                 <div className='text-xs mt-2 rounded'>{stamp.status ? (
                                                   <div>
                                                     <span className='mr-2'>Produced</span>
-                                                    <a className='px-4 py-1 rounded bg-green-700 text-slate-50' href={`https://sepolia.etherscan.io/tx/${stamp.txHash}`} target='_blank'>Verification</a>
+                                                    <a className='px-4 py-1 rounded bg-green-700 text-slate-50' href={`https://${blockExplorerUrl}/tx/${stamp.txHash}`} target='_blank'>Verification</a>
                                                   </div>) : "waiting 🕒"}</div>
                                               </div>
                                             </div>
@@ -567,7 +656,7 @@ export default function Home() {
                                                 <div className='text-xs mt-2 rounded'>{shipped.status ? (
                                                   <div>
                                                     <span className='mr-2'>Supply Center</span>
-                                                    <a className='px-4 py-1 rounded bg-green-700 text-slate-50' href={`https://sepolia.etherscan.io/tx/${shipped.txHash}`} target='_blank'>Verification</a>
+                                                    <a className='px-4 py-1 rounded bg-green-700 text-slate-50' href={`https://${blockExplorerUrl}/tx/${shipped.txHash}`} target='_blank'>Verification</a>
                                                   </div>) : "waiting 🕒"}</div>
                                               </div>
                                             </div>
@@ -578,7 +667,7 @@ export default function Home() {
                                                 <div className='text-xs mt-2 rounded'>{delivered.status ? (
                                                   <div>
                                                     <span className='mr-2'>Delivered</span>
-                                                    <a className='px-4 py-1 rounded bg-green-700 text-slate-50' href={`https://sepolia.etherscan.io/tx/${delivered.txHash}`} target='_blank'>Verification</a>
+                                                    <a className='px-4 py-1 rounded bg-green-700 text-slate-50' href={`https://${blockExplorerUrl}/tx/${delivered.txHash}`} target='_blank'>Verification</a>
                                                   </div>) : "waiting 🕒"}</div>
                                               </div>
                                             </div>
@@ -601,17 +690,13 @@ export default function Home() {
                 </ul>
               </div>
 
-              {hasTxHashKey != ""
+              {isBuyItemPending
                 ? (<div>
                   <div className='text-2xl'>Pending</div>
                   <hr className='mb-3' />
                   <ul>
                     <li>Buy transaction pending, please wait. <strong>Don't close this tab.</strong></li>
-                    <li>
-                      {"You can trace your transaction from "}
-                      <a className='underline text-slate-600 hover:text-slate-400 cursor-pointer' target='_blank' href={`https://sepolia.etherscan.io/tx/${hasTxHashKey}`}>{hasTxHashKey}</a>
-                    </li>
-                    <li><Loading spinnerColor='gray' spinnerType='wave' /></li>
+                    <li><Loading spinnerColor='gray' spinnerType='loader' /></li>
                   </ul>
                 </div>)
                 : ("")}
@@ -699,11 +784,18 @@ export default function Home() {
                       <textarea className='my-2 border outline-none p-2' name="message" id="message" cols="10" rows="5" onChange={(e) => setReportMessage(e.target.value)}></textarea>
 
                       <div onClick={() => {
-                        reportIssue({
-                          onSuccess: handleReportIssueSuccess,
-                          onError: (err) => handleReportIssueError(err)
-                        })
+                        handleReportIssue()
                       }} className='p-2 bg-blue-900 text-slate-50 rounded border w-fit my-2 cursor-pointer'>Send Report</div>
+                      <div>
+                        {
+                          isReportIssuePending
+                            ? <div className='flex'>
+                              <div className='mr-2'>Reporting issue. Please wait.</div>
+                              <Loading spinnerColor='gray' spinnerType='loader' />
+                            </div>
+                            : <div>{reportIssueSuccessText}</div>
+                        }
+                      </div>
                     </form>
                   </div>
                   <hr />
@@ -739,7 +831,7 @@ export default function Home() {
                 <div className='mr-5 text-xl text-slate-700'>Powered by <strong>{collection.charityName}</strong></div>
                 <div className='mr-5 text-slate-800 mt-1'>
                   <span className='text-sm'>{prettyAddress(asset.charityAddress)} </span>
-                  <a target='_blank' href={`https://sepolia.etherscan.io/address/${asset.charityAddress}`} className='text-xs underline text-cyan-900'>view on Etherscan</a>
+                  <a target='_blank' href={`https://${blockExplorerUrl}/address/${asset.charityAddress}`} className='text-xs underline text-cyan-900'>view on Transparent Verifier</a>
                 </div>
                 <div className='mt-5'>
                   <Button
@@ -789,10 +881,7 @@ export default function Home() {
                 <div>or</div>
                 <div className='w-fit mx-2'>
                   <Button isFullWidth="true" theme='primary' type='button' text='Donate with Crypto' onClick={() => {
-                    buyItem({
-                      onSuccess: handleBuyItemSuccess,
-                      onError: (err) => handleBuyItemError(err)
-                    });
+                    handleBuyItem()
                   }} style={{
                     border: "black",
                     height: "3rem",
@@ -825,13 +914,13 @@ export default function Home() {
                   </div>
                   <div className='flex flex-1 flex-col justify-center items-end mr-4'>
                     <div>
-                      <span className='font-semibold text-lg'>70% </span>
-                      <span className='text-sm text-slate-700'>of the proceeds</span>
+                      <span className='font-semibold text-lg'>99.5% </span>
+                      <span className='text-sm text-slate-700'>of proceeds</span>
                     </div>
                   </div>
                 </div>
 
-                <div className='flex flex-1 mb-5 border h-24 justify-between rounded'>
+                {/* <div className='flex flex-1 mb-5 border h-24 justify-between rounded'>
                   <div className='flex flex-1 items-center'>
                     <div className='h-full aspect-square flex items-center justify-center bg-slate-50 border-r border-blue-900'>
                       <Blockie seed={asset.seller} size={12} />
@@ -844,19 +933,19 @@ export default function Home() {
                       <span className='text-sm text-slate-700'>of the proceeds</span>
                     </div>
                   </div>
-                </div>
+                </div> */}
 
                 <div className='flex flex-1 mb-5 border h-24 justify-between rounded'>
                   <div className='flex flex-1 items-center'>
-                    <div className='h-full aspect-square flex items-center justify-center bg-slate-50 border-r border-blue-900'>
-                      <Blockie seed={marketplaceAddress} size={12} />
+                    <div className='h-full p-2 aspect-square flex items-center justify-center bg-slate-50 border-r border-blue-900'>
+                      <img src="logocompact.svg" alt="Ledgerise " />
                     </div>
-                    <div className='ml-4 text-lg'>Contract</div>
+                    <div className='ml-4 text-lg'>Ledgerise®</div>
                   </div>
                   <div className='flex flex-1 flex-col justify-center items-end mr-4'>
                     <div>
-                      <span className='font-semibold text-lg'>10% </span>
-                      <span className='text-sm text-slate-700'>of the proceeds</span>
+                      <span className='font-semibold text-lg'>0.5% </span>
+                      <span className='text-sm text-slate-700'>of proceeds</span>
                     </div>
                   </div>
                 </div>
@@ -864,7 +953,7 @@ export default function Home() {
               </div>
             </div>
             <div className='mt-16'>
-              <div className='text-3xl text-slate-900 mb-1'>Attributes</div>
+              <div className='text-3xl text-slate-900 mb-1'>This aid includes</div>
               <hr className='mb-3' />
               <div>
                 {

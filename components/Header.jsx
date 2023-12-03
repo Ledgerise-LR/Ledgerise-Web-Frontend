@@ -22,9 +22,9 @@ export default function Header() {
         if (!data.data.success && data.data.err == "authentication_failed") {
           setIsAuthenticated(false);
           setUsername("");
-        } else if (data.data.success && !data.data.err && data.data.username) {
+        } else if (data.data.success && !data.data.err && data.data.donor) {
           setIsAuthenticated(true);
-          setUsername(data.data.username)
+          setUsername(data.data.donor.email.split("@")[0])
         }
       })
 

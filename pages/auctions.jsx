@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react'
 import { useMoralis, useWeb3Contract } from 'react-moralis'
 import marketplaceAbi from "../constants/abi.json";
 import networkMapping from "../constants/networkMapping.json";
+import blockExplorerMapping from "../constants/blockExplorerMapping.json";
 import AuctionBox from '../components/AuctionCard'
 
 export default function Home() {

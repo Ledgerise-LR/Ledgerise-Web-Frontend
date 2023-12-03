@@ -7,6 +7,7 @@ import { useMoralis, useWeb3Contract } from 'react-moralis'
 import { ethers } from "ethers";
 import { Button, Modal, Blockie, useNotification, Loading } from 'web3uikit'
 import marketplaceAbi from "../constants/abi.json";
+import blockExplorerMapping from "../constants/blockExplorerMapping.json";
 import networkMapping from "../constants/networkMapping.json"
 import { calculatePercentage } from '@/utils/calculatePercentage';
 

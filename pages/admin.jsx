@@ -7,6 +7,7 @@ import { Button, Modal, useNotification } from 'web3uikit'
 import marketplaceAbi from "../constants/abi.json";
 import mainCollectionAbi from "../constants/mainCollectionAbi.json";
 import networkMapping from "../constants/networkMapping.json";
+import blockExplorerMapping from "../constants/blockExplorerMapping.json";
 import NFTBox from '../components/NftCard';
 import axios from "axios";
 import dynamic from "next/dynamic";
@@ -79,6 +80,12 @@ export default function Home() {
   const dispatch = useNotification();
 
   const chainString = chainId ? parseInt(chainId, 16).toString() : "11155111";
+
+  const [blockExplorerUrl, setBlockExplorerUrl] = useState("");
+
+  useEffect(() => {
+    setBlockExplorerUrl(blockExplorerMapping[chainString]);
+  }, [chainString]);
 
   const marketplaceAddress = networkMapping["Marketplace"][chainString];
   const mainCollectionAddress = networkMapping["MainCollection"][chainString];
@@ -361,6 +368,8 @@ export default function Home() {
     msgValue: ""
   })
 
+  console.log(marketplaceAddress)
+
   const [owner, setOwner] = useState("X");
 
   async function updateUI() {
@@ -452,7 +461,7 @@ export default function Home() {
               <div className="flex flex-1 flex-col mt-8 mb-8">
                 <div>List Item</div>
                 <div className="mt-4 mb-4">{listingStatus ? (<div>
-                  Listing in progress. Follow from <a target="_blank" className="underline hover:text-slate-500" href={`https://sepolia.etherscan.io/tx/${listTransactionHash}`}>{prettyAddress(listTransactionHash)}</a>
+                  Listing in progress. Follow from <a target="_blank" className="underline hover:text-slate-500" href={`https://${blockExplorerUrl}/tx/${listTransactionHash}`}>{prettyAddress(listTransactionHash)}</a>
                 </div>) : (<div>No listing on progress</div>)}</div>
                 <input className="p-2 border-2 w-auto mb-4" type="number" placeholder="price (eth)" onChange={(e) => { setListItemPrice(e.currentTarget.value.toString()) }} />
                 <input className="p-2 border-2 w-auto mb-4" type="text" placeholder="charityAddress" onChange={(e) => { setListItemCharityAddress(e.currentTarget.value) }} />
@@ -481,7 +490,7 @@ export default function Home() {
               <div className="flex flex-1 flex-col mt-8 mb-8">
                 <h1>Add creator</h1>
                 <div className="mt-4 mb-4">{addingCreatorStatus ? (<div>
-                  Adding a creator in progress. Follow from <a target="_blank" className="underline hover:text-slate-500" href={`https://sepolia.etherscan.io/tx/${addingCreatorTransactionHash}`}>{prettyAddress(addingCreatorTransactionHash)}</a>
+                  Adding a creator in progress. Follow from <a target="_blank" className="underline hover:text-slate-500" href={`https://${blockExplorerUrl}/tx/${addingCreatorTransactionHash}`}>{prettyAddress(addingCreatorTransactionHash)}</a>
                 </div>) : (<div>No adding creator on progress</div>)}</div>
                 <input className="p-2 border-2 w-auto mb-4" type="text" placeholder="Creator Address" onChange={(e) => { setAddCreatorCreatorAddress(e.currentTarget.value) }} />
                 <Button
@@ -499,7 +508,7 @@ export default function Home() {
               <div className="flex flex-1 flex-col mt-8 mb-8">
                 <h1>Create subcollection</h1>
                 <div className="mt-4 mb-4">{creatingSubcollectionStatus ? (<div>
-                  Subcollection creation in progress. Follow from <a target="_blank" className="underline hover:text-slate-500" href={`https://sepolia.etherscan.io/tx/${creatingSubcollectionTransactionHash}`}>{prettyAddress(creatingSubcollectionTransactionHash)}</a>
+                  Subcollection creation in progress. Follow from <a target="_blank" className="underline hover:text-slate-500" href={`https://${blockExplorerUrl}/tx/${creatingSubcollectionTransactionHash}`}>{prettyAddress(creatingSubcollectionTransactionHash)}</a>
                 </div>) : (<div>No creating subcollection on progress</div>)}</div>
                 <input className="p-2 border-2 w-auto mb-4" type="text" placeholder="Name" onChange={(e) => { setCreateSubcollectionName(e.currentTarget.value.toString()) }} />
                 <input className="p-2 border-2 w-auto mb-4" type="text" placeholder="charityAddress" onChange={(e) => { setCreateSubcollectionCharityAddress(e.currentTarget.value) }} />
@@ -519,7 +528,7 @@ export default function Home() {
               <div className="flex flex-1 flex-col mt-8 mb-8">
                 <h1>Update listing</h1>
                 <div className="mt-4 mb-4">{updatingStatus ? (<div>
-                  Updating in progress. Follow from <a target="_blank" className="underline hover:text-slate-500" href={`https://sepolia.etherscan.io/tx/${updatingTransactionHash}`}>{prettyAddress(updatingTransactionHash)}</a>
+                  Updating in progress. Follow from <a target="_blank" className="underline hover:text-slate-500" href={`https://${blockExplorerUrl}/tx/${updatingTransactionHash}`}>{prettyAddress(updatingTransactionHash)}</a>
                 </div>) : (<div>No updating on progress</div>)}</div>
                 <input className="p-2 border-2 w-auto mb-4" type="number" placeholder="price (ETH)" onChange={(e) => { setUpdateItemPrice(e.currentTarget.value.toString()) }} />
                 <input className="p-2 border-2 w-auto mb-4" type="text" placeholder="Token Id" onChange={(e) => { setUpdateTokenId(e.currentTarget.value) }} />

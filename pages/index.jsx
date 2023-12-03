@@ -5,6 +5,7 @@ import { useMoralis } from 'react-moralis';
 import { ethers } from 'ethers';
 import { getEthToUsdRate } from '@/utils/getEthToUsdRate';
 import { Button } from 'web3uikit'
+import blockExplorerMapping from "../constants/blockExplorerMapping.json";
 
 export default function Home() {
 

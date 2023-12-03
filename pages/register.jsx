@@ -18,6 +18,7 @@ export default function Home() {
   const [schoolNumber, setSchoolNumber] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [nationalIdentificationNumber, setNationalIdentificationNumber] = useState("");
 
 
   const [success, setSuccess] = useState("");
@@ -29,8 +30,9 @@ export default function Home() {
 
   const handleClick = () => {
 
-    if (email != "" && phoneNumber != "" && schoolNumber != "" && password != "" && confirmPassword != "" && password == confirmPassword) {
+    if (nationalIdentificationNumber != "" && email != "" && phoneNumber != "" && schoolNumber != "" && password != "" && confirmPassword != "" && password == confirmPassword) {
       axios.post("http://localhost:4000/auth/register", {
+        national_identification_number: nationalIdentificationNumber,
         email: email,
         school_number: schoolNumber,
         phone_number: phoneNumber,
@@ -66,6 +68,10 @@ export default function Home() {
             </div>
             <div className='text-slate-50 text-5xl my-4'>Welcome to Ledgerise</div>
             <div className='text-slate-200 text-xl'>Donate with a piece of mind. See your donation meeting beneficiaries.</div>
+            <div className='mt-4 flex items-center'>
+              <div className='mr-4 text-slate-300'>Already a donor?</div>
+              <a href='/login' className='bg-blue-900 text-slate-100 py-3 px-8 rounded-lg border hover:border-blue-900 hover:bg-slate-50 hover:text-slate-900 transition-all cursor-pointer'>Login</a>
+            </div>
           </div>
           <div className='ml-auto text-slate-300'>Ledgerise 2023</div>
         </div>
@@ -76,12 +82,14 @@ export default function Home() {
             <hr />
             <div className='mb-8'>Join the <strong>trustworthy</strong> and completely <strong>transparent</strong>, <strong>end-to-end</strong> donation trace system.</div>
             <div className='flex flex-col mb-4'>
+              <input className='bg-slate-100 rounded p-2 mb-4' type="text" placeholder='T.C. Identification Number' onChange={(e) => setNationalIdentificationNumber(e.target.value)} />
               <input className='bg-slate-100 rounded p-2 mb-4' type="text" placeholder='Email address' onChange={(e) => setEmail(e.target.value)} />
-              <input className='bg-slate-100 rounded p-2 mb-4' type="number" placeholder=' School Number' onChange={(e) => setSchoolNumber(e.target.value)} />
+              <input className='bg-slate-100 rounded p-2 mb-4' type="number" placeholder='School Number' onChange={(e) => setSchoolNumber(e.target.value)} />
               <input className='bg-slate-100 rounded p-2 mb-4' type="text" placeholder='Phone Number' onChange={(e) => setPhoneNumber(e.target.value)} />
-              <input className='bg-slate-100 rounded p-2 mb-4' type="password" placeholder='Password' onChange={(e) => setPassword(e.target.value)} />
-              <input className='bg-slate-100 rounded p-2 mb-4' type="password" placeholder='Confirm Password' onChange={(e) => setConfirmPassword(e.target.value)} />
-
+              <div className='flex justify-between'>
+                <input className='bg-slate-100 rounded p-2 mb-4 w-1/2 mr-4' type="password" placeholder='Password' onChange={(e) => setPassword(e.target.value)} />
+                <input className='bg-slate-100 rounded p-2 mb-4 w-1/2' type="password" placeholder='Confirm Password' onChange={(e) => setConfirmPassword(e.target.value)} />
+              </div>
               <div className={`${success == "true" ? ("text-green-600") : (success == "false" ? ("text-red-600") : (""))}`}>{successText}</div>
               <div className='ml-auto w-1/4 border text-slate-50 bg-blue-900 p-2 rounded flex flex-row-reverse cursor-pointer hover:animate-bounce' onClick={() => { handleClick() }}>→ Login</div>
             </div>
