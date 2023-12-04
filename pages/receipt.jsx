@@ -6,20 +6,32 @@ import html2canvas from 'html2canvas';
 
 export default function Home() {
 
+  const [donor, setDonor] = useState({});
+
+  useEffect(() => {
+    const _id = localStorage.getItem("_id");
+
+    axios.post(`http://localhost:4000/auth/authenticate`, {
+      _id: _id
+    })
+      .then((res) => {
+        const data = res.data;
+        if (data.success && data.donor) {
+          setDonor(data.donor);
+        }
+      })
+  }, [])
+
   const downloadAsPDF = async (divId, fileName) => {
     const div = document.getElementById(divId);
 
-    // Use html2canvas to capture the content of the div as an image
     const canvas = await html2canvas(div);
 
-    // Create a PDF document
     const pdf = new jsPDF();
     const imgData = canvas.toDataURL('image/png');
 
-    // Add the image to the PDF
     pdf.addImage(imgData, 'PNG', pdf.internal.pageSize.getWidth() * 0.5 * -1, 0, pdf.internal.pageSize.getWidth() * 2, pdf.internal.pageSize.getHeight());
 
-    // Save the PDF
     pdf.save(fileName);
   };
 
@@ -44,6 +56,19 @@ export default function Home() {
     numString = numString.toUpperCase();
 
     return numString;
+  }
+
+  function prettyDate(timestamp) {
+
+    const date = new Date(timestamp * 1);
+    const formattedDate = date.toLocaleString('tr-TR', {
+      day: 'numeric',
+      month: 'long',
+      year: 'numeric',
+      hour: 'numeric',
+      minute: 'numeric',
+    });
+    return formattedDate;
   }
 
   return (
@@ -119,7 +144,7 @@ export default function Home() {
                     </div>
                     <div className='flex'>
                       <div className='border border-black flex justify-center p-2 w-5/12'>T.C. Kimlik No</div>
-                      <div className='border border-black flex justify-center p-2 w-full'></div>
+                      <div className='border border-black flex justify-center p-2 w-full font-bold uppercase'>{donor.national_identification_number}</div>
                     </div>
                     <div className='flex h-24'>
                       <div className='border border-black flex justify-center p-2 w-5/12 items-center'>Adresi</div>
@@ -127,26 +152,26 @@ export default function Home() {
                     </div>
                     <div className='flex'>
                       <div className='border border-black flex justify-center p-2 w-5/12 items-center'>Tarih-İmza</div>
-                      <div className='border border-black flex justify-center p-2 w-full items-center'></div>
+                      <div className='border border-black flex justify-center p-2 w-full items-center font-bold'>{prettyDate(Date.now())}</div>
                     </div>
                   </div>
                   <div className='flex flex-col w-5/12'>
-                    <div className='border border-black flex justify-center p-2'>Teslim Eden</div>
+                    <div className='border border-black flex justify-center p-2'>Teslim Alan</div>
                     <div className='flex'>
                       <div className='border border-black flex justify-center p-2 w-5/12'>Adı Soyadı</div>
-                      <div className='border border-black flex justify-center p-2 w-full'></div>
+                      <div className='border border-black flex justify-center p-2 w-full font-bold'>John Doe</div>
                     </div>
                     <div className='flex'>
                       <div className='border border-black flex justify-center p-2 w-5/12'>Görevi</div>
-                      <div className='border border-black flex justify-center p-2 w-full'></div>
+                      <div className='border border-black flex justify-center p-2 w-full font-bold'>Yetkili</div>
                     </div>
                     <div className='flex h-20'>
                       <div className='border border-black flex justify-center p-2 w-5/12 items-center'>T.C. Kimlik No</div>
-                      <div className='border border-black flex justify-center p-2 w-full items-center'></div>
+                      <div className='border border-black flex justify-center p-2 w-full items-center font-bold'>12345678901</div>
                     </div>
                     <div className='flex h-20'>
                       <div className='border border-black flex justify-center p-2 w-5/12 items-center'>Tarih-İmza</div>
-                      <div className='border border-black flex justify-center p-2 w-full items-center'></div>
+                      <div className='border border-black flex justify-center p-2 w-full items-center font-bold'>{prettyDate(Date.now())}</div>
                     </div>
                   </div>
                 </div>

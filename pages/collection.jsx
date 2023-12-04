@@ -36,7 +36,7 @@ export default function Home() {
           setCollection(data.subcollection);
         })
     }
-  }, [isWeb3Enabled, itemId])
+  }, [itemId])
 
 
   const chainString = chainId ? parseInt(chainId, 16).toString() : "5";

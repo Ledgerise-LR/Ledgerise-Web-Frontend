@@ -319,7 +319,7 @@ export default function Home() {
     })
   }
 
-  const chainString = chainId ? parseInt(chainId, 16).toString() : "11155111";
+  const chainString = chainId ? parseInt(chainId, 16).toString() : "80001";
 
   const [blockExplorerUrl, setBlockExplorerUrl] = useState("");
 
@@ -369,7 +369,7 @@ export default function Home() {
             })
         })
     }
-  }, [tokenId, isWeb3Enabled])
+  }, [tokenId])
 
   useEffect(() => {
     const _id = localStorage.getItem("_id");
@@ -391,18 +391,18 @@ export default function Home() {
     }
   }, [])
 
-  const { runContractFunction: buyItem } = useWeb3Contract({
-    abi: marketplaceAbi,
-    contractAddress: marketplaceAddress,
-    functionName: "buyItem",
-    params: {
-      nftAddress: asset.nftAddress,
-      tokenId: asset.tokenId,
-      charityAddress: asset.charityAddress,
-      tokenUri: asset.tokenUri
-    },
-    msgValue: asset.price
-  })
+  // const { runContractFunction: buyItem } = useWeb3Contract({
+  //   abi: marketplaceAbi,
+  //   contractAddress: marketplaceAddress,
+  //   functionName: "buyItem",
+  //   params: {
+  //     nftAddress: asset.nftAddress,
+  //     tokenId: asset.tokenId,
+  //     charityAddress: asset.charityAddress,
+  //     tokenUri: asset.tokenUri
+  //   },
+  //   msgValue: asset.price
+  // })
 
   const generateReportCodes = () => {
     const reportCodesArray = [];
@@ -447,7 +447,7 @@ export default function Home() {
     if (asset) {
       updateUI();
     }
-  }, [isWeb3Enabled, asset, isModalOpen, asset.attributes]);
+  }, [asset, isModalOpen, asset.attributes]);
 
 
   const retrieveQRCodeData = (qrString) => {

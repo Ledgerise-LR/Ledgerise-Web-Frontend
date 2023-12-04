@@ -36,11 +36,27 @@ export default function Home() {
       })
   }
 
+  useEffect(() => {
+    const startsContent = document.getElementById("starts-content");
+
+    for (let i = 0; i < 100; i++) {
+      const star = document.createElement("div");
+      star.style.position = "absolute";
+      star.style.color = "white";
+      star.style.fontSize = "2px"
+      star.innerHTML = "★";
+      star.style.left = (Math.random() * 100).toString() + "%";
+      star.style.top = (Math.random() * 100).toString() + "%";
+      startsContent.appendChild(star);
+    }
+  }, []);
+
   return (
     <div className='w-screen h-screen flex items-center justify-center'>
       <div className='w-9/12 h-5/6 flex shadow-slate-600 shadow-lg'>
-        <div className='flex flex-col w-1/2 h-full bg-[linear-gradient(0deg,rgba(255,210,0,0.75)_1.82%,rgba(12,0,102,1)_25.44%)] justify-between p-4'>
-          <a href='/' className='py-2 px-4 rounded bg-blue-500 w-fit text-slate-100 cursor-pointer'>← Back to main</a>
+        <div className='flex flex-col w-1/2 h-full bg-[linear-gradient(0deg,rgba(255,210,0,0.75)_1.82%,rgba(4,0,100,1)_25.44%)] justify-between p-4 relative'>
+          <div id="starts-content" className='absolute z-0 w-full h-36 animate-pulse'></div>
+          <a href='/' className='z-10 py-2 px-4 rounded bg-blue-500 w-fit text-slate-100 cursor-pointer'>← Back to main</a>
           <div className='w-full flex flex-col items-center'>
             <div className='flex items-center'>
               <img className='h-36' src="logocompact.svg" alt="Ledgerise" />
@@ -48,7 +64,7 @@ export default function Home() {
               <img className='h-36' src="uaa.png" alt="Üsküdar American Academy" />
             </div>
             <div className='text-slate-50 text-5xl my-4'>Welcome to Ledgerise</div>
-            <div className='text-slate-200 text-xl'>Donate with a piece of mind. See your donation meeting beneficiaries.</div>
+            <div className='text-slate-200 text-lg text-center'>Donate with a piece of mind. See your donation meeting beneficiaries.</div>
             <div className='mt-4 flex items-center'>
               <div className='mr-4 text-slate-300'>New to Ledgerise?</div>
               <a href='/register' className='bg-blue-900 text-slate-100 py-3 px-8 rounded-lg border hover:border-blue-900 hover:bg-slate-50 hover:text-slate-900 transition-all cursor-pointer'>Sign Up</a>

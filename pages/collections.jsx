@@ -34,14 +34,12 @@ export default function Home() {
 
 
   useEffect(() => {
-    if (isWeb3Enabled) {
-      fetch(`http://localhost:4000/get-all-collections`)
-        .then(response => response.json())
-        .then(data => {
-          setCollections(data.subcollections);
-        })
-    }
-  }, [isWeb3Enabled])
+    fetch(`http://localhost:4000/get-all-collections`)
+      .then(response => response.json())
+      .then(data => {
+        setCollections(data.subcollections);
+      })
+  }, [])
 
   const chainString = chainId ? parseInt(chainId, 16).toString() : "5";
   const marketplaceAddress = networkMapping["Marketplace"][chainString];

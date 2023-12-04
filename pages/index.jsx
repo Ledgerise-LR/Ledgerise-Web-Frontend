@@ -84,7 +84,7 @@ export default function Home() {
     if (asset && asset.tokenUri) {
       updateUI();
     }
-  }, [isWeb3Enabled, asset, asset.tokenUri])
+  }, [asset, asset.tokenUri])
 
   return (
     <div className='w-full h-full p-28 overflow-hidden'>

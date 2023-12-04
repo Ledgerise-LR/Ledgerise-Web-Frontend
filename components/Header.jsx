@@ -50,7 +50,6 @@ export default function Header() {
         <div className="w-20">
           <div></div>
         </div>
-        <ConnectButton moralisAuth={false} />
         {
           router.pathname == "/admin"
             ? <ConnectButton moralisAuth={false} />
