@@ -45,7 +45,7 @@ export default function Home() {
       star.style.color = "white";
       star.style.fontSize = "2px"
       star.innerHTML = "★";
-      star.style.left = (Math.random() * 100).toString() + "%";
+      star.style.left = (Math.random() * 95).toString() + "%";
       star.style.top = (Math.random() * 100).toString() + "%";
       startsContent.appendChild(star);
     }

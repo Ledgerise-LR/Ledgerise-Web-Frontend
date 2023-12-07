@@ -36,10 +36,10 @@ export default function Home() {
           setCollection(data.subcollection);
         })
     }
-  }, [itemId])
+  }, [itemId, router])
 
 
-  const chainString = chainId ? parseInt(chainId, 16).toString() : "5";
+  const chainString = chainId ? parseInt(chainId, 16).toString() : "80001";
   const marketplaceAddress = networkMapping["Marketplace"][chainString];
 
 
@@ -296,7 +296,7 @@ export default function Home() {
             {!assets
               ? (<div>Loading...</div>)
               : (assets == ""
-                ? (<div className='text-slate-500 w-full h-36 flex flex-1 items-center justify-center'>No NFTs found for the filters you provided.</div>)
+                ? (<div className='text-slate-500 w-full h-36 flex flex-1 items-center justify-center'>No aid parcels found for the filters you provided.</div>)
                 : (assets.map((asset) => {
                   return (
                     <div className='w-72 mr-5 mb-5' key={`${asset.nftAddress}${asset.tokenId}`}>

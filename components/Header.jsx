@@ -30,6 +30,11 @@ export default function Header() {
 
   }, []);
 
+  const handleLogoutClick = () => {
+    localStorage.setItem("_id", "");
+    window.location.reload();
+  }
+
   return (
     <nav className="p-2 border-b-2 flex flex-row justify-between items-center">
       <h1 className="pl-12 text-4xl font-playfair font-medium">
@@ -58,6 +63,9 @@ export default function Header() {
                 isAuthenticated
                   ? (<div className="flex">
                     <div>{username}</div>
+                    <div className="w-6 ml-2 cursor-pointer hover:animate-pulse" onClick={() => { handleLogoutClick() }}>
+                      <img src="/logout.png" alt="Logout" />
+                    </div>
                     <div>
                       <img src="/user.png" alt="" />
                     </div>

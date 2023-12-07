@@ -3,24 +3,19 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import jsPDF from "jspdf";
 import html2canvas from 'html2canvas';
+import { useRouter } from 'next/router';
+import { ethers } from "ethers";
+import { getEthToUsdRate } from '@/utils/getEthToUsdRate';
 
 export default function Home() {
 
+  const router = useRouter();
+  const id = router.query.id;
+
   const [donor, setDonor] = useState({});
-
-  useEffect(() => {
-    const _id = localStorage.getItem("_id");
-
-    axios.post(`http://localhost:4000/auth/authenticate`, {
-      _id: _id
-    })
-      .then((res) => {
-        const data = res.data;
-        if (data.success && data.donor) {
-          setDonor(data.donor);
-        }
-      })
-  }, [])
+  const [history, setHistory] = useState({
+    price: 0
+  });
 
   const downloadAsPDF = async (divId, fileName) => {
     const div = document.getElementById(divId);
@@ -30,7 +25,7 @@ export default function Home() {
     const pdf = new jsPDF();
     const imgData = canvas.toDataURL('image/png');
 
-    pdf.addImage(imgData, 'PNG', pdf.internal.pageSize.getWidth() * 0.5 * -1, 0, pdf.internal.pageSize.getWidth() * 2, pdf.internal.pageSize.getHeight());
+    pdf.addImage(imgData, 'PNG', pdf.internal.pageSize.getWidth() * 0.25 * -1, 0, pdf.internal.pageSize.getWidth() * 1.5, pdf.internal.pageSize.getHeight());
 
     pdf.save(fileName);
   };
@@ -40,6 +35,8 @@ export default function Home() {
   };
 
   const getNumberAsWord = (number) => {
+    // number = (number.length - 4) * "0" + number;
+
     const step0 = ["", "BİN", "İKİBİN", "ÜÇBİN", "DÖRTBİN", "BEŞBİN", "ALTI BİN", "YEDİ BİN", "SEKİZ BİN", "DOKUZ BİN"];
     const step1 = ["", "YÜZ", "İKİYÜZ", "ÜÇYÜZ", "DÖRTYÜZ", "BEŞYÜZ", "ALTIYÜZ", "YEDİYÜZ", "SEKİZYÜZ", "DOKUZYÜZ"];
     const step2 = ["", "ON", "YİRMİ", "OTUZ", "KIRK", "ELLİ", "ALTMİŞ", "YETMİŞ", "SEKSEN", "DOKSAN"];
@@ -49,7 +46,6 @@ export default function Home() {
 
     for (let i = 0; i < number.toString().length; i++) {
       const element = number.toString()[i];
-      console.log(element)
       numString += eval(`step${i}`)[parseInt(element)];
     }
 
@@ -71,12 +67,58 @@ export default function Home() {
     return formattedDate;
   }
 
+  const [ethToUsdRate, setEthToUsdRate] = useState(null);
+
+  useEffect(() => {
+    const fetchEthToUsdRate = async () => {
+      const rate = await getEthToUsdRate();
+      setEthToUsdRate(rate);
+    };
+
+    fetchEthToUsdRate();
+  }, []);
+
+
+  useEffect(() => {
+
+    if (id) {
+      const tokenId = id.split("-")[0];
+      const openseaTokenId = id.split("-")[1];
+
+      const _id = localStorage.getItem("_id");
+
+      axios.post(`http://localhost:4000/auth/authenticate`, {
+        _id: _id
+      })
+        .then((res) => {
+          const data = res.data;
+          if (data.success && data.donor) {
+            setDonor(data.donor);
+            axios.post(`http://localhost:4000/donor/get-receipt-data`, {
+              buyer: donor.school_number,
+              tokenId: tokenId,
+              openseaTokenId: openseaTokenId
+            })
+              .then(dataRes => {
+                const dataResdata = dataRes.data;
+                if (dataResdata.success) return setHistory(dataResdata.history)
+              })
+          }
+        })
+    }
+  }, [id, ethToUsdRate])
+
+
+
   return (
     <div>
-      <div className='cursor-pointer bg-slate-900 rounded-lg text-slate-50 p-2 w-fit m-auto my-2' onClick={() => { handleDownloadPDF() }}>Download ↓</div>
+      <div className='w-2/3 cursor-pointer m-auto my-2 flex justify-between items-center' onClick={() => { handleDownloadPDF() }}>
+        <div>NAKDÎ BAĞIŞ MAKBUZU</div>
+        <div className='bg-slate-900 text-slate-50 p-2 rounded-lg'>Download ↓</div>
+      </div>
       <div id="main">
         <div className='w-screen h-full flex flex-col items-center justify-center font-serif'>
-          <div className='w-1/2 border border-black p-12'>
+          <div className='w-2/3 border-2 p-12'>
             <div className='flex justify-end'>EK-1</div>
             <div>
               <div className='flex justify-center'>OKUL-AİLE BİRLİĞİ AYNİ/ NAKDÎ BAĞIŞ ALINDI BELGESİ</div>
@@ -84,19 +126,19 @@ export default function Home() {
                 <div className='flex border'>
                   <div className='flex flex-col w-3/4 border'>
                     <div className='p-1 border border-black'>Birliğin</div>
-                    <div className='p-1 border border-black'>Adı    : <strong>Üsküdar Amerikan Lisesi Okul Aile Birliği</strong></div>
+                    <div className='p-1 border border-black'>Adı    : <strong className='uppercase'>Üsküdar Amerikan Lisesi Okul Aile Birliği</strong></div>
                     <div className='p-1 border border-black h-24'>Adresi    : <strong>Selamiali, Vakıf Sk. No:1, 34664 Üsküdar/İstanbul</strong></div>
                   </div>
                   <div className='flex flex-col w-1/4 border border-black p-1'>
-                    <div className='mb-2 h-1/4'>Seri No :</div>
-                    <div className='mb-2 h-1/4'>Cilt No :</div>
-                    <div>Sıra No :</div>
+                    <div className='mb-2 h-1/4'>Seri No : <strong className='uppercase'>0001</strong></div>
+                    <div className='mb-2 h-1/4'>Cilt No : <strong className='uppercase'>0001</strong></div>
+                    <div>Sıra No : <strong className='uppercase'>{history.openseaTokenId}</strong></div>
                   </div>
                 </div>
                 <div className='flex justify-between'>
-                  <div className='w-1/3 border border-black p-2'>Telefon No:</div>
-                  <div className='w-1/3 border border-black p-2'>Faks No:</div>
-                  <div className='w-1/3 border border-black p-2'>e-posta Adresi</div>
+                  <div className='w-1/3 border border-black p-2'>Telefon No: <strong>0(212) 412 44 22</strong></div>
+                  <div className='w-1/3 border border-black p-2'>Faks No: <strong>0(212) 412 44 44</strong></div>
+                  <div className='w-1/3 border border-black p-2'>e-posta Adresi: <strong>okulailebirligi@my.uaa.k12.tr</strong></div>
                 </div>
               </div>
             </div>
@@ -105,22 +147,22 @@ export default function Home() {
               <div className='flex flex-col'>
                 <div className='flex justify-between'>
                   <div className='border border-black w-16 p-1 flex justify-center items-center'>Sıra No</div>
-                  <div className='border border-black w-2/3 p-1 flex justify-center items-center'>Bağışın Cinsi (TL/Döviz )</div>
+                  <div className='border-t border-black w-2/3 p-1 flex justify-center items-center'>Bağışın Cinsi (TL/Döviz )</div>
                   <div className='border border-black w-1/3 p-1 flex justify-center items-center'>Tutar</div>
                 </div>
                 <div className='flex justify-between'>
-                  <div className='border border-black w-16 p-1 flex justify-center items-center'><strong>1</strong></div>
-                  <div className='border border-black w-2/3 p-1 flex justify-center items-center h-10'><strong>TÜRK LİRASI</strong></div>
-                  <div className='border border-black w-1/3 p-1 flex justify-center items-center'></div>
+                  <div className='border-x border-black w-16 p-1 flex justify-center items-center'><strong>1</strong></div>
+                  <div className='border-t border-black w-2/3 p-1 flex justify-center items-center h-10'><strong>TÜRK LİRASI</strong></div>
+                  <div className='border-x border-black w-1/3 p-1 flex justify-center items-center font-bold'>{((history.price / 1e18) * ethToUsdRate).toFixed(2)}</div>
+                </div>
+                <div className='flex justify-between'>
+                  <div className='border-x border-t border-black w-16 p-1 flex justify-center items-center'></div>
+                  <div className='border-t border-black w-2/3 p-1 flex justify-center items-center h-10'></div>
+                  <div className='border-x border-t border-black w-1/3 p-1 flex justify-center items-center'></div>
                 </div>
                 <div className='flex justify-between'>
                   <div className='border border-black w-16 p-1 flex justify-center items-center'></div>
-                  <div className='border border-black w-2/3 p-1 flex justify-center items-center h-10'></div>
-                  <div className='border border-black w-1/3 p-1 flex justify-center items-center'></div>
-                </div>
-                <div className='flex justify-between'>
-                  <div className='border border-black w-16 p-1 flex justify-center items-center'></div>
-                  <div className='border border-black w-2/3 p-1 flex justify-center items-center h-10'></div>
+                  <div className='border-y border-black w-2/3 p-1 flex justify-center items-center h-10'></div>
                   <div className='border border-black w-1/3 p-1 flex justify-center items-center'></div>
                 </div>
                 <div className='flex justify-between'>
@@ -139,38 +181,38 @@ export default function Home() {
                   <div className='flex flex-col w-5/12'>
                     <div className='border border-black flex justify-center p-2'>Teslim Eden</div>
                     <div className='flex'>
-                      <div className='border border-black flex justify-center p-2 w-5/12'>Adı Soyadı</div>
-                      <div className='border border-black flex justify-center p-2 w-full'></div>
+                      <div className='border-x border-black flex justify-center p-2 w-5/12'>Adı Soyadı</div>
+                      <div className='border-r border-black flex justify-center p-2 w-full font-bold uppercase'>{donor.name} {donor.surname}</div>
                     </div>
                     <div className='flex'>
                       <div className='border border-black flex justify-center p-2 w-5/12'>T.C. Kimlik No</div>
-                      <div className='border border-black flex justify-center p-2 w-full font-bold uppercase'>{donor.national_identification_number}</div>
+                      <div className='border-y border-r border-black flex justify-center p-2 w-full font-bold uppercase'>{donor.national_identification_number}</div>
                     </div>
                     <div className='flex h-24'>
-                      <div className='border border-black flex justify-center p-2 w-5/12 items-center'>Adresi</div>
-                      <div className='border border-black flex justify-center p-2 w-full items-center'></div>
+                      <div className='border-l border-black flex justify-center p-2 w-5/12 items-center'>Adresi</div>
+                      <div className='border-x border-black flex justify-center p-2 w-full items-center'></div>
                     </div>
                     <div className='flex'>
-                      <div className='border border-black flex justify-center p-2 w-5/12 items-center'>Tarih-İmza</div>
+                      <div className='border-y border-l border-black flex justify-center p-2 w-5/12 items-center'>Tarih-İmza</div>
                       <div className='border border-black flex justify-center p-2 w-full items-center font-bold'>{prettyDate(Date.now())}</div>
                     </div>
                   </div>
                   <div className='flex flex-col w-5/12'>
                     <div className='border border-black flex justify-center p-2'>Teslim Alan</div>
                     <div className='flex'>
-                      <div className='border border-black flex justify-center p-2 w-5/12'>Adı Soyadı</div>
-                      <div className='border border-black flex justify-center p-2 w-full font-bold'>John Doe</div>
+                      <div className='border-x border-black flex justify-center p-2 w-5/12'>Adı Soyadı</div>
+                      <div className='border-r border-black flex justify-center p-2 w-full font-bold'>John Doe</div>
                     </div>
                     <div className='flex'>
                       <div className='border border-black flex justify-center p-2 w-5/12'>Görevi</div>
-                      <div className='border border-black flex justify-center p-2 w-full font-bold'>Yetkili</div>
+                      <div className='border-y border-r border-black flex justify-center p-2 w-full font-bold'>Yetkili</div>
                     </div>
                     <div className='flex h-20'>
-                      <div className='border border-black flex justify-center p-2 w-5/12 items-center'>T.C. Kimlik No</div>
-                      <div className='border border-black flex justify-center p-2 w-full items-center font-bold'>12345678901</div>
+                      <div className='border-l border-black flex justify-center p-2 w-5/12 items-center'>T.C. Kimlik No</div>
+                      <div className='border-x border-black flex justify-center p-2 w-full items-center font-bold'>12345678901</div>
                     </div>
                     <div className='flex h-20'>
-                      <div className='border border-black flex justify-center p-2 w-5/12 items-center'>Tarih-İmza</div>
+                      <div className='border-y border-l border-black flex justify-center p-2 w-5/12 items-center'>Tarih-İmza</div>
                       <div className='border border-black flex justify-center p-2 w-full items-center font-bold'>{prettyDate(Date.now())}</div>
                     </div>
                   </div>
@@ -182,4 +224,5 @@ export default function Home() {
       </div>
     </div >
   )
+
 }

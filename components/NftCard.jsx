@@ -54,10 +54,9 @@ export default function NFTBox({ price, nftAddress, tokenId, marketplaceAddress,
   }
 
   useEffect(() => {
-    if (isWeb3Enabled) {
-      updateUI();
-    }
-  }, [isWeb3Enabled])
+    updateUI();
+
+  }, [])
 
 
   return (

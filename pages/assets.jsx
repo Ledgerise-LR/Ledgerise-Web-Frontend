@@ -202,10 +202,10 @@ export default function Home() {
 
 
   const handleBuyItem = () => {
-    setIsModalOpen(true);
-    setIsBuyItemPending(true);
     if (donor != {} && donor.school_number) {
-      console.log("hello")
+      setIsModalOpen(true);
+      setIsBuyItemPending(true);
+
       axios.post(`http://localhost:4000/donate/payment`, {
         nftAddress: asset.nftAddress,
         tokenId: asset.tokenId,
@@ -261,7 +261,7 @@ export default function Home() {
       dispatch({
         type: "info",
         message: "Please login to donate.",
-        title: "Transaction failed",
+        title: "Donation failed",
         position: "topR"
       })
     }
@@ -550,8 +550,8 @@ export default function Home() {
                               {
                                 !asset.collaborators.length
                                   ? (<div><button className='underline hover:text-slate-700' target='blank' onClick={() => {
-                                    retrieveQRCodeData(`["${asset.nftAddress}-${asset.tokenId}-${event.openseaTokenId}-${event.buyer}"]`);
-                                  }}>View the QR code</button> printed on your physical donation. Click <a className='underline cursor-pointer' href="/receipt" target='_blank'>here</a> can download "Bağış Alındı Makbuzu".</div>)
+                                    retrieveQRCodeData(`${asset.tokenId}-[${event.openseaTokenId}]`);
+                                  }}>View the QR code</button> printed on your physical donation. Click <a className='underline cursor-pointer' href={`/receipt?id=${asset.tokenId}-${event.openseaTokenId}`} target='_blank'>here</a> can download "Bağış Alındı Makbuzu".</div>)
 
                                   : (
                                     <div>
@@ -573,9 +573,9 @@ export default function Home() {
                                                       let collaboratorsDataArray = [];
                                                       for (let i = 0; i < eachCollaboratorCluster.length; i++) {
                                                         const eachCollaborator = eachCollaboratorCluster[i];
-                                                        collaboratorsDataArray.push(`${asset.nftAddress}-${asset.tokenId}-${eachCollaborator.split("_")[0]}-${eachCollaborator.split("_")[1]}`)
+                                                        collaboratorsDataArray.push(parseInt(eachCollaborator.split("_")[0]));
                                                       }
-                                                      retrieveQRCodeData(JSON.stringify(collaboratorsDataArray));
+                                                      retrieveQRCodeData(`${asset.tokenId}-${JSON.stringify(collaboratorsDataArray)}`);
                                                     }}>View the QR code</button> printed on your physical donation. Belonging to <strong>{eachCollaboratorCluster.length - 1} people you collaborated.</strong></div>
                                                   )
                                                 } else {
