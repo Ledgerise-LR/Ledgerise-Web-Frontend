@@ -82,7 +82,7 @@ export default function Home() {
               <input className='bg-slate-100 rounded p-2 mb-4' type="text" placeholder='Email address' onChange={(e) => setEmail(e.target.value)} />
               <input className='bg-slate-100 rounded p-2 mb-4' type="password" placeholder='Password' onChange={(e) => setPassword(e.target.value)} />
               <div className={`${success == "true" ? ("text-green-600") : (success == "false" ? ("text-red-600") : (""))}`}>{successText}</div>
-              <div className='ml-auto w-1/4 border text-slate-50 bg-blue-900 p-2 rounded flex flex-row-reverse cursor-pointer hover:animate-bounce' onClick={() => { handleClick() }}>→ Login</div>
+              <div className='ml-auto w-1/4 border text-slate-50 bg-blue-900 p-2 rounded flex flex-row-reverse cursor-pointer hover:animate-pulse' onClick={() => { handleClick() }}>→ Login</div>
             </div>
           </div>
           <div className='ml-auto'>Powered by Üsküdar American Academy</div>

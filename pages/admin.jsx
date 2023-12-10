@@ -11,6 +11,7 @@ import blockExplorerMapping from "../constants/blockExplorerMapping.json";
 import NFTBox from '../components/NftCard';
 import axios from "axios";
 import dynamic from "next/dynamic";
+import QrCode from "react-qr-code";
 
 
 export default function Home() {
@@ -94,14 +95,47 @@ export default function Home() {
   const [collections, setCollections] = useState([]);
 
   useEffect(() => {
-    fetch(`http://localhost:4000/get-all-active-items`)
+    fetch(`http://localhost:4000/get-all-collections`)
       .then(response => response.json())
       .then(data => {
-        setAssets(data.activeItems);
-        fetch(`http://localhost:4000/get-all-collections`)
+        setCollections(data.subcollections);
+
+        fetch(`http://localhost:4000/get-all-active-items`)
           .then(response => response.json())
           .then(data => {
-            setCollections(data.subcollections);
+
+            let tempArr = [];
+
+            data.activeItems.map(activeItem => {
+
+              fetch(`http://localhost:4000/get-asset?tokenId=${activeItem.tokenId}`)
+                .then(response => response.json())
+                .then(async (data) => {
+                  const asset = {
+                    seller: data.activeItem.seller,
+                    nftAddress: data.activeItem.nftAddress,
+                    tokenId: data.activeItem.tokenId,
+                    charityAddress: data.activeItem.charityAddress,
+                    tokenUri: data.activeItem.tokenUri,
+                    price: data.activeItem.price,
+                    availableEditions: data.activeItem.availableEditions,
+                    subcollectionId: data.activeItem.subcollectionId,
+                    history: data.activeItem.history,
+                    attributes: data.activeItem.attributes,
+                    real_item_history: data.activeItem.real_item_history,
+                    route: data.activeItem.route,
+                    collaborators: data.activeItem.collaborators
+                  }
+
+                  const requestUrl = asset.tokenUri.replace("ipfs://", "https://ipfs.io/ipfs/");
+                  const tokenUriResponse = await (await fetch(requestUrl)).json();
+
+                  asset.tokenName = tokenUriResponse.name;
+                  tempArr.push(asset)
+                })
+              setAssets(tempArr);
+            })
+
           })
       })
   }, []);
@@ -381,6 +415,7 @@ export default function Home() {
     updateUI();
   }, [isWeb3Enabled, assets, listingStatus, listItemPrice]);
 
+
   return (
     <div>
       {
@@ -457,6 +492,74 @@ export default function Home() {
                     </div>
                   </div>
                 </div>)}
+              </div>
+              <div>
+                {
+                  !assets
+                    ? (<div>Cannot fetch assets.</div>)
+                    : (
+                      <div>
+                        {
+                          assets.map(asset => {
+                            return (
+                              <div className='bg-slate-200 mb-5 p-8'>
+                                <div className='flex justify-between px-4'>
+                                  <div className='mb-4 text-xl'>{asset.tokenName} {asset.tokenId}</div>
+                                  <div className='bg-blue-900 text-slate-50 rounded-xl flex justify-center items-center px-4 cursor-pointer'>Print All</div>
+                                </div>
+                                <hr className='bg-slate-900 border-slate-800 my-4' />
+                                <div className='flex'>
+                                  {
+                                    !asset.collaborators.length
+                                      ? (
+                                        asset.history.map(event => {
+                                          if (event.key == "buy") {
+                                            return (
+                                              <div className='w-16 aspect-square mr-10'>
+                                                <QrCode className='w-full h-full' value={`${asset.tokenId}-[${event.openseaTokenId}]`} />
+                                                <div>{`${asset.tokenId}-[${event.openseaTokenId}]`}</div>
+                                              </div>
+                                            )
+                                          }
+                                        })
+                                      )
+                                      : (
+                                        <div>
+                                          <div className='flex'>
+                                            {
+                                              asset.collaborators.map((eachCollaboratorCluster) => {
+
+                                                const numberOfCollaborators = parseInt(asset.tokenName.split("/")[1].split(")")[0]);
+                                                if (eachCollaboratorCluster.length == numberOfCollaborators) {
+
+                                                  for (let i = 0; i < eachCollaboratorCluster.length; i++) {
+                                                    eachCollaboratorCluster[i] = parseInt(eachCollaboratorCluster[i].toString().split("_")[0]);
+                                                  }
+
+                                                  return (
+                                                    <div className='w-16 aspect-square mr-10'>
+                                                      <QrCode className='w-full h-full' value={`${asset.tokenId}-${JSON.stringify(eachCollaboratorCluster)}`} />
+                                                      <div>{`${asset.tokenId}-${JSON.stringify(eachCollaboratorCluster)}`}</div>
+                                                    </div>
+                                                  )
+
+                                                } else {
+                                                  return;
+                                                }
+                                              })
+                                            }
+                                          </div>
+                                        </div>
+                                      )
+                                  }
+                                </div>
+                              </div>
+                            )
+                          })
+                        }
+                      </div>
+                    )
+                }
               </div>
               <div className="flex flex-1 flex-col mt-8 mb-8">
                 <div>List Item</div>

@@ -1,6 +1,7 @@
 // src/components/Map.tsx
 import { MapContainer, Marker, TileLayer, Popup, Circle } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
+import { Loading } from 'web3uikit'
 import "leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility.css";
 import "leaflet-defaulticon-compatibility";
 import { useMoralis } from "react-moralis"
@@ -70,15 +71,22 @@ export default function MyMap({ stampCoordinates, shippedCoordinates, deliveredC
             visualVerifications.map(verification => {
               if (verification.visualVerificationTokenId == stampVisualTokenId) {
                 return (
-                  <div className="flex flex-1 w-72 items-end">
-                    <div className="w-1/2 relative">
+                  <div className="flex w-72 items-end h-full">
+                    <div className="w-1/2 relative h-full flex">
                       <div className="absolute left-2 top-2 flex items-center">
                         <img className="w-5" src="logocompact.svg" alt="LRLens" />
                         <div className="text-slate-50 ml-1 text-xs">
                           <div>Lens</div>
                         </div>
                       </div>
-                      <img src={`data:image/png;base64,${stampImageSrc}`} alt="" />
+                      {
+                        !stampImageSrc
+                          ? (<div className="flex">
+                            <div>Loading</div>
+                            <Loading spinnerColor='gray' spinnerType='loader' />
+                          </div>)
+                          : <img src={`data:image/png;base64,${stampImageSrc}`} alt="" />
+                      }
                     </div>
                     <div className="ml-4 w-1/2 flex flex-col">
                       <div className="mb-2 mt-1 text-xs text-slate-600">info: Exact location inavailable due to privacy rights</div>

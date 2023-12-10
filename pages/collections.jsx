@@ -59,9 +59,9 @@ export default function Home() {
                     </div>
                     <div className='text-slate-800 text-2xl my-3 flex flex-1 justify-between items-center'>
                       <div>{collection.name}</div>
-                      <div className='w-36 px-4 py-1 rounded-full bg-black flex-col text-slate-50 flex items-baseline justify-center'>
-                        <span className='text-xl mt-1 mr-1'>{parseInt(collection.totalRaised) * ethToUsdRate}$</span>
-                        <span className='text-xs mb-2 text-slate-300'>total raised</span>
+                      <div className='w-2/3 px-4 rounded-full py-2 bg-black flex-col text-slate-50 flex items-baseline justify-center'>
+                        <span className='text-lg mr-1 -mb-1'>{(collection.totalRaised * ethToUsdRate).toFixed(0)}$</span>
+                        <span className='text-xs text-slate-300'>total raised</span>
                       </div>
                     </div>
                     <div className=''>
