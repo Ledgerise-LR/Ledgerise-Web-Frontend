@@ -1,4 +1,11 @@
 {
-  "80001": "mumbai.polygonscan.com",
-  "11155111": "sepolia.etherscan.io"
+  "blockExplorer": {
+    "80001": "mumbai.polygonscan.com",
+    "11155111": "sepolia.etherscan.io"
+  },
+
+  "nftExplorer": {
+    "80001": "mumbai",
+    "11155111": "sepolia"
+  }
 }

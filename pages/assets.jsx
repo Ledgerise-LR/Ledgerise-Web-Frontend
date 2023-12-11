@@ -177,7 +177,7 @@ export default function Home() {
   const dispatch = useNotification();
 
   function getOpenseaUrl(openseaTokenId) {
-    const openseaUrl = `https://testnets.opensea.io/assets/sepolia/${asset.nftAddress}/${openseaTokenId}`;
+    const openseaUrl = `https://testnets.opensea.io/assets/${nftExplorerUrl}/${asset.nftAddress}/${openseaTokenId}`;
     return openseaUrl;
   }
 
@@ -322,9 +322,11 @@ export default function Home() {
   const chainString = chainId ? parseInt(chainId, 16).toString() : "80001";
 
   const [blockExplorerUrl, setBlockExplorerUrl] = useState("");
+  const [nftExplorerUrl, setNftExplorerUrl] = useState("");
 
   useEffect(() => {
-    setBlockExplorerUrl(blockExplorerMapping[chainString]);
+    setBlockExplorerUrl(blockExplorerMapping["blockExplorer"][chainString]);
+    setNftExplorerUrl(blockExplorerMapping["nftExplorer"][chainString]);
   }, [chainString]);
 
 

@@ -415,7 +415,6 @@ export default function Home() {
     updateUI();
   }, [isWeb3Enabled, assets, listingStatus, listItemPrice]);
 
-
   return (
     <div>
       {
@@ -504,7 +503,7 @@ export default function Home() {
                             return (
                               <div className='bg-slate-200 mb-5 p-8'>
                                 <div className='flex justify-between px-4'>
-                                  <div className='mb-4 text-xl'>{asset.tokenName} {asset.tokenId}</div>
+                                  <div className='mb-4 text-xl'>{asset.tokenName} - {asset.tokenId}</div>
                                   <div className='bg-blue-900 text-slate-50 rounded-xl flex justify-center items-center px-4 cursor-pointer'>Print All</div>
                                 </div>
                                 <hr className='bg-slate-900 border-slate-800 my-4' />
@@ -515,8 +514,31 @@ export default function Home() {
                                         asset.history.map(event => {
                                           if (event.key == "buy") {
                                             return (
-                                              <div className='w-16 aspect-square mr-10'>
-                                                <QrCode className='w-full h-full' value={`${asset.tokenId}-[${event.openseaTokenId}]`} />
+                                              <div className='w-16 aspect-square mr-10 relative'>
+                                                <QrCode
+                                                  onMouseMove={(e) => {
+                                                    const printButtonWrapper = document.createElement("div");
+                                                    const printButton = document.createElement("div");
+
+                                                    printButtonWrapper.style.position = "absolute";
+                                                    printButtonWrapper.style.width = "100%";
+                                                    printButtonWrapper.style.height = "100%";
+                                                    printButtonWrapper.style.display = "flex";
+                                                    printButtonWrapper.style.justifyContent = "center";
+                                                    printButtonWrapper.style.alignItems = "center";
+                                                    printButtonWrapper.style.zIndex = "100";
+                                                    printButtonWrapper.style.left = "0";
+                                                    printButtonWrapper.style.top = "0";
+
+                                                    printButton.innerHTML = "Print";
+                                                    printButton.style.padding = "3px";
+                                                    printButton.style.backgroundColor = "blue";
+                                                    printButton.style.color = "white";
+
+                                                    printButtonWrapper.appendChild(printButton)
+                                                    e.target.parentNode.appendChild(printButtonWrapper);
+                                                  }}
+                                                  className='w-full z-10 h-full' value={`${asset.tokenId}-[${event.openseaTokenId}]`} />
                                                 <div>{`${asset.tokenId}-[${event.openseaTokenId}]`}</div>
                                               </div>
                                             )
@@ -564,7 +586,7 @@ export default function Home() {
               <div className="flex flex-1 flex-col mt-8 mb-8">
                 <div>List Item</div>
                 <div className="mt-4 mb-4">{listingStatus ? (<div>
-                  Listing in progress. Follow from <a target="_blank" className="underline hover:text-slate-500" href={`https://${blockExplorerUrl}/tx/${listTransactionHash}`}>{prettyAddress(listTransactionHash)}</a>
+                  Listing in progress. Follow from <a target="_blank" className="underline hover:text-slate-500" href={`https://${blockExplorerUrl["blockExplorer"]}/tx/${listTransactionHash}`}>{prettyAddress(listTransactionHash)}</a>
                 </div>) : (<div>No listing on progress</div>)}</div>
                 <input className="p-2 border-2 w-auto mb-4" type="number" placeholder="price (eth)" onChange={(e) => { setListItemPrice(e.currentTarget.value.toString()) }} />
                 <input className="p-2 border-2 w-auto mb-4" type="text" placeholder="charityAddress" onChange={(e) => { setListItemCharityAddress(e.currentTarget.value) }} />
