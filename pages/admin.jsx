@@ -514,9 +514,9 @@ export default function Home() {
                                         asset.history.map(event => {
                                           if (event.key == "buy") {
                                             return (
-                                              <div className='w-16 aspect-square mr-10 relative'>
+                                              <div className='w-24 flex flex-col items-center aspect-square mr-10 relative p-4 bg-slate-100 cursor-pointer'>
                                                 <QrCode
-                                                  onMouseMove={(e) => {
+                                                  onMouseEnter={(e) => {
                                                     const printButtonWrapper = document.createElement("div");
                                                     const printButton = document.createElement("div");
 
@@ -526,20 +526,36 @@ export default function Home() {
                                                     printButtonWrapper.style.display = "flex";
                                                     printButtonWrapper.style.justifyContent = "center";
                                                     printButtonWrapper.style.alignItems = "center";
+                                                    printButtonWrapper.style.backgroundColor = "rgba(0,0,0,0.1)";
                                                     printButtonWrapper.style.zIndex = "100";
                                                     printButtonWrapper.style.left = "0";
                                                     printButtonWrapper.style.top = "0";
 
                                                     printButton.innerHTML = "Print";
-                                                    printButton.style.padding = "3px";
-                                                    printButton.style.backgroundColor = "blue";
+                                                    printButton.style.padding = "3px 16px";
+                                                    printButton.style.borderRadius = "10px";
+                                                    printButton.style.backgroundColor = "darkblue";
                                                     printButton.style.color = "white";
 
                                                     printButtonWrapper.appendChild(printButton)
-                                                    e.target.parentNode.appendChild(printButtonWrapper);
+                                                    e.target.parentNode.parentNode.appendChild(printButtonWrapper);
+
+                                                    e.target.addEventListener("mouseleave", (e) => {
+                                                      e.preventDefault();
+                                                      printButtonWrapper.remove();
+                                                    })
                                                   }}
                                                   className='w-full z-10 h-full' value={`${asset.tokenId}-[${event.openseaTokenId}]`} />
                                                 <div>{`${asset.tokenId}-[${event.openseaTokenId}]`}</div>
+                                                {
+                                                  event.isQrCodePrinted
+                                                    ? (
+                                                      <div className='text-2xl z-30 absolute w-full h-full left-0 top-0 flex justify-center items-center bg-opacity-10 bg-black'>
+                                                        ✅
+                                                      </div>
+                                                    )
+                                                    : ("")
+                                                }
                                               </div>
                                             )
                                           }
