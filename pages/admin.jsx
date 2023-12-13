@@ -12,9 +12,28 @@ import NFTBox from '../components/NftCard';
 import axios from "axios";
 import dynamic from "next/dynamic";
 import QrCode from "react-qr-code";
+import html2canvas from "html2canvas";
+import jsPDF from "jspdf";
 
 
 export default function Home() {
+
+  const downloadAsPDF = async (divId, fileName) => {
+    const div = document.getElementById(divId);
+
+    const canvas = await html2canvas(div);
+
+    const pdf = new jsPDF();
+    const imgData = canvas.toDataURL('image/png');
+
+    pdf.addImage(imgData, 'PNG', pdf.internal.pageSize.getWidth() * 0 * -1, 0, pdf.internal.pageSize.getWidth() * 1, pdf.internal.pageSize.getHeight());
+
+    pdf.save(fileName);
+  };
+
+  const handleDownloadPDF = () => {
+    downloadAsPDF('main', 'LedgeriseQRs.pdf');
+  };
 
   const Map = useMemo(() => dynamic(
     () => import('@/components/SelectionMap'),
@@ -402,8 +421,6 @@ export default function Home() {
     msgValue: ""
   })
 
-  console.log(marketplaceAddress)
-
   const [owner, setOwner] = useState("X");
 
   async function updateUI() {
@@ -414,6 +431,79 @@ export default function Home() {
   useEffect(() => {
     updateUI();
   }, [isWeb3Enabled, assets, listingStatus, listItemPrice]);
+
+
+  const handleQrCodeHover = (e, tokenId) => {
+
+    const printButtonWrapper = document.createElement("div");
+    const printButton = document.createElement("div");
+
+    printButtonWrapper.style.position = "absolute";
+    printButtonWrapper.style.width = "100%";
+    printButtonWrapper.style.height = "100%";
+    printButtonWrapper.style.display = "flex";
+    printButtonWrapper.style.justifyContent = "center";
+    printButtonWrapper.style.alignItems = "center";
+    printButtonWrapper.style.backgroundColor = "rgba(0,0,0,0.1)";
+    printButtonWrapper.style.zIndex = "150";
+    printButtonWrapper.style.left = "0";
+    printButtonWrapper.style.top = "0";
+
+    printButton.innerHTML = "Print";
+    printButton.style.padding = "3px 16px";
+    printButton.style.borderRadius = "10px";
+    printButton.style.backgroundColor = "darkblue";
+    printButton.style.color = "white";
+
+    printButtonWrapper.appendChild(printButton)
+    e.target.parentNode.appendChild(printButtonWrapper);
+
+    let main = "";
+
+    printButton.addEventListener("click", (e) => {
+
+      main = document.createElement("div");
+      main.id = "main";
+      main.style.display = "flex";
+      main.style.justifyContent = "space-between";
+      main.style.padding = "10px";
+      main.style.flexWrap = "wrap";
+      main.style.width = "100px";
+      main.style.height = "141px";
+      e.target.parentNode.parentNode.parentNode.parentNode.appendChild(main);
+
+      e.preventDefault();
+
+      const qrCodeSvgs = document.getElementsByClassName(`asset-${tokenId}`);
+
+      for (let i = 0; i < qrCodeSvgs.length; i++) {
+        const qrCodeSvg = qrCodeSvgs[i];
+        const copyQrCodeSvg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+        copyQrCodeSvg.setAttribute("width", "35");
+        copyQrCodeSvg.setAttribute("height", "35");
+        copyQrCodeSvg.setAttribute("viewBox", "0 0 21 21");
+
+        copyQrCodeSvg.innerHTML = qrCodeSvg.innerHTML;
+
+        main.appendChild(copyQrCodeSvg);
+
+        if (i % 4 == 0) {
+          handleDownloadPDF();
+          main.innerHTML = "";
+        }
+      }
+
+    })
+
+    printButtonWrapper.addEventListener("mouseleave", (e) => {
+      e.preventDefault();
+      printButtonWrapper.remove();
+      if (main != "") {
+        main.remove()
+      }
+    })
+  }
+
 
   return (
     <div>
@@ -452,42 +542,43 @@ export default function Home() {
                 {!assets ? (<div>Assets couldn't fetched</div>) : (<div>
                   <div>
                     <div className="flex flex-col">
+                      {
+                        collections.map(collection => {
 
-                      {collections.map(collection => {
-
-                        return (
-                          <div className="flex flex-1 mb-4">
-                            <div>{collection.name}</div>
-                            <div>{collection.itemId}</div>
-                            {assets.map(asset => {
-                              if (asset.subcollectionId == collection.itemId) {
-                                return (
-                                  <div className='w-72 mr-5 mb-5' key={`${asset.nftAddress}${asset.tokenId}`}>
-                                    <a href={`/assets?id=${asset.tokenId}`}>
-                                      <NFTBox
-                                        marketplaceAddress={marketplaceAddress}
-                                        nftAddress={asset.nftAddress}
-                                        tokenId={asset.tokenId}
-                                        seller={asset.seller}
-                                        price={asset.price}
-                                        tokenUri={asset.tokenUri}
-                                        history={asset.history}
-                                        availableEditions={asset.availableEditions}
-                                      />
-                                    </a>
-                                    <div className="flex-1 flex-wrap flex flex-col">
-                                      <span>tokenId {asset.tokenId}, </span>
-                                      <span>subcollectionId {asset.subcollectionId}, </span>
-                                      <span className="text-xs break-all">charityAddress {asset.charityAddress}</span>
-                                      <span className="text-xs break-all">tokenUri {asset.tokenUri}</span>
+                          return (
+                            <div className="flex flex-1 mb-4">
+                              <div>{collection.name}</div>
+                              <div>{collection.itemId}</div>
+                              {assets.map(asset => {
+                                if (asset.subcollectionId == collection.itemId) {
+                                  return (
+                                    <div className='w-72 mr-5 mb-5' key={`${asset.nftAddress}${asset.tokenId}`}>
+                                      <a href={`/assets?id=${asset.tokenId}`}>
+                                        <NFTBox
+                                          marketplaceAddress={marketplaceAddress}
+                                          nftAddress={asset.nftAddress}
+                                          tokenId={asset.tokenId}
+                                          seller={asset.seller}
+                                          price={asset.price}
+                                          tokenUri={asset.tokenUri}
+                                          history={asset.history}
+                                          availableEditions={asset.availableEditions}
+                                        />
+                                      </a>
+                                      <div className="flex-1 flex-wrap flex flex-col">
+                                        <span>tokenId {asset.tokenId}, </span>
+                                        <span>subcollectionId {asset.subcollectionId}, </span>
+                                        <span className="text-xs break-all">charityAddress {asset.charityAddress}</span>
+                                        <span className="text-xs break-all">tokenUri {asset.tokenUri}</span>
+                                      </div>
                                     </div>
-                                  </div>
-                                )
-                              }
-                            })}
-                          </div>
-                        )
-                      })}
+                                  )
+                                }
+                              })}
+                            </div>
+                          )
+                        })
+                      }
                     </div>
                   </div>
                 </div>)}
@@ -514,38 +605,10 @@ export default function Home() {
                                         asset.history.map(event => {
                                           if (event.key == "buy") {
                                             return (
-                                              <div className='w-24 flex flex-col items-center aspect-square mr-10 relative p-4 bg-slate-100 cursor-pointer'>
+                                              <div className='w-24 flex flex-col items-center aspect-square mr-10 p-4 bg-slate-100 cursor-pointer relative'>
                                                 <QrCode
-                                                  onMouseEnter={(e) => {
-                                                    const printButtonWrapper = document.createElement("div");
-                                                    const printButton = document.createElement("div");
-
-                                                    printButtonWrapper.style.position = "absolute";
-                                                    printButtonWrapper.style.width = "100%";
-                                                    printButtonWrapper.style.height = "100%";
-                                                    printButtonWrapper.style.display = "flex";
-                                                    printButtonWrapper.style.justifyContent = "center";
-                                                    printButtonWrapper.style.alignItems = "center";
-                                                    printButtonWrapper.style.backgroundColor = "rgba(0,0,0,0.1)";
-                                                    printButtonWrapper.style.zIndex = "100";
-                                                    printButtonWrapper.style.left = "0";
-                                                    printButtonWrapper.style.top = "0";
-
-                                                    printButton.innerHTML = "Print";
-                                                    printButton.style.padding = "3px 16px";
-                                                    printButton.style.borderRadius = "10px";
-                                                    printButton.style.backgroundColor = "darkblue";
-                                                    printButton.style.color = "white";
-
-                                                    printButtonWrapper.appendChild(printButton)
-                                                    e.target.parentNode.parentNode.appendChild(printButtonWrapper);
-
-                                                    e.target.addEventListener("mouseleave", (e) => {
-                                                      e.preventDefault();
-                                                      printButtonWrapper.remove();
-                                                    })
-                                                  }}
-                                                  className='w-full z-10 h-full' value={`${asset.tokenId}-[${event.openseaTokenId}]`} />
+                                                  className={`w-full z-5 h-full asset-${asset.tokenId}`} value={`${asset.tokenId}-[${event.openseaTokenId}]`}
+                                                />
                                                 <div>{`${asset.tokenId}-[${event.openseaTokenId}]`}</div>
                                                 {
                                                   event.isQrCodePrinted
@@ -556,6 +619,10 @@ export default function Home() {
                                                     )
                                                     : ("")
                                                 }
+                                                <div className='w-full h-full absolute top-0 l-0 z-10'
+                                                  onMouseEnter={(e) => {
+                                                    handleQrCodeHover(e, asset.tokenId);
+                                                  }}></div>
                                               </div>
                                             )
                                           }
@@ -575,9 +642,15 @@ export default function Home() {
                                                   }
 
                                                   return (
-                                                    <div className='w-16 aspect-square mr-10'>
-                                                      <QrCode className='w-full h-full' value={`${asset.tokenId}-${JSON.stringify(eachCollaboratorCluster)}`} />
+                                                    <div className='w-24 flex flex-col items-center aspect-square mr-10 relative p-4 bg-slate-100 cursor-pointer'>
+                                                      <QrCode
+                                                        className={`w-full z-10 h-full asset-${asset.tokenId}`} value={`${asset.tokenId}-${JSON.stringify(eachCollaboratorCluster)}`}
+                                                      />
                                                       <div>{`${asset.tokenId}-${JSON.stringify(eachCollaboratorCluster)}`}</div>
+                                                      <div className='w-full h-full absolute top-0 l-0 z-10'
+                                                        onMouseEnter={(e) => {
+                                                          handleQrCodeHover(e, asset.tokenId);
+                                                        }}></div>
                                                     </div>
                                                   )
 
@@ -590,6 +663,9 @@ export default function Home() {
                                         </div>
                                       )
                                   }
+                                </div>
+                                <div id={`asset-${asset.tokenId}`} className='w-3 h-3'>
+
                                 </div>
                               </div>
                             )

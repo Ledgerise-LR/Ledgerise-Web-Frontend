@@ -35,7 +35,18 @@ export default function Home() {
   };
 
   const getNumberAsWord = (number) => {
-    // number = (number.length - 4) * "0" + number;
+
+    if (number.includes(".")) {
+      number = number.split(".")[0];
+    }
+
+    const numberLength = number.length;
+    let zeroCluster = "";
+    for (let j = 0; j < (4 - numberLength); j++) {
+      zeroCluster += "0";
+    }
+
+    number = `${zeroCluster}${number}`;
 
     const step0 = ["", "BİN", "İKİBİN", "ÜÇBİN", "DÖRTBİN", "BEŞBİN", "ALTI BİN", "YEDİ BİN", "SEKİZ BİN", "DOKUZ BİN"];
     const step1 = ["", "YÜZ", "İKİYÜZ", "ÜÇYÜZ", "DÖRTYÜZ", "BEŞYÜZ", "ALTIYÜZ", "YEDİYÜZ", "SEKİZYÜZ", "DOKUZYÜZ"];
@@ -78,12 +89,16 @@ export default function Home() {
     fetchEthToUsdRate();
   }, []);
 
+  const [tokenId, setTokenId] = useState(0);
+
 
   useEffect(() => {
 
     if (id) {
       const tokenId = id.split("-")[0];
       const openseaTokenId = id.split("-")[1];
+
+      setTokenId(tokenId)
 
       const _id = localStorage.getItem("_id");
 
@@ -131,8 +146,8 @@ export default function Home() {
                   </div>
                   <div className='flex flex-col w-1/4 border border-black p-1'>
                     <div className='mb-2 h-1/4'>Seri No : <strong className='uppercase'>0001</strong></div>
-                    <div className='mb-2 h-1/4'>Cilt No : <strong className='uppercase'>0001</strong></div>
-                    <div>Sıra No : <strong className='uppercase'>{history.openseaTokenId}</strong></div>
+                    <div className='mb-2 h-1/4'>Cilt No : <strong className='uppercase'>LR-{tokenId}</strong></div>
+                    <div>Sıra No : <strong className='uppercase'>LR-{history.openseaTokenId}</strong></div>
                   </div>
                 </div>
                 <div className='flex justify-between'>
@@ -172,7 +187,7 @@ export default function Home() {
                 </div>
                 <div className='flex justify-center mt-4'>
                   <div>Yalnız ............................................................................................. TL/Döviz tahsil edilmiştir.</div>
-                  <div className='absolute font-bold -ml-36'>{getNumberAsWord("0159")}</div>
+                  <div className='absolute font-bold -ml-36'>{getNumberAsWord(((history.price / 1e18) * ethToUsdRate).toFixed(2))}</div>
                 </div>
               </div>
               <div>
