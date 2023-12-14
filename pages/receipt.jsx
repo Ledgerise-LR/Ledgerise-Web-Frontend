@@ -115,6 +115,7 @@ export default function Home() {
               openseaTokenId: openseaTokenId
             })
               .then(dataRes => {
+                console.log(dataRes.data.history);
                 const dataResdata = dataRes.data;
                 if (dataResdata.success) return setHistory(dataResdata.history)
               })
@@ -145,7 +146,7 @@ export default function Home() {
                     <div className='p-1 border border-black h-24'>Adresi    : <strong>Selamiali, Vakıf Sk. No:1, 34664 Üsküdar/İstanbul</strong></div>
                   </div>
                   <div className='flex flex-col w-1/4 border border-black p-1'>
-                    <div className='mb-2 h-1/4'>Seri No : <strong className='uppercase'>0001</strong></div>
+                    <div className='mb-2 h-1/4'>Seri No : <strong className='uppercase'>LR-{history.subcollectionId}</strong></div>
                     <div className='mb-2 h-1/4'>Cilt No : <strong className='uppercase'>LR-{tokenId}</strong></div>
                     <div>Sıra No : <strong className='uppercase'>LR-{history.openseaTokenId}</strong></div>
                   </div>

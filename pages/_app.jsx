@@ -2,6 +2,7 @@
 import '@/styles/globals.css';
 import { MoralisProvider } from "react-moralis";
 import Header from "../components/Header";
+import Footer from "../components/Footer";
 import { NotificationProvider } from "web3uikit";
 import Head from 'next/head';
 import { useRouter } from 'next/router';
@@ -29,6 +30,11 @@ export default function App({ Component, pageProps }) {
               : <div></div>
           }
           <Component {...pageProps} />
+          {
+            router.pathname != "/admin"
+              ? <Footer />
+              : <div></div>
+          }
         </NotificationProvider>
       </MoralisProvider>
     </div>

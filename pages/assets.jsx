@@ -526,7 +526,7 @@ export default function Home() {
 
   return (
     <>
-      <div className='w-full h-screen py-20 px-40'>
+      <div className='w-full py-20 px-40'>
         {isModalOpen
           ? (<Modal visible={isModalOpen} onCloseButtonPressed={hideModal} onOk={hideModal} onCancel={hideModal} okText='Continue' title={<h1 className='text-3xl text-slate-900'>Thank you for your contribution!!! 🎉 🎉</h1>}>
             <div className='p-5'>

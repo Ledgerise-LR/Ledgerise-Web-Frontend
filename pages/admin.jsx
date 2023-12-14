@@ -546,35 +546,39 @@ export default function Home() {
                         collections.map(collection => {
 
                           return (
-                            <div className="flex flex-1 mb-4">
-                              <div>{collection.name}</div>
-                              <div>{collection.itemId}</div>
-                              {assets.map(asset => {
-                                if (asset.subcollectionId == collection.itemId) {
-                                  return (
-                                    <div className='w-72 mr-5 mb-5' key={`${asset.nftAddress}${asset.tokenId}`}>
-                                      <a href={`/assets?id=${asset.tokenId}`}>
-                                        <NFTBox
-                                          marketplaceAddress={marketplaceAddress}
-                                          nftAddress={asset.nftAddress}
-                                          tokenId={asset.tokenId}
-                                          seller={asset.seller}
-                                          price={asset.price}
-                                          tokenUri={asset.tokenUri}
-                                          history={asset.history}
-                                          availableEditions={asset.availableEditions}
-                                        />
-                                      </a>
-                                      <div className="flex-1 flex-wrap flex flex-col">
-                                        <span>tokenId {asset.tokenId}, </span>
-                                        <span>subcollectionId {asset.subcollectionId}, </span>
-                                        <span className="text-xs break-all">charityAddress {asset.charityAddress}</span>
-                                        <span className="text-xs break-all">tokenUri {asset.tokenUri}</span>
+                            <div className="flex flex-1 flex-col mb-4 p-4">
+                              <div className="text-2xl">
+                                <div>{collection.name} - {collection.itemId}</div>
+                              </div>
+                              <hr className="my-4" />
+                              <div className='flex'>
+                                {assets.map(asset => {
+                                  if (asset.subcollectionId == collection.itemId) {
+                                    return (
+                                      <div className='w-72 mr-5 mb-5' key={`${asset.nftAddress}${asset.tokenId}`}>
+                                        <a href={`/assets?id=${asset.tokenId}`}>
+                                          <NFTBox
+                                            marketplaceAddress={marketplaceAddress}
+                                            nftAddress={asset.nftAddress}
+                                            tokenId={asset.tokenId}
+                                            seller={asset.seller}
+                                            price={asset.price}
+                                            tokenUri={asset.tokenUri}
+                                            history={asset.history}
+                                            availableEditions={asset.availableEditions}
+                                          />
+                                        </a>
+                                        <div className="flex-1 flex-wrap flex flex-col">
+                                          <span>tokenId {asset.tokenId}, </span>
+                                          <span>subcollectionId {asset.subcollectionId}, </span>
+                                          <span className="text-xs break-all">charityAddress {asset.charityAddress}</span>
+                                          <span className="text-xs break-all">tokenUri {asset.tokenUri}</span>
+                                        </div>
                                       </div>
-                                    </div>
-                                  )
-                                }
-                              })}
+                                    )
+                                  }
+                                })}
+                              </div>
                             </div>
                           )
                         })
