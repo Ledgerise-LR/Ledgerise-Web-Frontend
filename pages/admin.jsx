@@ -214,11 +214,32 @@ export default function Home() {
   })
 
   const [createSubcollectionName, setCreateSubcollectionName] = useState("");
-  const [createSubcollectionCharityAddress, setCreateSubcollectionCharityAddress] = useState("");
+  const [createSubcollectionCompanyCode, setCreateSubcollectionCompanyCode] = useState("");
   const [createSubcollectionProperties, setCreateSubcollectionProperties] = useState("0,0");
+
+  const [createSubcollectionCharityAddress, setCreateSubcollectionCharityAddress] = useState("");
 
   const [creatingSubcollectionStatus, setCreatingSubcollectionStatus] = useState(false);
   const [creatingSubcollectionTransactionHash, setCreatingSubcollectionTransactionHash] = useState(false)
+
+  const handleCreateSubcollectionClick = () => {
+
+    if (createSubcollectionCompanyCode != "") {
+      axios.post("http://localhost:4000/company/get-company-from-code", {
+        code: createSubcollectionCompanyCode
+      })
+        .then((res) => {
+          const data = res.data;
+          const charityAddress = data.company.charityAddress
+          setCreateSubcollectionCharityAddress(charityAddress);
+
+          createSubcollection({
+            onSuccess: handleCreateSubcollectionSuccess,
+            onError: (err) => handleTransactionError(err)
+          });
+        })
+    }
+  }
 
   const { runContractFunction: createSubcollection } = useWeb3Contract({
     abi: mainCollectionAbi,
@@ -264,19 +285,51 @@ export default function Home() {
     setAddingCreatorStatus(false);
   }
 
-  const handleCreateSubcollectionSuccess = async (tx) => {
-    dispatch({
-      type: "success",
-      message: "Tx successful: item bought",
-      title: "Transaction Success",
-      position: "topR"
-    });
 
+  const { runContractFunction: getSubcollectionCounter } = useWeb3Contract({
+    abi: mainCollectionAbi,
+    contractAddress: mainCollectionAddress,
+    functionName: "getSubcollectionCounter",
+    params: {},
+  })
+
+
+  const handleCreateSubcollectionSuccess = async (tx) => {
     setCreatingSubcollectionStatus(true);
     setCreatingSubcollectionTransactionHash(tx.hash);
 
     await tx.wait(1);
 
+    // Get subcollection counter
+
+    const subcollectionId = (await getSubcollectionCounter()) - 1;
+
+    // update subcolletion db image
+
+    const formData = new FormData();
+    formData.append('image', selectedImage);
+    formData.append('subcollectionId', subcollectionId);
+    formData.append('companyCode', createSubcollectionCompanyCode);
+
+    axios.post("http://localhost:4000/update-subcollection-image", formData)
+      .then((res) => {
+        const data = res.data;
+        if (data.success) {
+          dispatch({
+            type: "success",
+            message: "Tx successful: subcollection created",
+            title: "Transaction Success",
+            position: "topR"
+          });
+        } else if (!data.success) {
+          dispatch({
+            type: "error",
+            message: "Sorry for the error. Please refresh and try again.",
+            title: "Transaction failed",
+            position: "topR"
+          })
+        }
+      })
     setCreatingSubcollectionStatus(false);
   }
 
@@ -348,19 +401,25 @@ export default function Home() {
   const [companyCode, setCompanyCode] = useState("");
   const [companyEmail, setCompanyEmail] = useState("");
   const [companyPassword, setCompanyPassword] = useState("");
+  const [companyCharityAddress, setCompanyCharityAddress] = useState("");
 
   const [companySuccessText, setCompanySuccessText] = useState("");
 
   const handleCreateCompanyClick = () => {
-    axios.post("http://localhost:4000/auth/company/create", {
-      name: companyName,
-      code: companyCode,
-      email: companyEmail,
-      password: companyPassword
-    }, (res) => {
-      if (!res.success && res.err == "bad_request") return setCompanySuccessText("Couldn't create company. Please try again.");
-      else if (res.success && res.company) return setCompanySuccessText("Successfully created.");
-    });
+
+    const formData = new FormData();
+    formData.append('image', selectedImage);
+    formData.append('name', companyName);
+    formData.append('code', companyCode);
+    formData.append('email', companyEmail);
+    formData.append('password', companyPassword);
+    formData.append('charityAddress', companyCharityAddress);
+
+    axios.post("http://localhost:4000/auth/company/create", formData)
+      .then((res) => {
+        if (!res.success && res.err == "bad_request") return setCompanySuccessText("Couldn't create company. Please try again.");
+        else if (res.success && res.company) return setCompanySuccessText("Successfully created.");
+      });
   }
 
   const [updateTokenId, setUpdateTokenId] = useState("1");
@@ -732,17 +791,22 @@ export default function Home() {
                   Subcollection creation in progress. Follow from <a target="_blank" className="underline hover:text-slate-500" href={`https://${blockExplorerUrl}/tx/${creatingSubcollectionTransactionHash}`}>{prettyAddress(creatingSubcollectionTransactionHash)}</a>
                 </div>) : (<div>No creating subcollection on progress</div>)}</div>
                 <input className="p-2 border-2 w-auto mb-4" type="text" placeholder="Name" onChange={(e) => { setCreateSubcollectionName(e.currentTarget.value.toString()) }} />
-                <input className="p-2 border-2 w-auto mb-4" type="text" placeholder="charityAddress" onChange={(e) => { setCreateSubcollectionCharityAddress(e.currentTarget.value) }} />
+                <input className="p-2 border-2 w-auto mb-4" type="text" placeholder="Company Code" onChange={(e) => { setCreateSubcollectionCompanyCode(e.currentTarget.value) }} />
+                <div>
+                  <input type="file" accept="image/*" onChange={handleImageChange} />
+                  {selectedImage && (
+                    <div>
+                      <img src={selectedImage} alt="Selected" width={200} />
+                    </div>
+                  )}
+                </div>
                 <input className="p-2 border-2 w-auto mb-4" type="text" placeholder="Properties (split with ,)" onChange={(e) => { setCreateSubcollectionProperties(e.currentTarget.value) }} />
                 <Button
                   theme="primary"
                   text="Create subcollection"
                   isFullWidth="true" type='button'
                   onClick={() => {
-                    createSubcollection({
-                      onSuccess: handleCreateSubcollectionSuccess,
-                      onError: (err) => handleTransactionError(err)
-                    });
+                    handleCreateSubcollectionClick()
                   }}
                 />
               </div>
@@ -811,7 +875,16 @@ export default function Home() {
                 <input className="p-2 border-2 w-auto mb-4" type="text" placeholder="Name" onChange={(e) => { setCompanyName(e.currentTarget.value) }} />
                 <input className="p-2 border-2 w-auto mb-4" type="text" placeholder="Code" onChange={(e) => { setCompanyCode(e.currentTarget.value) }} />
                 <input className="p-2 border-2 w-auto mb-4" type="text" placeholder="Email" onChange={(e) => { setCompanyEmail(e.currentTarget.value) }} />
+                <div>
+                  <input type="file" accept="image/*" onChange={handleImageChange} />
+                  {selectedImage && (
+                    <div>
+                      <img src={selectedImage} alt="Selected" width={200} />
+                    </div>
+                  )}
+                </div>
                 <input className="p-2 border-2 w-auto mb-4" type="text" placeholder="Password" onChange={(e) => { setCompanyPassword(e.currentTarget.value) }} />
+                <input className="p-2 border-2 w-auto mb-4" type="text" placeholder="Charity Crypto Address" onChange={(e) => { setCompanyCharityAddress(e.currentTarget.value) }} />
                 <Button
                   theme="primary"
                   text="Create Company"

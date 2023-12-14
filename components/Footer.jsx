@@ -34,18 +34,28 @@ export default function Footer() {
                   <div className="animate-bounce mr-1 font-bold text-yellow-400">{"change"}</div>
                   <div className="mr-1">{"after you donate"}</div>
                 </div>
-                <div className="p-4 px-16 w-fit ml-auto bg-slate-900 text-green-500 rounded-full transition-all cursor-pointer border border-green-500 hover:text-slate-50 hover:bg-green-500">Donate now</div>
+                <a href="collections" className="p-4 px-16 w-fit ml-auto bg-slate-900 text-green-500 rounded-full transition-all cursor-pointer border border-green-500 hover:text-slate-50 hover:bg-green-500">Donate now</a>
               </div>
             </div>
             <div className="w-1/2 flex flex-row-reverse">
               <div className="w-1/3 h-full ml-12">
                 <div className="text-slate-100 mb-2">Resources</div>
                 <div className="text-slate-400">
-                  <div className="mb-2">Home</div>
-                  <div className="mb-2">Collections</div>
-                  <div className="mb-2">Auctions</div>
-                  <div className="mb-2">Login</div>
-                  <div className="mb-2">Register</div>
+                  <div className="mb-2">
+                    <a href="/">Home</a>
+                  </div>
+                  <div className="mb-2">
+                    <a href="/collections">Collections</a>
+                  </div>
+                  <div className="mb-2">
+                    <a href="/auctions">Auctions</a>
+                  </div>
+                  <div className="mb-2">
+                    <a href="/login">Login</a>
+                  </div>
+                  <div className="mb-2">
+                    <a href="/register">Register</a>
+                  </div>
                 </div>
               </div>
               <div className="w-1/3 h-full ml-12">

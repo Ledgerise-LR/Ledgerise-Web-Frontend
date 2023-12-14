@@ -83,6 +83,7 @@ export default function Home() {
     attributes: [],
     real_item_history: []
   });
+  const [company, setCompany] = useState({});
   const [visualVerifications, setVisualVerifications] = useState({});
   const [imageURI, setImageURI] = useState("");
   const [tokenName, setTokenName] = useState("");
@@ -365,6 +366,12 @@ export default function Home() {
                 .then(response => response.json())
                 .then(data => {
                   setVisualVerifications(data.data);
+
+                  axios.post(`http://localhost:4000/company/get-company-from-code`, { code: collection.companyCode })
+                    .then((res) => {
+                      const companyData = res.data;
+                      setCompany(companyData.company);
+                    })
 
                 })
 
@@ -830,7 +837,7 @@ export default function Home() {
           <div className='p-5'>
             <div className='absolute top-0 flex flex-1 items-center'>
               <div>
-                <div className='mr-5 text-xl text-slate-700'>Powered by <strong>{collection.charityName}</strong></div>
+                <div className='mr-5 text-xl text-slate-700'>Powered by <strong>{company.name}</strong></div>
                 <div className='mr-5 text-slate-800 mt-1'>
                   <span className='text-sm'>{prettyAddress(asset.charityAddress)} </span>
                   <a target='_blank' href={`https://${blockExplorerUrl}/address/${asset.charityAddress}`} className='text-xs underline text-cyan-900'>view on Transparent Verifier</a>
@@ -844,7 +851,7 @@ export default function Home() {
                 </div>
               </div>
               <div className='h-16 aspect-square ml-5 bg-slate-50 border-2 rounded-full flex flex-1 justify-center items-center p-1 relative'>
-                <img className='rounded-full' src={collection.charityImage} alt={collection.charityName} />
+                <img className='rounded-full' src={company.image} alt={company.name} />
                 <img className='absolute w-8 -top-3 -right-3' src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e4/Twitter_Verified_Badge.svg/640px-Twitter_Verified_Badge.svg.png" alt="verified" />
               </div>
             </div>
@@ -910,9 +917,9 @@ export default function Home() {
                 <div className='flex flex-1 mb-5 border h-24 justify-between rounded'>
                   <div className='flex flex-1 items-center'>
                     <div className='h-full aspect-square flex items-center justify-center bg-slate-50 border-r border-blue-900'>
-                      <img className='p-2' src={collection.charityImage} alt={collection.charityName} />
+                      <img className='p-2' src={company.image} alt={company.name} />
                     </div>
-                    <div className='ml-4 text-lg'>{collection.charityName}</div>
+                    <div className='ml-4 text-lg'>{company.name}</div>
                   </div>
                   <div className='flex flex-1 flex-col justify-center items-end mr-4'>
                     <div>

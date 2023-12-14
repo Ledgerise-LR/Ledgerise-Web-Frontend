@@ -37,6 +37,7 @@ export default function Home() {
     fetch(`http://localhost:4000/get-all-collections`)
       .then(response => response.json())
       .then(data => {
+
         setCollections(data.subcollections);
       })
   }, [])
