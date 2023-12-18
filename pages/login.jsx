@@ -46,7 +46,7 @@ export default function Home() {
       star.style.fontSize = "2px"
       star.innerHTML = "★";
       star.style.left = (Math.random() * 95).toString() + "%";
-      star.style.top = (Math.random() * 100).toString() + "%";
+      star.style.top = (Math.random() * (120 - (Math.random() * 40))).toString() + "%";
       startsContent.appendChild(star);
     }
   }, []);
@@ -54,12 +54,12 @@ export default function Home() {
   return (
     <div className='w-screen h-screen flex items-center justify-center'>
       <div className='w-9/12 h-5/6 flex shadow-slate-600 shadow-lg'>
-        <div className='flex flex-col w-1/2 h-full bg-[linear-gradient(0deg,rgba(255,210,0,0.75)_1.82%,rgba(4,0,100,1)_25.44%)] justify-between p-4 relative'>
+        <div className='flex flex-col w-1/2 h-full bg-[linear-gradient(0deg,rgba(255,210,0,0.75)_1.82%,rgba(4,0,75,1)_25.44%)] justify-between p-4 relative'>
           <div id="starts-content" className='absolute z-0 w-full h-36 animate-pulse'></div>
           <a href='/' className='z-10 py-2 px-4 rounded bg-blue-500 w-fit text-slate-100 cursor-pointer'>← Back to main</a>
           <div className='w-full flex flex-col items-center'>
             <div className='flex items-center'>
-              <img className='h-36' src="logocompact.svg" alt="Ledgerise" />
+              <img className='h-36 z-10' src="icon.svg" alt="Ledgerise" />
               <div className='text-2xl text-slate-50 mx-4'>×</div>
               <img className='h-36' src="uaa.png" alt="Üsküdar American Academy" />
             </div>
@@ -72,7 +72,7 @@ export default function Home() {
           </div>
           <div className='ml-auto text-slate-900'>Ledgerise 2023</div>
         </div>
-        <div className='flex flex-col w-1/2 h-full p-4 px-16 justify-between'>
+        <div className='flex flex-col w-1/2 h-full p-4 px-16 justify-between bg-white'>
           <div></div>
           <div>
             <div className='text-2xl mb-8'>Ledgerise | Login</div>

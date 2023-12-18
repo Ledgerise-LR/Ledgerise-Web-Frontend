@@ -31,7 +31,7 @@ export default function App({ Component, pageProps }) {
           }
           <Component {...pageProps} />
           {
-            router.pathname != "/admin"
+            router.pathname != "/admin" && router.pathname != "/register" && router.pathname != "/login"
               ? <Footer />
               : <div></div>
           }

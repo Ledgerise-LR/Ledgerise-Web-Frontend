@@ -366,19 +366,21 @@ export default function Home() {
                 .then(response => response.json())
                 .then(data => {
                   setVisualVerifications(data.data);
-
-                  axios.post(`http://localhost:4000/company/get-company-from-code`, { code: collection.companyCode })
-                    .then((res) => {
-                      const companyData = res.data;
-                      setCompany(companyData.company);
-                    })
-
                 })
-
             })
         })
     }
   }, [tokenId])
+
+  useEffect(() => {
+    if (collection.companyCode) {
+      axios.post(`http://localhost:4000/company/get-company-from-code`, { code: collection.companyCode })
+        .then((res) => {
+          const companyData = res.data;
+          setCompany(companyData.company);
+        })
+    }
+  }, [collection])
 
   useEffect(() => {
     const _id = localStorage.getItem("_id");

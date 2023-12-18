@@ -29,10 +29,13 @@ export default function Footer() {
                 <div className="mb-8">
                   <img src="/icon.svg" alt="Ledgerise logo" />
                 </div>
-                <div className="w-full font-serif text-yellow-500 text-2xl mb-8 flex">
+                <div className="w-full font-serif text-yellow-500 text-2xl mb-1 flex">
                   <div className="mr-1">{"See the"}</div>
-                  <div className="animate-bounce mr-1 font-bold text-yellow-400">{"change"}</div>
+                  <div className="mr-1 font-bold text-yellow-400">{"change"}</div>
                   <div className="mr-1">{"after you donate"}</div>
+                </div>
+                <div className="w-full font-serif text-yellow-700 text-lg mb-8 flex">
+                  Let us hand your donation into the hearts of beneficiaries ❤️
                 </div>
                 <a href="collections" className="p-4 px-16 w-fit ml-auto bg-slate-900 text-green-500 rounded-full transition-all cursor-pointer border border-green-500 hover:text-slate-50 hover:bg-green-500">Donate now</a>
               </div>
@@ -59,7 +62,7 @@ export default function Footer() {
                 </div>
               </div>
               <div className="w-1/3 h-full ml-12">
-                <div className="text-slate-100 mb-2">Company</div>
+                <div className="text-slate-100 mb-2">Related</div>
                 <div className="text-slate-400">
                   <div className="mb-2">Terms & Conditions</div>
                   <div className="mb-2">Privacy Policy</div>

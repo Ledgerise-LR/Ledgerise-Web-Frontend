@@ -34,7 +34,6 @@ export default function MyMap({ stampCoordinates, shippedCoordinates, deliveredC
 
   useEffect(() => {
     visualVerifications.map(verification => {
-      console.log(verification)
       if (verification.visualVerificationTokenId == stampVisualTokenId) {
         console.log(verification.visualVerificationTokenId)
         console.log(verification.tokenUri)
