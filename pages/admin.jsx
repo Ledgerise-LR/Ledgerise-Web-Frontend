@@ -14,6 +14,7 @@ import dynamic from "next/dynamic";
 import QrCode from "react-qr-code";
 import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
+import { URL, PORT } from '@/serverConfig';
 
 
 export default function Home() {
@@ -99,12 +100,12 @@ export default function Home() {
   const router = useRouter();
   const dispatch = useNotification();
 
-  const chainString = chainId ? parseInt(chainId, 16).toString() : "11155111";
+  const chainString = chainId ? parseInt(chainId, 16).toString() : "80001";
 
   const [blockExplorerUrl, setBlockExplorerUrl] = useState("");
 
   useEffect(() => {
-    setBlockExplorerUrl(blockExplorerMapping[chainString]);
+    setBlockExplorerUrl(blockExplorerMapping["blockExplorer"][chainString]);
   }, [chainString]);
 
   const marketplaceAddress = networkMapping["Marketplace"][chainString];
@@ -114,12 +115,12 @@ export default function Home() {
   const [collections, setCollections] = useState([]);
 
   useEffect(() => {
-    fetch(`http://localhost:4000/get-all-collections`)
+    fetch(`${URL}:${PORT}/get-all-collections`)
       .then(response => response.json())
       .then(data => {
         setCollections(data.subcollections);
 
-        fetch(`http://localhost:4000/get-all-active-items`)
+        fetch(`${URL}:${PORT}/get-all-active-items`)
           .then(response => response.json())
           .then(data => {
 
@@ -127,7 +128,7 @@ export default function Home() {
 
             data.activeItems.map(activeItem => {
 
-              fetch(`http://localhost:4000/get-asset?tokenId=${activeItem.tokenId}`)
+              fetch(`${URL}:${PORT}/get-asset?tokenId=${activeItem.tokenId}`)
                 .then(response => response.json())
                 .then(async (data) => {
                   const asset = {
@@ -151,10 +152,10 @@ export default function Home() {
 
                   asset.tokenName = tokenUriResponse.name;
                   tempArr.push(asset)
+                }).then(() => {
+                  setAssets(tempArr);
                 })
-              setAssets(tempArr);
             })
-
           })
       })
   }, []);
@@ -162,7 +163,7 @@ export default function Home() {
   const [tokenUris, setTokenUris] = useState([]);
 
   useEffect(() => {
-    fetch(`http://localhost:4000/admin/pinata/tokenuri`)
+    fetch(`${URL}:${PORT}/admin/pinata/tokenuri`)
       .then(response => response.json())
       .then(data => {
         setTokenUris(data.data);
@@ -172,7 +173,7 @@ export default function Home() {
   const [companies, setCompanies] = useState([]);
 
   useEffect(() => {
-    fetch(`http://localhost:4000/company/get-all`)
+    fetch(`${URL}:${PORT}/company/get-all`)
       .then(response => response.json())
       .then(data => {
         setCompanies(data.companies);
@@ -225,7 +226,7 @@ export default function Home() {
   const handleCreateSubcollectionClick = () => {
 
     if (createSubcollectionCompanyCode != "") {
-      axios.post("http://localhost:4000/company/get-company-from-code", {
+      axios.post(`${URL}:${PORT}/company/get-company-from-code`, {
         code: createSubcollectionCompanyCode
       })
         .then((res) => {
@@ -311,7 +312,7 @@ export default function Home() {
     formData.append('subcollectionId', subcollectionId);
     formData.append('companyCode', createSubcollectionCompanyCode);
 
-    axios.post("http://localhost:4000/update-subcollection-image", formData)
+    axios.post(`${URL}:${PORT}/update-subcollection-image`, formData)
       .then((res) => {
         const data = res.data;
         if (data.success) {
@@ -386,7 +387,7 @@ export default function Home() {
       formData.append('description', pinataDescription);
       formData.append('attributes', pinataAttributesString);
 
-      axios.post('http://localhost:4000/admin/pinata/upload', formData)
+      axios.post(`${URL}:${PORT}/admin/pinata/upload`, formData)
         .then((response) => {
           alert(response.data);
           setUploadingToPinataStatus(false)
@@ -415,7 +416,7 @@ export default function Home() {
     formData.append('password', companyPassword);
     formData.append('charityAddress', companyCharityAddress);
 
-    axios.post("http://localhost:4000/auth/company/create", formData)
+    axios.post(`${URL}:${PORT}/auth/company/create`, formData)
       .then((res) => {
         if (!res.success && res.err == "bad_request") return setCompanySuccessText("Couldn't create company. Please try again.");
         else if (res.success && res.company) return setCompanySuccessText("Successfully created.");

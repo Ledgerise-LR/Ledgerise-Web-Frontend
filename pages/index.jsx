@@ -6,6 +6,7 @@ import { ethers } from 'ethers';
 import { getEthToUsdRate } from '@/utils/getEthToUsdRate';
 import { Button } from 'web3uikit'
 import blockExplorerMapping from "../constants/blockExplorerMapping.json";
+import { URL, PORT } from '@/serverConfig';
 
 export default function Home() {
 
@@ -38,7 +39,7 @@ export default function Home() {
   useEffect(() => {
     async function fetchAsset() {
       console.log(asset.tokenId);
-      fetch(`http://localhost:4000/get-random-featured-nft?previousTokenId=${previousTokenId}`)
+      fetch(`${URL}:${PORT}/get-random-featured-nft?previousTokenId=${previousTokenId}`)
         .then(response => response.json())
         .then(data => {
           const asset = {

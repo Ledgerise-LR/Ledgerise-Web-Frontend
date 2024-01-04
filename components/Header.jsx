@@ -5,6 +5,7 @@ import { AES, enc } from "crypto-js";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { useRouter } from "next/router";
+import { URL, PORT } from '@/serverConfig';
 
 export default function Header() {
 
@@ -15,7 +16,7 @@ export default function Header() {
 
   useEffect(() => {
     console.log(localStorage.getItem("_id"))
-    axios.post("http://localhost:4000/auth/authenticate", {
+    axios.post(`${URL}:${PORT}/auth/authenticate`, {
       _id: localStorage.getItem("_id") || "null"
     })
       .then(data => {

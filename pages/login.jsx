@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useRouter } from 'next/router';
 import { AES, enc } from "crypto-js";
+import { URL, PORT } from '@/serverConfig';
 
 export default function Home() {
 
@@ -19,7 +20,7 @@ export default function Home() {
   }, [success, successText])
 
   const handleClick = () => {
-    axios.post("http://localhost:4000/auth/login", {
+    axios.post(`${URL}:${PORT}/auth/login`, {
       email: email,
       password: password
     })
@@ -54,7 +55,7 @@ export default function Home() {
   return (
     <div className='w-screen h-screen flex items-center justify-center'>
       <div className='w-9/12 h-5/6 flex shadow-slate-600 shadow-lg'>
-        <div className='flex flex-col w-1/2 h-full bg-[linear-gradient(0deg,rgba(255,210,0,0.75)_1.82%,rgba(4,0,75,1)_25.44%)] justify-between p-4 relative'>
+        <div className='flex flex-col w-1/2 h-full bg-[linear-gradient(0deg,rgba(255,191,0,0.75)_0%,rgba(136,206,235,0.75)_75%)] justify-between p-4 relative'>
           <div id="starts-content" className='absolute z-0 w-full h-36 animate-pulse'></div>
           <a href='/' className='z-10 py-2 px-4 rounded bg-blue-500 w-fit text-slate-100 cursor-pointer'>← Back to main</a>
           <div className='w-full flex flex-col items-center'>
@@ -66,7 +67,7 @@ export default function Home() {
             <div className='text-slate-50 text-5xl my-4'>Welcome to Ledgerise</div>
             <div className='text-slate-200 text-lg text-center'>Donate with a piece of mind. See your donation meeting beneficiaries.</div>
             <div className='mt-4 flex items-center'>
-              <div className='mr-4 text-slate-300'>New to Ledgerise?</div>
+              <div className='mr-4 text-slate-600'>New to Ledgerise?</div>
               <a href='/register' className='bg-blue-900 text-slate-100 py-3 px-8 rounded-lg border hover:border-blue-900 hover:bg-slate-50 hover:text-slate-900 transition-all cursor-pointer'>Sign Up</a>
             </div>
           </div>

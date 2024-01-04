@@ -12,6 +12,7 @@ import blockExplorerMapping from "../constants/blockExplorerMapping.json";
 import dynamic from "next/dynamic"
 import { AES, enc } from "crypto-js";
 import axios from 'axios';
+import { URL, PORT } from '@/serverConfig';
 
 const { MapContainer, TileLayer, Popup, Marker } = dynamic(() => import("react-leaflet"), { ssr: false })
 
@@ -207,7 +208,7 @@ export default function Home() {
       setIsModalOpen(true);
       setIsBuyItemPending(true);
 
-      axios.post(`http://localhost:4000/donate/payment`, {
+      axios.post(`${URL}:${PORT}/donate/payment`, {
         nftAddress: asset.nftAddress,
         tokenId: asset.tokenId,
         charityAddress: asset.charityAddress,
@@ -228,7 +229,7 @@ export default function Home() {
               position: "topR"
             });
             setBuyItemSuccessText(`Donated 1 ${tokenName} successfully. Thanks for your contribution.`);
-            fetch(`http://localhost:4000/get-asset?tokenId=${tokenId}`)
+            fetch(`${URL}:${PORT}/get-asset?tokenId=${tokenId}`)
               .then(response => response.json())
               .then(data => {
                 const asset = {
@@ -288,7 +289,7 @@ export default function Home() {
     await tx.wait(1);
     localStorage.setItem("txHash", "");
     setHasTxHashKey(false);
-    fetch(`http://localhost:4000/get-asset?tokenId=${tokenId}`)
+    fetch(`${URL}:${PORT}/get-asset?tokenId=${tokenId}`)
       .then(response => response.json())
       .then(data => {
         const asset = {
@@ -337,7 +338,7 @@ export default function Home() {
 
   useEffect(() => {
     if (tokenId) {
-      fetch(`http://localhost:4000/get-asset?tokenId=${tokenId}`)
+      fetch(`${URL}:${PORT}/get-asset?tokenId=${tokenId}`)
         .then(response => response.json())
         .then(data => {
           console.log(data.activeItem.collaborators)
@@ -357,12 +358,12 @@ export default function Home() {
             collaborators: data.activeItem.collaborators
           }
           setAsset(asset);
-          fetch(`http://localhost:4000/get-single-collection?id=${asset.subcollectionId}`)
+          fetch(`${URL}:${PORT}/get-single-collection?id=${asset.subcollectionId}`)
             .then(response => response.json())
             .then(data => {
               setCollection(data.subcollection);
 
-              fetch(`http://localhost:4000/get-all-visual-verifications`)
+              fetch(`${URL}:${PORT}/get-all-visual-verifications`)
                 .then(response => response.json())
                 .then(data => {
                   setVisualVerifications(data.data);
@@ -374,7 +375,7 @@ export default function Home() {
 
   useEffect(() => {
     if (collection.companyCode) {
-      axios.post(`http://localhost:4000/company/get-company-from-code`, { code: collection.companyCode })
+      axios.post(`${URL}:${PORT}/company/get-company-from-code`, { code: collection.companyCode })
         .then((res) => {
           const companyData = res.data;
           setCompany(companyData.company);
@@ -386,12 +387,12 @@ export default function Home() {
     const _id = localStorage.getItem("_id");
 
     if (_id) {
-      axios.post(`http://localhost:4000/auth/authenticate`, {
+      axios.post(`${URL}:${PORT}/auth/authenticate`, {
         _id: _id
       }).then((res) => {
         if (res.data.success) {
           setDonor(res.data.donor);
-          fetch(`http://localhost:4000/reports/get-past?reporter=${res.data.donor.school_number}`)
+          fetch(`${URL}:${PORT}/reports/get-past?reporter=${res.data.donor.school_number}`)
             .then(response => response.json())
             .then(data => {
               setReports(data.data);
@@ -481,7 +482,7 @@ export default function Home() {
     hideLocationModal();
     showModal();
 
-    axios.post("http://localhost:4000/donate/payment/usd/", {
+    axios.post(`${URL}:${PORT}/donate/payment/usd/`, {
       cardOwner: cardOwner,
       PAN: PAN,
       expiryMonth: expiryMonth,
@@ -511,14 +512,14 @@ export default function Home() {
   const handleReportIssue = () => {
     const _id = localStorage.getItem("_id");
     if (_id) {
-      axios.post(`http://localhost:4000/auth/authenticate`, {
+      axios.post(`${URL}:${PORT}/auth/authenticate`, {
         _id: _id
       }).then((res) => {
         if (res.data.success) {
 
           setIsReportIssuePending(true);
 
-          axios.post(`http://localhost:4000/reports/report-issue`, {
+          axios.post(`${URL}:${PORT}/reports/report-issue`, {
             reporter: res.data.donor.school_number.toString(),
             message: reportMessage,
             reportCodes: generateReportCodes(),

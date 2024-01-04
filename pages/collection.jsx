@@ -6,6 +6,7 @@ import marketplaceAbi from "../constants/abi.json";
 import networkMapping from "../constants/networkMapping.json";
 import NFTBox from '../components/NftCard'
 import blockExplorerMapping from "../constants/blockExplorerMapping.json";
+import { URL, PORT } from '@/serverConfig';
 
 export default function Home() {
 
@@ -25,15 +26,15 @@ export default function Home() {
 
   useEffect(() => {
     if (itemId) {
-      fetch(`http://localhost:4000/get-collection?subcollectionId=${itemId}`)
+      fetch(`${URL}:${PORT}/get-collection?subcollectionId=${itemId}`)
         .then(response => response.json())
         .then(data => {
           setAssets(data.activeItems);
-        })
-      fetch(`http://localhost:4000/get-single-collection?id=${itemId}`)
-        .then(response => response.json())
-        .then(data => {
-          setCollection(data.subcollection);
+          fetch(`${URL}:${PORT}/get-single-collection?id=${itemId}`)
+            .then(response => response.json())
+            .then(data => {
+              setCollection(data.subcollection);
+            })
         })
     }
   }, [itemId, router])
@@ -51,7 +52,7 @@ export default function Home() {
     setNewestClicked(false);
     const priceFilter = selectedPriceCategories.join(",");
     const availableEditionsFilter = availableEditions.join(",");
-    fetch(`http://localhost:4000/get-collection?subcollectionId=${itemId}&priceFilter=${priceFilter}&availableEditionsFilter=${availableEditionsFilter}`)
+    fetch(`${URL}:${PORT}/get-collection?subcollectionId=${itemId}&priceFilter=${priceFilter}&availableEditionsFilter=${availableEditionsFilter}`)
       .then(response => response.json())
       .then(data => {
         setAssets(data.activeItems);
@@ -66,7 +67,7 @@ export default function Home() {
     setNewestClicked(false);
     const priceFilter = selectedPriceCategories.join(",");
     const availableEditionsFilter = availableEditions.join(",");
-    fetch(`http://localhost:4000/sort/price-ascending?subcollectionId=${itemId}&priceFilter=${priceFilter}&availableEditionsFilter=${availableEditionsFilter}`)
+    fetch(`${URL}:${PORT}/sort/price-ascending?subcollectionId=${itemId}&priceFilter=${priceFilter}&availableEditionsFilter=${availableEditionsFilter}`)
       .then(response => response.json())
       .then(data => {
         setAssets(data.activeItems);
@@ -81,7 +82,7 @@ export default function Home() {
     setNewestClicked(false);
     const priceFilter = selectedPriceCategories.join(",");
     const availableEditionsFilter = availableEditions.join(",");
-    fetch(`http://localhost:4000/sort/price-descending?subcollectionId=${itemId}&priceFilter=${priceFilter}&availableEditionsFilter=${availableEditionsFilter}`)
+    fetch(`${URL}:${PORT}/sort/price-descending?subcollectionId=${itemId}&priceFilter=${priceFilter}&availableEditionsFilter=${availableEditionsFilter}`)
       .then(response => response.json())
       .then(data => {
         setAssets(data.activeItems);
@@ -96,7 +97,7 @@ export default function Home() {
     setNewestClicked(false);
     const priceFilter = selectedPriceCategories.join(",");
     const availableEditionsFilter = availableEditions.join(",");
-    fetch(`http://localhost:4000/sort/oldest?subcollectionId=${itemId}&priceFilter=${priceFilter}&availableEditionsFilter=${availableEditionsFilter}`)
+    fetch(`${URL}:${PORT}/sort/oldest?subcollectionId=${itemId}&priceFilter=${priceFilter}&availableEditionsFilter=${availableEditionsFilter}`)
       .then(response => response.json())
       .then(data => {
         setAssets(data.activeItems);
@@ -112,7 +113,7 @@ export default function Home() {
     setNewestClicked(true);
     const priceFilter = selectedPriceCategories.join(",");
     const availableEditionsFilter = availableEditions.join(",");
-    fetch(`http://localhost:4000/sort/newest?subcollectionId=${itemId}&priceFilter=${priceFilter}&availableEditionsFilter=${availableEditionsFilter}`)
+    fetch(`${URL}:${PORT}/sort/newest?subcollectionId=${itemId}&priceFilter=${priceFilter}&availableEditionsFilter=${availableEditionsFilter}`)
       .then(response => response.json())
       .then(data => {
         setAssets(data.activeItems);

@@ -6,6 +6,7 @@ import html2canvas from 'html2canvas';
 import { useRouter } from 'next/router';
 import { ethers } from "ethers";
 import { getEthToUsdRate } from '@/utils/getEthToUsdRate';
+import { URL, PORT } from '@/serverConfig';
 
 export default function Home() {
 
@@ -102,14 +103,14 @@ export default function Home() {
 
       const _id = localStorage.getItem("_id");
 
-      axios.post(`http://localhost:4000/auth/authenticate`, {
+      axios.post(`${URL}:${PORT}/auth/authenticate`, {
         _id: _id
       })
         .then((res) => {
           const data = res.data;
           if (data.success && data.donor) {
             setDonor(data.donor);
-            axios.post(`http://localhost:4000/donor/get-receipt-data`, {
+            axios.post(`${URL}:${PORT}/donor/get-receipt-data`, {
               buyer: donor.school_number,
               tokenId: tokenId,
               openseaTokenId: openseaTokenId

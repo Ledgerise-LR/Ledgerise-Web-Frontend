@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useRouter } from 'next/router';
 import { AES, enc } from "crypto-js";
+import { URL, PORT } from '@/serverConfig';
 
 export default function Home() {
 
@@ -13,6 +14,8 @@ export default function Home() {
     return encryptedValue.toString();
   }
 
+  const [name, setName] = useState("");
+  const [surname, setSurname] = useState("");
   const [email, setEmail] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
   const [schoolNumber, setSchoolNumber] = useState("");
@@ -31,7 +34,9 @@ export default function Home() {
   const handleClick = () => {
 
     if (nationalIdentificationNumber != "" && email != "" && phoneNumber != "" && schoolNumber != "" && password != "" && confirmPassword != "" && password == confirmPassword) {
-      axios.post("http://localhost:4000/auth/register", {
+      axios.post(`${URL}:${PORT}/auth/register`, {
+        name: name,
+        surname: surname,
         national_identification_number: nationalIdentificationNumber,
         email: email,
         school_number: schoolNumber,
@@ -84,8 +89,8 @@ export default function Home() {
             <div className='flex flex-col mb-4'>
               <input className='bg-slate-100 rounded p-2 mb-4' type="text" placeholder='T.C. Identification Number' onChange={(e) => setNationalIdentificationNumber(e.target.value)} />
               <div className='flex justify-between'>
-                <input className='bg-slate-100 rounded p-2 mb-4 w-1/2 mr-4' type="text" placeholder='Name' onChange={(e) => setPhoneNumber(e.target.value)} />
-                <input className='bg-slate-100 rounded p-2 mb-4 w-1/2' type="text" placeholder='Surname' onChange={(e) => setPhoneNumber(e.target.value)} />
+                <input className='bg-slate-100 rounded p-2 mb-4 w-1/2 mr-4' type="text" placeholder='Name' onChange={(e) => setName(e.target.value)} />
+                <input className='bg-slate-100 rounded p-2 mb-4 w-1/2' type="text" placeholder='Surname' onChange={(e) => setSurname(e.target.value)} />
               </div>
               <input className='bg-slate-100 rounded p-2 mb-4' type="text" placeholder='Email address' onChange={(e) => setEmail(e.target.value)} />
               <input className='bg-slate-100 rounded p-2 mb-4' type="number" placeholder='School Number' onChange={(e) => setSchoolNumber(e.target.value)} />

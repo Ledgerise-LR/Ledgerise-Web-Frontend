@@ -1,9 +1,11 @@
 
+import { URL, PORT } from '@/serverConfig';
+
 const calculatePercentage = async (type /* rarity or advancament */, targetTokenAttributes, subcollectionId, targetTokenId) => {
 
   let percentagesArray = [];
 
-  await fetch(`http://localhost:4000/get-all-items-collection?subcollectionId=${subcollectionId}`)
+  await fetch(`${URL}:${PORT}/get-all-items-collection?subcollectionId=${subcollectionId}`)
     .then(response => response.json())
     .then(data => {
 

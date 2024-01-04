@@ -6,6 +6,7 @@ import marketplaceAbi from "../constants/abi.json";
 import networkMapping from "../constants/networkMapping.json";
 import blockExplorerMapping from "../constants/blockExplorerMapping.json";
 import AuctionBox from '../components/AuctionCard'
+import { URL, PORT } from '@/serverConfig';
 
 export default function Home() {
 
@@ -22,7 +23,7 @@ export default function Home() {
   const checkboxClassName = "w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600";
 
   useEffect(() => {
-    fetch(`http://localhost:4000/get-all-auction-items`)
+    fetch(`${URL}:${PORT}/get-all-auction-items`)
       .then(response => response.json())
       .then(data => {
         setAssets(data.auctionItems);

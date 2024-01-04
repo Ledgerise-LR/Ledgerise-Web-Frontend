@@ -10,6 +10,7 @@ import marketplaceAbi from "../constants/abi.json";
 import blockExplorerMapping from "../constants/blockExplorerMapping.json";
 import networkMapping from "../constants/networkMapping.json"
 import { calculatePercentage } from '@/utils/calculatePercentage';
+import { URL, PORT } from '@/serverConfig';
 
 export default function Home() {
 
@@ -79,7 +80,7 @@ export default function Home() {
     await tx.wait(1);
     localStorage.setItem("txHash", "");
     setHasTxHashKey(false);
-    fetch(`http://localhost:4000/get-auction?tokenId=${tokenId}`)
+    fetch(`${URL}:${PORT}/get-auction?tokenId=${tokenId}`)
       .then(response => response.json())
       .then(data => {
         const asset = {
@@ -112,7 +113,7 @@ export default function Home() {
 
   useEffect(() => {
     if (tokenId) {
-      fetch(`http://localhost:4000/get-auction?tokenId=${tokenId}`)
+      fetch(`${URL}:${PORT}/get-auction?tokenId=${tokenId}`)
         .then(response => response.json())
         .then(data => {
           const asset = data.activeItem

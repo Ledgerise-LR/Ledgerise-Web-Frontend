@@ -37,7 +37,7 @@ export default function MyMap({ stampCoordinates, shippedCoordinates, deliveredC
       if (verification.visualVerificationTokenId == stampVisualTokenId) {
         console.log(verification.visualVerificationTokenId)
         console.log(verification.tokenUri)
-        fetch(`http://localhost:4000/privacy/blur-visual?ipfsGatewayTokenUri=https://ipfs.io/ipfs/${verification.tokenUri}`)
+        fetch(`${URL}:${PORT}/privacy/blur-visual?ipfsGatewayTokenUri=https://ipfs.io/ipfs/${verification.tokenUri}`)
           .then(response => response.json())
           .then(data => {
             setStampImageSrc(data.data);

@@ -11,6 +11,7 @@ import networkMapping from "../constants/networkMapping.json";
 import NFTBox from '@/components/NFTCard'
 import { getEthToUsdRate } from '@/utils/getEthToUsdRate';
 import blockExplorerMapping from "../constants/blockExplorerMapping.json";
+import { URL, PORT } from '@/serverConfig';
 
 
 export default function Home() {
@@ -34,7 +35,7 @@ export default function Home() {
 
 
   useEffect(() => {
-    fetch(`http://localhost:4000/get-all-collections`)
+    fetch(`${URL}:${PORT}/get-all-collections`)
       .then(response => response.json())
       .then(data => {
 
