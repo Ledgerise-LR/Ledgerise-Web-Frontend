@@ -55,7 +55,7 @@ export default function Home() {
   return (
     <div className='w-screen h-screen flex items-center justify-center'>
       <div className='w-9/12 h-5/6 flex shadow-slate-600 shadow-lg'>
-        <div className='flex flex-col w-1/2 h-full bg-[linear-gradient(0deg,rgba(255,191,0,0.75)_0%,rgba(136,206,235,0.75)_75%)] justify-between p-4 relative'>
+        <div className='flex flex-col w-1/2 h-full bg-[linear-gradient(0deg,rgba(255,100,0,0.75)_0%,rgba(20,50,150,0.75)_75%)] justify-between p-4 relative'>
           <div id="starts-content" className='absolute z-0 w-full h-36 animate-pulse'></div>
           <a href='/' className='z-10 py-2 px-4 rounded bg-blue-500 w-fit text-slate-100 cursor-pointer'>← Back to main</a>
           <div className='w-full flex flex-col items-center'>

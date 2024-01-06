@@ -9,11 +9,6 @@ export default function Home() {
 
   const router = useRouter();
 
-  const hashStringAES = (value) => {
-    const encryptedValue = AES.encrypt(enc.Utf8.parse(value), `${process.env.AUTHENTICATION_KEY}`);
-    return encryptedValue.toString();
-  }
-
   const [name, setName] = useState("");
   const [surname, setSurname] = useState("");
   const [email, setEmail] = useState("");
@@ -50,7 +45,7 @@ export default function Home() {
           } else if (data.data.success && !data.data.error && data.data.donor) {
             setSuccess("true")
             setSuccessText("Successfully registered. Proceeding main.")
-            localStorage.setItem("_id", hashStringAES(data.data.donor._id));
+            localStorage.setItem("_id", data.data.donor._id);
             router.push("/");
           }
         })

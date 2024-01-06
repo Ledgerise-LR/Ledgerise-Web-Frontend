@@ -95,7 +95,7 @@ export default function Home() {
 
   useEffect(() => {
 
-    if (id) {
+    if (id && router) {
       const tokenId = id.split("-")[0];
       const openseaTokenId = id.split("-")[1];
 
@@ -123,7 +123,7 @@ export default function Home() {
           }
         })
     }
-  }, [id, ethToUsdRate])
+  }, [id, ethToUsdRate, router])
 
 
 

@@ -834,7 +834,7 @@ export default function Home() {
         }
 
         <div className='flex flex-1 items-end relative h-full'>
-          <div className='border-2 h-full flex flex-col justify-center'>
+          <div className='border-2 w-1/2 h-screen flex flex-col justify-center'>
             <Image loader={() => imageURI} src={imageURI} width="500" height="1" />
           </div>
           <div className='p-5'>

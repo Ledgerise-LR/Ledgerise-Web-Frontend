@@ -8,6 +8,7 @@ import { useMoralis } from "react-moralis";
 import networkMapping from "../constants/networkMapping.json";
 import { useEffect, useState } from "react";
 import blockExplorerMapping from "../constants/blockExplorerMapping.json";
+import { URL, PORT } from '@/serverConfig';
 
 export default function MyMap({ stampCoordinates, shippedCoordinates, deliveredCoordinates, route, stampVisualTokenId, shipVisualTokenId, deliverVisualTokenId, visualVerifications, zoom }) {
 
