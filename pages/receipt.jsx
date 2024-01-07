@@ -15,7 +15,9 @@ export default function Home() {
 
   const [donor, setDonor] = useState({});
   const [history, setHistory] = useState({
-    price: 0
+    price: "0000",
+    subcollectionId: 0,
+    openseaTokenId: 0
   });
 
   const downloadAsPDF = async (divId, fileName) => {
