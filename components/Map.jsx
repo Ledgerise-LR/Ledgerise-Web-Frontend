@@ -31,17 +31,17 @@ export default function MyMap({ stampCoordinates, shippedCoordinates, deliveredC
 
   const ledgeriseLensNftAddress = networkMapping["LedgeriseLens"][chainString];
 
-  const [stampImageSrc, setStampImageSrc] = useState(null);
+  const [deliverImageSrc, setDeliverImageSrc] = useState(null);
 
   useEffect(() => {
     visualVerifications.map(verification => {
-      if (verification.visualVerificationTokenId == stampVisualTokenId) {
+      if (verification.visualVerificationTokenId == deliverVisualTokenId) {
         console.log(verification.visualVerificationTokenId)
         console.log(verification.tokenUri)
         fetch(`${URL}:${PORT}/privacy/blur-visual?ipfsGatewayTokenUri=https://ipfs.io/ipfs/${verification.tokenUri}`)
           .then(response => response.json())
           .then(data => {
-            setStampImageSrc(data.data);
+            setDeliverImageSrc(data.data);
           })
           .catch(error => {
             console.error('Error fetching image:', error);
@@ -73,22 +73,7 @@ export default function MyMap({ stampCoordinates, shippedCoordinates, deliveredC
               if (verification.visualVerificationTokenId == stampVisualTokenId) {
                 return (
                   <div className="flex w-72 items-end h-64">
-                    <div className="w-1/2 relative h-full flex">
-                      <div className="absolute left-2 top-2 flex items-center z-40">
-                        <img className="w-5" src="logocompact.svg" alt="LRLens" />
-                        <div className="text-slate-50 ml-1 text-xs">
-                          <div>Lens</div>
-                        </div>
-                      </div>
-                      {
-                        !stampImageSrc
-                          ? (<div className="flex w-full h-full items-center justify-center animate-pulse bg-slate-200 rounded border-dashed border border-slate-700">
-                            <div className="mr-2">Loading</div>
-                            <Loading spinnerColor='gray' spinnerType='loader' />
-                          </div>)
-                          : (< img src={`data:image/png;base64,${stampImageSrc}`} alt="" />)
-                      }
-                    </div>
+                    <img className="w-1/2" src={`https://ipfs.io/ipfs/${verification.tokenUri}`} alt="" />
                     <div className="ml-4 w-1/2 flex flex-col">
                       <div className="mb-2 mt-1 text-xs text-slate-600">info: Exact location inavailable due to privacy rights</div>
                       <div className="mb-2 mt-1 text-base text-bold text-slate-800">Stamped <span className="text-xs text-slate-500">don_id: #{verification.openseaTokenId}</span></div>
@@ -151,7 +136,22 @@ export default function MyMap({ stampCoordinates, shippedCoordinates, deliveredC
               if (verification.visualVerificationTokenId == deliverVisualTokenId) {
                 return (
                   <div className="flex flex-1 w-72 items-end">
-                    <img className="w-1/2" src={`https://ipfs.io/ipfs/${verification.tokenUri}`} alt="" />
+                    <div className="w-1/2 relative h-full flex">
+                      <div className="absolute left-2 top-2 flex items-center z-40">
+                        <img className="w-5" src="logocompact.svg" alt="LRLens" />
+                        <div className="text-slate-50 ml-1 text-xs">
+                          <div>Lens</div>
+                        </div>
+                      </div>
+                      {
+                        !deliverImageSrc
+                          ? (<div className="flex w-full h-full items-center justify-center animate-pulse bg-slate-200 rounded border-dashed border border-slate-700">
+                            <div className="mr-2">Loading</div>
+                            <Loading spinnerColor='gray' spinnerType='loader' />
+                          </div>)
+                          : (< img src={`data:image/png;base64,${deliverImageSrc}`} alt="" />)
+                      }
+                    </div>
                     <div className="ml-4 w-1/2 flex flex-col">
                       <div className="mb-2 mt-1 text-base text-bold text-slate-800">Delivered <span className="text-xs text-slate-500">don_id: #{verification.openseaTokenId}</span></div>
                       <hr />
