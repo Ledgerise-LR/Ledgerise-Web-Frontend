@@ -93,7 +93,7 @@ export default function Home() {
         <div className='flex flex-1 w-3/5 h-4/5 justify-between'>
           <div className='flex-col'>
             <div>
-              <div className='text-6xl w-1/2 font-playfair'>Trustworthy,{"\n"}Tranparent,{"\n"}Immutable</div>
+              <div className='text-6xl w-1/2 font-playfair'>Trustworthy,{"\n"}Transparent,{"\n"}Immutable</div>
               <div className='text-2xl text-slate-500 mt-12 font-serif'>Donate with a <strong>piece of mind</strong>. See your donation <strong>meeting beneficiaries.</strong></div>
             </div>
             <div className='w-1/2 mt-16'>

@@ -40,11 +40,6 @@ export default function Home() {
 
   const [donor, setDonor] = useState({});
 
-  function hashStringAES(value) {
-    const encryptedValue = AES.encrypt(enc.Utf8.parse(value), `${process.env.CREDIT_CARD_INFO_AES_HASH_SECRET}`);
-    return encryptedValue.toString();
-  }
-
   function prettyAddress(address) {
     return address.slice(0, 6) + "..." + address.slice(address.length - 6, address.length)
   }
@@ -482,17 +477,21 @@ export default function Home() {
     hideLocationModal();
     showModal();
 
-    axios.post(`${URL}:${PORT}/donate/payment/usd/`, {
-      cardOwner: cardOwner,
-      PAN: PAN,
+    axios.post(`${URL}:${PORT}/donate/payment/TRY`, {
+      cardHolderName: cardOwner,
+      cardNumber: PAN,
       expiryMonth: expiryMonth,
       expiryYear: expiryYear,
       CVV: CVV,
       tokenId: asset.tokenId,
       charityAddress: asset.charityAddress,
-      price: parseInt(ethers.utils.formatEther(asset.price, "ether")),
+      price: 10,
       tokenURI: asset.tokenUri,
-      priceFeed: process.env.PRICE_FEED_ADRESS
+      s_tokenCounter: 15,
+      donorId: donor._id, 
+      tokenName: tokenName,
+      subcollectionName: "Koleksiyon adı",
+      tokenId: asset.tokenId
     })
       .then(() => {
         console.log("success")
@@ -738,11 +737,11 @@ export default function Home() {
                   <div className='my-4'>Your card information are <strong>encrypted</strong> meeting AES standards.</div>
                   <form className='flex flex-col' action="" method="post">
                     <div className='flex justify-between mb-4'>
-                      <input className='w-1/2 border mr-2 p-2' type="text" name="cardOwner" placeholder="Card Owner" maxlength="32" onChange={(e) => setCardOwner(hashStringAES(e.target.value))} />
-                      <input className='w-1/2 border p-2' type="text" name="pan" placeholder="PAN" maxlength="19" onChange={(e) => setPAN(hashStringAES(e.target.value))} />
+                      <input className='w-1/2 border mr-2 p-2' type="text" name="cardOwner" placeholder="Card Owner" maxlength="32" onChange={(e) => setCardOwner((e.target.value))} />
+                      <input className='w-1/2 border p-2' type="text" name="pan" placeholder="PAN" maxlength="19" onChange={(e) => setPAN((e.target.value))} />
                     </div>
                     <div className='flex justify-between mb-4'>
-                      <select className='w-1/2 border mr-2 p-2' name="expiryMonth" onChange={(e) => setExpiryMonth(hashStringAES(e.target.value))}>
+                      <select className='w-1/2 border mr-2 p-2' name="expiryMonth" onChange={(e) => setExpiryMonth((e.target.value))}>
                         <option value="01">January</option>
                         <option value="02">February</option>
                         <option value="03">March</option>
@@ -756,7 +755,7 @@ export default function Home() {
                         <option value="11">November</option>
                         <option value="12">December</option>
                       </select>
-                      <select className='w-1/2 border p-2' name="expiryYear" onChange={(e) => setExpiryYear(hashStringAES(e.target.value))}>
+                      <select className='w-1/2 border p-2' name="expiryYear" onChange={(e) => setExpiryYear((e.target.value))}>
                         <option value="2019">2024</option>
                         <option value="2019">2025</option>
                         <option value="2019">2026</option>
@@ -767,7 +766,7 @@ export default function Home() {
                       </select>
                     </div>
                     <div className='flex justify-between mb-4'>
-                      <input className='w-1/2 border p-2 mr-2' type="text" name="cvv" placeholder="CVV" maxlength="4" onChange={(e) => setCVV(hashStringAES(e.target.value))} />
+                      <input className='w-1/2 border p-2 mr-2' type="text" name="cvv" placeholder="CVV" maxlength="4" onChange={(e) => setCVV((e.target.value))} />
                       <button
                         className='w-1/2 border p-2 bg-green-600 text-slate-50'
                         onClick={() => {
