@@ -48,10 +48,10 @@ export default function Header() {
           Home
         </Link>
         <Link href="/collections" className="mr-4 p-6" >
-          Collections
+          Aid Campaigns
         </Link>
         <Link href="/auctions" className="mr-4 p-6" >
-          Auctions
+          Charity Auctions
         </Link>
         <div className="w-20">
           <div></div>

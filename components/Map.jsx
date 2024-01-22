@@ -36,8 +36,7 @@ export default function MyMap({ stampCoordinates, shippedCoordinates, deliveredC
   useEffect(() => {
     visualVerifications.map(verification => {
       if (verification.visualVerificationTokenId == deliverVisualTokenId) {
-        console.log(verification.visualVerificationTokenId)
-        console.log(verification.tokenUri)
+        if (verification.tokenUri) {
         fetch(`${URL}:${PORT}/privacy/blur-visual?ipfsGatewayTokenUri=https://ipfs.io/ipfs/${verification.tokenUri}`)
           .then(response => response.json())
           .then(data => {
@@ -46,6 +45,7 @@ export default function MyMap({ stampCoordinates, shippedCoordinates, deliveredC
           .catch(error => {
             console.error('Error fetching image:', error);
           });
+        }
       }
     })
   }, []);
@@ -64,10 +64,10 @@ export default function MyMap({ stampCoordinates, shippedCoordinates, deliveredC
       attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
       url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
     />
-    <Circle center={[(stampCoordinates.latitude) / 1000, (stampCoordinates.longitude) / 1000]} pathOptions={{ fillColor: 'blue' }} radius={200} />
+    <Circle center={[(deliveredCoordinates.latitude) / 1000, (deliveredCoordinates.longitude) / 1000]} pathOptions={{ fillColor: 'blue' }} radius={300} />
     {
-      stampCoordinates.latitude ? <Marker position={[((stampCoordinates.latitude) / 1000) * ((Math.random() * 0.000035) + (Math.random() > 0.5 ? ((Math.random() * 0.00003) + 1) : (1 - (Math.random() * 0.00003)))), ((stampCoordinates.longitude) / 1000) * (Math.random() > 0.5 ? ((Math.random() * 0.00003) + 1) : (1 - (Math.random() * 0.00003)))]}>
-        <Popup>
+      stampCoordinates.latitude ? <Marker position={[(stampCoordinates.latitude + 0.01) / 1000, (stampCoordinates.longitude + 0.01) / 1000]}>        
+      <Popup>
           {
             visualVerifications.map(verification => {
               if (verification.visualVerificationTokenId == stampVisualTokenId) {
@@ -75,7 +75,6 @@ export default function MyMap({ stampCoordinates, shippedCoordinates, deliveredC
                   <div className="flex w-72 items-end h-64">
                     <img className="w-1/2" src={`https://ipfs.io/ipfs/${verification.tokenUri}`} alt="" />
                     <div className="ml-4 w-1/2 flex flex-col">
-                      <div className="mb-2 mt-1 text-xs text-slate-600">info: Exact location inavailable due to privacy rights</div>
                       <div className="mb-2 mt-1 text-base text-bold text-slate-800">Stamped <span className="text-xs text-slate-500">don_id: #{verification.openseaTokenId}</span></div>
                       <hr />
                       <div>{prettyDate(verification.date)}</div>
@@ -129,13 +128,13 @@ export default function MyMap({ stampCoordinates, shippedCoordinates, deliveredC
     }
 
     {
-      deliveredCoordinates.latitude ? <Marker position={[(deliveredCoordinates.latitude + 0.01) / 1000, (deliveredCoordinates.longitude + 0.01) / 1000]}>
+      deliveredCoordinates.latitude ? <Marker position={[((deliveredCoordinates.latitude) / 1000) * ((Math.random() * 0.000035) + (Math.random() > 0.5 ? ((Math.random() * 0.00003) + 1) : (1 - (Math.random() * 0.00003)))), ((deliveredCoordinates.longitude) / 1000) * (Math.random() > 0.5 ? ((Math.random() * 0.00003) + 1) : (1 - (Math.random() * 0.00003)))]}>
         <Popup>
           {
             visualVerifications.map(verification => {
               if (verification.visualVerificationTokenId == deliverVisualTokenId) {
                 return (
-                  <div className="flex flex-1 w-72 items-end">
+                  <div className="h-54 flex flex-1 w-72 items-end">
                     <div className="w-1/2 relative h-full flex">
                       <div className="absolute left-2 top-2 flex items-center z-40">
                         <img className="w-5" src="logocompact.svg" alt="LRLens" />
@@ -153,6 +152,7 @@ export default function MyMap({ stampCoordinates, shippedCoordinates, deliveredC
                       }
                     </div>
                     <div className="ml-4 w-1/2 flex flex-col">
+                      <div className="mb-2 mt-1 text-xs text-slate-600">info: Exact location inavailable due to privacy rights</div>
                       <div className="mb-2 mt-1 text-base text-bold text-slate-800">Delivered <span className="text-xs text-slate-500">don_id: #{verification.openseaTokenId}</span></div>
                       <hr />
                       <div>{prettyDate(verification.date)}</div>

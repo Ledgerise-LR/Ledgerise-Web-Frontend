@@ -291,7 +291,7 @@ export default function Home() {
           </div>
         </div >
         <div className='w-3/4 h-full'>
-          <div className='text-4xl w-full h-full mb-4 text-center'>{collection.name} Campaign</div>
+          <div className='text-4xl w-full h-full mb-4 text-center'>{collection.name}</div>
           <hr className='mb-4' />
           <div className='flex flex-1 flex-wrap h-max'>
             {!assets

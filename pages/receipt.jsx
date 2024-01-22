@@ -113,7 +113,7 @@ export default function Home() {
           if (data.success && data.donor) {
             setDonor(data.donor);
             axios.post(`${URL}:${PORT}/donor/get-receipt-data`, {
-              buyer: donor.school_number,
+              buyer: data.donor.school_number,
               tokenId: tokenId,
               openseaTokenId: openseaTokenId
             })
