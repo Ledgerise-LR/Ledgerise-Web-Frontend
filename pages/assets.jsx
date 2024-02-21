@@ -10,7 +10,6 @@ import { calculatePercentage } from '@/utils/calculatePercentage';
 import { getEthToUsdRate } from '@/utils/getEthToUsdRate';
 import blockExplorerMapping from "../constants/blockExplorerMapping.json";
 import dynamic from "next/dynamic"
-import { AES, enc } from "crypto-js";
 import axios from 'axios';
 import { URL, PORT } from '@/serverConfig';
 
@@ -891,7 +890,7 @@ export default function Home() {
                 </div>
                 <div>or</div>
                 <div className='w-fit mx-2'>
-                  <Button isFullWidth="true" theme='primary' type='button' text='Donate with Crypto' onClick={() => {
+                  <Button isFullWidth="true" theme='primary' type='button' text='Donate TEST' onClick={() => {
                     handleBuyItem()
                   }} style={{
                     border: "black",
