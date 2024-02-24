@@ -471,7 +471,7 @@ export default function Home() {
     params: {
       nftAddress: mainCollectionAddress,
       tokenId: parseInt(listTokenCounter),
-      price: ethers.utils.parseEther(listItemPrice || "0") || "0",
+      price: listItemPrice || "0",
       tokenUri: listItemTokenUri,
       charityAddress: listItemCharityAddress,
       availableEditions: listItemAvailableEditions,
@@ -744,7 +744,7 @@ export default function Home() {
                 <div className="mt-4 mb-4">{listingStatus ? (<div>
                   Listing in progress. Follow from <a target="_blank" className="underline hover:text-slate-500" href={`https://${blockExplorerUrl["blockExplorer"]}/tx/${listTransactionHash}`}>{prettyAddress(listTransactionHash)}</a>
                 </div>) : (<div>No listing on progress</div>)}</div>
-                <input className="p-2 border-2 w-auto mb-4" type="number" placeholder="price (eth)" onChange={(e) => { setListItemPrice(e.currentTarget.value.toString()) }} />
+                <input className="p-2 border-2 w-auto mb-4" type="number" placeholder="Price (TRY)" onChange={(e) => { setListItemPrice(e.currentTarget.value.toString()) }} />
                 <input className="p-2 border-2 w-auto mb-4" type="text" placeholder="charityAddress" onChange={(e) => { setListItemCharityAddress(e.currentTarget.value) }} />
                 <input className="p-2 border-2 w-auto mb-4" type="text" placeholder="tokenUri" onChange={(e) => { setListItemTokenUri(e.currentTarget.value) }} />
                 <input className="p-2 border-2 w-auto mb-4" type="text" placeholder="subcollectionId" onChange={(e) => { setListItemSubcollectionId(e.currentTarget.value) }} />
@@ -816,7 +816,7 @@ export default function Home() {
                 <div className="mt-4 mb-4">{updatingStatus ? (<div>
                   Updating in progress. Follow from <a target="_blank" className="underline hover:text-slate-500" href={`https://${blockExplorerUrl}/tx/${updatingTransactionHash}`}>{prettyAddress(updatingTransactionHash)}</a>
                 </div>) : (<div>No updating on progress</div>)}</div>
-                <input className="p-2 border-2 w-auto mb-4" type="number" placeholder="price (ETH)" onChange={(e) => { setUpdateItemPrice(e.currentTarget.value.toString()) }} />
+                <input className="p-2 border-2 w-auto mb-4" type="number" placeholder="Price (TRY)" onChange={(e) => { setUpdateItemPrice(e.currentTarget.value.toString()) }} />
                 <input className="p-2 border-2 w-auto mb-4" type="text" placeholder="Token Id" onChange={(e) => { setUpdateTokenId(e.currentTarget.value) }} />
                 <input className="p-2 border-2 w-auto mb-4" type="text" placeholder="charityAddress" onChange={(e) => { setUpdateItemCharityAddress(e.currentTarget.value) }} />
                 <input className="p-2 border-2 w-auto mb-4" type="text" placeholder="tokenUri" onChange={(e) => { setUpdateItemTokenUri(e.currentTarget.value) }} />

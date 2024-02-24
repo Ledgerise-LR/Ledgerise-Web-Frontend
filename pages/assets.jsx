@@ -3,7 +3,7 @@ import { useRouter } from 'next/router'
 import { useState, useEffect, useMemo } from 'react'
 import { useMoralis, useWeb3Contract } from 'react-moralis'
 import { ethers } from "ethers";
-import { Button, Modal, Blockie, useNotification, Loading } from 'web3uikit'
+import { Button, Modal, Blockie, useNotification, Loading, Input, Logo } from 'web3uikit'
 import marketplaceAbi from "../constants/abi.json";
 import networkMapping from "../constants/networkMapping.json"
 import { calculatePercentage } from '@/utils/calculatePercentage';
@@ -471,30 +471,77 @@ export default function Home() {
 
   const handleFiatDonation = () => {
 
+    setIsBuyItemPending(true);
     setHasTxHashKey(true);
     hidePaymentModal();
     hideLocationModal();
     showModal();
 
-    axios.post(`${URL}:${PORT}/donate/payment/TRY`, {
-      cardHolderName: cardOwner,
-      cardNumber: PAN,
-      expiryMonth: expiryMonth,
-      expiryYear: expiryYear,
-      CVV: CVV,
-      tokenId: asset.tokenId,
-      charityAddress: asset.charityAddress,
-      price: 10,
-      tokenURI: asset.tokenUri,
-      s_tokenCounter: 15,
-      donorId: donor._id, 
-      tokenName: tokenName,
-      subcollectionName: "Koleksiyon adı",
-      tokenId: asset.tokenId
-    })
-      .then(() => {
-        console.log("success")
+    if (donor && donor.school_number != "") {
+
+      axios.post(`${URL}:${PORT}/donate/payment/TRY`, {
+        cardHolderName: cardOwner,
+        cardNumber: PAN,
+        expiryMonth: expiryMonth,
+        expiryYear: expiryYear,
+        CVV: CVV,
+        tokenId: asset.tokenId,
+        tokenURI: asset.tokenUri,
+        donorId: donor._id, 
+        tokenName: tokenName,
+        tokenId: asset.tokenId,
+        charityAddress: asset.charityAddress,
+        nftAddress: asset.nftAddress
       })
+        .then((res) => {
+          const data = res.data;
+          if (data.success) {
+            setIsBuyItemPending(false);
+            dispatch({
+              type: "success",
+              message: "Tx successful: Item donated.",
+              title: "Transaction Success",
+              position: "topR"
+            });
+            setBuyItemSuccessText(`Donated 1 ${tokenName} successfully. Thanks for your contribution.`);
+            fetch(`${URL}:${PORT}/get-asset?tokenId=${tokenId}`)
+              .then(response => response.json())
+              .then(data => {
+                const asset = {
+                  seller: data.activeItem.seller,
+                  nftAddress: data.activeItem.nftAddress,
+                  tokenId: data.activeItem.tokenId,
+                  charityAddress: data.activeItem.charityAddress,
+                  tokenUri: data.activeItem.tokenUri,
+                  price: data.activeItem.price,
+                  availableEditions: data.activeItem.availableEditions,
+                  subcollectionId: data.activeItem.subcollectionId,
+                  history: data.activeItem.history,
+                  attributes: data.activeItem.attributes,
+                  real_item_history: data.activeItem.real_item_history,
+                  route: data.activeItem.route,
+                  collaborators: data.activeItem.collaborators
+                }
+                setAsset(asset);
+              })
+          } else if (!data.success) {
+            dispatch({
+              type: "error",
+              message: "Sorry for the error. Please refresh the page and try again.",
+              title: "Transaction Failed",
+              position: "topR"
+            });
+            setBuyItemSuccessText(`An error occured. Please refresh and try again.`);
+          }
+        })
+      } else {
+        dispatch({
+          type: "info",
+          message: "Tx failed: Please sign in to donate.",
+          title: "Transaction info",
+          position: "topR"
+        });
+      }
   }
 
   const [isTimeoutSelected, setIsTimeoutSelected] = useState("");
@@ -732,51 +779,138 @@ export default function Home() {
               </Modal>
             ) : isPaymentModalOpen
               ? (
-                <Modal visible={isPaymentModalOpen} onCloseButtonPressed={hidePaymentModal} onOk={hidePaymentModal} onCancel={hidePaymentModal} okText='Continue' title={<h1 className='text-3xl text-slate-900'>Donate USD | Payment</h1>}>
-                  <div className='my-4'>Your card information are <strong>encrypted</strong> meeting AES standards.</div>
-                  <form className='flex flex-col' action="" method="post">
-                    <div className='flex justify-between mb-4'>
-                      <input className='w-1/2 border mr-2 p-2' type="text" name="cardOwner" placeholder="Card Owner" maxlength="32" onChange={(e) => setCardOwner((e.target.value))} />
-                      <input className='w-1/2 border p-2' type="text" name="pan" placeholder="PAN" maxlength="19" onChange={(e) => setPAN((e.target.value))} />
+                <Modal hasFooter={false} 
+                width='100%'
+                visible={isPaymentModalOpen} onCloseButtonPressed={hidePaymentModal} onOk={hidePaymentModal} onCancel={hidePaymentModal} okText='Continue' title={<h1 className='text-3xl text-slate-900'>Bağışınızı Tamamlayın</h1>}>
+                  <div className='mb-8 text-slate-500'>Sayın {donor.name} {donor.surname}, bağışınızı tamamlamak için son bir adım kaldı. Lütfen kart bilgilerinizi giriniz.</div>
+                  <div className='w-full mb-8 h-24 shadow-md relative flex flex-1 items-center justify-between'>
+                    <div className='absolute w-full h-0.5 bg-slate-500 z-10'></div>
+                    <div className='absolute w-1/2 h-1 bg-green-500 z-10'></div>
+                    <div className='h-full flex flex-col ml-24 z-10 items-center'>
+                      <div className='w-20 z-10'>
+                        <img className='z-10' src="https://www.svgrepo.com/show/108470/id-card.svg" alt="Kimlik" />
+                      </div>
+                      <div>Kimlik Doğrulama</div>
                     </div>
-                    <div className='flex justify-between mb-4'>
-                      <select className='w-1/2 border mr-2 p-2' name="expiryMonth" onChange={(e) => setExpiryMonth((e.target.value))}>
-                        <option value="01">January</option>
-                        <option value="02">February</option>
-                        <option value="03">March</option>
-                        <option value="04">April</option>
-                        <option value="05">May</option>
-                        <option value="06">June</option>
-                        <option value="07">July</option>
-                        <option value="08">August</option>
-                        <option value="09">September</option>
-                        <option value="10">October</option>
-                        <option value="11">November</option>
-                        <option value="12">December</option>
-                      </select>
-                      <select className='w-1/2 border p-2' name="expiryYear" onChange={(e) => setExpiryYear((e.target.value))}>
-                        <option value="2024">2024</option>
-                        <option value="2025">2025</option>
-                        <option value="2026">2026</option>
-                        <option value="2027">2027</option>
-                        <option value="2028">2028</option>
-                        <option value="2029">2029</option>
-                        <option value="2030">2030</option>
-                      </select>
+                    <div className='h-full flex flex-col z-10 items-center'>
+                      <div className='w-20 z-10'>
+                        <img className='z-10' src="https://www.svgrepo.com/show/108470/id-card.svg" alt="Kimlik" />
+                      </div>
+                      <div>Kart Bilgileri</div>
                     </div>
-                    <div className='flex justify-between mb-4'>
-                      <input className='w-1/2 border p-2 mr-2' type="text" name="cvv" placeholder="CVV" maxlength="4" onChange={(e) => setCVV((e.target.value))} />
-                      <button
-                        className='w-1/2 border p-2 bg-green-600 text-slate-50'
-                        onClick={() => {
-                          handleFiatDonation()
+                    <div className='h-full flex flex-col mr-24 z-10 items-center'>
+                      <div className='w-20 z-10'>
+                        <img className='z-10' src="https://www.svgrepo.com/show/108470/id-card.svg" alt="Kimlik" />
+                      </div>
+                      <div>Onay Sayfası</div>
+                    </div>
+                  </div>
+                  <div className='flex flex-1'>
+                    <form className='flex flex-col w-1/2 mr-12 shadow-xl p-10 mb-8' action="" method="post">
+                      <Input
+                        label='Kart Sahibinin İsmi'
+                        style={{
+                          border: "1px solid black",
+                          borderRadius: "5px",
+                          marginBottom: "20px"
                         }}
-                      >
-                        Donate
-                      </button>
+                        onChange={(e) => setCardOwner((e.target.value))}
+                      />
+                      <Input
+                        type='number'
+                        label='Kredi Kartı Numaranız'
+                        style={{
+                          border: "1px solid black",
+                          borderRadius: "5px",
+                          marginBottom: "20px"
+                        }}
+                        onChange={(e) => setPAN((e.target.value))}
+                      />
+                      <div className='flex mb-8'>
+                        <select className='w-1/5 border rounded mr-4 border-black p-2' name="expiryMonth" onChange={(e) => setExpiryMonth((e.target.value))}>
+                          <option value="">Ay</option>
+                          <option value="01">Ocak</option>
+                          <option value="02">Şubat</option>
+                          <option value="03">Mart</option>
+                          <option value="04">Nisan</option>
+                          <option value="05">Mayıs</option>
+                          <option value="06">Nisan</option>
+                          <option value="07">Haziran</option>
+                          <option value="08">Ağustos</option>
+                          <option value="09">Eylül</option>
+                          <option value="10">Ekim</option>
+                          <option value="11">Kasım</option>
+                          <option value="12">Aralık</option>
+                        </select>
+                        <select className='w-1/5 mr-4 border rounded border-black p-2' name="expiryYear" onChange={(e) => setExpiryYear((e.target.value))}>
+                          <option value="">Yıl</option>
+                          <option value="2024">2024</option>
+                          <option value="2025">2025</option>
+                          <option value="2026">2026</option>
+                          <option value="2027">2027</option>
+                          <option value="2028">2028</option>
+                          <option value="2029">2029</option>
+                          <option value="2030">2030</option>
+                        </select>
+                      </div>
+                      <div className='flex justify-between mb-4 w-2/5'>
+                        <Input 
+                          type='number'
+                          style={{
+                            border: "1px solid black",
+                            borderRadius: "5px"
+                          }}
+                          label='CVV'
+                          onChange={(e) => setCVV((e.target.value))}
+                        />
+                      </div>
+                    <div>
+                      <hr />
+                      <div className='mt-4 mb-2'>Geçerli Ödeme Yöntemleri</div>
+                      <div className='flex flex-1 items-center'>
+                        <div className='w-24'> 
+                          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a4/Mastercard_2019_logo.svg/1200px-Mastercard_2019_logo.svg.png" alt="Mastercard" />
+                        </div>
+                        <div className='w-24'>
+                          <img src="https://st4.depositphotos.com/1050070/21934/i/450/depositphotos_219349070-stock-photo-chisinau-moldova-september-2018-visa.jpg" alt="Visa" />
+                        </div>
+                        <div className='w-24'>
+                          <img src="https://pentagram-production.imgix.net/de996aa4-5343-4200-a466-ab8fc7eafa80/am_amex_06.jpg?rect=%2C%2C%2C&w=640&fm=jpg&q=70&auto=format" alt="American Express" />
+                        </div>
+                      </div>
                     </div>
-                  </form>
-
+                    <hr className='mt-4'/>
+                    <button
+                          className='w-2/3 mt-4 border p-2 rounded-md bg-green-500 text-white font-bold'
+                          onClick={() => {
+                            handleFiatDonation()
+                          }}
+                        >
+                          Bağış Yap
+                        </button>
+                    </form>
+                    <div className='w-1/2 shadow-xl p-8 mb-8'>
+                      <div className='text-gray-600 font-bold text-2xl mb-2'>❤️ Bağış Özeti</div>
+                      <div>Sayın, {donor.name} {donor.surname}. Ledgerise ailesine hoş geldiniz.</div>
+                      <div className='flex justify-between w-full mt-8'>
+                        <div className='font-bold'>Bağış İsmi</div>
+                        <div>{company.name} | {tokenName}</div>
+                      </div>
+                      <div className='flex justify-between w-full mt-4'>
+                        <div className='font-bold'>Bağış Tipi</div>
+                        <div>Yardım / Erzak Kolisi</div>
+                      </div>
+                      <div className='flex justify-between w-full mt-4'>
+                        <div className='font-bold'>Ödeme Yöntemi</div>
+                        <div>Kredi / Banka Kartı</div>
+                      </div>
+                      <hr className='mt-4'/>
+                      <div className='flex justify-between w-full mt-4'>
+                        <div className='font-bold'>Toplam Bağış (Türk Lirası)</div>
+                        <div>{parseFloat(asset.price)} TL</div>
+                      </div>
+                    </div>
+                  </div>
                 </Modal>
               )
               : isReportModalOpen
@@ -875,8 +1009,8 @@ export default function Home() {
               <div className='text-sm text-slate-500 mt-3'>Current donation fee:</div>
               <div className='flex items-center justify-between w-full mt-2'>
                 <div>
-                  <span className='text-4xl font-semibold'>{(ethers.utils.formatEther(asset.price, "ether") * ethToUsdRate).toFixed(2)} </span>
-                  <span className='text-slate-500'>$</span>
+                  <span className='text-4xl font-semibold'>{asset.price - 0.01} </span>
+                  <span className='text-slate-500'>TL</span>
                 </div>
                 <div className='w-fit mx-2'>
                   <Button isFullWidth="true" theme='primary' type='button' text='Donate USD' onClick={() => {
@@ -997,7 +1131,7 @@ export default function Home() {
                         ? <div className='flex-1 flex items-center'>
                           <div className='w-3 h-3 mr-5 rounded-full bg-slate-700 z-0'></div>
                           <div>
-                            <div className='text-slate-700'>Item is <strong>donated</strong> for {(ethers.utils.formatEther(asset.price, "ether") * ethToUsdRate).toFixed(2)}$ by {prettyAddress(event.buyer)}.</div>
+                            <div className='text-slate-700'>Item is <strong>donated</strong> for {asset.price-0.01} TL by {prettyAddress(event.buyer)}.</div>
                             <div className='text-slate-500'>{event.date}</div>
                           </div>
                         </div>
@@ -1005,14 +1139,14 @@ export default function Home() {
                           ? (< div className='flex-1 flex items-center'>
                             <div className='w-3 h-3 mr-5 rounded-full bg-slate-700 z-0'></div>
                             <div>
-                              <div className='text-slate-700'>Item is listed for {(ethers.utils.formatEther(asset.price, "ether") * ethToUsdRate).toFixed(2)}$.</div>
+                              <div className='text-slate-700'>Item is listed for {asset.price-0.01} TL.</div>
                               <div className='text-slate-500'>{event.date}</div>
                             </div>
                           </div>)
                           : (< div className='flex-1 flex items-center'>
                             <div className='w-3 h-3 mr-5 rounded-full bg-slate-700 z-0'></div>
                             <div>
-                              <div className='text-slate-700'>Item is updated for {(ethers.utils.formatEther(asset.price, "ether") * ethToUsdRate).toFixed(2)}$.</div>
+                              <div className='text-slate-700'>Item is updated for {asset.price-0.01} TL.</div>
                               <div className='text-slate-500'>{event.date}</div>
                             </div>
                           </div>)

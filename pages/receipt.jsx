@@ -172,7 +172,7 @@ export default function Home() {
                 <div className='flex justify-between'>
                   <div className='border-x border-black w-16 p-1 flex justify-center items-center'><strong>1</strong></div>
                   <div className='border-t border-black w-2/3 p-1 flex justify-center items-center h-10'><strong>TÜRK LİRASI</strong></div>
-                  <div className='border-x border-black w-1/3 p-1 flex justify-center items-center font-bold'>{((history.price / 1e18) * ethToUsdRate).toFixed(2)}</div>
+                  <div className='border-x border-black w-1/3 p-1 flex justify-center items-center font-bold'>{history.price}</div>
                 </div>
                 <div className='flex justify-between'>
                   <div className='border-x border-t border-black w-16 p-1 flex justify-center items-center'></div>
@@ -191,7 +191,7 @@ export default function Home() {
                 </div>
                 <div className='flex justify-center mt-4'>
                   <div>Yalnız ............................................................................................. TL/Döviz tahsil edilmiştir.</div>
-                  <div className='absolute font-bold -ml-36'>{getNumberAsWord(((history.price / 1e18) * ethToUsdRate).toFixed(2))}</div>
+                  <div className='absolute font-bold -ml-36'>{getNumberAsWord(history.price)}</div>
                 </div>
               </div>
               <div>
