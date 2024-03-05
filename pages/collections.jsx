@@ -1,16 +1,8 @@
-import Head from 'next/head'
-import Image from 'next/image'
-import { Inter } from 'next/font/google'
 import { useRouter } from 'next/router'
 import { useState, useEffect } from 'react'
 import { useMoralis, useWeb3Contract } from 'react-moralis'
-import { ethers } from "ethers";
-import { Button, color } from 'web3uikit'
-import marketplaceAbi from "../constants/abi.json";
 import networkMapping from "../constants/networkMapping.json";
-import NFTBox from '@/components/NFTCard'
 import { getEthToUsdRate } from '@/utils/getEthToUsdRate';
-import blockExplorerMapping from "../constants/blockExplorerMapping.json";
 import { URL, PORT } from '@/serverConfig';
 
 
