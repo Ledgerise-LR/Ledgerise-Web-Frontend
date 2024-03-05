@@ -1005,7 +1005,7 @@ export default function Home() {
             </div>
             <div className='text-slate-500'>{asset.availableEditions} available stocks</div>
             <hr />
-            <div>
+            {/* <div>
               <div className='text-sm text-slate-500 mt-3'>Current donation fee:</div>
               <div className='flex items-center justify-between w-full mt-2'>
                 <div>
@@ -1034,7 +1034,7 @@ export default function Home() {
                   }} />
                 </div>
               </div>
-            </div>
+            </div> */}
           </div>
         </div>
         <div className='mt-7 flex flex-1'>
