@@ -1,5 +1,5 @@
 
-const URL = "https://api-ledgerise.onredner.com";
+const URL = "https://api-ledgerise.onrender.com";
 const PORT = "";
 
 module.exports = { URL, PORT };
