@@ -301,7 +301,7 @@ export default function Home() {
                 : (assets.map((asset) => {
                   return (
                     <div className='w-72 mr-5 mb-5' key={`${asset.nftAddress}${asset.tokenId}`}>
-                      <a href={`/assets?id=${asset.tokenId}`}>
+                      <a href={`/assets?id=${asset.tokenId}&subcollectionId=${asset.subcollectionId}`}>
                         <NFTBox
                           marketplaceAddress={marketplaceAddress}
                           nftAddress={asset.nftAddress}

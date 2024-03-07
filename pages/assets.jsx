@@ -170,6 +170,7 @@ export default function Home() {
 
   const router = useRouter();
   const tokenId = router.query.id
+  const subcollectionId = router.query.subcollectionId
   const dispatch = useNotification();
 
   function getOpenseaUrl(openseaTokenId) {
@@ -223,7 +224,7 @@ export default function Home() {
               position: "topR"
             });
             setBuyItemSuccessText(`Donated 1 ${tokenName} successfully. Thanks for your contribution.`);
-            fetch(`${URL}:${PORT}/get-asset?tokenId=${tokenId}`)
+            fetch(`${URL}:${PORT}/get-asset?tokenId=${tokenId}&subcollectionId=${subcollectionId}`)
               .then(response => response.json())
               .then(data => {
                 const asset = {
@@ -283,7 +284,7 @@ export default function Home() {
     await tx.wait(1);
     localStorage.setItem("txHash", "");
     setHasTxHashKey(false);
-    fetch(`${URL}:${PORT}/get-asset?tokenId=${tokenId}`)
+    fetch(`${URL}:${PORT}/get-asset?tokenId=${tokenId}&subcollectionId=${subcollectionId}`)
       .then(response => response.json())
       .then(data => {
         const asset = {
@@ -332,7 +333,7 @@ export default function Home() {
 
   useEffect(() => {
     if (tokenId) {
-      fetch(`${URL}:${PORT}/get-asset?tokenId=${tokenId}`)
+      fetch(`${URL}:${PORT}/get-asset?tokenId=${tokenId}&subcollectionId=${subcollectionId}`)
         .then(response => response.json())
         .then(data => {
           console.log(data.activeItem.collaborators)
@@ -504,7 +505,7 @@ export default function Home() {
               position: "topR"
             });
             setBuyItemSuccessText(`Donated 1 ${tokenName} successfully. Thanks for your contribution.`);
-            fetch(`${URL}:${PORT}/get-asset?tokenId=${tokenId}`)
+            fetch(`${URL}:${PORT}/get-asset?tokenId=${tokenId}&subcollectionId=${subcollectionId}`)
               .then(response => response.json())
               .then(data => {
                 const asset = {
@@ -597,7 +598,7 @@ export default function Home() {
                 <ul>
                   {
                     asset.history.map(event => {
-                      if (event.buyer && event.buyer.toLowerCase() == donor.school_number) {
+                      if (event.buyer && event.openseaTokenId >= 0) {
                         // https://sepolia.etherscan.io/tx/0x0f10b50aad6b472a42910bfa4a1664989486bf917486a97ebc24f98a3f71bf39
                         return (
                           <li className='mb-8'>

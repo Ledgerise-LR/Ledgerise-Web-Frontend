@@ -34,6 +34,7 @@ export default function Home() {
     totalRaised: "0",
     collectionName: "-",
     charityAddress: "0x",
+    subcollectionId: "",
   });
 
   useEffect(() => {
@@ -49,6 +50,7 @@ export default function Home() {
             collectionName: data.data.collectionName,
             charityAddress: data.data.charityAddress,
             nftAddress: data.data.nftAddress,
+            subcollectionId: data.data.subcollectionId,
             totalDonated: data.data.totalDonated
           }
           setAsset(asset);
@@ -116,7 +118,7 @@ export default function Home() {
             </div>
           </div>
           <div className={`w-1/2 h-max ${imageURI ? `animate-fade` : ``}`}>
-            <a href={`/assets?id=${asset.tokenId}`}>
+            <a href={`/assets?id=${asset.tokenId}&subcollectionId=${asset.subcollectionId}`}>
               <div className='h-max flex flex-1 flex-col justify-center w-4/5 border-2 p-2 rounded'>
                 <img src={imageURI} alt={tokenName} className='border-b-2 rounded' />
                 <div className='w-full h-max mt-2 p-2'>
