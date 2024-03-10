@@ -316,7 +316,7 @@ export default function Home() {
     })
   }
 
-  const chainString = chainId ? parseInt(chainId, 16).toString() : "80001";
+  const chainString = "80001";
 
   const [blockExplorerUrl, setBlockExplorerUrl] = useState("");
   const [nftExplorerUrl, setNftExplorerUrl] = useState("");
