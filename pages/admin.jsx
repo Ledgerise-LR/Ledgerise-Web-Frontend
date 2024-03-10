@@ -128,7 +128,7 @@ export default function Home() {
 
             data.activeItems.map(activeItem => {
 
-              fetch(`${URL}:${PORT}/get-asset?tokenId=${activeItem.tokenId}`)
+              fetch(`${URL}:${PORT}/get-asset?tokenId=${activeItem.tokenId}&subcollectionId=${activeItem.subcollectionId}`)
                 .then(response => response.json())
                 .then(async (data) => {
                   const asset = {

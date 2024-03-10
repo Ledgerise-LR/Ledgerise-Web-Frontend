@@ -1006,36 +1006,43 @@ export default function Home() {
             </div>
             <div className='text-slate-500'>{asset.availableEditions} available stocks</div>
             <hr />
-            {/* <div>
-              <div className='text-sm text-slate-500 mt-3'>Current donation fee:</div>
-              <div className='flex items-center justify-between w-full mt-2'>
-                <div>
-                  <span className='text-4xl font-semibold'>{asset.price - 0.01} </span>
-                  <span className='text-slate-500'>TL</span>
-                </div>
-                <div className='w-fit mx-2'>
-                  <Button isFullWidth="true" theme='primary' type='button' text='Donate USD' onClick={() => {
-                    showPaymentModal();
-                  }} style={{
-                    border: "black",
-                    height: "3rem",
-                    borderRadius: "100px",
-                    fontSize: "16px"
-                  }} />
-                </div>
-                <div>or</div>
-                <div className='w-fit mx-2'>
-                  <Button isFullWidth="true" theme='primary' type='button' text='Donate TEST' onClick={() => {
-                    handleBuyItem()
-                  }} style={{
-                    border: "black",
-                    height: "3rem",
-                    borderRadius: "100px",
-                    fontSize: "16px"
-                  }} />
-                </div>
-              </div>
-            </div> */}
+
+            {
+              donor._id && donor._id.length > 0
+                ? (
+                  <div>
+                    <div className='text-sm text-slate-500 mt-3'>Current donation fee:</div>
+                    <div className='flex items-center justify-between w-full mt-2'>
+                      <div>
+                        <span className='text-4xl font-semibold'>{asset.price - 0.01} </span>
+                        <span className='text-slate-500'>TL</span>
+                      </div>
+                      <div className='w-fit mx-2'>
+                        <Button isFullWidth="true" theme='primary' type='button' text='Donate USD' onClick={() => {
+                          showPaymentModal();
+                        }} style={{
+                          border: "black",
+                          height: "3rem",
+                          borderRadius: "100px",
+                          fontSize: "16px"
+                        }} />
+                      </div>
+                      <div>or</div>
+                      <div className='w-fit mx-2'>
+                        <Button isFullWidth="true" theme='primary' type='button' text='Donate TEST' onClick={() => {
+                          handleBuyItem()
+                        }} style={{
+                          border: "black",
+                          height: "3rem",
+                          borderRadius: "100px",
+                          fontSize: "16px"
+                        }} />
+                      </div>
+                    </div>
+                  </div>
+                )
+                : ("")
+            }
           </div>
         </div>
         <div className='mt-7 flex flex-1'>
