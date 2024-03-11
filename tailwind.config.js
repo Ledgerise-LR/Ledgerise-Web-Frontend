@@ -24,6 +24,11 @@ module.exports = {
       },
       fontFamily: {
         "playfair": ["Playfair Display", "serif"]
+      },
+      screens: {
+        'sm': '576px',
+        'md': '960px',
+        'lg': '1440px',
       }
     },
   },

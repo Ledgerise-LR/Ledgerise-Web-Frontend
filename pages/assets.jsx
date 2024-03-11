@@ -582,9 +582,9 @@ export default function Home() {
 
   return (
     <>
-      <div className='w-full py-20 px-40'>
+      <div className='w-full py-20 px-10'>
         {isModalOpen
-          ? (<Modal visible={isModalOpen} onCloseButtonPressed={hideModal} onOk={hideModal} onCancel={hideModal} okText='Continue' title={<h1 className='text-3xl text-slate-900'>Thank you for your contribution!!! 🎉 🎉</h1>}>
+          ? (<Modal visible={isModalOpen} width='100%' onCloseButtonPressed={hideModal} onOk={hideModal} onCancel={hideModal} okText='Continue' title={<h1 className='text-3xl text-slate-900'>Thank you for your contribution!!! 🎉 🎉</h1>}>
             <div className='p-5'>
               <div className='mb-12'>
                 <div className='text-2xl flex justify-between'>
@@ -602,14 +602,16 @@ export default function Home() {
                         // https://sepolia.etherscan.io/tx/0x0f10b50aad6b472a42910bfa4a1664989486bf917486a97ebc24f98a3f71bf39
                         return (
                           <li className='mb-8'>
-                            <div className='text-slate-900'>Donated | <strong>{event.date}</strong></div>
-                            <a target='_blank' className='underline text-slate-800 hover:text-slate-600' href={getOpenseaUrl(event.openseaTokenId - 1)}>View certificate</a>. Verify the <strong>donation transaction</strong> <a href={`https://${blockExplorerUrl}/tx/${event.transactionHash}`} target='_blank' className='underline hover:text-slate-800 font-bold'>here</a>. Id #{event.openseaTokenId - 1}
+                            <div className='text-slate-900'>Bağışlandı | <strong>{event.date}</strong></div>
+                            <a target='_blank' className='underline text-slate-800 hover:text-slate-600' href={getOpenseaUrl(event.openseaTokenId - 1)}>Sertifikayı görüntüle</a>. <strong>Güvenlilik belgesini</strong> <a href={`https://${blockExplorerUrl}/tx/${event.transactionHash}`} target='_blank' className='underline hover:text-slate-800 font-bold'>buradan</a> görüntüle. Id #{event.openseaTokenId - 1}
                             <div>
                               {
                                 !asset.collaborators.length
-                                  ? (<div><button className='underline hover:text-slate-700' target='blank' onClick={() => {
+                                  ? (<div>Bağış kolisinin üzerindeki <button className='underline hover:text-slate-700' target='blank' onClick={() => {
                                     retrieveQRCodeData(`${asset.tokenId}-[${event.openseaTokenId}]`);
-                                  }}>View the QR code</button> printed on your physical donation. Click <a className='underline cursor-pointer' href={`/receipt?id=${asset.tokenId}-${event.openseaTokenId}`} target='_blank'>here</a> can download "Bağış Alındı Makbuzu".</div>)
+                                  }}>QR kodu</button> görüntüle.
+                                    {/* Click <a className='underline cursor-pointer' href={`/receipt?id=${asset.tokenId}-${event.openseaTokenId}`} target='_blank'>here</a> can download "Bağış Alındı Makbuzu". */}
+                                    </div>)
 
                                   : (
                                     <div>
@@ -702,7 +704,7 @@ export default function Home() {
                                                 <div className='text-sm'>{stamp.status ? (stamp.date) : "waiting for production 🕒"}</div>
                                                 <div className='text-xs mt-2 rounded'>{stamp.status ? (
                                                   <div>
-                                                    <span className='mr-2'>Produced</span>
+                                                    <span className='mr-2'>Üretildi</span>
                                                     <a className='px-4 py-1 rounded bg-green-700 text-slate-50' href={`https://${blockExplorerUrl}/tx/${stamp.txHash}`} target='_blank'>Verification</a>
                                                   </div>) : "waiting 🕒"}</div>
                                               </div>
@@ -713,7 +715,7 @@ export default function Home() {
                                                 <div className='text-sm'>{shipped.status ? (shipped.date) : "waiting for shipment 🕒"}</div>
                                                 <div className='text-xs mt-2 rounded'>{shipped.status ? (
                                                   <div>
-                                                    <span className='mr-2'>Supply Center</span>
+                                                    <span className='mr-2'>Depo</span>
                                                     <a className='px-4 py-1 rounded bg-green-700 text-slate-50' href={`https://${blockExplorerUrl}/tx/${shipped.txHash}`} target='_blank'>Verification</a>
                                                   </div>) : "waiting 🕒"}</div>
                                               </div>
@@ -724,16 +726,16 @@ export default function Home() {
                                                 <div className='text-sm'>{delivered.status ? (delivered.date) : "waiting for delivery 🕒"}</div>
                                                 <div className='text-xs mt-2 rounded'>{delivered.status ? (
                                                   <div>
-                                                    <span className='mr-2'>Delivered</span>
+                                                    <span className='mr-2'>Teslim edildi</span>
                                                     <a className='px-4 py-1 rounded bg-green-700 text-slate-50' href={`https://${blockExplorerUrl}/tx/${delivered.txHash}`} target='_blank'>Verification</a>
                                                   </div>) : "waiting 🕒"}</div>
                                               </div>
                                             </div>
                                           </div>
                                           <div className='flex flex-1 mt-3 text-slate-200 items-center'>
-                                            <div className='text-slate-700 mr-6'>The <strong>route</strong> and <strong>visual verification</strong> of your donation is <strong>ready.</strong></div>
+                                            <div className='text-slate-700 mr-6'>Bağışınızın <strong>güzergahı</strong> ve <strong>görüntülü doğrulaması</strong> <strong>hazır.</strong></div>
                                             <div onClick={() => showLocationModal(stamp, shipped, delivered)
-                                            } className='mr-5 p-2 w-36 flex justify-center bg-green-700 rounded cursor-pointer shadow-green-600 shadow-lg'>View verification</div>
+                                            } className='mr-5 p-2 w-fit flex justify-center bg-green-700 rounded cursor-pointer shadow-green-600 shadow-lg'>Bağış verifikasyonu</div>
                                           </div>
                                           <hr className='mt-7' />
                                         </div>
@@ -763,7 +765,7 @@ export default function Home() {
           :
           isLocationModalOpen
             ? (
-              <Modal visible={isLocationModalOpen} onCloseButtonPressed={hideLocationModal} onOk={hideLocationModal} onCancel={hideLocationModal} okText='Continue' title={<h1 className='text-3xl text-slate-900'>Transparent route of your donation</h1>}>
+              <Modal visible={isLocationModalOpen} onCloseButtonPressed={hideLocationModal} onOk={hideLocationModal} onCancel={hideLocationModal} okText='Continue' title={<h1 className='text-3xl text-slate-900'>Bağışların şeffaf güzergahı</h1>}>
                 <div className='h-96 w-full z-30'>
                   <Map
                     stampCoordinates={displayedStampLocation}
@@ -966,22 +968,26 @@ export default function Home() {
                 : ("")
         }
 
-        <div className='flex flex-1 items-end relative h-full'>
-          <div className='border-2 w-1/2 h-screen flex flex-col justify-center'>
+        <div className='flex flex-1 md:items-center relative h-full md:h-fit flex-col items-center'>
+          <div className='w-full h-96 mt-72 flex flex-col justify-center items-center'>
             <Image loader={() => imageURI} src={imageURI} width="500" height="1" />
           </div>
-          <div className='p-5'>
+          <div className='w-full -mt-36 flex flex-col'>
             <div className='absolute top-0 flex flex-1 items-center'>
               <div>
-                <div className='mr-5 text-xl text-slate-700'>Powered by <strong>{company.name}</strong></div>
+                <div className='mr-5 text-lg text-slate-700'>Powered by <strong>{company.name}</strong></div>
                 <div className='mr-5 text-slate-800 mt-1'>
                   <span className='text-sm'>{prettyAddress(asset.charityAddress)} </span>
                   <a target='_blank' href={`https://${blockExplorerUrl}/address/${asset.charityAddress}`} className='text-xs underline text-cyan-900'>view on Transparent Verifier</a>
                 </div>
                 <div className='mt-5'>
                   <Button
+                    size='xl'
+                    style={{
+                      fontSize: "24px"
+                    }}
                     theme='secondary'
-                    text='View My Donation History On This Item'
+                    text='BAĞIŞ RAPORUNU GÖRÜNTÜLEYİN'
                     onClick={() => showModal()}
                   />
                 </div>
@@ -991,7 +997,7 @@ export default function Home() {
                 <img className='absolute w-8 -top-3 -right-3' src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e4/Twitter_Verified_Badge.svg/640px-Twitter_Verified_Badge.svg.png" alt="verified" />
               </div>
             </div>
-            <div className='mb-3'>
+            <div className='mb-3 mt-60'>
               <div className='mr-5 text-xl text-slate-400'> #{tokenId}</div>
               <span className='text-slate-900 text-6xl'>{tokenName.toUpperCase()}</span>
             </div>
@@ -1045,8 +1051,8 @@ export default function Home() {
             }
           </div>
         </div>
-        <div className='mt-7 flex flex-1'>
-          <div className='w-1/2 mb-36'>
+        <div className='flex flex-1 mt-20 flex-col'>
+          <div className='w-fit mb-4'>
             <div className='mb-16'>
               <div className='text-3xl text-slate-900 mb-1'>Description</div>
               <hr className='mb-3' />
@@ -1126,7 +1132,7 @@ export default function Home() {
               </div>
             </div>
           </div>
-          <div className='ml-auto'>
+          <div className='w-full mb-12'>
             <div className='text-2xl mb-2'>History</div>
             <hr className='mb-2' />
             <div className='flex flex-1 flex-col-reverse relative'>

@@ -75,12 +75,12 @@ export default function MyMap({ stampCoordinates, shippedCoordinates, deliveredC
                   <div className="flex w-72 items-end h-64">
                     <img className="w-1/2" src={`https://ipfs.io/ipfs/${verification.tokenUri}`} alt="" />
                     <div className="ml-4 w-1/2 flex flex-col">
-                      <div className="mb-2 mt-1 text-base text-bold text-slate-800">Stamped <span className="text-xs text-slate-500">don_id: #{verification.openseaTokenId}</span></div>
+                      <div className="mb-2 mt-1 text-base text-bold text-slate-800">Stamped <span className="text-xs text-slate-500">bagis: #{verification.openseaTokenId}</span></div>
                       <hr />
                       <div>{prettyDate(verification.date)}</div>
                       <hr />
-                      <a className="p-2 mt-2 mb-2 bg-green-500 shadow-green-500 shadow rounded" target="_blank" href={`https://${blockExplorerMapping["blockExplorer"][chainString]}/tx/${verification.transactionHash}`}><span className="text-slate-50 text-xs">View Verification</span></a>
-                      <a className="p-2 bg-blue-500 shadow-blue-500 shadow rounded" target="_blank" href={`https://testnets.opensea.io/assets/${blockExplorerMapping["nftExplorer"][chainString]}/${ledgeriseLensNftAddress}/${verification.visualVerificationTokenId}`}><span className="text-slate-50 text-xs">View Certificate</span></a>
+                      <a className="p-2 mt-2 mb-2 bg-green-500 shadow-green-500 shadow rounded" target="_blank" href={`https://${blockExplorerMapping["blockExplorer"][chainString]}/tx/${verification.transactionHash}`}><span className="text-slate-50 text-xs">Verifikasyonu gör</span></a>
+                      <a className="p-2 bg-blue-500 shadow-blue-500 shadow rounded" target="_blank" href={`https://testnets.opensea.io/assets/${blockExplorerMapping["nftExplorer"][chainString]}/${ledgeriseLensNftAddress}/${verification.visualVerificationTokenId}`}><span className="text-slate-50 text-xs">Sertifikayı gör</span></a>
                     </div>
                   </div>
                 )
@@ -111,12 +111,12 @@ export default function MyMap({ stampCoordinates, shippedCoordinates, deliveredC
                         <span className="text-xs absolute -mt-5 ml-5 px-1 bg-green-400 rounded-full">50.1 cm</span>
                         <span className="absolute right-0 -mt-6 font-bold">Valid ✓</span>
                       </div>
-                      <div className="mb-2 mt-1 text-base text-bold text-slate-800">Shipped <span className="text-xs text-slate-500">don_id: #{verification.openseaTokenId}</span></div>
+                      <div className="mb-2 mt-1 text-base text-bold text-slate-800">Depoda <span className="text-xs text-slate-500">bagis: {verification.openseaTokenId}</span></div>
                       <hr />
                       <div>{prettyDate(verification.date)}</div>
                       <hr />
-                      <a className="p-2 mt-2 mb-2 bg-green-500 shadow-green-500 shadow rounded" target="_blank" href={`https://${blockExplorerMapping["blockExplorer"][chainString]}/tx/${verification.transactionHash}`}><span className="text-slate-50 text-xs">View Verification</span></a>
-                      <a className="p-2 bg-blue-500 shadow-blue-500 shadow rounded" target="_blank" href={`https://testnets.opensea.io/assets/sepolia/${ledgeriseLensNftAddress}/${verification.visualVerificationTokenId}`}><span className="text-slate-50 text-xs">View Certificate</span></a>
+                      <a className="p-2 mt-2 mb-2 bg-green-500 shadow-green-500 shadow rounded" target="_blank" href={`https://${blockExplorerMapping["blockExplorer"][chainString]}/tx/${verification.transactionHash}`}><span className="text-slate-50 text-xs">Verifikasyonu gör</span></a>
+                      <a className="p-2 bg-blue-500 shadow-blue-500 shadow rounded" target="_blank" href={`https://testnets.opensea.io/assets/mumbai/${ledgeriseLensNftAddress}/${verification.visualVerificationTokenId}`}><span className="text-slate-50 text-xs">Sertifikayı gör</span></a>
                     </div>
                   </div>
                 )
@@ -152,13 +152,13 @@ export default function MyMap({ stampCoordinates, shippedCoordinates, deliveredC
                       }
                     </div>
                     <div className="ml-4 w-1/2 flex flex-col">
-                      <div className="mb-2 mt-1 text-xs text-slate-600">info: Exact location inavailable due to privacy rights</div>
-                      <div className="mb-2 mt-1 text-base text-bold text-slate-800">Delivered <span className="text-xs text-slate-500">don_id: #{verification.openseaTokenId}</span></div>
+                      <div className="mb-2 mt-1 text-xs text-slate-600">KVKK gereğince tam lokasyon belirsiz</div>
+                      <div className="mb-2 mt-1 text-base text-bold text-slate-800">Teslim Edildi <span className="text-xs text-slate-500">bagis: #{verification.openseaTokenId}</span></div>
                       <hr />
                       <div>{prettyDate(verification.date)}</div>
                       <hr />
-                      <a className="p-2 mt-2 mb-2 bg-green-500 shadow-green-500 shadow rounded" target="_blank" href={`https://${blockExplorerMapping["blockExplorer"][chainString]}/tx/${verification.transactionHash}`}><span className="text-slate-50 text-xs">View Verification</span></a>
-                      <a className="p-2 bg-blue-500 shadow-blue-500 shadow rounded" target="_blank" href={`https://testnets.opensea.io/assets/sepolia/${ledgeriseLensNftAddress}/${verification.visualVerificationTokenId}`}><span className="text-slate-50 text-xs">View Certificate</span></a>
+                      <a className="p-2 mt-2 mb-2 bg-green-500 shadow-green-500 shadow rounded" target="_blank" href={`https://${blockExplorerMapping["blockExplorer"][chainString]}/tx/${verification.transactionHash}`}><span className="text-slate-50 text-xs">Verifikasyonu gör</span></a>
+                      <a className="p-2 bg-blue-500 shadow-blue-500 shadow rounded" target="_blank" href={`https://testnets.opensea.io/assets/mumbai/${ledgeriseLensNftAddress}/${verification.visualVerificationTokenId}`}><span className="text-slate-50 text-xs">Sertifikayı gör</span></a>
                     </div>
                   </div>
                 )

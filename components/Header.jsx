@@ -38,7 +38,7 @@ export default function Header() {
 
   return (
     <nav className="p-2 border-b-2 flex flex-row justify-between items-center">
-      <h1 className="pl-12 text-4xl font-playfair font-medium">
+      <h1 className="pl-12 w-48">
         <a href="/">
           <img className="h-20" src="logo.svg" alt="Ledgerise | Decentralized Fundrasing-delivering trace protocol" />
         </a>
@@ -50,7 +50,7 @@ export default function Header() {
         <Link href="/collections" className="mr-4 p-6" >
           Aid Campaigns
         </Link>
-        <Link href="/auctions" className="mr-4 p-6" >
+        <Link href="/auctions" className="mr-4 p-6">
           Charity Auctions
         </Link>
         <div className="w-20">
