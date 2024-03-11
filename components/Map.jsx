@@ -168,20 +168,5 @@ export default function MyMap({ stampCoordinates, shippedCoordinates, deliveredC
         </Popup>
       </Marker> : ("")
     }
-    <Marker position={[parseInt(route[0][0]._hex) / 1000, parseInt(route[0][1]._hex) / 1000]} icon={myIcon}>
-      <Popup>
-        Item destination 1
-      </Popup>
-    </Marker>
-    <Marker position={[parseInt(route[1][0]._hex) / 1000, parseInt(route[1][1]._hex) / 1000]} icon={myIcon}>
-      <Popup>
-        Item route destination 2
-      </Popup>
-    </Marker>
-    <Marker position={[parseInt(route[2][0]._hex) / 1000, parseInt(route[2][1]._hex) / 1000]} icon={myIcon}>
-      <Popup>
-        Item route destination 3
-      </Popup>
-    </Marker>
   </MapContainer >
 }

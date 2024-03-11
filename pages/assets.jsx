@@ -598,7 +598,7 @@ export default function Home() {
                 <ul>
                   {
                     asset.history.map(event => {
-                      if (event.buyer && event.openseaTokenId >= 0) {
+                      if ((!donor._id && event.buyer && event.openseaTokenId >= 0) || (donor._id && donor._id == event.buyer && event.buyer && event.openseaTokenId >= 0)) {
                         // https://sepolia.etherscan.io/tx/0x0f10b50aad6b472a42910bfa4a1664989486bf917486a97ebc24f98a3f71bf39
                         return (
                           <li className='mb-8'>
@@ -701,34 +701,34 @@ export default function Home() {
                                             <div className='flex bg-slate-300 p-3 w-fit rounded-lg z-10'>
                                               <div className={`h-7 my-auto border-2 aspect-square rounded-full flex items-center justify-center text-slate-200 ${stamp.status ? "bg-green-500" : "bg-slate-200"}`}>✓</div>
                                               <div className='flex flex-col ml-4'>
-                                                <div className='text-sm'>{stamp.status ? (stamp.date) : "waiting for production 🕒"}</div>
+                                                <div className='text-sm'>{stamp.status ? (stamp.date) : "bekleniyor 🕒"}</div>
                                                 <div className='text-xs mt-2 rounded'>{stamp.status ? (
                                                   <div>
                                                     <span className='mr-2'>Üretildi</span>
                                                     <a className='px-4 py-1 rounded bg-green-700 text-slate-50' href={`https://${blockExplorerUrl}/tx/${stamp.txHash}`} target='_blank'>Verification</a>
-                                                  </div>) : "waiting 🕒"}</div>
+                                                  </div>) : "Üretim 🕒"}</div>
                                               </div>
                                             </div>
                                             <div className='flex bg-slate-300 p-3 w-fit mx-8 rounded-lg z-10'>
                                               <div className={`h-7 my-auto border-2 aspect-square rounded-full flex items-center justify-center text-slate-200 ${shipped.status ? "bg-green-500" : "bg-slate-200"}`}>✓</div>
                                               <div className='flex flex-col ml-4'>
-                                                <div className='text-sm'>{shipped.status ? (shipped.date) : "waiting for shipment 🕒"}</div>
+                                                <div className='text-sm'>{shipped.status ? (shipped.date) : "bekleniyor 🕒"}</div>
                                                 <div className='text-xs mt-2 rounded'>{shipped.status ? (
                                                   <div>
                                                     <span className='mr-2'>Depo</span>
                                                     <a className='px-4 py-1 rounded bg-green-700 text-slate-50' href={`https://${blockExplorerUrl}/tx/${shipped.txHash}`} target='_blank'>Verification</a>
-                                                  </div>) : "waiting 🕒"}</div>
+                                                  </div>) : "Depo 🕒"}</div>
                                               </div>
                                             </div>
                                             <div className='flex bg-slate-300 p-3 w-fit rounded-lg z-10'>
                                               <div className={`h-7 my-auto border-2 aspect-square rounded-full flex items-center justify-center text-slate-200 ${delivered.status ? "bg-green-500" : "bg-slate-200"}`}>✓</div>
                                               <div className='flex flex-col ml-4'>
-                                                <div className='text-sm'>{delivered.status ? (delivered.date) : "waiting for delivery 🕒"}</div>
+                                                <div className='text-sm'>{delivered.status ? (delivered.date) : "bekleniyor 🕒"}</div>
                                                 <div className='text-xs mt-2 rounded'>{delivered.status ? (
                                                   <div>
                                                     <span className='mr-2'>Teslim edildi</span>
                                                     <a className='px-4 py-1 rounded bg-green-700 text-slate-50' href={`https://${blockExplorerUrl}/tx/${delivered.txHash}`} target='_blank'>Verification</a>
-                                                  </div>) : "waiting 🕒"}</div>
+                                                  </div>) : "Teslim etme 🕒"}</div>
                                               </div>
                                             </div>
                                           </div>
@@ -975,7 +975,7 @@ export default function Home() {
           <div className='w-full -mt-36 flex flex-col'>
             <div className='absolute top-0 flex flex-1 items-center'>
               <div>
-                <div className='mr-5 text-lg text-slate-700'>Powered by <strong>{company.name}</strong></div>
+                <div className='mr-5 text-lg text-slate-700'><strong>{company.name}</strong> katkılarıyla</div>
                 <div className='mr-5 text-slate-800 mt-1'>
                   <span className='text-sm'>{prettyAddress(asset.charityAddress)} </span>
                   <a target='_blank' href={`https://${blockExplorerUrl}/address/${asset.charityAddress}`} className='text-xs underline text-cyan-900'>view on Transparent Verifier</a>
@@ -1013,42 +1013,33 @@ export default function Home() {
             <div className='text-slate-500'>{asset.availableEditions} available stocks</div>
             <hr />
 
-            {
-              donor._id && donor._id.length > 0
-                ? (
+            
+              <div>
+                <div className='text-sm text-slate-500 mt-3'>Current donation fee:</div>
+                <div className='flex items-center justify-between w-full mt-2'>
                   <div>
-                    <div className='text-sm text-slate-500 mt-3'>Current donation fee:</div>
-                    <div className='flex items-center justify-between w-full mt-2'>
-                      <div>
-                        <span className='text-4xl font-semibold'>{asset.price - 0.01} </span>
-                        <span className='text-slate-500'>TL</span>
-                      </div>
-                      <div className='w-fit mx-2'>
-                        <Button isFullWidth="true" theme='primary' type='button' text='Donate USD' onClick={() => {
-                          showPaymentModal();
-                        }} style={{
-                          border: "black",
-                          height: "3rem",
-                          borderRadius: "100px",
-                          fontSize: "16px"
-                        }} />
-                      </div>
-                      <div>or</div>
-                      <div className='w-fit mx-2'>
-                        <Button isFullWidth="true" theme='primary' type='button' text='Donate TEST' onClick={() => {
-                          handleBuyItem()
-                        }} style={{
-                          border: "black",
-                          height: "3rem",
-                          borderRadius: "100px",
-                          fontSize: "16px"
-                        }} />
-                      </div>
+                    <span className='text-4xl font-semibold'>{asset.price - 0.01} </span>
+                    <span className='text-slate-500'>TL</span>
+                  </div>
+                      {
+                  donor._id && donor._id.length > 0 && donor.school_number == "980"
+                    ? (
+                          <div className='w-fit mx-2'>
+                            <Button isFullWidth="true" theme='primary' type='button' text='Donate USD' onClick={() => {
+                              showPaymentModal();
+                            }} style={{
+                              border: "black",
+                              height: "3rem",
+                              borderRadius: "100px",
+                              fontSize: "16px"
+                            }} />
+                          </div>
+                            )
+                        : ("")
+                    }
                     </div>
                   </div>
-                )
-                : ("")
-            }
+                
           </div>
         </div>
         <div className='flex flex-1 mt-20 flex-col'>

@@ -28,14 +28,10 @@ export default function Home() {
 
   const handleClick = () => {
 
-    if (nationalIdentificationNumber != "" && email != "" && phoneNumber != "" && schoolNumber != "" && password != "" && confirmPassword != "" && password == confirmPassword) {
+    if (email != "" && schoolNumber != "" && password != "") {
       axios.post(`${URL}:${PORT}/auth/register`, {
-        name: name,
-        surname: surname,
-        national_identification_number: nationalIdentificationNumber,
         email: email,
         school_number: schoolNumber,
-        phone_number: phoneNumber,
         password: password
       })
         .then(data => {
@@ -82,18 +78,9 @@ export default function Home() {
             <hr />
             <div className='mb-8'>Join the <strong>trustworthy</strong> and completely <strong>transparent</strong>, <strong>end-to-end</strong> donation trace system.</div>
             <div className='flex flex-col mb-4'>
-              <input className='bg-slate-100 rounded p-2 mb-4' type="text" placeholder='T.C. Identification Number' onChange={(e) => setNationalIdentificationNumber(e.target.value)} />
-              <div className='flex justify-between'>
-                <input className='bg-slate-100 rounded p-2 mb-4 w-1/2 mr-4' type="text" placeholder='Name' onChange={(e) => setName(e.target.value)} />
-                <input className='bg-slate-100 rounded p-2 mb-4 w-1/2' type="text" placeholder='Surname' onChange={(e) => setSurname(e.target.value)} />
-              </div>
               <input className='bg-slate-100 rounded p-2 mb-4' type="text" placeholder='Email address' onChange={(e) => setEmail(e.target.value)} />
-              <input className='bg-slate-100 rounded p-2 mb-4' type="number" placeholder='School Number' onChange={(e) => setSchoolNumber(e.target.value)} />
-              <input className='bg-slate-100 rounded p-2 mb-4' type="text" placeholder='Phone Number' onChange={(e) => setPhoneNumber(e.target.value)} />
-              <div className='flex justify-between'>
-                <input className='bg-slate-100 rounded p-2 mb-4 w-1/2 mr-4' type="password" placeholder='Password' onChange={(e) => setPassword(e.target.value)} />
-                <input className='bg-slate-100 rounded p-2 mb-4 w-1/2' type="password" placeholder='Confirm Password' onChange={(e) => setConfirmPassword(e.target.value)} />
-              </div>
+              <input className='bg-slate-100 rounded p-2 mb-4' type="text" placeholder='School Number' onChange={(e) => setSchoolNumber(e.target.value)} />
+              <input className='bg-slate-100 rounded p-2 mb-4 w-1/2 mr-4' type="text" placeholder='Password' onChange={(e) => setPassword(e.target.value)} />
               <div className={`${success == "true" ? ("text-green-600") : (success == "false" ? ("text-red-600") : (""))}`}>{successText}</div>
               <div className='ml-auto w-1/4 border text-slate-50 bg-blue-900 p-2 rounded flex flex-row-reverse cursor-pointer hover:animate-bounce' onClick={() => { handleClick() }}>→ Sign Up</div>
             </div>

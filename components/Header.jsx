@@ -44,18 +44,9 @@ export default function Header() {
         </a>
       </h1>
       <div className="flex flex-row justify-between items-center">
-        <Link href="/" className="mr-4 p-6">
-          Home
+        <Link href="/collections" className="p-6" >
+          Kampanyalar
         </Link>
-        <Link href="/collections" className="mr-4 p-6" >
-          Aid Campaigns
-        </Link>
-        <Link href="/auctions" className="mr-4 p-6">
-          Charity Auctions
-        </Link>
-        <div className="w-20">
-          <div></div>
-        </div>
         {
           router.pathname == "/admin"
             ? <ConnectButton moralisAuth={false} />
@@ -74,7 +65,6 @@ export default function Header() {
                   : (
                     <div className="flex items-center border-2 rounded-full pr-2">
                       <a href="/login" className="border-2 rounded-full px-12 py-2 mr-2 bg-blue-900 text-slate-100 cursor-pointer hover:bg-blue-800 transition-all">Login</a>
-                      <div>to donate</div>
                     </div>
                   )
               }

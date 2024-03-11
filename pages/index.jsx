@@ -90,13 +90,13 @@ export default function Home() {
   }, [asset, asset.tokenUri])
 
   return (
-    <div className='w-full h-full p-28 overflow-hidden'>
+    <div className='w-full h-full py-28 px-10 overflow-hidden'>
       <div className='w-full h-full flex justify-center items-center'>
-        <div className='flex flex-1 w-3/5 h-4/5 justify-between'>
-          <div className='flex-col'>
-            <div>
-              <div className='text-6xl w-1/2 font-playfair'>Trustworthy,{"\n"}Transparent,{"\n"}Immutable</div>
-              <div className='text-2xl text-slate-500 mt-12 font-serif'>Donate with a <strong>piece of mind</strong>. See your donation <strong>meeting beneficiaries.</strong></div>
+        <div className='flex flex-1 w-3/5 h-4/5 justify-center flex-wrap'>
+          <div className='flex-col w-128 mb-12'>
+            <div className='w-full'>
+              <div className='text-6xl w-1/2 font-playfair'>Güvenilir,{"\n"}Şeffaf,{"\n"}Değiştirilemez</div>
+              <div className='text-2xl text-slate-500 mt-12 font-serif'><strong>Gönül rahatlığıyla</strong> bağış yapın. Bağışınızın <strong>ihtiyaç sahibine ulaştığını</strong> görün.</div>
             </div>
             <div className='w-1/2 mt-16'>
               <a href="/collections">
@@ -110,29 +110,29 @@ export default function Home() {
                     color: "white"
                   }}
                   isFullWidth="true"
-                  text='Make a donation now!'
+                  text='Şimdi Bağış Yapın!'
                   theme='custom'
                   size='xl'
                 />
               </a>
             </div>
           </div>
-          <div className={`w-1/2 h-max ${imageURI ? `animate-fade` : ``}`}>
+          <div className={`w-fit h-max ${imageURI ? `animate-fade` : ``}`}>
             <a href={`/assets?id=${asset.tokenId}&subcollectionId=${asset.subcollectionId}`}>
-              <div className='h-max flex flex-1 flex-col justify-center w-4/5 border-2 p-2 rounded'>
-                <img src={imageURI} alt={tokenName} className='border-b-2 rounded' />
+              <div className='h-max flex flex-1 flex-col justify-center border-2 p-2 rounded'>
+                <img src={imageURI} alt={tokenName} className='border-b-2 rounded h-96' />
                 <div className='w-full h-max mt-2 p-2'>
-                  <div className='text-2xl text-slate-800 font-medium mb-1'>{asset.collectionName} Collection</div>
+                  <div className='text-2xl text-slate-800 font-medium mb-1'>{asset.collectionName} Kampanyası</div>
                   <div className='flex flex-1 justify-between items-center'>
                     <div>
                       <span className='text-sm text-slate-500'>#{asset.tokenId} </span>
                       <span className='uppercase text-xl text-slate-700'>{tokenName}</span>
                     </div>
                     <div className='flex-col flex items-end'>
-                      <div className='text-xs text-slate-500'>Total donated:</div>
+                      <div className='text-xs text-slate-500'>Toplam Bağış:</div>
                       <div className='w-48 mt-1 p-2 rounded-full bg-black text-slate-100 flex justify-end items-center px-5'>
-                        <span className='text-slate-200 mr-2'>${Number(ethToUsdRate * Number(asset.totalRaised)).toFixed(1)}</span>
-                        <span className='text-xs text-slate-400'>{Number(asset.totalDonated)} donated aids</span>
+                        <span className='text-slate-200 mr-2'>{Number(asset.totalRaised).toFixed(1)} ₺</span>
+                        <span className='text-xs text-slate-400'>{Number(asset.totalDonated)} bağış kolisi</span>
                       </div>
                     </div>
                   </div>
@@ -143,7 +143,7 @@ export default function Home() {
           </div>
         </div>
       </div>
-      <div className='mt-16 w-screen -ml-32 overflow-hidden'>
+      <div className='mt-16 w-screen -ml-12 overflow-hidden'>
         <img className='w-screen' src="supplyChain.svg" alt="Supply chain" />
       </div>
     </div >
