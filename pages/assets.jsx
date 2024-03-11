@@ -588,10 +588,10 @@ export default function Home() {
             <div className='p-5'>
               <div className='mb-12'>
                 <div className='text-2xl flex justify-between'>
-                  <div>My Donations</div>
+                  <div>Bağışlar</div>
                   <div className='flex text-sm items-center p-2'>
-                    <div>Is there something wrong?</div>
-                    <div className='p-2 bg-blue-900 text-slate-50 rounded ml-2 cursor-pointer' onClick={() => { showReportModal() }}>Report an Issue</div>
+                    <div>Ters giden bir şey mi var?</div>
+                    <div className='p-2 bg-blue-900 text-slate-50 rounded ml-2 cursor-pointer' onClick={() => { showReportModal() }}>Sorun belirtin</div>
                   </div>
                 </div>
                 <hr className='mb-3' />
@@ -698,7 +698,7 @@ export default function Home() {
                                         <div className='mt-5'>
                                           <div className='relative w-full justify-between flex flex-1 items-center'>
                                             <div className='absolute w-full h-0.5 bg-slate-400'></div>
-                                            <div className='flex bg-slate-300 p-3 w-64 rounded-lg z-10'>
+                                            <div className='flex bg-slate-300 p-3 w-fit rounded-lg z-10'>
                                               <div className={`h-7 my-auto border-2 aspect-square rounded-full flex items-center justify-center text-slate-200 ${stamp.status ? "bg-green-500" : "bg-slate-200"}`}>✓</div>
                                               <div className='flex flex-col ml-4'>
                                                 <div className='text-sm'>{stamp.status ? (stamp.date) : "waiting for production 🕒"}</div>
@@ -709,7 +709,7 @@ export default function Home() {
                                                   </div>) : "waiting 🕒"}</div>
                                               </div>
                                             </div>
-                                            <div className='flex bg-slate-300 p-3 w-64 rounded-lg z-10'>
+                                            <div className='flex bg-slate-300 p-3 w-fit mx-8 rounded-lg z-10'>
                                               <div className={`h-7 my-auto border-2 aspect-square rounded-full flex items-center justify-center text-slate-200 ${shipped.status ? "bg-green-500" : "bg-slate-200"}`}>✓</div>
                                               <div className='flex flex-col ml-4'>
                                                 <div className='text-sm'>{shipped.status ? (shipped.date) : "waiting for shipment 🕒"}</div>
@@ -720,7 +720,7 @@ export default function Home() {
                                                   </div>) : "waiting 🕒"}</div>
                                               </div>
                                             </div>
-                                            <div className='flex bg-slate-300 p-3 w-64 rounded-lg z-10'>
+                                            <div className='flex bg-slate-300 p-3 w-fit rounded-lg z-10'>
                                               <div className={`h-7 my-auto border-2 aspect-square rounded-full flex items-center justify-center text-slate-200 ${delivered.status ? "bg-green-500" : "bg-slate-200"}`}>✓</div>
                                               <div className='flex flex-col ml-4'>
                                                 <div className='text-sm'>{delivered.status ? (delivered.date) : "waiting for delivery 🕒"}</div>
