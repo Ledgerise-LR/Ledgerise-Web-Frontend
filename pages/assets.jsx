@@ -765,7 +765,7 @@ export default function Home() {
           :
           isLocationModalOpen
             ? (
-              <Modal visible={isLocationModalOpen} onCloseButtonPressed={hideLocationModal} onOk={hideLocationModal} onCancel={hideLocationModal} okText='Continue' title={<h1 className='text-3xl text-slate-900'>Bağışların şeffaf güzergahı</h1>}>
+              <Modal visible={isLocationModalOpen} width='100%' onCloseButtonPressed={hideLocationModal} onOk={hideLocationModal} onCancel={hideLocationModal} okText='Continue' title={<h1 className='text-3xl text-slate-900'>Bağışların şeffaf güzergahı</h1>}>
                 <div className='h-96 w-full z-30'>
                   <Map
                     stampCoordinates={displayedStampLocation}
@@ -1054,12 +1054,12 @@ export default function Home() {
         <div className='flex flex-1 mt-20 flex-col'>
           <div className='w-fit mb-4'>
             <div className='mb-16'>
-              <div className='text-3xl text-slate-900 mb-1'>Description</div>
+              <div className='text-3xl text-slate-900 mb-1'>Açıklama</div>
               <hr className='mb-3' />
               <div className='text-slate-700'>{tokenDescription}</div>
             </div>
             <div>
-              <div className='text-3xl text-slate-900 mb-3'>Distribution Of Earnings</div>
+              <div className='text-3xl text-slate-900 mb-3'>Bağışların dağıtımı</div>
               <hr className='mb-3' />
               <div>
 
@@ -1072,8 +1072,8 @@ export default function Home() {
                   </div>
                   <div className='flex flex-1 flex-col justify-center items-end mr-4'>
                     <div>
-                      <span className='font-semibold text-lg'>99.5% </span>
-                      <span className='text-sm text-slate-700'>of proceeds</span>
+                      <span className='text-sm text-slate-700'>Bağıştan</span>
+                      <span className='font-semibold text-lg'>%99.5</span>
                     </div>
                   </div>
                 </div>
@@ -1102,8 +1102,8 @@ export default function Home() {
                   </div>
                   <div className='flex flex-1 flex-col justify-center items-end mr-4'>
                     <div>
+                      <span className='text-sm text-slate-700'>Komisyon</span>
                       <span className='font-semibold text-lg'>0.5% </span>
-                      <span className='text-sm text-slate-700'>of proceeds</span>
                     </div>
                   </div>
                 </div>
@@ -1123,9 +1123,9 @@ export default function Home() {
                           <div className='text-slate-900 text-xl'>{trait.value}</div>
                         </div>
                         <div>
-                          <span className='text-sm text-slate-500'>more than</span>
-                          <span className='text-xl'> {attributesPercentages[asset.attributes.indexOf(trait)]}%</span>
-                          <span className='text-sm text-slate-500'> items in the collection</span>
+                          <span className='text-sm text-slate-500'>bu kampanyadaki kolilerden</span>
+                          <span className='text-xl'> %{attributesPercentages[asset.attributes.indexOf(trait)]} </span>
+                          <span className='text-sm text-slate-500'> daha fazla </span>
                         </div>
                       </div>)
                   })}
@@ -1133,7 +1133,7 @@ export default function Home() {
             </div>
           </div>
           <div className='w-full mb-12'>
-            <div className='text-2xl mb-2'>History</div>
+            <div className='text-2xl mb-2'>Geçmiş Bağışlar</div>
             <hr className='mb-2' />
             <div className='flex flex-1 flex-col-reverse relative'>
               <div className='absolute w-px h-full ml-1.5 top-5 bg-slate-300 z-0'></div>
@@ -1145,7 +1145,7 @@ export default function Home() {
                         ? <div className='flex-1 flex items-center'>
                           <div className='w-3 h-3 mr-5 rounded-full bg-slate-700 z-0'></div>
                           <div>
-                            <div className='text-slate-700'>Item is <strong>donated</strong> for {asset.price-0.01} TL by {prettyAddress(event.buyer)}.</div>
+                            <div className='text-slate-700'>Koli {prettyAddress(event.buyer)} tarfından {asset.price-0.01} TL'ye <strong>bağışlandı</strong>.</div>
                             <div className='text-slate-500'>{event.date}</div>
                           </div>
                         </div>
@@ -1153,7 +1153,7 @@ export default function Home() {
                           ? (< div className='flex-1 flex items-center'>
                             <div className='w-3 h-3 mr-5 rounded-full bg-slate-700 z-0'></div>
                             <div>
-                              <div className='text-slate-700'>Item is listed for {asset.price-0.01} TL.</div>
+                              <div className='text-slate-700'>Koli {asset.price-0.01} TL'ye listelendi.</div>
                               <div className='text-slate-500'>{event.date}</div>
                             </div>
                           </div>)

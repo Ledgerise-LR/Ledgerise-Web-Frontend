@@ -37,7 +37,7 @@ export default function Header() {
   }
 
   return (
-    <nav className="p-2 border-b-2 flex flex-row justify-between items-center w-screen overflow-hidden">
+    <nav className="p-2 border-b-2 flex flex-row justify-between items-center w-screen overflow-x-hidden">
       <h1 className="pl-12 w-48">
         <a href="/">
           <img className="h-20" src="logo.svg" alt="Ledgerise | Decentralized Fundrasing-delivering trace protocol" />
