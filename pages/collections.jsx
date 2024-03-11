@@ -40,16 +40,17 @@ export default function Home() {
 
   return (
     <>
-      <div className='px-48 py-20 w-full flex flex-1'>
+      <div className='text-xl m-12'>Bağış Kampanyaları</div>
+      <div className='px-12 mb-20 w-full flex flex-1 flex-wrap'>
         {!collections
           ? (<div>Loading...</div>)
           : (
             collections.map((collection) => {
               return (
-                <a className='w-1/3 mr-4' href={`/collection?id=${collection.itemId}`}>
-                  <div className='w-full mr-5 aspect-square border-2 rounded flex flex-col p-4' key={`${collection.itemId}`}>
-                    <div className='w-full aspect-video border-2'>
-                      <img className='w-full' src={`${collection.image}`} alt={collection.name} />
+                <a className='w-96 mr-4 mb-12' href={`/collection?id=${collection.itemId}`}>
+                  <div className='mr-5 aspect-square border-2 rounded flex flex-col p-4' key={`${collection.itemId}`}>
+                    <div className='aspect-video border-2 flex items-center justify-center'>
+                      <img className='h-36' src={`${collection.image}`} alt={collection.name} />
                     </div>
                     <div className='text-slate-800 text-2xl my-3 flex flex-1 justify-between items-center'>
                       <div>{collection.name}</div>
