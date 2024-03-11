@@ -488,6 +488,22 @@ export default function Home() {
     setListTokenCounter(await getListTokenCounter());
   }
 
+  const [buyItemTokenId, setBuyItemTokenId] = useState("");
+  const [buyItemDonorEmail, setBuyItemDonorEmail] = useState("");
+
+  const handleBuyItemClick = () => {
+    axios.post(`${URL}:${PORT}/donate/payment/already_bought`, {
+      tokenId: buyItemTokenId,
+      school_number: buyItemDonorEmail
+    }).then((res) => {
+      if (res.data.success) {
+        alert("Successfully donated.")
+      } else {
+        alert("Donation failed.")
+      }
+    })
+  }
+
   useEffect(() => {
     updateUI();
   }, [isWeb3Enabled, assets, listingStatus, listItemPrice]);
@@ -783,6 +799,19 @@ export default function Home() {
                       onSuccess: handleAddCreatorSuccess,
                       onError: (err) => handleTransactionError(err)
                     });
+                  }}
+                />
+              </div>
+              <div className="flex flex-1 flex-col mt-8 mb-8">
+                <h1>Donate Item (already donated)</h1>
+                <input className="p-2 border-2 w-auto mb-4" type="text" placeholder="Token Id" onChange={(e) => { setBuyItemTokenId(e.currentTarget.value) }} />
+                <input className="p-2 border-2 w-auto mb-4" type="text" placeholder="Donor Email" onChange={(e) => { setBuyItemDonorEmail(e.currentTarget.value) }} />
+                <Button
+                  theme="primary"
+                  text="Donate Item"
+                  isFullWidth="true" type='button'
+                  onClick={() => {
+                    handleBuyItemClick()
                   }}
                 />
               </div>
