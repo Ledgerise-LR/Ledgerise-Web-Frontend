@@ -978,7 +978,7 @@ export default function Home() {
                 <div className='mr-5 text-lg text-slate-700'><strong>{company.name}</strong> katkılarıyla</div>
                 <div className='mr-5 text-slate-800 mt-1'>
                   <span className='text-sm'>{prettyAddress(asset.charityAddress)} </span>
-                  <a target='_blank' href={`https://${blockExplorerUrl}/address/${asset.charityAddress}`} className='text-xs underline text-cyan-900'>view on Transparent Verifier</a>
+                  <a target='_blank' href={`https://${blockExplorerUrl}/address/${asset.charityAddress}`} className='text-xs underline text-cyan-900'>sertifikayı görüntüle.</a>
                 </div>
                 <div className='mt-5'>
                   <Button
@@ -1006,16 +1006,16 @@ export default function Home() {
                 <Blockie seed={asset.seller} />
               </div>
               <div>
-                <div className='text-slate-500 text-xs'>Owner</div>
+                <div className='text-slate-500 text-xs'>Admin</div>
                 <div className='text-slate-700 text-sm'>{prettyAddress(asset.seller)}</div>
               </div>
             </div>
-            <div className='text-slate-500'>{asset.availableEditions} available stocks</div>
+            <div className='text-slate-500'>{asset.availableEditions} ürün stoğu</div>
             <hr />
 
             
               <div>
-                <div className='text-sm text-slate-500 mt-3'>Current donation fee:</div>
+                <div className='text-sm text-slate-500 mt-3'>Bağış tutarı:</div>
                 <div className='flex items-center justify-between w-full mt-2'>
                   <div>
                     <span className='text-4xl font-semibold'>{asset.price - 0.01} </span>
