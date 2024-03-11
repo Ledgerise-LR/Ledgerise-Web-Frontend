@@ -1123,9 +1123,9 @@ export default function Home() {
                           <div className='text-slate-900 text-xl'>{trait.value}</div>
                         </div>
                         <div>
-                          <span className='text-sm text-slate-500'>bu kampanyadaki kolilerden</span>
+                          <span className='text-sm text-slate-500'>diğer kolilerin</span>
                           <span className='text-xl'> %{attributesPercentages[asset.attributes.indexOf(trait)]} </span>
-                          <span className='text-sm text-slate-500'> daha fazla </span>
+                          <span className='text-sm text-slate-500'>'ünden daha fazla </span>
                         </div>
                       </div>)
                   })}

@@ -87,7 +87,7 @@ export default function Footer() {
           <div className="border-slate-500 border w-full"></div>
           <div className="w-full py-8 bg-slate-900 flex px-16 justify-between items-center text-slate-200">
             <div>Ledgerise® - 2024</div>
-            <div>Powered by Üsküdar American Academy</div>
+            <div>Powered by LR</div>
           </div>
         </div>
       </div>
