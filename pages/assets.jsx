@@ -584,7 +584,7 @@ export default function Home() {
     <>
       <div className='w-full py-20 px-10'>
         {isModalOpen
-          ? (<Modal visible={isModalOpen} width='100%' onCloseButtonPressed={hideModal} onOk={hideModal} onCancel={hideModal} okText='Continue' title={<h1 className='text-3xl text-slate-900'>Thank you for your contribution!!! 🎉 🎉</h1>}>
+          ? (<Modal visible={isModalOpen} width='100%' onCloseButtonPressed={hideModal} onOk={hideModal} onCancel={hideModal} okText='Continue' title={<h1 className='text-3xl text-slate-900'>Bağışınız için teşekkürler 🎉</h1>}>
             <div className='p-5'>
               <div className='mb-12'>
                 <div className='text-2xl flex justify-between'>
@@ -917,27 +917,27 @@ export default function Home() {
                 </Modal>
               )
               : isReportModalOpen
-                ? <Modal visible={isReportModalOpen} onCloseButtonPressed={hideReportModal} onOk={hideReportModal} onCancel={hideReportModal} okText='Continue' title={<h1 className='text-3xl text-slate-900'>Report an Issue</h1>}>
+                ? <Modal visible={isReportModalOpen} onCloseButtonPressed={hideReportModal} onOk={hideReportModal} onCancel={hideReportModal} okText='Continue' title={<h1 className='text-3xl text-slate-900'>Sorun bildir</h1>}>
                   <div>Tell us what's going wrong.</div>
                   <div>
                     <form action="" method='POST' className='flex flex-col'>
                       <div className='flex'>
-                        <div onClick={() => { setIsTimeoutSelected(!isTimeoutSelected) }} className={`mr-4 border rounded p-2 cursor-pointer hover:bg-slate-200 transition-all ${isTimeoutSelected ? "bg-slate-300" : "bg-slate-50"}`}>No verification for a long time</div>
-                        <div onClick={() => { setIsIrrelevantVisualSelected(!isIrrelevantVisualSelected) }} className={`mr-4 border rounded p-2 cursor-pointer hover:bg-slate-200 transition-all ${isIrrelevantVisualSelected ? "bg-slate-300" : "bg-slate-50"}`}>The image verification are irrelevant</div>
-                        <div onClick={() => { setIsIncompatibleMeasurementsSelected(!isIncompatibleMeasurementsSelected) }} className={`mr-4 border rounded p-2 cursor-pointer hover:bg-slate-200 transition-all ${isIncompatibleMeasurementsSelected ? "bg-slate-300" : "bg-slate-50"}`}>Incompatible Measurements</div>
-                        <div onClick={() => { setIsOtherSelected(!isOtherSelected) }} className={`mr-4 border rounded p-2 cursor-pointer hover:bg-slate-200 transition-all ${isOtherSelected ? "bg-slate-300" : "bg-slate-50"}`}>Other</div>
+                        <div onClick={() => { setIsTimeoutSelected(!isTimeoutSelected) }} className={`mr-4 border rounded p-2 cursor-pointer hover:bg-slate-200 transition-all ${isTimeoutSelected ? "bg-slate-300" : "bg-slate-50"}`}>Uzun zamandır verifikasyon alamadım</div>
+                        <div onClick={() => { setIsIrrelevantVisualSelected(!isIrrelevantVisualSelected) }} className={`mr-4 border rounded p-2 cursor-pointer hover:bg-slate-200 transition-all ${isIrrelevantVisualSelected ? "bg-slate-300" : "bg-slate-50"}`}>Görüntü doğru değil</div>
+                        <div onClick={() => { setIsIncompatibleMeasurementsSelected(!isIncompatibleMeasurementsSelected) }} className={`mr-4 border rounded p-2 cursor-pointer hover:bg-slate-200 transition-all ${isIncompatibleMeasurementsSelected ? "bg-slate-300" : "bg-slate-50"}`}>Ölçüler tutmuyor</div>
+                        <div onClick={() => { setIsOtherSelected(!isOtherSelected) }} className={`mr-4 border rounded p-2 cursor-pointer hover:bg-slate-200 transition-all ${isOtherSelected ? "bg-slate-300" : "bg-slate-50"}`}>Diğer</div>
                       </div>
-                      <div className='mt-12'>Elaborate on the issue you experience.</div>
+                      <div className='mt-12'>Sorunu detaylıca açıklayınız.</div>
                       <textarea className='my-2 border outline-none p-2' name="message" id="message" cols="10" rows="5" onChange={(e) => setReportMessage(e.target.value)}></textarea>
 
                       <div onClick={() => {
                         handleReportIssue()
-                      }} className='p-2 bg-blue-900 text-slate-50 rounded border w-fit my-2 cursor-pointer'>Send Report</div>
+                      }} className='p-2 bg-blue-900 text-slate-50 rounded border w-fit my-2 cursor-pointer'>Gönder</div>
                       <div>
                         {
                           isReportIssuePending
                             ? <div className='flex'>
-                              <div className='mr-2'>Reporting issue. Please wait.</div>
+                              <div className='mr-2'>Sorun gönderildi. Lütfen bekleyiniz.</div>
                               <Loading spinnerColor='gray' spinnerType='loader' />
                             </div>
                             : <div>{reportIssueSuccessText}</div>
@@ -949,7 +949,7 @@ export default function Home() {
                   <div className='p-2'>
                     {
                       !reports.length
-                        ? <div>No past reports. Everything works fine!</div>
+                        ? <div>Bir sorun yok. Her şey tıkırında!</div>
                         : reports.map(report => {
                           return (
                             <div className='border p-2 rounded mb-2'>
