@@ -51,7 +51,8 @@ export default function Home() {
             charityAddress: data.data.charityAddress,
             nftAddress: data.data.nftAddress,
             subcollectionId: data.data.subcollectionId,
-            totalDonated: data.data.totalDonated
+            totalDonated: data.data.totalDonated,
+            price: data.data.price
           }
           setAsset(asset);
         })
@@ -131,7 +132,7 @@ export default function Home() {
                     <div className='flex-col flex items-end'>
                       <div className='text-xs text-slate-500'>Toplam Bağış:</div>
                       <div className='w-48 mt-1 p-2 rounded-full bg-black text-slate-100 flex justify-end items-center px-5'>
-                        <span className='text-slate-200 mr-2'>{Number(asset.totalRaised).toFixed(1)} ₺</span>
+                        <span className='text-slate-200 mr-2'>{Number(asset.price)*asset.totalDonated} ₺</span>
                         <span className='text-xs text-slate-400'>{Number(asset.totalDonated)} bağış kolisi</span>
                       </div>
                     </div>
