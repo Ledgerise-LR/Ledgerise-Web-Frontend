@@ -1018,7 +1018,7 @@ export default function Home() {
                 <div className='text-sm text-slate-500 mt-3'>Bağış tutarı:</div>
                 <div className='flex items-center justify-between w-full mt-2'>
                   <div>
-                    <span className='text-4xl font-semibold'>{asset.price - 0.01} </span>
+                    <span className='text-4xl font-semibold'>{asset.price - 1} </span>
                     <span className='text-slate-500'>TL</span>
                   </div>
                       {
@@ -1136,7 +1136,7 @@ export default function Home() {
                         ? <div className='flex-1 flex items-center'>
                           <div className='w-3 h-3 mr-5 rounded-full bg-slate-700 z-0'></div>
                           <div>
-                            <div className='text-slate-700'>Koli {prettyAddress(event.buyer)} tarfından {asset.price-0.01} TL'ye <strong>bağışlandı</strong>.</div>
+                            <div className='text-slate-700'>Koli {prettyAddress(event.buyer)} tarfından {asset.price-1} TL'ye <strong>bağışlandı</strong>.</div>
                             <div className='text-slate-500'>{event.date}</div>
                           </div>
                         </div>
@@ -1144,14 +1144,14 @@ export default function Home() {
                           ? (< div className='flex-1 flex items-center'>
                             <div className='w-3 h-3 mr-5 rounded-full bg-slate-700 z-0'></div>
                             <div>
-                              <div className='text-slate-700'>Koli {asset.price-0.01} TL'ye listelendi.</div>
+                              <div className='text-slate-700'>Koli {asset.price-1} TL'ye listelendi.</div>
                               <div className='text-slate-500'>{event.date}</div>
                             </div>
                           </div>)
                           : (< div className='flex-1 flex items-center'>
                             <div className='w-3 h-3 mr-5 rounded-full bg-slate-700 z-0'></div>
                             <div>
-                              <div className='text-slate-700'>Item is updated for {asset.price-0.01} TL.</div>
+                              <div className='text-slate-700'>Item is updated for {asset.price-1} TL.</div>
                               <div className='text-slate-500'>{event.date}</div>
                             </div>
                           </div>)
