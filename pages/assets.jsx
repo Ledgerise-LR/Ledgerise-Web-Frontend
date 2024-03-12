@@ -1102,7 +1102,7 @@ export default function Home() {
               </div>
             </div>
             <div className='mt-16'>
-              <div className='text-3xl text-slate-900 mb-1'>This aid includes</div>
+              <div className='text-3xl text-slate-900 mb-1'>Erzak kolisi içeriği</div>
               <hr className='mb-3' />
               <div>
                 {
