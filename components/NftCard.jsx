@@ -8,17 +8,6 @@ import { getEthToUsdRate } from '@/utils/getEthToUsdRate';
 
 export default function NFTBox({ price, nftAddress, tokenId, marketplaceAddress, seller, tokenUri, history, availableEditions }) {
 
-  const [ethToUsdRate, setEthToUsdRate] = useState(null);
-
-  useEffect(() => {
-    const fetchEthToUsdRate = async () => {
-      const rate = await getEthToUsdRate();
-      setEthToUsdRate(rate);
-    };
-
-    fetchEthToUsdRate();
-  }, []);
-
   function prettyAddress(address) {
     return address.slice(0, 6) + "..." + address.slice(address.length - 6, address.length)
   }
@@ -78,7 +67,7 @@ export default function NFTBox({ price, nftAddress, tokenId, marketplaceAddress,
                     : ("Listed donation price")
                   }
                 </div>
-                <div className="text-slate-700 text-2xl mt-1 font-medium">${Number(ethToUsdRate * Number(ethers.utils.formatEther(price, "ether"))).toFixed(1)}</div>
+                <div className="text-slate-700 text-2xl mt-1 font-medium">{Number(price)-0.1} TL</div>
                 <div className="text-slate-500 mt-2 mb-2 text-sm">
                   <span className="text-slate-600 font-medium">{availableEditions} </span>
                   editions available
@@ -88,7 +77,7 @@ export default function NFTBox({ price, nftAddress, tokenId, marketplaceAddress,
                     <Blockie seed={seller} size={7} />
                   </div>
                   <div className="ml-3 text-xs text-slate-500">
-                    <div>Owner</div>
+                    <div>Admin</div>
                     <div className="text-slate-600">{prettyAddress(seller)}</div>
                   </div>
                 </div>
@@ -96,7 +85,7 @@ export default function NFTBox({ price, nftAddress, tokenId, marketplaceAddress,
               </div>
             </div>
           </div>
-        ) : (<div>Loading...</div>)}
+        ) : (<div>Yükleniyor...</div>)}
       </div>
     </div>
   )
