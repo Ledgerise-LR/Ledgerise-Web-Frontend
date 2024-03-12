@@ -153,21 +153,21 @@ export default function Home() {
   return (
     <>
       <div className='flex flex-1 py-16'>
-        <div className='w-1/4 px-16 h-fit'>
-          <div className='text-xl w-full h-full mb-4 mt-3'>Filters</div>
+        <div className='w-1/4 hidden flex-col px-16 h-fit'>
+          <div className='text-xl w-full h-full mb-4 mt-3'>Filtrele</div>
           <div className='border-b w-full bg-black'></div>
           <div className='w-full h-max border-b mt-4 p-2'>
             <div className='text-slate-600'>Sort by</div>
             <div className='text-slate-800'>
-              <div id='priceAscending' onClick={handleDefault} className={`hover:text-slate-400 cursor-pointer ${allClicked ? "text-slate-500" : "text-slate-800"}`}>Default</div>
-              <div id='priceAscending' onClick={handleSortPriceAscending} className={`hover:text-slate-400 cursor-pointer ${ascendingClicked ? "text-slate-500" : "text-slate-800"}`}>Price: Low-High</div>
-              <div id='priceDescending' onClick={handleSortPriceDescending} className={`hover:text-slate-400 cursor-pointer ${descendingClicked ? "text-slate-500" : "text-slate-800"}`}>Price: High-Low</div>
-              <div id='newest' onClick={handleSortNewest} className={`hover:text-slate-400 cursor-pointer ${newestClicked ? "text-slate-500" : "text-slate-800"}`}>Newest</div>
-              <div id='oldest' onClick={handleSortOldest} className={`hover:text-slate-400 cursor-pointer ${oldestClicked ? "text-slate-500" : "text-slate-800"}`}>Oldest</div>
+              <div id='priceAscending' onClick={handleDefault} className={`hover:text-slate-400 cursor-pointer ${allClicked ? "text-slate-500" : "text-slate-800"}`}>Varsayılan</div>
+              <div id='priceAscending' onClick={handleSortPriceAscending} className={`hover:text-slate-400 cursor-pointer ${ascendingClicked ? "text-slate-500" : "text-slate-800"}`}>Fiyat: düşük-yüksek</div>
+              <div id='priceDescending' onClick={handleSortPriceDescending} className={`hover:text-slate-400 cursor-pointer ${descendingClicked ? "text-slate-500" : "text-slate-800"}`}>Fiyat: yüksek-düşük</div>
+              <div id='newest' onClick={handleSortNewest} className={`hover:text-slate-400 cursor-pointer ${newestClicked ? "text-slate-500" : "text-slate-800"}`}>Önce yeni</div>
+              <div id='oldest' onClick={handleSortOldest} className={`hover:text-slate-400 cursor-pointer ${oldestClicked ? "text-slate-500" : "text-slate-800"}`}>Önce eski</div>
             </div>
           </div>
           <div className='w-full h-max border-b mt-4 p-2'>
-            <div className='text-slate-700 mb-2'>Filter by price</div>
+            <div className='text-slate-700 mb-2'>Fiyata göre</div>
             <div>
               <label>
                 <input
@@ -176,7 +176,7 @@ export default function Home() {
                   value="0-0.01"
                   onChange={handlePriceCategoryChange}
                 />
-                {" 0-5 $"}
+                {" 0-500 ₺"}
               </label>
               <br />
               <label>
@@ -186,7 +186,7 @@ export default function Home() {
                   value="0.01-0.1"
                   onChange={handlePriceCategoryChange}
                 />
-                {" 5-20 $"}
+                {" 500-1000 ₺"}
               </label>
               <br />
               <label>
@@ -197,7 +197,7 @@ export default function Home() {
                   checked={selectedPriceCategories.includes('0.1-1')}
                   onChange={handlePriceCategoryChange}
                 />
-                {" 20-50 $"}
+                {" 1000-1500 ₺"}
               </label>
               <br />
               <label>
@@ -208,7 +208,7 @@ export default function Home() {
                   checked={selectedPriceCategories.includes('1-10')}
                   onChange={handlePriceCategoryChange}
                 />
-                {" 50-100 $"}
+                {" 1500-2000 ₺"}
               </label>
               <br />
               <label>
@@ -219,13 +219,13 @@ export default function Home() {
                   checked={selectedPriceCategories.includes('10-1000000')}
                   onChange={handlePriceCategoryChange}
                 />
-                {" 100+ $"}
+                {" 2000+ ₺"}
               </label>
               <br />
             </div>
-          </div>
+          </div> 
           <div className='w-full h-max border-b mt-4 p-2'>
-            <div className='text-slate-700 mb-2'>Filter by available editions</div>
+            <div className='text-slate-700 mb-2'>Stoğa göre</div>
             <div className='flex-col flex'>
               <label>
                 <input
@@ -290,7 +290,8 @@ export default function Home() {
             </div>
           </div>
         </div >
-        <div className='w-3/4 h-full'>
+       
+        <div className='w-full h-full'>
           <div className='text-4xl w-full h-full mb-4 text-center'>{collection.name}</div>
           <hr className='mb-4' />
           <div className='flex flex-1 flex-wrap h-max'>
@@ -300,7 +301,7 @@ export default function Home() {
                 ? (<div className='text-slate-500 w-full h-36 flex flex-1 items-center justify-center'>No aid parcels found for the filters you provided.</div>)
                 : (assets.map((asset) => {
                   return (
-                    <div className='w-72 mr-5 mb-5' key={`${asset.nftAddress}${asset.tokenId}`}>
+                    <div className='w-72 ml-10 mb-5' key={`${asset.nftAddress}${asset.tokenId}`}>
                       <a href={`/assets?id=${asset.tokenId}&subcollectionId=${asset.subcollectionId}`}>
                         <NFTBox
                           marketplaceAddress={marketplaceAddress}
