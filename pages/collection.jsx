@@ -30,6 +30,7 @@ export default function Home() {
         .then(response => response.json())
         .then(data => {
           setAssets(data.activeItems);
+          handleDefault();
           fetch(`${URL}:${PORT}/get-single-collection?id=${itemId}`)
             .then(response => response.json())
             .then(data => {
@@ -101,7 +102,6 @@ export default function Home() {
       .then(response => response.json())
       .then(data => {
         setAssets(data.activeItems);
-        console.log(assets)
       })
   }
 
