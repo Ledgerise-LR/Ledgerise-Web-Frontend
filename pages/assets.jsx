@@ -1056,10 +1056,10 @@ export default function Home() {
               <hr className='mb-3' />
               <div className='text-slate-700'>{tokenDescription}</div>
             </div>
-            <div>
+            {/* <div>
               <div className='text-3xl text-slate-900 mb-3'>Bağışların dağıtımı</div>
-              <hr className='mb-3' />
-              <div>
+              <hr className='mb-3' /> */}
+              {/* <div>
 
                 <div className='flex flex-1 mb-5 border h-24 justify-between rounded'>
                   <div className='flex flex-1 items-center'>
@@ -1074,7 +1074,7 @@ export default function Home() {
                       <span className='font-semibold text-lg'>%99.5</span>
                     </div>
                   </div>
-                </div>
+                </div> */}
 
                 {/* <div className='flex flex-1 mb-5 border h-24 justify-between rounded'>
                   <div className='flex flex-1 items-center'>
@@ -1091,7 +1091,7 @@ export default function Home() {
                   </div>
                 </div> */}
 
-                <div className='flex flex-1 mb-5 border h-24 justify-between rounded'>
+                {/* <div className='flex flex-1 mb-5 border h-24 justify-between rounded'>
                   <div className='flex flex-1 items-center'>
                     <div className='h-full p-2 aspect-square flex items-center justify-center bg-slate-50 border-r border-blue-900'>
                       <img src="logocompact.svg" alt="Ledgerise " />
@@ -1104,10 +1104,10 @@ export default function Home() {
                       <span className='font-semibold text-lg'>0.5% </span>
                     </div>
                   </div>
-                </div>
+                </div> */}
 
-              </div>
-            </div>
+              {/* </div> */}
+            {/* </div> */}
             <div className='mt-16'>
               <div className='text-3xl text-slate-900 mb-1'>Erzak kolisi içeriği</div>
               <hr className='mb-3' />
