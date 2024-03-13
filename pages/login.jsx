@@ -66,10 +66,10 @@ export default function Home() {
             </div>
             <div className='text-slate-50 text-4xl my-4'>Ledgerise'a hoşgeldiniz</div>
             <div className='text-slate-200 text-lg text-center'>Gönül rahatlığıyla bağış yapın. Bağışınızın ihtiyaç sahiplerine ulaştığını görün.</div>
-            {/* <div className='mt-4 flex items-center'>
-              <div className='mr-4 text-slate-600'>New to Ledgerise?</div>
-              <a href='/register' className='bg-blue-900 text-slate-100 py-3 px-8 rounded-lg border hover:border-blue-900 hover:bg-slate-50 hover:text-slate-900 transition-all cursor-pointer'>Sign Up</a>
-            </div> */}
+            <div className='mt-4 flex items-center'>
+              <div className='mr-4 text-slate-600'>Bir hesabınız yok mu?</div>
+              <a href='/register' className='bg-blue-900 text-slate-100 py-3 px-8 rounded-lg border hover:border-blue-900 hover:bg-slate-50 hover:text-slate-900 transition-all cursor-pointer'>Kayıt olun</a>
+            </div>
           </div>
           <div className='ml-auto text-slate-900'>Ledgerise 2024</div>
         </div>

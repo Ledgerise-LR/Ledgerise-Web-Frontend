@@ -77,15 +77,19 @@ export default function Home() {
           <div>
             <div className='text-2xl mb-8'>Ledgerise | Giriş</div>
             <hr />
-            <div className='mb-8'>Email adresinizi ve şifrenizi girerek raporunuzu görüntüleyin.</div>
+            <div className='mb-8'>Email adresiniz ve şifreniz ile hesap oluşturarak raporunuzu görüntüleyin.</div>
+            <div className='flex w-full items-center mb-4'>
+              <div className='mr-4'>Zaten bir hesabınız var mı?</div>
+              <a href='/login' className='bg-slate-800 text-slate-50 px-4 py-2 rounded-full'>Giriş yapın</a>
+            </div>
             <div className='flex flex-col mb-4'>
               <input className='bg-slate-100 rounded p-2 mb-4' type="text" placeholder='Email address' onChange={(e) => setEmail(e.target.value)} />
               <input className='bg-slate-100 rounded p-2 mb-4 w-1/2 mr-4' type="text" placeholder='Password' onChange={(e) => setPassword(e.target.value)} />
               <div className={`${success == "true" ? ("text-green-600") : (success == "false" ? ("text-red-600") : (""))}`}>{successText}</div>
-              <div className='ml-auto w-24 border text-slate-50 bg-blue-900 p-2 rounded flex flex-row-reverse cursor-pointer hover:animate-bounce' onClick={() => { handleClick() }}>→ Sign Up</div>
+              <div className='ml-auto w-24 border text-slate-50 bg-blue-900 p-2 rounded flex flex-row-reverse cursor-pointer' onClick={() => { handleClick() }}>→ Kayıt ol</div>
             </div>
           </div>
-          <div className='ml-auto'>Powered by Üsküdar American Academy</div>
+          <div className='ml-auto'>Powered by LR</div>
         </div>
       </div>
     </div>

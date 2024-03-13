@@ -111,7 +111,7 @@ export default function Home() {
                     color: "white"
                   }}
                   isFullWidth="true"
-                  text='Şimdi Bağış Yapın!'
+                  text='Raporunuzu görüntüleyin!'
                   theme='custom'
                   size='xl'
                 />

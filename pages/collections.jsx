@@ -55,8 +55,8 @@ export default function Home() {
                     <div className='text-slate-800 text-2xl my-3 flex flex-1 justify-between items-center'>
                       <div>{collection.name}</div>
                       <div className='w-2/3 px-4 rounded-full py-2 bg-black flex-col text-slate-50 flex items-baseline justify-center'>
-                        <span className='text-lg mr-1 -mb-1'>{(collection.totalRaised * ethToUsdRate).toFixed(0)}$</span>
-                        <span className='text-xs text-slate-300'>total raised</span>
+                        <span className='text-lg mr-1 -mb-1'>{collection.totalRaised} ₺</span>
+                        <span className='text-xs text-slate-300'>toplam bağış</span>
                       </div>
                     </div>
                     <div className=''>

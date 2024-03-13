@@ -597,8 +597,9 @@ export default function Home() {
                 <hr className='mb-3' />
                 <ul>
                   {
-                    asset.history.map(event => {
-                      if ((!donor._id && event.buyer && event.openseaTokenId >= 0) || (donor._id && donor._id == event.buyer && event.buyer && event.openseaTokenId >= 0)) {
+                    asset.history.length && asset.history.length > 1
+                    ? asset.history.map(event => {
+                      if ((!donor.school_number && event.buyer && event.openseaTokenId >= 0) || (donor.school_number && donor.school_number == event.buyer && event.buyer && event.openseaTokenId >= 0)) {
                         // https://sepolia.etherscan.io/tx/0x0f10b50aad6b472a42910bfa4a1664989486bf917486a97ebc24f98a3f71bf39
                         return (
                           <li className='mb-8'>
@@ -746,7 +747,13 @@ export default function Home() {
                             </div>
                           </li>)
                       }
-                    })}
+                    })
+                    : (
+                      <div className='w-full flex justify-center'>
+                        Henüz bir rapor oluşturulmamıştır.
+                      </div>
+                    )
+                  }
                 </ul>
               </div>
 
