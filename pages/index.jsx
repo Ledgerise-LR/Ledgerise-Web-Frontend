@@ -111,7 +111,7 @@ export default function Home() {
                     color: "white"
                   }}
                   isFullWidth="true"
-                  text='Raporunuzu görüntüleyin!'
+                  text='Kampanyaları görüntüleyin!'
                   theme='custom'
                   size='xl'
                 />
@@ -123,7 +123,7 @@ export default function Home() {
               <div className='h-max flex flex-1 flex-col justify-center border-2 p-2 rounded'>
                 <img src={imageURI} alt={tokenName} className='border-b-2 rounded h-96' />
                 <div className='w-full h-max mt-2 p-2'>
-                  <div className='text-2xl text-slate-800 font-medium mb-1'>{asset.collectionName} Kampanyası</div>
+                  <div className='text-2xl text-slate-800 font-medium mb-1'>{asset.collectionName}</div>
                   <div className='flex flex-1 justify-between items-center'>
                     <div>
                       <span className='text-sm text-slate-500'>#{asset.tokenId} </span>
