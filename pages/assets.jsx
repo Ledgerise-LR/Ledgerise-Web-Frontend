@@ -40,7 +40,11 @@ export default function Home() {
   const [donor, setDonor] = useState({});
 
   function prettyAddress(address) {
-    return address.slice(0, 3) + "..." + address.slice(address.length - 3, address.length)
+    return address.slice(0, 6) + "..." + address.slice(address.length - 6, address.length)
+  }
+
+  function concealDonor(address) {
+    return address[0] + "*******"
   }
 
   function prettyDate(timestamp) {
@@ -1131,7 +1135,7 @@ export default function Home() {
             </div>
           </div>
           <div className='w-full mb-12'>
-            <div className='text-2xl mb-2'>Geçmiş Bağışlar</div>
+            <div className='text-2xl mb-2'>Yapılan Tüm Bağışlar</div>
             <hr className='mb-2' />
             <div className='flex flex-1 flex-col-reverse relative'>
               <div className='absolute w-px h-full ml-1.5 top-5 bg-slate-300 z-0'></div>
@@ -1143,7 +1147,7 @@ export default function Home() {
                         ? <div className='flex-1 flex items-center'>
                           <div className='w-3 h-3 mr-5 rounded-full bg-slate-700 z-0'></div>
                           <div>
-                            <div className='text-slate-700'>Koli {prettyAddress(event.buyer)} tarfından {asset.price-1} TL'ye <strong>bağışlandı</strong>.</div>
+                            <div className='text-slate-700'>Koli {concealDonor(event.buyer)} tarfından {asset.price-1} TL'ye <strong>bağışlandı</strong>.</div>
                             <div className='text-slate-500'>{event.date}</div>
                           </div>
                         </div>
