@@ -55,6 +55,21 @@ export default function Home() {
   return (
     <div className='w-screen h-screen flex items-center justify-center sm:flex'>
       <div className='w-fit h-5/6 flex shadow-slate-600 shadow-lg flex-wrap flex-row-reverse'>
+      <div className='flex flex-col w-100 h-full p-4 px-16 justify-between bg-white'>
+          <div></div>
+          <div>
+            <div className='text-2xl mb-8'>Ledgerise | Login</div>
+            <hr />
+            <div className='mb-8'><strong>Güvenli</strong> ve <strong>%100 şefaf</strong>, <strong>uçtan uca</strong> bağış takip sistemine katılın.</div>
+            <div className='flex flex-col mb-4'>
+              <input className='bg-slate-100 rounded p-2 mb-4' type="text" placeholder='Email address' onChange={(e) => setEmail(e.target.value)} />
+              <input className='bg-slate-100 rounded p-2 mb-4' type="password" placeholder='Password' onChange={(e) => setPassword(e.target.value)} />
+              <div className={`${success == "true" ? ("text-green-600") : (success == "false" ? ("text-red-600") : (""))}`}>{successText}</div>
+              <div className='ml-auto w-1/4 border text-slate-50 bg-blue-900 p-2 rounded flex flex-row-reverse cursor-pointer hover:animate-pulse' onClick={() => { handleClick() }}>→ Login</div>
+            </div>
+          </div>
+          <div className='ml-auto'>Powered by LR</div>
+        </div>
         <div className='flex flex-col w-100 h-full bg-[linear-gradient(0deg,rgba(255,100,0,0.75)_0%,rgba(20,50,150,0.75)_75%)] justify-between p-4 relative'>
           <div id="starts-content" className='absolute z-0 w-full h-36 animate-pulse'></div>
           <a href='/' className='z-10 py-2 px-4 rounded bg-blue-500 w-fit text-slate-100 cursor-pointer'>← Back to main</a>
@@ -72,21 +87,6 @@ export default function Home() {
             </div>
           </div>
           <div className='ml-auto text-slate-900'>Ledgerise 2024</div>
-        </div>
-        <div className='flex flex-col w-100 h-full p-4 px-16 justify-between bg-white'>
-          <div></div>
-          <div>
-            <div className='text-2xl mb-8'>Ledgerise | Login</div>
-            <hr />
-            <div className='mb-8'><strong>Güvenli</strong> ve <strong>%100 şefaf</strong>, <strong>uçtan uca</strong> bağış takip sistemine katılın.</div>
-            <div className='flex flex-col mb-4'>
-              <input className='bg-slate-100 rounded p-2 mb-4' type="text" placeholder='Email address' onChange={(e) => setEmail(e.target.value)} />
-              <input className='bg-slate-100 rounded p-2 mb-4' type="password" placeholder='Password' onChange={(e) => setPassword(e.target.value)} />
-              <div className={`${success == "true" ? ("text-green-600") : (success == "false" ? ("text-red-600") : (""))}`}>{successText}</div>
-              <div className='ml-auto w-1/4 border text-slate-50 bg-blue-900 p-2 rounded flex flex-row-reverse cursor-pointer hover:animate-pulse' onClick={() => { handleClick() }}>→ Login</div>
-            </div>
-          </div>
-          <div className='ml-auto'>Powered by LR</div>
         </div>
       </div>
     </div>
