@@ -40,7 +40,7 @@ export default function Home() {
   const [donor, setDonor] = useState({});
 
   function prettyAddress(address) {
-    return address.slice(0, 6) + "..." + address.slice(address.length - 6, address.length)
+    return address.slice(0, 3) + "..." + address.slice(address.length - 3, address.length)
   }
 
   function prettyDate(timestamp) {
