@@ -403,6 +403,9 @@ export default function Home() {
   const [companyEmail, setCompanyEmail] = useState("");
   const [companyPassword, setCompanyPassword] = useState("");
   const [companyCharityAddress, setCompanyCharityAddress] = useState("");
+  const [companyIBAN, setCompanyIBAN] = useState("");
+  const [companyIBANReceipient, setCompanyIBANReceipient] = useState("");
+  const [companyBankName, setCompanyBankName] = useState("");
 
   const [companySuccessText, setCompanySuccessText] = useState("");
 
@@ -415,6 +418,9 @@ export default function Home() {
     formData.append('email', companyEmail);
     formData.append('password', companyPassword);
     formData.append('charityAddress', companyCharityAddress);
+    formData.append('IBAN', companyIBAN);
+    formData.append('receipientName', companyIBANReceipient);
+    formData.append('bankName', companyBankName);
 
     axios.post(`${URL}:${PORT}/auth/company/create`, formData)
       .then((res) => {
@@ -905,6 +911,9 @@ export default function Home() {
                 <input className="p-2 border-2 w-auto mb-4" type="text" placeholder="Name" onChange={(e) => { setCompanyName(e.currentTarget.value) }} />
                 <input className="p-2 border-2 w-auto mb-4" type="text" placeholder="Code" onChange={(e) => { setCompanyCode(e.currentTarget.value) }} />
                 <input className="p-2 border-2 w-auto mb-4" type="text" placeholder="Email" onChange={(e) => { setCompanyEmail(e.currentTarget.value) }} />
+                <input className="p-2 border-2 w-auto mb-4" type="text" placeholder="IBAN" onChange={(e) => { setCompanyIBAN(e.currentTarget.value) }} />
+                <input className="p-2 border-2 w-auto mb-4" type="text" placeholder="IBAN receipient name" onChange={(e) => { setCompanyIBANReceipient(e.currentTarget.value) }} />
+                <input className="p-2 border-2 w-auto mb-4" type="text" placeholder="Name of the bank" onChange={(e) => { setCompanyBankName(e.currentTarget.value) }} />
                 <div>
                   <input type="file" accept="image/*" onChange={handleImageChange} />
                   {selectedImage && (

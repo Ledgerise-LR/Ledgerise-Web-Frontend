@@ -23,62 +23,57 @@ export default function Footer() {
     <div>
       <div>
         <div className="flex flex-col justify-between items-center bg-slate-800 w-full">
-          <div className="w-full h-4/5 flex p-24">
-            <div className="mr-auto flex w-1/2">
+          <div className="w-full h-4/5 flex py-24 px-12 flex-wrap justify-center">
+            <div className="mr-auto flex w-fit mb-12">
               <div>
                 <div className="mb-8">
                   <img src="/icon.svg" alt="Ledgerise logo" />
                 </div>
                 <div className="w-full font-serif text-yellow-500 text-2xl mb-1 flex">
-                  <div className="mr-1">{"See the"}</div>
-                  <div className="mr-1 font-bold text-yellow-400">{"change"}</div>
-                  <div className="mr-1">{"after you donate"}</div>
+                  <div className="mr-1">{"Bağış hiç olmadığı kadar"}  <span className="font-bold text-yellow-400">{"şeffaf"}</span></div>
                 </div>
                 <div className="w-full font-serif text-yellow-700 text-lg mb-8 flex">
-                  Let us hand your donation into the hearts of beneficiaries ❤️
+                  Ledgerise ailesine katılın, bağışınızla kalplere uzanın ❤️
                 </div>
-                <a href="collections" className="p-4 px-16 w-fit ml-auto bg-slate-900 text-green-500 rounded-full transition-all cursor-pointer border border-green-500 hover:text-slate-50 hover:bg-green-500">Donate now</a>
+                <a href="collections" className="p-4 px-8 w-fit ml-auto bg-slate-900 text-green-500 rounded-full transition-all cursor-pointer border border-green-500 hover:text-slate-50 hover:bg-green-500">Kampanyalar</a>
               </div>
             </div>
-            <div className="w-1/2 flex flex-row-reverse">
+            <div className="w-100 flex">
               <div className="w-1/3 h-full ml-12">
-                <div className="text-slate-100 mb-2">Resources</div>
+                <div className="text-slate-100 mb-2">Kaynaklar</div>
                 <div className="text-slate-400">
                   <div className="mb-2">
-                    <a href="/">Home</a>
+                    <a href="/">Anasayfa</a>
                   </div>
                   <div className="mb-2">
-                    <a href="/collections">Collections</a>
+                    <a href="/collections">Kampanyalar</a>
                   </div>
                   <div className="mb-2">
-                    <a href="/auctions">Auctions</a>
+                    <a href="/login">Giriş yap</a>
                   </div>
                   <div className="mb-2">
-                    <a href="/login">Login</a>
-                  </div>
-                  <div className="mb-2">
-                    <a href="/register">Register</a>
+                    <a href="/register">Kayıt ol</a>
                   </div>
                 </div>
               </div>
               <div className="w-1/3 h-full ml-12">
-                <div className="text-slate-100 mb-2">Related</div>
+                <div className="text-slate-100 mb-2">İlgili</div>
                 <div className="text-slate-400">
-                  <div className="mb-2">Terms & Conditions</div>
-                  <div className="mb-2">Privacy Policy</div>
+                  <div className="mb-2">Şartlar & Koşullar</div>
+                  <div className="mb-2">Gizlilik Politikası</div>
                 </div>
               </div>
               <div className="w-1/3 h-full ml-12">
-                <div className="text-slate-100 mb-2">Transparency</div>
+                <div className="text-slate-100 mb-2">Şeffaflık</div>
                 <div className="text-slate-400">
                   <div className="mb-2">
-                    <a href={`https://${blockExplorer}/address/${marketplaceAddress}`}>Ledgerise Donation Marketplace</a>
+                    <a href={`https://${blockExplorer}/address/${marketplaceAddress}`}>Bağış Platformu</a>
                   </div>
                   <div className="mb-2">
-                    <a href={`https://${blockExplorer}/address/${mainCollectionAddress}`}>Ledgerise Main Collection</a>
+                    <a href={`https://${blockExplorer}/address/${mainCollectionAddress}`}>Ana kampanya</a>
                   </div>
                   <div className="mb-2">
-                    <a href={`https://${blockExplorer}/address/${ledgeriseLensAddress}`}>Ledgerise Lens</a>
+                    <a href={`https://${blockExplorer}/address/${ledgeriseLensAddress}`}>Lens</a>
                   </div>
                 </div>
               </div>
