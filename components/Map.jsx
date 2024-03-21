@@ -75,7 +75,7 @@ export default function MyMap({ stampCoordinates, shippedCoordinates, deliveredC
                   <div className="flex w-72 items-end h-64">
                     <img className="w-1/2" src={`https://ipfs.io/ipfs/${verification.tokenUri}`} alt="" />
                     <div className="ml-4 w-1/2 flex flex-col">
-                      <div className="mb-2 mt-1 text-base text-bold text-slate-800">Stamped <span className="text-xs text-slate-500">bagis: #{verification.openseaTokenId}</span></div>
+                      <div className="mb-2 mt-1 text-base text-bold text-slate-800">Üretildi <span className="text-xs text-slate-500">bagis: #{verification.openseaTokenId}</span></div>
                       <hr />
                       <div>{prettyDate(verification.date)}</div>
                       <hr />
