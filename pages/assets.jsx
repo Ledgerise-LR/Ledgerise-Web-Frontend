@@ -50,7 +50,7 @@ export default function Home() {
   function prettyDate(timestamp) {
 
     const date = new Date(timestamp * 1);
-    const formattedDate = date.toLocaleString('en-US', {
+    const formattedDate = date.toLocaleString('tr-TR', {
       day: 'numeric',
       month: 'long',
       year: 'numeric',
@@ -603,7 +603,7 @@ export default function Home() {
                   {
                     asset.history.length && asset.history.length > 1
                     ? asset.history.map(event => {
-                      if ((!donor.school_number && event.buyer && event.openseaTokenId >= 0) || (donor.school_number && donor.school_number == event.buyer && event.buyer && event.openseaTokenId >= 0)) {
+                      if (/*(!donor.school_number && event.buyer && event.openseaTokenId >= 0) ||*/ (donor.school_number && donor.school_number == event.buyer && event.buyer && event.openseaTokenId >= 0)) {
                         // https://sepolia.etherscan.io/tx/0x0f10b50aad6b472a42910bfa4a1664989486bf917486a97ebc24f98a3f71bf39
                         return (
                           <li className='mb-8'>
