@@ -37,20 +37,20 @@ export default function Header() {
   }
 
   return (
-    <nav className="p-2 border-b-2 flex flex-row justify-between items-center w-screen overflow-x-hidden">
+    <nav className="p-2 border-b-2 flex flex-row justify-between items-center w-full overflow-x-hidden">
       <h1 className="pl-12 w-48">
         <a href="/">
           <img className="h-20" src="logo.svg" alt="Ledgerise | Decentralized Fundrasing-delivering trace protocol" />
         </a>
       </h1>
-      <div className="flex flex-row justify-between items-center">
+      <div className="w-fit flex flex-row items-center">
         <Link href="/collections" className="p-6" >
           Kampanyalar
         </Link>
         {
           router.pathname == "/admin"
             ? <ConnectButton moralisAuth={false} />
-            : (<div className="w-fit mr-36 h-fit">
+            : (<div className="mr-36 h-fit">
               {
                 isAuthenticated
                   ? (<div className="flex">
