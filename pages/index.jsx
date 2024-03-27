@@ -96,8 +96,8 @@ export default function Home() {
         <div className='flex flex-1 w-3/5 h-4/5 justify-center flex-wrap'>
           <div className='flex-col w-128 mb-12'>
             <div className='w-full'>
-              <div className='text-6xl w-1/2 font-playfair'>Güvenilir,{"\n"}Şeffaf,{"\n"}Değiştirilemez</div>
-              <div className='text-2xl text-slate-500 mt-12 font-serif'><strong>Gönül rahatlığıyla</strong> bağış yapın. Bağışınızın <strong>ihtiyaç sahibine ulaştığını</strong> görün.</div>
+              <div className='text-4xl w-1/2 font-playfair'>Güvenilir,{"\n"}Şeffaf,{"\n"}Değiştirilemez</div>
+              <div className='text-xl text-slate-500 mt-12 font-serif'><strong>Gönül rahatlığıyla</strong> bağış yapın. Bağışınızın <strong>ihtiyaç sahibine ulaştığını</strong> görün.</div>
             </div>
             <div className='w-1/2 mt-16'>
               <a href="/collections">
