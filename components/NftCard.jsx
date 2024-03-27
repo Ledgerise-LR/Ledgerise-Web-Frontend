@@ -63,14 +63,14 @@ export default function NFTBox({ price, nftAddress, tokenId, marketplaceAddress,
                 <div className="text-slate-800 text-3xl uppercase font-medium mt-2">{tokenName}</div>
                 <div className="text-slate-500 mt-1 text-xs">
                   {isAssetUpdated(history) == true
-                    ? ("Updated donation price")
-                    : ("Listed donation price")
+                    ? ("Güncellenmiş fiyat")
+                    : ("Listeleme fiyatı")
                   }
                 </div>
                 <div className="text-slate-700 text-2xl mt-1 font-medium">{Number(price)-1} TL</div>
                 <div className="text-slate-500 mt-2 mb-2 text-sm">
                   <span className="text-slate-600 font-medium">{availableEditions} </span>
-                  editions available
+                  mevcut stok
                 </div>
                 <div className="flex flex-1 items-center mt-4 mb-3">
                   <div>

@@ -15,7 +15,7 @@ export default function App({ Component, pageProps }) {
     <div>
       <Head>
         <title>Ledgerise</title>
-        <meta name="description" content="Nft Marketplace " />
+        <meta name="description" content="Bağış hiç olmadığı kadar şeffaf" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
         <link rel="preconnect" href="https://fonts.googleapis.com"></link>
