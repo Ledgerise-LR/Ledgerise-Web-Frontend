@@ -38,51 +38,56 @@ export default function Footer() {
                 <a href="collections" className="p-4 px-8 w-fit ml-auto bg-slate-900 text-green-500 rounded-full transition-all cursor-pointer border border-green-500 hover:text-slate-50 hover:bg-green-500">Kampanyalar</a>
               </div>
             </div>
-            <div className="w-100 flex">
-              <div className="w-1/3 h-full ml-12">
-                <div className="text-slate-100 mb-2">Kaynaklar</div>
-                <div className="text-slate-400">
-                  <div className="mb-2">
-                    <a href="/">Anasayfa</a>
+            <div className="w-100 flex flex-col h-full">
+              <div className="w-full flex">
+                <div className="w-1/3 h-full ml-12">
+                  <div className="text-slate-100 mb-2">Kaynaklar</div>
+                  <div className="text-slate-400">
+                    <div className="mb-2">
+                      <a href="/">Anasayfa</a>
+                    </div>
+                    <div className="mb-2">
+                      <a href="/collections">Kampanyalar</a>
+                    </div>
+                    <div className="mb-2">
+                      <a href="/login">Giriş yap</a>
+                    </div>
+                    <div className="mb-2">
+                      <a href="/register">Kayıt ol</a>
+                    </div>
                   </div>
-                  <div className="mb-2">
-                    <a href="/collections">Kampanyalar</a>
+                </div>
+                <div className="w-1/3 h-full ml-12">
+                  <div className="text-slate-100 mb-2">İlgili</div>
+                  <div className="text-slate-400">
+                    <div className="mb-2">Şartlar & Koşullar</div>
+                    <div className="mb-2">Gizlilik Politikası</div>
                   </div>
-                  <div className="mb-2">
-                    <a href="/login">Giriş yap</a>
-                  </div>
-                  <div className="mb-2">
-                    <a href="/register">Kayıt ol</a>
+                </div>
+                <div className="w-1/3 h-full ml-12">
+                  <div className="text-slate-100 mb-2">Şeffaflık</div>
+                  <div className="text-slate-400">
+                    <div className="mb-2">
+                      <a href={`https://${blockExplorer}/address/${marketplaceAddress}`}>Bağış Platformu</a>
+                    </div>
+                    <div className="mb-2">
+                      <a href={`https://${blockExplorer}/address/${mainCollectionAddress}`}>Ana kampanya</a>
+                    </div>
+                    <div className="mb-2">
+                      <a href={`https://${blockExplorer}/address/${ledgeriseLensAddress}`}>Lens</a>
+                    </div>
                   </div>
                 </div>
               </div>
-              <div className="w-1/3 h-full ml-12">
-                <div className="text-slate-100 mb-2">İlgili</div>
-                <div className="text-slate-400">
-                  <div className="mb-2">Şartlar & Koşullar</div>
-                  <div className="mb-2">Gizlilik Politikası</div>
-                </div>
-              </div>
-              <div className="w-1/3 h-full ml-12">
-                <div className="text-slate-100 mb-2">Şeffaflık</div>
-                <div className="text-slate-400">
-                  <div className="mb-2">
-                    <a href={`https://${blockExplorer}/address/${marketplaceAddress}`}>Bağış Platformu</a>
-                  </div>
-                  <div className="mb-2">
-                    <a href={`https://${blockExplorer}/address/${mainCollectionAddress}`}>Ana kampanya</a>
-                  </div>
-                  <div className="mb-2">
-                    <a href={`https://${blockExplorer}/address/${ledgeriseLensAddress}`}>Lens</a>
-                  </div>
-                </div>
+              <div className="flex justify-end items-end mt-28">
+                <div className="text-slate-300">© Ledgerise 2023. All rights reserved</div>
               </div>
             </div>
           </div>
           <div className="border-slate-500 border w-full"></div>
-          <div className="w-full py-8 bg-slate-900 flex px-16 justify-between items-center text-slate-200">
-            <div>Ledgerise® - 2024</div>
-            <div>Powered by LR</div>
+          <div className="w-full py-8 bg-slate-900 flex px-16 justify-center items-center text-slate-200">
+            <div className="text-sm text-slate-300">backed by</div>
+            <img src="itucekirdek.png" alt="İtü Çekirdek" />
           </div>
         </div>
       </div>
