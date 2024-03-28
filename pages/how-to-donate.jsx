@@ -44,13 +44,14 @@ export default function Home() {
     <>
       <div className='flex flex-1 py-16 px-8 overflow-x-hidden'>
         <div className='w-full h-full'>
-          <div className='w-full flex flex-col justify-center items-center h-96'>
+          <div className='w-full flex flex-col justify-center items-center h-100'>
             <div className='text-3xl mb-4'>How to donate?</div>
             <div className='text-center'>for <strong>{
               assets && assets[0] && assets[0].collectionName
                 ? assets[0].collectionName
                 : ("")
             }</strong></div>
+            <div className='animate-bounce mt-12 text-xl'>⤓</div>
           </div>
           <div>
             <div>
