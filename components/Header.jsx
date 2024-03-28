@@ -24,6 +24,7 @@ export default function Header() {
     const handleResize = () => {
       const hamburgerMenu = document.getElementById("hamburger-menu");
       hamburgerMenu.style.left = `-${window.innerWidth}px`;
+      hamburgerMenu.style.display = "block";
       setWindowSize({
         width: window.innerWidth,
         height: window.innerHeight
@@ -63,7 +64,7 @@ export default function Header() {
 
   return (
     <nav>
-      <div id="hamburger-menu" className="hamburger-menu w-screen h-screen absolute bg-white z-10 p-8 transition-all">
+      <div id="hamburger-menu" className="hamburger-menu w-screen h-screen absolute bg-white z-10 p-8 transition-all hidden">
         <div className="flex justify-between items-center">
           <a href="/">
             <img className="h-12" src="logo.svg" alt="Ledgerise | Decentralized Fundrasing-delivering trace protocol" />
