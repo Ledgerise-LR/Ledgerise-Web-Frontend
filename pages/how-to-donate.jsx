@@ -51,11 +51,14 @@ export default function Home() {
                 ? assets[0].collectionName
                 : ("")
             }</strong></div>
-            <div className='animate-bounce mt-12 text-xl'>⤓</div>
+            <div className='animate-bounce mt-12 text-xl flex flex-col items-center'>
+              <div>Slide up</div>
+              <div>↑</div>
+            </div>
           </div>
           <div>
             <div>
-                <div className='mb-8'><strong>Step 1</strong> Select a parcel to donate</div>
+                <div className='mb-8'><strong>Step 1</strong> Decide a parcel to donate</div>
                 <div className='w-full h-96 overflow-x-scroll overflow-y-hidden flex'>
                 {!assets
                   ? (<div>Loading...</div>)
@@ -83,8 +86,9 @@ export default function Home() {
                 }
                 </div>
                 <div className='mt-32'>
-                  <div className='mb-8'><strong>Step 2</strong> Send the money for the parcel you chose.</div>
-                  <div><strong>Important:</strong> Please write your email address to the "Açıklama" section.</div>
+                  <div className='mb-8'><strong>Step 2</strong> Send the money to the IBAN of <strong>{company.receipientDescription} {company.receipientName}</strong> below</div>
+                  <div><strong>Important:</strong> Please write your email address to the "Açıklama" section in the format below.</div>
+                  <div className='w-full flex justify-center'><strong>LR "your email address"</strong></div>
                   {
                     company && company.bankName
                       ? (

@@ -405,6 +405,7 @@ export default function Home() {
   const [companyCharityAddress, setCompanyCharityAddress] = useState("");
   const [companyIBAN, setCompanyIBAN] = useState("");
   const [companyIBANReceipient, setCompanyIBANReceipient] = useState("");
+  const [companyIBANReceipientDescription, setCompanyIBANReceipientDescription] = useState("");
   const [companyBankName, setCompanyBankName] = useState("");
 
   const [companySuccessText, setCompanySuccessText] = useState("");
@@ -913,6 +914,7 @@ export default function Home() {
                 <input className="p-2 border-2 w-auto mb-4" type="text" placeholder="Email" onChange={(e) => { setCompanyEmail(e.currentTarget.value) }} />
                 <input className="p-2 border-2 w-auto mb-4" type="text" placeholder="IBAN" onChange={(e) => { setCompanyIBAN(e.currentTarget.value) }} />
                 <input className="p-2 border-2 w-auto mb-4" type="text" placeholder="IBAN receipient name" onChange={(e) => { setCompanyIBANReceipient(e.currentTarget.value) }} />
+                <input className="p-2 border-2 w-auto mb-4" type="text" placeholder="IBAN receipient description (Who is the receipient?)" onChange={(e) => { setCompanyIBANReceipientDescription(e.currentTarget.value) }} />
                 <input className="p-2 border-2 w-auto mb-4" type="text" placeholder="Name of the bank" onChange={(e) => { setCompanyBankName(e.currentTarget.value) }} />
                 <div>
                   <input type="file" accept="image/*" onChange={handleImageChange} />
