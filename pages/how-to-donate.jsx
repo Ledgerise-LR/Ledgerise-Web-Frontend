@@ -31,6 +31,7 @@ export default function Home() {
         axios.post(`${URL}:${PORT}/company/get-company-from-code`, { code: itemId })
         .then((res) => {
           const companyData = res.data;
+          console.log(companyData.company)
           setCompany(companyData.company);
         })
       });
@@ -85,22 +86,22 @@ export default function Home() {
                   )
                 }
                 </div>
-                <div className='mt-32'>
-                  <div className='mb-8'><strong>Step 2</strong> Send the money to the IBAN of <strong>{company.receipientDescription} {company.receipientName}</strong> below</div>
-                  <div><strong>Important:</strong> Please write your email address to the "Açıklama" section in the format below.</div>
-                  <div className='w-full flex justify-center'><strong>LR "your email address"</strong></div>
-                  {
-                    company && company.bankName
-                      ? (
+                {
+                  company && company.bankName && company.receipientDescription 
+                    ? (
+                      <div className='mt-32'>
+                        <div className='mb-8'><strong>Step 2</strong> Send the money to the IBAN of <strong>{company.receipientDescription} {company.receipientName}</strong> below</div>
+                        <div><strong>Important:</strong> Please write your email address to the "Açıklama" section in the format below.</div>
+                        <div className='w-full flex justify-center'><strong>LR "your email address"</strong></div>
                         <div>
                           <div className='mt-10'>{company.bankName}</div>
                           <div className='mt-2'><strong>{company.IBAN}</strong></div>
                           <div className='mt-2'>{company.receipientName}</div>
                         </div>
-                      )
-                      : ("")
-                  }
-                </div>
+                      </div>
+                    )
+                    : ("")
+                }
             </div>
             <div className='w-full flex flex-col justify-center items-center h-96'>
               <div className='text-3xl mb-4 text-center'>How to see donation delivery report?</div>
