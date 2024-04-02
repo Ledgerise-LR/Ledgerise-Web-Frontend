@@ -47,7 +47,7 @@ export default function Home() {
           : (
             collections.map((collection) => {
               return (
-                <a className='w-96 mr-4 mb-12' href={`/collection?id=${collection.itemId}`}>
+                <a className='w-96 mr-4 mb-12' href={`/collection?id=${collection.itemId}&nftAddress=${collection.nftAddress}`}>
                   <div className='mr-5 aspect-square border-2 rounded flex flex-col p-4' key={`${collection.itemId}`}>
                     <div className='aspect-video border-2 flex items-center justify-center'>
                       <img className='h-36' src={`${collection.image}`} alt={collection.name} />

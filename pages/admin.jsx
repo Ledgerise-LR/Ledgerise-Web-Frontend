@@ -3,7 +3,7 @@ import { useRouter } from 'next/router';
 import { useState, useEffect, useMemo } from 'react';
 import { useMoralis, useWeb3Contract } from 'react-moralis';
 import { ethers } from "ethers";
-import { Button, Modal, useNotification } from 'web3uikit'
+import { Button, Modal, useNotification, CopyButton } from 'web3uikit'
 import marketplaceAbi from "../constants/abi.json";
 import mainCollectionAbi from "../constants/mainCollectionAbi.json";
 import networkMapping from "../constants/networkMapping.json";
@@ -128,7 +128,7 @@ export default function Home() {
 
             data.activeItems.map(activeItem => {
 
-              fetch(`${URL}:${PORT}/get-asset?tokenId=${activeItem.tokenId}&subcollectionId=${activeItem.subcollectionId}`)
+              fetch(`${URL}:${PORT}/get-asset?tokenId=${activeItem.tokenId}&subcollectionId=${activeItem.subcollectionId}&nftAddress=${activeItem.nftAddress}`)
                 .then(response => response.json())
                 .then(async (data) => {
                   const asset = {
@@ -311,6 +311,7 @@ export default function Home() {
     formData.append('image', selectedImage);
     formData.append('subcollectionId', subcollectionId);
     formData.append('companyCode', createSubcollectionCompanyCode);
+    formData.append('nftAddress', mainCollectionAddress);
 
     axios.post(`${URL}:${PORT}/update-subcollection-image`, formData)
       .then((res) => {
@@ -471,6 +472,29 @@ export default function Home() {
 
   const [currentSelectingEvent, setCurrectSelectingEvent] = useState("stamp");
 
+
+  const handleListItemClick = () => {
+
+    axios.post(`${URL}:${PORT}/active-item/list-item`, {
+      nftAddress: listItemNftAddress,
+      price: listItemPrice,
+      subcollectionId: listItemSubcollectionId,
+      availableEditions: listItemAvailableEditions,
+      route: listItemRoute,
+      charityAddress: listItemCharityAddress,
+      tokenUri: listItemTokenUri
+    })
+      .then((res) => {
+        const data = res.data;
+        if (data.success && !data.err) {
+          alert("Item successfully listed.");
+        } else {
+          alert("Item list threw error.");
+        }
+      })
+  }
+
+
   const { runContractFunction: listItem } = useWeb3Contract({
     abi: marketplaceAbi,
     contractAddress: marketplaceAddress,
@@ -497,9 +521,11 @@ export default function Home() {
 
   const [buyItemTokenId, setBuyItemTokenId] = useState("");
   const [buyItemDonorEmail, setBuyItemDonorEmail] = useState("");
+  const [buyItemNftAddress, setBuyItemNftAddress] = useState("");
 
   const handleBuyItemClick = () => {
     axios.post(`${URL}:${PORT}/donate/payment/already_bought`, {
+      nftAddress: buyItemNftAddress,
       tokenId: buyItemTokenId,
       school_number: buyItemDonorEmail
     }).then((res) => {
@@ -630,8 +656,15 @@ export default function Home() {
 
                           return (
                             <div className="flex flex-1 flex-col mb-4 p-4">
-                              <div className="text-2xl">
+                              <div className="text-2xl flex items-center">
                                 <div>{collection.name} - {collection.itemId}</div>
+                                <div className='flex ml-4 border-2 rounded p-2 bg-blue-50'>
+                                  <div>Copy NFT Address</div>
+                                  <CopyButton
+                                    revertIn={3000}
+                                    text={collection.nftAddress}
+                                  />
+                                </div>
                               </div>
                               <hr className="my-4" />
                               <div className='flex'>
@@ -639,7 +672,7 @@ export default function Home() {
                                   if (asset.subcollectionId == collection.itemId) {
                                     return (
                                       <div className='w-72 mr-5 mb-5' key={`${asset.nftAddress}${asset.tokenId}`}>
-                                        <a href={`/assets?id=${asset.tokenId}`}>
+                                        <a href={`/assets?id=${asset.tokenId}&subcollectionId=${asset.subcollectionId}&nftAddress=${asset.nftAddress}`}>
                                           <NFTBox
                                             marketplaceAddress={marketplaceAddress}
                                             nftAddress={asset.nftAddress}
@@ -767,6 +800,7 @@ export default function Home() {
                 <div className="mt-4 mb-4">{listingStatus ? (<div>
                   Listing in progress. Follow from <a target="_blank" className="underline hover:text-slate-500" href={`https://${blockExplorerUrl["blockExplorer"]}/tx/${listTransactionHash}`}>{prettyAddress(listTransactionHash)}</a>
                 </div>) : (<div>No listing on progress</div>)}</div>
+                <input className="p-2 border-2 w-auto mb-4" type="text" placeholder="nftAddress" onChange={(e) => { setListItemNftAddress(e.currentTarget.value.toString()) }} />
                 <input className="p-2 border-2 w-auto mb-4" type="number" placeholder="Price (TRY)" onChange={(e) => { setListItemPrice(e.currentTarget.value.toString()) }} />
                 <input className="p-2 border-2 w-auto mb-4" type="text" placeholder="charityAddress" onChange={(e) => { setListItemCharityAddress(e.currentTarget.value) }} />
                 <input className="p-2 border-2 w-auto mb-4" type="text" placeholder="tokenUri" onChange={(e) => { setListItemTokenUri(e.currentTarget.value) }} />
@@ -784,10 +818,7 @@ export default function Home() {
                   text="List item"
                   isFullWidth="true" type='button'
                   onClick={() => {
-                    listItem({
-                      onSuccess: handleListItemSuccess,
-                      onError: (err) => handleTransactionError(err)
-                    });
+                    handleListItemClick()
                   }}
                 />
               </div>
@@ -813,6 +844,7 @@ export default function Home() {
                 <h1>Donate Item (already donated)</h1>
                 <input className="p-2 border-2 w-auto mb-4" type="text" placeholder="Token Id" onChange={(e) => { setBuyItemTokenId(e.currentTarget.value) }} />
                 <input className="p-2 border-2 w-auto mb-4" type="text" placeholder="Donor Email" onChange={(e) => { setBuyItemDonorEmail(e.currentTarget.value) }} />
+                <input className="p-2 border-2 w-auto mb-4" type="text" placeholder="Nft Address" onChange={(e) => { setBuyItemNftAddress(e.currentTarget.value) }} />
                 <Button
                   theme="primary"
                   text="Donate Item"

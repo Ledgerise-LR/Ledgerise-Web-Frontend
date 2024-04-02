@@ -67,7 +67,7 @@ export default function NFTBox({ price, nftAddress, tokenId, marketplaceAddress,
                     : ("Listeleme fiyatı")
                   }
                 </div>
-                <div className="text-slate-700 text-2xl mt-1 font-medium">{Number(price)-1} TL</div>
+                <div className="text-slate-700 text-2xl mt-1 font-medium">{Number(price)} TL</div>
                 <div className="text-slate-500 mt-2 mb-2 text-sm">
                   <span className="text-slate-600 font-medium">{availableEditions} </span>
                   mevcut stok

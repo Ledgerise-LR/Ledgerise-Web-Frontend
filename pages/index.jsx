@@ -119,7 +119,7 @@ export default function Home() {
             </div>
           </div>
           <div className={`w-fit h-max ${imageURI ? `animate-fade` : ``}`}>
-            <a href={`/assets?id=${asset.tokenId}&subcollectionId=${asset.subcollectionId}`}>
+            <a href={`/assets?id=${asset.tokenId}&subcollectionId=${asset.subcollectionId}&nftAddress=${asset.nftAddress}`}>
               <div className='h-max flex flex-1 flex-col justify-center border-2 p-2 rounded'>
                 <img src={imageURI} alt={tokenName} className='border-b-2 rounded h-96' />
                 <div className='w-full h-max mt-2 p-2'>

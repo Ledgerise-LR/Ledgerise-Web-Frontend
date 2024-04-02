@@ -175,6 +175,7 @@ export default function Home() {
   const router = useRouter();
   const tokenId = router.query.id
   const subcollectionId = router.query.subcollectionId
+  const nftAddress = router.query.nftAddress
   const dispatch = useNotification();
 
   function getOpenseaUrl(openseaTokenId) {
@@ -228,7 +229,7 @@ export default function Home() {
               position: "topR"
             });
             setBuyItemSuccessText(`Donated 1 ${tokenName} successfully. Thanks for your contribution.`);
-            fetch(`${URL}:${PORT}/get-asset?tokenId=${tokenId}&subcollectionId=${subcollectionId}`)
+            fetch(`${URL}:${PORT}/get-asset?tokenId=${tokenId}&subcollectionId=${subcollectionId}&nftAddress=${nftAddress}`)
               .then(response => response.json())
               .then(data => {
                 const asset = {
@@ -288,7 +289,7 @@ export default function Home() {
     await tx.wait(1);
     localStorage.setItem("txHash", "");
     setHasTxHashKey(false);
-    fetch(`${URL}:${PORT}/get-asset?tokenId=${tokenId}&subcollectionId=${subcollectionId}`)
+    fetch(`${URL}:${PORT}/get-asset?tokenId=${tokenId}&subcollectionId=${subcollectionId}&nftAddress=${nftAddress}`)
       .then(response => response.json())
       .then(data => {
         const asset = {
@@ -337,7 +338,7 @@ export default function Home() {
 
   useEffect(() => {
     if (tokenId) {
-      fetch(`${URL}:${PORT}/get-asset?tokenId=${tokenId}&subcollectionId=${subcollectionId}`)
+      fetch(`${URL}:${PORT}/get-asset?tokenId=${tokenId}&subcollectionId=${subcollectionId}&nftAddress=${nftAddress}`)
         .then(response => response.json())
         .then(data => {
           console.log(data.activeItem.collaborators)
@@ -357,7 +358,7 @@ export default function Home() {
             collaborators: data.activeItem.collaborators
           }
           setAsset(asset);
-          fetch(`${URL}:${PORT}/get-single-collection?id=${asset.subcollectionId}`)
+          fetch(`${URL}:${PORT}/get-single-collection?id=${asset.subcollectionId}&nftAddress=${nftAddress}`)
             .then(response => response.json())
             .then(data => {
               setCollection(data.subcollection);
@@ -449,7 +450,7 @@ export default function Home() {
       setImageURI(imageURIURL);
       setTokenName(tokenUriResponse.name);
       setTokenDescription(tokenUriResponse.description);
-      const percentages = await calculatePercentage("advancement", asset.attributes, asset.subcollectionId, asset.tokenId);
+      const percentages = await calculatePercentage("advancement", asset.attributes, asset.subcollectionId, asset.tokenId, asset.nftAddress);
       setAttributesPercentages(percentages);
     }
   }
@@ -509,7 +510,7 @@ export default function Home() {
               position: "topR"
             });
             setBuyItemSuccessText(`Donated 1 ${tokenName} successfully. Thanks for your contribution.`);
-            fetch(`${URL}:${PORT}/get-asset?tokenId=${tokenId}&subcollectionId=${subcollectionId}`)
+            fetch(`${URL}:${PORT}/get-asset?tokenId=${tokenId}&subcollectionId=${subcollectionId}&nftAddress=${nftAddress}`)
               .then(response => response.json())
               .then(data => {
                 const asset = {
@@ -615,7 +616,7 @@ export default function Home() {
                                   ? (<div>Bağış kolisinin üzerindeki <button className='underline hover:text-slate-700' target='blank' onClick={() => {
                                     retrieveQRCodeData(`${asset.tokenId}-[${event.openseaTokenId}]`);
                                   }}>QR kodu</button> görüntüle.
-                                    {/* Click <a className='underline cursor-pointer' href={`/receipt?id=${asset.tokenId}-${event.openseaTokenId}`} target='_blank'>here</a> can download "Bağış Alındı Makbuzu". */}
+                                    {/* Click <a className='underline cursor-pointer' href={`/receipt?id=${asset.tokenId}-${event.openseaTokenId}-${asset.nftAddress}`} target='_blank'>here</a> can download "Bağış Alındı Makbuzu". */}
                                     </div>)
 
                                   : (
@@ -788,6 +789,7 @@ export default function Home() {
                     visualVerifications={visualVerifications}
                     route={asset.route}
                     zoom={10}
+                    nftAddress={asset.nftAddress}
                   />
                 </div>
               </Modal>

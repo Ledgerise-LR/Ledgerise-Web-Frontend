@@ -17,6 +17,7 @@ export default function Home() {
 
   const router = useRouter();
   const itemId = router.query.id;
+  const nftAddress = router.query.nftAddress;
 
   const [allClicked, setAllClicked] = useState(true);
   const [ascendingClicked, setAscendingClicked] = useState(false);
@@ -26,12 +27,12 @@ export default function Home() {
 
   useEffect(() => {
     if (itemId) {
-      fetch(`${URL}:${PORT}/get-collection?subcollectionId=${itemId}`)
+      fetch(`${URL}:${PORT}/get-collection?subcollectionId=${itemId}&nftAddress=${nftAddress}`)
         .then(response => response.json())
         .then(data => {
           setAssets(data.activeItems);
           handleDefault();
-          fetch(`${URL}:${PORT}/get-single-collection?id=${itemId}`)
+          fetch(`${URL}:${PORT}/get-single-collection?id=${itemId}&nftAddress=${nftAddress}`)
             .then(response => response.json())
             .then(data => {
               setCollection(data.subcollection);
@@ -53,7 +54,7 @@ export default function Home() {
     setNewestClicked(false);
     const priceFilter = selectedPriceCategories.join(",");
     const availableEditionsFilter = availableEditions.join(",");
-    fetch(`${URL}:${PORT}/get-collection?subcollectionId=${itemId}&priceFilter=${priceFilter}&availableEditionsFilter=${availableEditionsFilter}`)
+    fetch(`${URL}:${PORT}/get-collection?nftAddress=${nftAddress}&subcollectionId=${itemId}&priceFilter=${priceFilter}&availableEditionsFilter=${availableEditionsFilter}`)
       .then(response => response.json())
       .then(data => {
         setAssets(data.activeItems);
@@ -68,7 +69,7 @@ export default function Home() {
     setNewestClicked(false);
     const priceFilter = selectedPriceCategories.join(",");
     const availableEditionsFilter = availableEditions.join(",");
-    fetch(`${URL}:${PORT}/sort/price-ascending?subcollectionId=${itemId}&priceFilter=${priceFilter}&availableEditionsFilter=${availableEditionsFilter}`)
+    fetch(`${URL}:${PORT}/sort/price-ascending?nftAddress=${nftAddress}&subcollectionId=${itemId}&priceFilter=${priceFilter}&availableEditionsFilter=${availableEditionsFilter}`)
       .then(response => response.json())
       .then(data => {
         setAssets(data.activeItems);
@@ -83,7 +84,7 @@ export default function Home() {
     setNewestClicked(false);
     const priceFilter = selectedPriceCategories.join(",");
     const availableEditionsFilter = availableEditions.join(",");
-    fetch(`${URL}:${PORT}/sort/price-descending?subcollectionId=${itemId}&priceFilter=${priceFilter}&availableEditionsFilter=${availableEditionsFilter}`)
+    fetch(`${URL}:${PORT}/sort/price-descending?nftAddress=${nftAddress}&subcollectionId=${itemId}&priceFilter=${priceFilter}&availableEditionsFilter=${availableEditionsFilter}`)
       .then(response => response.json())
       .then(data => {
         setAssets(data.activeItems);
@@ -98,7 +99,7 @@ export default function Home() {
     setNewestClicked(false);
     const priceFilter = selectedPriceCategories.join(",");
     const availableEditionsFilter = availableEditions.join(",");
-    fetch(`${URL}:${PORT}/sort/oldest?subcollectionId=${itemId}&priceFilter=${priceFilter}&availableEditionsFilter=${availableEditionsFilter}`)
+    fetch(`${URL}:${PORT}/sort/oldest?nftAddress=${nftAddress}&subcollectionId=${itemId}&priceFilter=${priceFilter}&availableEditionsFilter=${availableEditionsFilter}`)
       .then(response => response.json())
       .then(data => {
         setAssets(data.activeItems);
@@ -113,7 +114,7 @@ export default function Home() {
     setNewestClicked(true);
     const priceFilter = selectedPriceCategories.join(",");
     const availableEditionsFilter = availableEditions.join(",");
-    fetch(`${URL}:${PORT}/sort/newest?subcollectionId=${itemId}&priceFilter=${priceFilter}&availableEditionsFilter=${availableEditionsFilter}`)
+    fetch(`${URL}:${PORT}/sort/newest?nftAddress=${nftAddress}&subcollectionId=${itemId}&priceFilter=${priceFilter}&availableEditionsFilter=${availableEditionsFilter}`)
       .then(response => response.json())
       .then(data => {
         setAssets(data.activeItems);
@@ -302,7 +303,7 @@ export default function Home() {
                 : (assets.map((asset) => {
                   return (
                     <div className='w-72 ml-10 mb-5' key={`${asset.nftAddress}${asset.tokenId}`}>
-                      <a href={`/assets?id=${asset.tokenId}&subcollectionId=${asset.subcollectionId}`}>
+                      <a href={`/assets?id=${asset.tokenId}&subcollectionId=${asset.subcollectionId}&nftAddress=${nftAddress}`}>
                         <NFTBox
                           marketplaceAddress={marketplaceAddress}
                           nftAddress={asset.nftAddress}

@@ -100,6 +100,7 @@ export default function Home() {
     if (id && router) {
       const tokenId = id.split("-")[0];
       const openseaTokenId = id.split("-")[1];
+      const nftAddress = id.split("-")[2];
 
       setTokenId(tokenId)
 
@@ -115,7 +116,8 @@ export default function Home() {
             axios.post(`${URL}:${PORT}/donor/get-receipt-data`, {
               buyer: data.donor.school_number,
               tokenId: tokenId,
-              openseaTokenId: openseaTokenId
+              openseaTokenId: openseaTokenId,
+              nftAddress: nftAddress
             })
               .then(dataRes => {
                 console.log(dataRes.data.history);
@@ -243,5 +245,4 @@ export default function Home() {
       </div>
     </div >
   )
-
 }
