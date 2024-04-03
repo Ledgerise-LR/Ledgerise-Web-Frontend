@@ -30,83 +30,14 @@ export default function Home() {
   }, [])
 
   return (
-    <div className='w-screen h-screen flex items-center justify-center sm:flex'>
+    <div className='w-screen h-screen flex items-center justify-center'>
       <div className='w-full h-full p-4'>
-        <div>
-          <div className='text-lg'>Bağışınızı hangi şirket aracılığıyla gönderdiniz?</div>
-          <Select
-            label='Kargo aracı kurum'
-            options={[
-              {
-                label: "HepsiBurada",
-                id: "hepsiburada"
-              },
-              {
-                label: "Migros Sanal Market",
-                id: "migroshemen"
-              }
-            ]}
-            onChange={(e) => {
-              setSelectedCompany(e.label);
-            }}
-          />
-        </div>
-        <div className='mt-8'>
-          <div>{selectedCompany ? selectedCompany : "Seçtiğiniz kurum"} için kimlik bilgilerinizi doğrulayınız</div>
-          <div className='mt-8'>
-            <Input
-              label='Kullanıcı adınız'
-              type='text'
-              onChange={(e) => {
-                setUsername(e.target.value)
-              }}
-              style={{
-                marginBottom: "20px"
-              }}
-            />
-            <Input
-              label='Şifreniz'
-              type='password'
-              onChange={(e) => {
-                setPassword(e.target.value)
-              }}
-            />
+        <div className='mb-4'>İhtiyaçlar</div>
+        <div className='flex flex-col h-full'>
+          <div className='w-11/12 border-2 h-96'>
+            
           </div>
         </div>
-        <div className='mt-8 mb-8'>
-          <div className='mb-8'>Bağış gönderimini gerçekleştirdiğiniz satıcı kodunu ve sipariş numarasını giriniz.</div>
-          <Input
-            label='Satıcı kodu'
-            type='text'
-            onChange={(e) => {
-              setMerchantId(e.target.value)
-            }}
-            style={{
-              marginBottom: "20px"
-            }}
-          />
-          <Input
-            label='Sipariş Numarası'
-            type='text'
-            onChange={(e) => {
-              setOrderNumber(e.target.value)
-            }}
-          />
-        </div>
-        <Button
-          style={{
-            backgroundColor: "#fec35b",
-            color: "white",
-            borderColor: "green"
-          }}
-          customize={{
-            onHover: "lighten",
-            color: "white"
-          }}
-          text='Bağışımı onayla!'
-          theme='custom'
-          size='xl'
-        />
       </div>
     </div>
   )
