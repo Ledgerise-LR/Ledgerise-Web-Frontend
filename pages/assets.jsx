@@ -778,6 +778,7 @@ export default function Home() {
           isLocationModalOpen
             ? (
               <Modal visible={isLocationModalOpen} width='100%' onCloseButtonPressed={hideLocationModal} onOk={hideLocationModal} onCancel={hideLocationModal} okText='Continue' title={<h1 className='text-3xl text-slate-900'>Bağışların şeffaf güzergahı</h1>}>
+                <div className='font-bold mb-4'>Bağışınızın detaylarını görmek için belirteçlere tıklayın.</div>
                 <div className='h-96 w-full z-30'>
                   <Map
                     stampCoordinates={displayedStampLocation}
