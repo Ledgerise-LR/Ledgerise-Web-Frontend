@@ -35,7 +35,7 @@ export default function MyMap({ nftAddress, stampCoordinates, shippedCoordinates
 
   useEffect(() => {
     visualVerifications.map(verification => {
-      if (verification.visualVerificationTokenId == deliverVisualTokenId && verification.nftAddress == nftAddress) {
+      if (verification.visualVerificationTokenId == deliverVisualTokenId /* && verification.nftAddress == nftAddress*/) {
         if (verification.tokenUri) {
         fetch(`${URL}:${PORT}/privacy/blur-visual?ipfsGatewayTokenUri=https://ipfs.io/ipfs/${verification.tokenUri}&x=${verification.bounds.x}&y=${verification.bounds.y}`)
           .then(response => response.json())
@@ -70,7 +70,7 @@ export default function MyMap({ nftAddress, stampCoordinates, shippedCoordinates
       <Popup>
           {
             visualVerifications.map(verification => {
-              if (verification.visualVerificationTokenId == stampVisualTokenId && verification.nftAddress == nftAddress) {
+              if (verification.visualVerificationTokenId == stampVisualTokenId /* && verification.nftAddress == nftAddress*/) {
                 return (
                   <div className="flex w-72 items-end h-64">
                     <img className="w-1/2" src={`https://ipfs.io/ipfs/${verification.tokenUri}`} alt="" />
@@ -96,7 +96,7 @@ export default function MyMap({ nftAddress, stampCoordinates, shippedCoordinates
         <Popup>
           {
             visualVerifications.map(verification => {
-              if (verification.visualVerificationTokenId == shipVisualTokenId && verification.nftAddress == nftAddress) {
+              if (verification.visualVerificationTokenId == shipVisualTokenId /* && verification.nftAddress == nftAddress*/) {
                 return (
                   <div className="flex flex-1 w-72 items-end">
                     <img className="w-1/2" src={`https://ipfs.io/ipfs/${verification.tokenUri}`} alt="" />
@@ -132,7 +132,7 @@ export default function MyMap({ nftAddress, stampCoordinates, shippedCoordinates
         <Popup>
           {
             visualVerifications.map(verification => {
-              if (verification.visualVerificationTokenId == deliverVisualTokenId && verification.nftAddress == nftAddress) {
+              if (verification.visualVerificationTokenId == deliverVisualTokenId /* && verification.nftAddress == nftAddress*/) {
                 return (
                   <div className="h-54 flex flex-1 w-72 items-end">
                     <div className="w-1/2 relative h-full flex">
