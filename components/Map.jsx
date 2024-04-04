@@ -73,7 +73,7 @@ export default function MyMap({ nftAddress, stampCoordinates, shippedCoordinates
               if (verification.visualVerificationTokenId == stampVisualTokenId /* && verification.nftAddress == nftAddress*/) {
                 return (
                   <div className="flex w-72 items-end h-64">
-                    <img className="w-1/2" src={`https://ipfs.io/ipfs/${verification.tokenUri.replace("ipfs://", "")}`} alt="" />
+                    <img className="w-1/2" src={`https://ipfs.io/ipfs/${verification.tokenUri}`} alt="" />
                     <div className="ml-4 w-1/2 flex flex-col">
                       <div className="mb-2 mt-1 text-base text-bold text-slate-800">Üretildi <span className="text-xs text-slate-500">bagis: #{verification.openseaTokenId}</span></div>
                       <hr />
@@ -99,7 +99,7 @@ export default function MyMap({ nftAddress, stampCoordinates, shippedCoordinates
               if (verification.visualVerificationTokenId == shipVisualTokenId /* && verification.nftAddress == nftAddress*/) {
                 return (
                   <div className="flex flex-1 w-72 items-end">
-                    <img className="w-1/2" src={`https://ipfs.io/ipfs/${verification.tokenUri.replace("ipfs://", "")}`} alt="" />
+                    <img className="w-1/2" src={`https://ipfs.io/ipfs/${verification.tokenUri}`} alt="" />
                     <div className="ml-4 w-1/2 flex flex-col">
                       <div className="relative mb-16">
                         <div className="absolute w-10 h-10 border border-blue-900 bg-amber-300"></div>
