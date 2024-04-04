@@ -635,17 +635,17 @@ export default function Home() {
                                                 const numberOfCollaborators = parseInt(tokenName.split("/")[1].split(")")[0]);
                                                 if (eachCollaboratorCluster.length == numberOfCollaborators) {
                                                   return (
-                                                    <div><button className='underline hover:text-slate-700' target='blank' onClick={() => {
+                                                    <div>Bağış kolisinin üzerindeki <button className='underline hover:text-slate-700' target='blank' onClick={() => {
                                                       let collaboratorsDataArray = [];
                                                       for (let i = 0; i < eachCollaboratorCluster.length; i++) {
                                                         const eachCollaborator = eachCollaboratorCluster[i];
                                                         collaboratorsDataArray.push(parseInt(eachCollaborator.split("_")[0]));
                                                       }
                                                       retrieveQRCodeData(`${asset.tokenId}-${JSON.stringify(collaboratorsDataArray)}`);
-                                                    }}>View the QR code</button> printed on your physical donation. Belonging to <strong>{eachCollaboratorCluster.length - 1} people you collaborated.</strong></div>
+                                                    }}>QR kodu</button> görüntüle. Bu bağışı <strong>{eachCollaboratorCluster.length - 1} kişi ile ortaklaşa gerçekleştirdiniz.</strong></div>
                                                   )
                                                 } else {
-                                                  return (<div>Currently waiting for donation of <strong>{numberOfCollaborators - eachCollaboratorCluster.length} more people.</strong> Thank you for your understanding.</div>)
+                                                  return (<div>Bu bağışın üretimi için <strong>{numberOfCollaborators - eachCollaboratorCluster.length} kişinin bağışı bekleniyor.</strong> Anlayışınız için teşekkür ederiz.</div>)
                                                 }
                                               }
                                             }
