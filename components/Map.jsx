@@ -134,7 +134,7 @@ export default function MyMap({ nftAddress, stampCoordinates, shippedCoordinates
             visualVerifications.map(verification => {
               if (verification.visualVerificationTokenId == deliverVisualTokenId /* && verification.nftAddress == nftAddress*/) {
                 return (
-                  <div className="h-54 flex flex-1 w-72 items-end">
+                  <div className="h-60 flex flex-1 w-72 items-end">
                     <div className="w-1/2 relative h-full flex">
                       <div className="absolute left-2 top-2 flex items-center z-40">
                         <img className="w-5" src="logocompact.svg" alt="LRLens" />
@@ -149,6 +149,7 @@ export default function MyMap({ nftAddress, stampCoordinates, shippedCoordinates
                             <Loading spinnerColor='gray' spinnerType='loader' />
                           </div>)
                           : (< img src={`data:image/png;base64,${deliverImageSrc}`} alt="" />)
+                          /* < img src={`data:image/png;base64,${deliverImageSrc}`} alt="" /> */
                       }
                     </div>
                     <div className="ml-4 w-1/2 flex flex-col">
