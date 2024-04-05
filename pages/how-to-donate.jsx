@@ -110,7 +110,8 @@ export default function Home() {
             <div><strong>Step 1</strong></div>
             <div className='flex flex-col justify-center items-center'>
               <a target='_blank' className='text-center underline text-blue-600' href="/register">Register to Ledgerise</a>
-              <div className='text-center'>with the email you provided in "Açıklama" when you donated. Create a password.</div>
+              <div className='text-center mb-2'>with the email you provided in "Açıklama" when you donated. Create a password.</div>
+              <div>If you already have a Ledgerise acoount. <a className='underline text-blue-600' target='_blank' href="/login">Login</a></div>
             </div>
             <div className='mt-24'><strong>Step 2</strong></div>
             {
