@@ -19,6 +19,10 @@ export default function Header() {
     height: ""
   });
 
+  const setLastVisitedUrl = () => {
+    localStorage.setItem("lastVisitedUrl", window.location.href);
+  }
+
   useEffect(() => {
 
     const handleResize = () => {
@@ -83,11 +87,11 @@ export default function Header() {
             <div className="text-2xl text-slate-700">Kampanyalar</div>
             <img className="w-4" src="right-arrow.png" alt="right-arrow" />
           </a>
-          <a href="/login" className="flex justify-between items-center">
+          <a href="/login" onClick={() => { setLastVisitedUrl() }} className="flex justify-between items-center">
             <div className="text-2xl text-slate-700">Giriş yap</div>
             <img className="w-4" src="right-arrow.png" alt="right-arrow" />
           </a>
-          <a href="/register" className="flex justify-between items-center">
+          <a href="/register" onClick={() => { setLastVisitedUrl() }} className="flex justify-between items-center">
             <div className="text-2xl text-slate-700">Kayıt ol</div>
             <img className="w-4" src="right-arrow.png" alt="right-arrow" />
           </a>
@@ -153,7 +157,7 @@ export default function Header() {
                   </div>)
                   : (
                     <div className="flex items-center border-2 rounded-full pr-2">
-                      <a href="/login" className="border-2 rounded-full px-12 py-2 mr-2 bg-blue-900 text-slate-100 cursor-pointer hover:bg-blue-800 transition-all">Login</a>
+                      <a href="/login" onClick={() => { setLastVisitedUrl() }} className="border-2 rounded-full px-12 py-2 mr-2 bg-blue-900 text-slate-100 cursor-pointer hover:bg-blue-800 transition-all">Login</a>
                     </div>
                   )
               }

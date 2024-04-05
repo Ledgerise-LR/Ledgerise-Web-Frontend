@@ -32,7 +32,12 @@ export default function Home() {
         } else if (data.data.success && !data.data.error && data.data.donor) {
           setSuccess("true")
           localStorage.setItem("_id", data.data.donor._id);
-          router.push("/");
+          const lastVisitedUrl = localStorage.getItem("lastVisitedUrl");
+          if (lastVisitedUrl) {
+            router.push(lastVisitedUrl);
+          } else {
+            router.push("/");
+          }
         }
       })
   }
