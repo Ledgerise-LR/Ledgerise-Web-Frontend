@@ -1,28 +1,89 @@
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import axios from 'axios';
 import { URL, PORT } from '@/serverConfig';
 import { Select, Input, Button, Modal } from 'web3uikit';
+import dynamic from "next/dynamic"
 
 export default function Home() {
 
 
   const [needs, setNeeds] = useState([]);
-  const [isModalOpen, setIsModalOpen] = useState(true);
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isReportModalOpen, setIsReportModalOpen] = useState(false);
+  const [isMapModalOpen, setIsMapModalOpen] = useState(false);
 
   const [depotAddress, setDepotAddress] = useState("HB İZMİR DEPO");
   const [donationName, setDonationName] = useState("Xiaomi Redmi Note 7");
   const [donationPrice, setDonationPrice] = useState(18000);
   const [beneficiaryAddress, setBeneficiaryAddress] = useState("Atatürk Mah. Çarşı Cad. Kare Sok. 2/4");
   const [orderNumber, setOrderNumber] = useState("49537952075");
+  const [tokenUri, setTokenUri] = useState("ipfs://QmZF2GAphvYsfLapAM7TFc64U7mqZfk2w2hhrErsSz4Svi");
+  const [needId, setNeedId] = useState("");
+
+  const [donor, setDonor] = useState({});
 
   const [quantityDetermined, setQuantityDetermined] = useState(0);
   
-  const showModal = () => {
+
+  const [needItemsArray, setNeedItemsArray] = useState([]);
+
+  const Map = useMemo(() => dynamic(
+    () => import('@/components/Map'),
+    {
+      loading: () => <p>The map is loading...</p>,
+      ssr: false
+    }
+  ), [])
+
+  const showReportModal = () => {
+    setIsReportModalOpen(true);
+  }
+
+  const hideReportModal = () => {
+    setIsReportModalOpen(false);
+  }
+
+  const [displayedStampLocation, setDisplayedStampLocation] = useState({});
+  const [displayedStampDetails, setDisplayedStampDetails] = useState({});
+  const [displayedNeedTokenUri, setDisplayedNeedTokenUri] = useState("");
+  const [displayedNeedItem, setDisplayedNeedItem] = useState({});
+  const [displayedNeed, setDisplayedNeed] = useState("");
+
+  const [visualVerifications, setVisualVerifications] = useState([]);
+
+  const showMapModal = (needDetails, deliverDetails, needTokenUri, need, needItem) => {
+
+    hideReportModal();
+    axios.post(`${URL}:${PORT}/depot/get-depot-location`, {
+      depotName: needDetails.depotAddress
+    })
+      .then((res) => {
+        const stampLocation = res.data.depotLocation;
+
+        setDisplayedNeedItem(needItem)
+        setDisplayedStampLocation(stampLocation);
+        setDisplayedStampDetails(needDetails);
+        setDisplayedNeedTokenUri(needTokenUri);
+        setDisplayedNeed(need);
+        setIsMapModalOpen(true);
+      })
+  }
+
+  const hideMapModal = () => {
+
+    setIsMapModalOpen(false);
+    setIsReportModalOpen(true);
+  }
+
+  const showModal = (needId) => {
+    setNeedId(needId)
     setIsModalOpen(true);
   }
 
   const hideModal = () => {
+    setNeedId("");
     setIsModalOpen(false);
   }
 
@@ -30,17 +91,32 @@ export default function Home() {
 
     axios.post(`${URL}:${PORT}/needs/list-need-item`, {
       beneficiaryAddress: beneficiaryAddress,
-      beneficiaryPhoneNumber: needs[0].beneficiaryPhoneNumber,
+      needId: needId,
       orderNumber: orderNumber,
-      donationPrice: donationPrice,
-      donationName: donationName,
+      donorPhoneNumber: donor.school_number, 
+      price: donationPrice,
+      name: donationName,
       depotAddress: depotAddress,
-      quantitySatisfied: quantityDetermined
+      quantitySatisfied: quantityDetermined,
+      tokenUri: tokenUri
     })
       .then((res) => {
         const data = res.data;
-        console.log(data);
+        alert("Ürün başarıyla bağışlandı")
       })
+  }
+
+  function prettyDate(timestamp) {
+
+    const date = new Date(timestamp * 1);
+    const formattedDate = date.toLocaleString('tr-TR', {
+      day: 'numeric',
+      month: 'long',
+      year: 'numeric',
+      hour: 'numeric',
+      minute: 'numeric',
+    });
+    return formattedDate;
   }
 
   useEffect(() => {
@@ -53,11 +129,31 @@ export default function Home() {
       .then((res) => {
         const data = res.data;
         if (data.success && data.donor) {
+          const dataDonor = data.donor
+          setDonor(data.donor)
           axios.get(`${URL}:${PORT}/needs/get-all-needs`,
           {})
             .then((res) => {
               const data = res.data;
               setNeeds(data.needs);
+              
+              axios.post(`${URL}:${PORT}/needs/get-satisfied-donations-of-donor`, {
+                buyer: dataDonor.school_number
+              })
+                .then((res) => {
+                  const data = res.data;
+                  if (data.success) {
+                    setNeedItemsArray(data.needItemsArray);
+
+                    fetch(`${URL}:${PORT}/get-all-visual-verifications`)
+                      .then(response => response.json())
+                      .then(data => {
+                        setVisualVerifications(data.data);
+                      })
+                  } else {
+                    alert("An error occured, please try again.")
+                  }
+                })
             })
         } else {
           window.location.href = "/";
@@ -67,6 +163,53 @@ export default function Home() {
 
   return (
     <div className='w-screen h-screen flex items-center justify-center'>
+      {
+        isMapModalOpen
+          ? <Modal visible={isMapModalOpen} width='100%' onCloseButtonPressed={hideMapModal} onOk={hideMapModal} onCancel={hideMapModal} okText='Continue' title={<h1 className='text-3xl text-slate-900'>Bağışınızın şeffaf güzergahı 🎉</h1>}>
+            <div className='w-full h-96'>
+              <Map
+                nftAddress={displayedNeed.nftAddress}
+                stampCoordinates={displayedStampLocation}
+                isNeedItem={true}
+                needItemInfo={displayedStampDetails}
+                zoom={10}
+                needTokenUri={displayedNeedTokenUri}
+                need={displayedNeed}
+                visualVerifications={visualVerifications}
+                deliveredCoordinates={displayedNeedItem.real_item_history[0].location || {}}
+                deliverVisualTokenId={displayedNeedItem.real_item_history[0].visualVerificationTokenId || 0}
+              />
+            </div>
+          </Modal>
+          : ("")
+      }
+      {
+        isReportModalOpen
+          ? <Modal visible={isReportModalOpen} width='100%' onCloseButtonPressed={hideReportModal} onOk={hideReportModal} onCancel={hideReportModal} okText='Continue' title={<h1 className='text-3xl text-slate-900'>Bağışınız için teşekkürler 🎉</h1>}>
+            <div className='w-full h-full'>
+              {
+                needItemsArray
+                  ? needItemsArray.map(needItem => {
+                    return(
+                      <div className='w-full h-fit mb-8 p-4 border-2'>
+                        <div>
+                          <div>{needItem.need.name}</div>
+                          <div><strong>{prettyDate(needItem.needDetails.donateTimestamp)}</strong> tarihinde ihtiyacın <strong>{needItem.needDetails.quantitySatisfied}</strong> tanesini karşıladınız</div>
+                        </div>
+                        <div>Bağışınızın gönderildiği kolinin üzerindeki <a target='_blank' className='underline hover:text-slate-300' href={`https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=${needItem.needItem.tokenId}-[${needItem.needItem.history[0].openseaTokenId}]`}>QR koda ulaşmak için tıklayın</a></div>
+                        <div className='flex items-center mt-4'>
+                          <div>Bağışınızın şeffaf güzergahını görüntülemek için</div>
+                          <div className='p-2 bg-green-700 text-slate-50 rounded ml-4 cursor-pointer' onClick={() => { showMapModal(needItem.needDetails, needItem.deliverDetails, needItem.needItem.tokenUri, needItem.need, needItem.needItem) }}>Tıklayın</div>
+                        </div>
+                      </div>
+                    )
+                  })
+                  : ("Karşıladığınız ihtiyaç bulunamadı")
+              }
+            </div>
+          </Modal>
+          : ("")
+      }
       {
         isModalOpen
           ? (
@@ -78,7 +221,7 @@ export default function Home() {
                 <div className='w-1/3 h-full flex border-2 p-4'>
                   <div className='w-1/2'>
                     <div>
-                      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT9U36dKtoEBdLFOMVy1gwDM4MJZ8njtzOouz6YQcjWzg&s" alt="Telefon" />
+                      <img src={`https://ipfs.io/ipfs/QmeUHLwaCEMUZE5kezM71Y1gw7t958UtzbfJh4er8CRKec`} alt="Telefon" />
                     </div>
                     <div className='text-xl'>{donationName}</div>
                     <div className='text-lg'>{donationPrice-1} ₺</div>
@@ -131,6 +274,17 @@ export default function Home() {
           : ("")
       }
       <div className='w-full h-full p-4'>
+        <div className='w-full h-24'>
+        <Button
+          size='xl'
+          style={{
+            fontSize: "24px"
+          }}
+          theme='secondary'
+          text='KARŞILADIĞINIZ İHTİYAÇLARIN RAPORUNU GÖRÜNTÜLEYİN'
+          onClick={() => showReportModal()}
+        />
+        </div>
         <div className='mb-4'>İhtiyaçlar</div>
         <div className='flex flex-col h-full'>
           <div className='m-4 w-11/12 h-96'>
@@ -141,7 +295,7 @@ export default function Home() {
                     <div className='w-full border-2 p-4 relative mb-4'>
                       <div>{need.name}</div>
                       <div>{need.quantity} adet</div>
-                      <div onClick={() => {showModal()}} className='absolute bottom-4 right-4 bg-red-600 text-slate-50 p-2 cursor-pointer'>İhtiyacı karşıla</div>
+                      <div onClick={() => {showModal(need._id)}} className='absolute bottom-4 right-4 bg-red-600 text-slate-50 p-2 cursor-pointer'>İhtiyacı karşıla</div>
                     </div>
                   )
                 }) 

@@ -236,6 +236,31 @@
       {
         "indexed": true,
         "internalType": "address",
+        "name": "nftAddress",
+        "type": "address"
+      },
+      {
+        "indexed": true,
+        "internalType": "uint256",
+        "name": "beneficiaryTokenId",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "string",
+        "name": "phoneNumber",
+        "type": "string"
+      }
+    ],
+    "name": "BeneficiaryCreated",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
         "name": "creatorAddress",
         "type": "address"
       }
@@ -440,6 +465,44 @@
       {
         "indexed": true,
         "internalType": "address",
+        "name": "nftAddress",
+        "type": "address"
+      },
+      {
+        "indexed": true,
+        "internalType": "uint256",
+        "name": "needTokenId",
+        "type": "uint256"
+      }
+    ],
+    "name": "NeedCreated",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "nftAddress",
+        "type": "address"
+      },
+      {
+        "indexed": true,
+        "internalType": "uint256",
+        "name": "needTokenId",
+        "type": "uint256"
+      }
+    ],
+    "name": "NeedSatisfied",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
         "name": "previousOwner",
         "type": "address"
       },
@@ -502,6 +565,24 @@
     ],
     "name": "ReportCreated",
     "type": "event"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "nftAddress",
+        "type": "address"
+      },
+      {
+        "internalType": "string",
+        "name": "phoneNumber",
+        "type": "string"
+      }
+    ],
+    "name": "addBeneficiary",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
   },
   {
     "inputs": [
@@ -608,24 +689,43 @@
   {
     "inputs": [
       {
-        "internalType": "bytes",
-        "name": "",
-        "type": "bytes"
-      }
-    ],
-    "name": "checkUpkeep",
-    "outputs": [
-      {
-        "internalType": "bool",
-        "name": "upkeepNeeded",
-        "type": "bool"
+        "internalType": "address",
+        "name": "nftAddress",
+        "type": "address"
       },
       {
-        "internalType": "bytes",
-        "name": "performData",
-        "type": "bytes"
+        "internalType": "string",
+        "name": "beneficiaryPhoneNumber",
+        "type": "string"
+      },
+      {
+        "internalType": "string",
+        "name": "name",
+        "type": "string"
+      },
+      {
+        "internalType": "string",
+        "name": "description",
+        "type": "string"
+      },
+      {
+        "internalType": "uint256",
+        "name": "quantity",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "latitude",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "longitude",
+        "type": "uint256"
       }
     ],
+    "name": "createNeed",
+    "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
   },
@@ -879,9 +979,144 @@
             "internalType": "struct Marketplace.Route",
             "name": "route",
             "type": "tuple"
+          },
+          {
+            "internalType": "enum Marketplace.ListingType",
+            "name": "listingType",
+            "type": "uint8"
+          },
+          {
+            "components": [
+              {
+                "internalType": "string",
+                "name": "donorPhoneNumber",
+                "type": "string"
+              },
+              {
+                "internalType": "string",
+                "name": "beneficiaryPhoneNumber",
+                "type": "string"
+              },
+              {
+                "internalType": "string",
+                "name": "depotAddress",
+                "type": "string"
+              },
+              {
+                "internalType": "string",
+                "name": "beneficiaryAddress",
+                "type": "string"
+              },
+              {
+                "internalType": "string",
+                "name": "orderNumber",
+                "type": "string"
+              },
+              {
+                "internalType": "uint256",
+                "name": "donateTimestamp",
+                "type": "uint256"
+              },
+              {
+                "internalType": "uint256",
+                "name": "needTokenId",
+                "type": "uint256"
+              },
+              {
+                "internalType": "uint256",
+                "name": "quantitySatisfied",
+                "type": "uint256"
+              }
+            ],
+            "internalType": "struct Marketplace.NeedDetails",
+            "name": "needDetails",
+            "type": "tuple"
           }
         ],
         "internalType": "struct Marketplace.Listing",
+        "name": "",
+        "type": "tuple"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "nftAddress",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "needTokenId",
+        "type": "uint256"
+      }
+    ],
+    "name": "getNeed",
+    "outputs": [
+      {
+        "components": [
+          {
+            "internalType": "uint256",
+            "name": "uniqueNeedId",
+            "type": "uint256"
+          },
+          {
+            "internalType": "string",
+            "name": "name",
+            "type": "string"
+          },
+          {
+            "internalType": "string",
+            "name": "description",
+            "type": "string"
+          },
+          {
+            "internalType": "uint256",
+            "name": "quantity",
+            "type": "uint256"
+          },
+          {
+            "internalType": "string",
+            "name": "beneficiaryPhoneNumber",
+            "type": "string"
+          },
+          {
+            "internalType": "uint256",
+            "name": "timestamp",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "currentSatisfiedNeedQuantity",
+            "type": "uint256"
+          },
+          {
+            "components": [
+              {
+                "internalType": "uint256",
+                "name": "latitude",
+                "type": "uint256"
+              },
+              {
+                "internalType": "uint256",
+                "name": "longitude",
+                "type": "uint256"
+              },
+              {
+                "internalType": "uint256",
+                "name": "decimals",
+                "type": "uint256"
+              }
+            ],
+            "internalType": "struct Marketplace.Location",
+            "name": "location",
+            "type": "tuple"
+          }
+        ],
+        "internalType": "struct Marketplace.Need",
         "name": "",
         "type": "tuple"
       }
@@ -957,6 +1192,35 @@
         "internalType": "struct Marketplace.RealItemHistory[]",
         "name": "",
         "type": "tuple[]"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "nftAddress",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "needTokenId",
+        "type": "uint256"
+      },
+      {
+        "internalType": "string",
+        "name": "donorPhoneNumber",
+        "type": "string"
+      }
+    ],
+    "name": "getSatisfiedAmountFromPhoneNumber",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
       }
     ],
     "stateMutability": "view",
@@ -1079,6 +1343,86 @@
     "type": "function"
   },
   {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "nftAddress",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "tokenId",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "price",
+        "type": "uint256"
+      },
+      {
+        "internalType": "address",
+        "name": "charityAddress",
+        "type": "address"
+      },
+      {
+        "internalType": "string",
+        "name": "tokenUri",
+        "type": "string"
+      },
+      {
+        "components": [
+          {
+            "internalType": "string",
+            "name": "donorPhoneNumber",
+            "type": "string"
+          },
+          {
+            "internalType": "string",
+            "name": "beneficiaryPhoneNumber",
+            "type": "string"
+          },
+          {
+            "internalType": "string",
+            "name": "depotAddress",
+            "type": "string"
+          },
+          {
+            "internalType": "string",
+            "name": "beneficiaryAddress",
+            "type": "string"
+          },
+          {
+            "internalType": "string",
+            "name": "orderNumber",
+            "type": "string"
+          },
+          {
+            "internalType": "uint256",
+            "name": "donateTimestamp",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "needTokenId",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "quantitySatisfied",
+            "type": "uint256"
+          }
+        ],
+        "internalType": "struct Marketplace.NeedDetails",
+        "name": "needDetails",
+        "type": "tuple"
+      }
+    ],
+    "name": "listNeedItem",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
     "inputs": [],
     "name": "owner",
     "outputs": [
@@ -1089,19 +1433,6 @@
       }
     ],
     "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "bytes",
-        "name": "performData",
-        "type": "bytes"
-      }
-    ],
-    "name": "performUpkeep",
-    "outputs": [],
-    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -1367,6 +1698,58 @@
         ],
         "internalType": "struct Marketplace.Route",
         "name": "route",
+        "type": "tuple"
+      },
+      {
+        "internalType": "enum Marketplace.ListingType",
+        "name": "listingType",
+        "type": "uint8"
+      },
+      {
+        "components": [
+          {
+            "internalType": "string",
+            "name": "donorPhoneNumber",
+            "type": "string"
+          },
+          {
+            "internalType": "string",
+            "name": "beneficiaryPhoneNumber",
+            "type": "string"
+          },
+          {
+            "internalType": "string",
+            "name": "depotAddress",
+            "type": "string"
+          },
+          {
+            "internalType": "string",
+            "name": "beneficiaryAddress",
+            "type": "string"
+          },
+          {
+            "internalType": "string",
+            "name": "orderNumber",
+            "type": "string"
+          },
+          {
+            "internalType": "uint256",
+            "name": "donateTimestamp",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "needTokenId",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "quantitySatisfied",
+            "type": "uint256"
+          }
+        ],
+        "internalType": "struct Marketplace.NeedDetails",
+        "name": "needDetails",
         "type": "tuple"
       }
     ],
