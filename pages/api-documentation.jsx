@@ -12,9 +12,9 @@ export default function Home() {
   return (
     <div className='w-screen h-screen flex overflow-x-hidden border-t-4 border-t-yellow-500'>
       <nav className='h-full w-2/12 border-r-2 p-4 overflow-y-scroll'>
-        <div className='text-slate-800 mb-4 uppercase text-sm'>Ledgerise - Organizasyon Entegrasyonu</div>
+        <div className='text-slate-800 mb-4 uppercase text-xs'>Ledgerise - Organizasyon Entegrasyonu</div>
         <div className='text-slate-600'>
-          <div className='mb-2'>Bağış ürünü</div>
+          <div className='mb-2 text-sm'>Bağış ürünü</div>
           <div onClick={() => setFocusedApiEndpoint(1)}>
             <ApiTab title={"Bağış ürünü detayları"} method={"GET"}/>
           </div>
@@ -33,7 +33,7 @@ export default function Home() {
         </div>
         
         <div className='text-slate-600 mt-6'>
-          <div className='mb-2'>Bağış kampanyası</div>
+          <div className='mb-2 text-sm'>Bağış kampanyası</div>
           <div  onClick={() => setFocusedApiEndpoint(7)}>
             <ApiTab title={"Kampanyanın bağış ürünlerini sorgula"} method={"GET"}/>
           </div>
@@ -67,7 +67,7 @@ export default function Home() {
         </div>
 
         <div className='text-slate-600 mt-6'>
-          <div className='mb-2'>Otorizasyon</div>
+          <div className='mb-2 text-sm'>Otorizasyon</div>
           <div  onClick={() => setFocusedApiEndpoint(17)}>
           <ApiTab title={"Bağışçı (register)"} method={"POST"}/>          
           </div>
@@ -86,7 +86,7 @@ export default function Home() {
         </div>
 
         <div className='text-slate-600 mt-6'>
-          <div className='mb-2'>Şirket</div>
+          <div className='mb-2 text-sm'>Şirket</div>
           <div  onClick={() => setFocusedApiEndpoint(22)}>
             <ApiTab title={"Kampanyalarınızı sorgulayın"} method={"POST"}/>            
           </div>
@@ -102,21 +102,21 @@ export default function Home() {
         </div>
 
         <div className='text-slate-600 mt-6'>
-          <div className='mb-2'>Depo</div>
+          <div className='mb-2 text-sm'>Depo</div>
           <div  onClick={() => setFocusedApiEndpoint(26)}>
             <ApiTab title={"Depo lokasyonu sorgula"} method={"POST"}/>            
           </div>
         </div>
 
         <div className='text-slate-600 mt-6'>
-          <div className='mb-2'>Bağışçı</div>
+          <div className='mb-2 text-sm'>Bağışçı</div>
           <div  onClick={() => setFocusedApiEndpoint(27)}>
             <ApiTab title={"Fatura bilgisi sorgula"} method={"POST"}/>            
           </div>
         </div>
 
         <div className='text-slate-600 mt-6'>
-          <div className='mb-2'>Rapor & sorun bildirme</div>
+          <div className='mb-2 text-sm'>Rapor & sorun bildirme</div>
           <div  onClick={() => setFocusedApiEndpoint(28)}>
             <ApiTab title={"Raporları sorgula"} method={"GET"}/>            
           </div>
@@ -126,7 +126,7 @@ export default function Home() {
         </div>
 
         <div className='text-slate-600 mt-6'>
-          <div className='mb-2'>İhtiyaç</div>
+          <div className='mb-2 text-sm'>İhtiyaç</div>
           <div  onClick={() => setFocusedApiEndpoint(30)}>
             <ApiTab title={"İhtiyaçları filtrele"} method={"POST"}/>            
           </div>
@@ -148,7 +148,7 @@ export default function Home() {
         </div>
 
         <div className='text-slate-600 mt-6'>
-          <div className='mb-2'>Bağışlar & ödeme</div>
+          <div className='mb-2 text-sm'>Bağışlar & ödeme</div>
           <div  onClick={() => setFocusedApiEndpoint(36)}>
             <ApiTab title={"Bağışla (ödeme gerçekleşmiş)"} method={"POST"}/>            
           </div>
@@ -161,7 +161,7 @@ export default function Home() {
         </div>
 
         <div className='text-slate-600 mt-6'>
-          <div className='mb-2'>Bağış ürünü kimliği: tokenUri</div>
+          <div className='mb-2 text-sm'>Bağış ürünü kimliği: tokenUri</div>
           <div  onClick={() => setFocusedApiEndpoint(39)}>
             <ApiTab title={"tokenUri filtrele"} method={"GET"}/>     
           </div>
