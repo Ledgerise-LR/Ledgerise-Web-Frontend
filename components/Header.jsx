@@ -131,13 +131,13 @@ export default function Header() {
         windowSize.width > 400
           ? (
             <div className="p-2 border-b-2 flex flex-row justify-between items-center w-full overflow-x-hidden">
-      <h1 className="pl-12 w-48">
+      <h1 className="pl-12 w-40">
         <a href="/">
           <img className="h-20" src="logo.svg" alt="Ledgerise | Decentralized Fundrasing-delivering trace protocol" />
         </a>
       </h1>
       <div className="w-fit flex flex-row items-center">
-        <Link href="/collections" className="p-6" >
+        <Link href="/collections" className="p-6 text-sm" >
           Kampanyalar
         </Link>
         {
@@ -157,7 +157,7 @@ export default function Header() {
                   </div>)
                   : (
                     <div className="flex items-center border-2 rounded-full pr-2">
-                      <a href="/login" onClick={() => { setLastVisitedUrl() }} className="border-2 rounded-full px-12 py-2 mr-2 bg-blue-900 text-slate-100 cursor-pointer hover:bg-blue-800 transition-all">Login</a>
+                      <a href="/login" onClick={() => { setLastVisitedUrl() }} className="border-2 text-sm rounded-full px-12 py-2 mr-2 bg-blue-900 text-slate-100 cursor-pointer hover:bg-blue-800 transition-all">Login</a>
                     </div>
                   )
               }
