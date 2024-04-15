@@ -10,162 +10,174 @@ export default function Home() {
   const [focusedApiEndpoint, setFocusedApiEndpoint] = useState(1);
 
   return (
-    <div className='w-screen h-screen flex overflow-x-hidden border-t-4 border-t-yellow-500'>
+    <div className='w-screen h-screen'>
+      {/* <div className='w-full border-t-4 border-t-yellow-500 border-b flex p-2 text-sm'>
+        <div className='mr-4'>Bağış ürünü</div>
+        <div className='mr-4'>Bağış kampanyası</div>
+        <div className='mr-4'>Otorizasyon</div>
+        <div className='mr-4'>Şirket</div>
+        <div className='mr-4'>Depo</div>
+        <div className='mr-4'>Bağışçı</div>
+        <div className='mr-4'>İhtiyaç</div>
+        <div className='mr-4'>Bağışlar & ödeme</div>
+        <div className='mr-4'>tokenUri</div>
+      </div> */}
+    <div className='w-full h-full flex overflow-x-hidden border-t-4 border-t-yellow-500'>
       <nav className='h-full w-2/12 border-r-2 p-4 overflow-y-scroll'>
         <div className='text-slate-800 mb-4 uppercase text-xs'>Ledgerise - Organizasyon Entegrasyonu</div>
         <div className='text-slate-600'>
           <div className='mb-2 text-sm'>Bağış ürünü</div>
-          <div onClick={() => setFocusedApiEndpoint(1)}>
+          <div className={`rounded-lg ${focusedApiEndpoint == 1 ? "border bg-orange-500 bg-opacity-25 text-orange-800" : ""}`} onClick={() => setFocusedApiEndpoint(1)}>
             <ApiTab title={"Bağış ürünü detayları"} method={"GET"}/>
           </div>
-          <div onClick={() => setFocusedApiEndpoint(2)}>
+          <div className={`rounded-lg ${focusedApiEndpoint == 2 ? "border bg-orange-500 bg-opacity-25 text-orange-800" : ""}`} onClick={() => setFocusedApiEndpoint(2)}>
             <ApiTab title={"Bağış ürünlerini filtrele"} method={"POST"}/>
           </div>
-          <div  onClick={() => setFocusedApiEndpoint(3)}>
+          <div className={`rounded-lg ${focusedApiEndpoint == 3 ? "border bg-orange-500 bg-opacity-25 text-orange-800" : ""}`} onClick={() => setFocusedApiEndpoint(3)}>
             <ApiTab title={"Vitrin için rastgele bir bağış ürünü"} method={"GET"}/>
           </div>
-          <div  onClick={() => setFocusedApiEndpoint(5)}>
+          <div className={`rounded-lg ${focusedApiEndpoint == 5 ? "border bg-orange-500 bg-opacity-25 text-orange-800" : ""}`} onClick={() => setFocusedApiEndpoint(5)}>
             <ApiTab title={"Verifikasyonları filtrele"} method={"POST"}/>
           </div>
-          <div  onClick={() => setFocusedApiEndpoint(6)}>
+          <div className={`rounded-lg ${focusedApiEndpoint == 6 ? "border bg-orange-500 bg-opacity-25 text-orange-800" : ""}`} onClick={() => setFocusedApiEndpoint(6)}>
             <ApiTab title={"Bağış ürünü listele"} method={"POST"}/>
           </div>
         </div>
         
         <div className='text-slate-600 mt-6'>
           <div className='mb-2 text-sm'>Bağış kampanyası</div>
-          <div  onClick={() => setFocusedApiEndpoint(7)}>
+          <div className={`rounded-lg ${focusedApiEndpoint == 7 ? "border bg-orange-500 bg-opacity-25 text-orange-800" : ""}`} onClick={() => setFocusedApiEndpoint(7)}>
             <ApiTab title={"Kampanyanın bağış ürünlerini sorgula"} method={"GET"}/>
           </div>
-          <div  onClick={() => setFocusedApiEndpoint(8)}>
+          <div className={`rounded-lg ${focusedApiEndpoint == 8 ? "border bg-orange-500 bg-opacity-25 text-orange-800" : ""}`} onClick={() => setFocusedApiEndpoint(8)}>
             <ApiTab title={"Bağış kampanyalarını filtrele"} method={"POST"}/>
           </div>
-          <div  onClick={() => setFocusedApiEndpoint(9)}>
+          <div className={`rounded-lg ${focusedApiEndpoint == 9 ? "border bg-orange-500 bg-opacity-25 text-orange-800" : ""}`} onClick={() => setFocusedApiEndpoint(9)}>
             <ApiTab title={"Kampanya detayları"} method={"GET"}/>
           </div>
-          <div  onClick={() => setFocusedApiEndpoint(10)}>
+          <div className={`rounded-lg ${focusedApiEndpoint == 10 ? "border bg-orange-500 bg-opacity-25 text-orange-800" : ""}`} onClick={() => setFocusedApiEndpoint(10)}>
             <ApiTab title={"Sırala & filtrele (fiyat artan)"} method={"GET"}/>
           </div>
-          <div  onClick={() => setFocusedApiEndpoint(11)}>
+          <div className={`rounded-lg ${focusedApiEndpoint == 11 ? "border bg-orange-500 bg-opacity-25 text-orange-800" : ""}`} onClick={() => setFocusedApiEndpoint(11)}>
             <ApiTab title={"Sırala & filtrele (fiyat azalan)"} method={"GET"}/>
           </div>
-          <div  onClick={() => setFocusedApiEndpoint(12)}>
+          <div className={`rounded-lg ${focusedApiEndpoint == 12 ? "border bg-orange-500 bg-opacity-25 text-orange-800" : ""}`} onClick={() => setFocusedApiEndpoint(12)}>
             <ApiTab title={"Sırala & filtrele (eski-yeni)"} method={"GET"}/>
           </div>
-          <div  onClick={() => setFocusedApiEndpoint(13)}>
+          <div className={`rounded-lg ${focusedApiEndpoint == 13 ? "border bg-orange-500 bg-opacity-25 text-orange-800" : ""}`} onClick={() => setFocusedApiEndpoint(13)}>
             <ApiTab title={"Sırala & filtrele (yeni-eski)"} method={"GET"}/>
           </div>
-          <div  onClick={() => setFocusedApiEndpoint(14)}>
+          <div className={`rounded-lg ${focusedApiEndpoint == 14 ? "border bg-orange-500 bg-opacity-25 text-orange-800" : ""}`} onClick={() => setFocusedApiEndpoint(14)}>
             <ApiTab title={"Kampanyanın bağış ürünleri (filtresiz)"} method={"GET"}/>          
           </div>
-          <div  onClick={() => setFocusedApiEndpoint(15)}>
+          <div className={`rounded-lg ${focusedApiEndpoint == 15 ? "border bg-orange-500 bg-opacity-25 text-orange-800" : ""}`} onClick={() => setFocusedApiEndpoint(15)}>
             <ApiTab title={"Kampanya yarat"} method={"POST"}/>          
           </div>
-          <div  onClick={() => setFocusedApiEndpoint(16)}>
+          <div className={`rounded-lg ${focusedApiEndpoint == 16 ? "border bg-orange-500 bg-opacity-25 text-orange-800" : ""}`} onClick={() => setFocusedApiEndpoint(16)}>
             <ApiTab title={"Kampanya görselini güncelle"} method={"POST"}/>          
           </div>
         </div>
 
         <div className='text-slate-600 mt-6'>
           <div className='mb-2 text-sm'>Otorizasyon</div>
-          <div  onClick={() => setFocusedApiEndpoint(17)}>
+          <div className={`rounded-lg ${focusedApiEndpoint == 17 ? "border bg-orange-500 bg-opacity-25 text-orange-800" : ""}`} onClick={() => setFocusedApiEndpoint(17)}>
           <ApiTab title={"Bağışçı (register)"} method={"POST"}/>          
           </div>
-          <div  onClick={() => setFocusedApiEndpoint(18)}>
+          <div className={`rounded-lg ${focusedApiEndpoint == 18 ? "border bg-orange-500 bg-opacity-25 text-orange-800" : ""}`} onClick={() => setFocusedApiEndpoint(18)}>
           <ApiTab title={"Bağışçı (login)"} method={"POST"}/>          
           </div>
-          <div  onClick={() => setFocusedApiEndpoint(19)}>
+          <div className={`rounded-lg ${focusedApiEndpoint == 19 ? "border bg-orange-500 bg-opacity-25 text-orange-800" : ""}`} onClick={() => setFocusedApiEndpoint(19)}>
           <ApiTab title={"İhtiyaç sahibi (register)"} method={"POST"}/>          
           </div>
-          <div  onClick={() => setFocusedApiEndpoint(20)}>
+          <div className={`rounded-lg ${focusedApiEndpoint == 20 ? "border bg-orange-500 bg-opacity-25 text-orange-800" : ""}`} onClick={() => setFocusedApiEndpoint(20)}>
             <ApiTab title={"İhtiyaç sahibi (login)"} method={"POST"}/>            
           </div>
-          <div  onClick={() => setFocusedApiEndpoint(21)}>
+          <div className={`rounded-lg ${focusedApiEndpoint == 21 ? "border bg-orange-500 bg-opacity-25 text-orange-800" : ""}`} onClick={() => setFocusedApiEndpoint(21)}>
             <ApiTab title={"Şirket (login)"} method={"POST"}/>            
           </div>
         </div>
 
         <div className='text-slate-600 mt-6'>
           <div className='mb-2 text-sm'>Şirket</div>
-          <div  onClick={() => setFocusedApiEndpoint(22)}>
+          <div className={`rounded-lg ${focusedApiEndpoint == 22 ? "border bg-orange-500 bg-opacity-25 text-orange-800" : ""}`} onClick={() => setFocusedApiEndpoint(22)}>
             <ApiTab title={"Kampanyalarınızı sorgulayın"} method={"POST"}/>            
           </div>
-          <div  onClick={() => setFocusedApiEndpoint(23)}>
+          <div className={`rounded-lg ${focusedApiEndpoint == 23 ? "border bg-orange-500 bg-opacity-25 text-orange-800" : ""}`} onClick={() => setFocusedApiEndpoint(23)}>
             <ApiTab title={"Şirket detayları"} method={"POST"}/>            
           </div>
-          <div  onClick={() => setFocusedApiEndpoint(24)}>
+          <div className={`rounded-lg ${focusedApiEndpoint == 24 ? "border bg-orange-500 bg-opacity-25 text-orange-800" : ""}`} onClick={() => setFocusedApiEndpoint(24)}>
             <ApiTab title={"Şirket ismi sorgula"} method={"POST"}/>            
           </div>
-          <div  onClick={() => setFocusedApiEndpoint(25)}>
+          <div className={`rounded-lg ${focusedApiEndpoint == 25 ? "border bg-orange-500 bg-opacity-25 text-orange-800" : ""}`} onClick={() => setFocusedApiEndpoint(25)}>
             <ApiTab title={"Bağış ürünlerinizi sorgulayın"} method={"POST"}/>            
           </div>
         </div>
 
         <div className='text-slate-600 mt-6'>
           <div className='mb-2 text-sm'>Depo</div>
-          <div  onClick={() => setFocusedApiEndpoint(26)}>
+          <div className={`rounded-lg ${focusedApiEndpoint == 26 ? "border bg-orange-500 bg-opacity-25 text-orange-800" : ""}`} onClick={() => setFocusedApiEndpoint(26)}>
             <ApiTab title={"Depo lokasyonu sorgula"} method={"POST"}/>            
           </div>
         </div>
 
         <div className='text-slate-600 mt-6'>
           <div className='mb-2 text-sm'>Bağışçı</div>
-          <div  onClick={() => setFocusedApiEndpoint(27)}>
+          <div className={`rounded-lg ${focusedApiEndpoint == 27 ? "border bg-orange-500 bg-opacity-25 text-orange-800" : ""}`} onClick={() => setFocusedApiEndpoint(27)}>
             <ApiTab title={"Fatura bilgisi sorgula"} method={"POST"}/>            
           </div>
         </div>
 
         <div className='text-slate-600 mt-6'>
           <div className='mb-2 text-sm'>Rapor & sorun bildirme</div>
-          <div  onClick={() => setFocusedApiEndpoint(28)}>
+          <div className={`rounded-lg ${focusedApiEndpoint == 28 ? "border bg-orange-500 bg-opacity-25 text-orange-800" : ""}`} onClick={() => setFocusedApiEndpoint(28)}>
             <ApiTab title={"Raporları sorgula"} method={"GET"}/>            
           </div>
-          <div  onClick={() => setFocusedApiEndpoint(29)}>
+          <div className={`rounded-lg ${focusedApiEndpoint == 29 ? "border bg-orange-500 bg-opacity-25 text-orange-800" : ""}`} onClick={() => setFocusedApiEndpoint(29)}>
             <ApiTab title={"Rapor & sorun bildir"} method={"POST"}/>            
           </div>
         </div>
 
         <div className='text-slate-600 mt-6'>
           <div className='mb-2 text-sm'>İhtiyaç</div>
-          <div  onClick={() => setFocusedApiEndpoint(30)}>
+          <div className={`rounded-lg ${focusedApiEndpoint == 30 ? "border bg-orange-500 bg-opacity-25 text-orange-800" : ""}`} onClick={() => setFocusedApiEndpoint(30)}>
             <ApiTab title={"İhtiyaçları filtrele"} method={"POST"}/>            
           </div>
-          <div  onClick={() => setFocusedApiEndpoint(31)}>
+          <div className={`rounded-lg ${focusedApiEndpoint == 31 ? "border bg-orange-500 bg-opacity-25 text-orange-800" : ""}`} onClick={() => setFocusedApiEndpoint(31)}>
             <ApiTab title={"İhtiyaç başvurusu"} method={"POST"}/>            
           </div>
-          <div  onClick={() => setFocusedApiEndpoint(32)}>
+          <div className={`rounded-lg ${focusedApiEndpoint == 32 ? "border bg-orange-500 bg-opacity-25 text-orange-800" : ""}`} onClick={() => setFocusedApiEndpoint(32)}>
             <ApiTab title={"İhtiyacı karşıla"} method={"POST"}/>            
           </div>
-          <div  onClick={() => setFocusedApiEndpoint(33)}>
+          <div className={`rounded-lg ${focusedApiEndpoint == 33 ? "border bg-orange-500 bg-opacity-25 text-orange-800" : ""}`} onClick={() => setFocusedApiEndpoint(33)}>
             <ApiTab title={"İhtiyacın karşılandığı ürünün detaylarını sorgula"} method={"GET"}/>            
           </div>
-          <div  onClick={() => setFocusedApiEndpoint(34)}>
+          <div className={`rounded-lg ${focusedApiEndpoint == 34 ? "border bg-orange-500 bg-opacity-25 text-orange-800" : ""}`} onClick={() => setFocusedApiEndpoint(34)}>
             <ApiTab title={"Bağışçının karşıladığı ihtiyaçları sorgula"} method={"GET"}/>            
           </div>
-          <div  onClick={() => setFocusedApiEndpoint(35)}>
+          <div className={`rounded-lg ${focusedApiEndpoint == 35 ? "border bg-orange-500 bg-opacity-25 text-orange-800" : ""}`} onClick={() => setFocusedApiEndpoint(35)}>
             <ApiTab title={"İhtiyaç sahibinin ihtiyaçlarını sorgula"} method={"GET"}/>            
           </div>
         </div>
 
         <div className='text-slate-600 mt-6'>
           <div className='mb-2 text-sm'>Bağışlar & ödeme</div>
-          <div  onClick={() => setFocusedApiEndpoint(36)}>
+          <div className={`rounded-lg ${focusedApiEndpoint == 36 ? "border bg-orange-500 bg-opacity-25 text-orange-800" : ""}`} onClick={() => setFocusedApiEndpoint(36)}>
             <ApiTab title={"Bağışla (ödeme gerçekleşmiş)"} method={"POST"}/>            
           </div>
-          <div  onClick={() => setFocusedApiEndpoint(37)}>
+          <div className={`rounded-lg ${focusedApiEndpoint == 37 ? "border bg-orange-500 bg-opacity-25 text-orange-800" : ""}`} onClick={() => setFocusedApiEndpoint(37)}>
             <ApiTab title={"Bağışla (kredi kartı)"} method={"POST"}/>            
           </div>
-          <div  onClick={() => setFocusedApiEndpoint(38)}>
+          <div className={`rounded-lg ${focusedApiEndpoint == 38 ? "border bg-orange-500 bg-opacity-25 text-orange-800" : ""}`} onClick={() => setFocusedApiEndpoint(38)}>
             <ApiTab title={"Bağışla (kripto)"} method={"POST"}/>            
           </div>
         </div>
 
         <div className='text-slate-600 mt-6'>
           <div className='mb-2 text-sm'>Bağış ürünü kimliği: tokenUri</div>
-          <div  onClick={() => setFocusedApiEndpoint(39)}>
+          <div className={`rounded-lg ${focusedApiEndpoint == 39 ? "border bg-orange-500 bg-opacity-25 text-orange-800" : ""}`} onClick={() => setFocusedApiEndpoint(39)}>
             <ApiTab title={"tokenUri filtrele"} method={"GET"}/>     
           </div>
-          <div  onClick={() => setFocusedApiEndpoint(40)}>
+          <div className={`rounded-lg ${focusedApiEndpoint == 40 ? "border bg-orange-500 bg-opacity-25 text-orange-800" : ""}`} onClick={() => setFocusedApiEndpoint(40)}>
             <ApiTab title={"tokenUri oluştur"} method={"POST"}/>          
           </div>
         </div>
@@ -1479,6 +1491,7 @@ export default function Home() {
                                           : ("")
           }
       </div>
+    </div>
     </div>
   )
 }
