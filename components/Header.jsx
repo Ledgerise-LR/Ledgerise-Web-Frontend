@@ -128,8 +128,8 @@ export default function Header(isApiHeader) {
       {
         windowSize.width > 400
           ? (
-            <div className="p-2 border-b-2 flex flex-row justify-between items-center w-full overflow-x-hidden">
-      <h1 className="pl-12 w-40">
+            <div className={`p-2 border-b-2 flex flex-row justify-between items-center w-full overflow-x-hidden ${router.pathname == "/api-documentation" ? "h-16 overflow-y-hidden" : ""}`}>
+      <h1 className={`pl-12 ${router.pathname == "/api-documentation" ? "w-36" : "w-40"}`}>
         <a href="/">
           <img className="h-20" src="logo.svg" alt="Ledgerise | Decentralized Fundrasing-delivering trace protocol" />
         </a>
@@ -144,9 +144,9 @@ export default function Header(isApiHeader) {
             : (<div className="mr-36 h-fit">
               {
                 isAuthenticated
-                  ? (<div className="flex">
-                    <div>{username}</div>
-                    <div className="w-6 ml-2 cursor-pointer hover:animate-pulse" onClick={() => { handleLogoutClick() }}>
+                  ? (<div className="flex items-center">
+                    <div className="text-sm">{username}</div>
+                    <div className="w-6 ml-2 text-sm cursor-pointer hover:animate-pulse" onClick={() => { handleLogoutClick() }}>
                       <img src="/logout.png" alt="Logout" />
                     </div>
                     <div>

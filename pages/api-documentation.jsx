@@ -11,22 +11,22 @@ export default function Home() {
 
   return (
     <div className='w-screen h-screen'>
-      {/* <div className='w-full border-t-4 border-t-yellow-500 border-b flex p-2 text-sm'>
-        <div className='mr-4'>Bağış ürünü</div>
-        <div className='mr-4'>Bağış kampanyası</div>
-        <div className='mr-4'>Otorizasyon</div>
-        <div className='mr-4'>Şirket</div>
-        <div className='mr-4'>Depo</div>
-        <div className='mr-4'>Bağışçı</div>
-        <div className='mr-4'>İhtiyaç</div>
-        <div className='mr-4'>Bağışlar & ödeme</div>
-        <div className='mr-4'>tokenUri</div>
-      </div> */}
-    <div className='w-full h-full flex overflow-x-hidden border-t-4 border-t-yellow-500'>
+      <div className='w-full border-t-4 border-t-yellow-500 border-b flex items-center h-12 p-1 pl-4 text-sm text-gray-700'>
+        <a href='#Bağış ürünü' className='mr-4 rounded-lg p-1 cursor-pointer hover:border'>Bağış ürünü</a>
+        <a href='#Bağış kampanyası' className='mr-4 rounded-lg p-1 cursor-pointer hover:border'>Bağış kampanyası</a>
+        <a href='#Otorizasyon' className='mr-4 rounded-lg p-1 cursor-pointer hover:border'>Otorizasyon</a>
+        <a href='#Şirket' className='mr-4 rounded-lg p-1 cursor-pointer hover:border'>Şirket</a>
+        <a href='#Depo' className='mr-4 rounded-lg p-1 cursor-pointer hover:border'>Depo</a>
+        <a href='#Bağışçı' className='mr-4 rounded-lg p-1 cursor-pointer hover:border'>Bağışçı</a>
+        <a href='#İhtiyaç' className='mr-4 rounded-lg p-1 cursor-pointer hover:border'>İhtiyaç</a>
+        <a href='#Bağışlar & ödeme' className='mr-4 rounded-lg p-1 cursor-pointer hover:border'>Bağışlar & ödeme</a>
+        <a href='#tokenUri' className='mr-4 rounded-lg p-1 cursor-pointer hover:border'>tokenUri</a>
+      </div>
+    <div className='w-full h-full flex overflow-x-hidden'>
       <nav className='h-full w-2/12 border-r-2 p-4 overflow-y-scroll'>
         <div className='text-slate-800 mb-4 uppercase text-xs'>Ledgerise - Organizasyon Entegrasyonu</div>
         <div className='text-slate-600'>
-          <div className='mb-2 text-sm'>Bağış ürünü</div>
+          <div id="Bağış ürünü" className='mb-2 text-sm'>Bağış ürünü</div>
           <div className={`rounded-lg ${focusedApiEndpoint == 1 ? "border bg-orange-500 bg-opacity-25 text-orange-800" : ""}`} onClick={() => setFocusedApiEndpoint(1)}>
             <ApiTab title={"Bağış ürünü detayları"} method={"GET"}/>
           </div>
@@ -48,7 +48,7 @@ export default function Home() {
         </div>
         
         <div className='text-slate-600 mt-6'>
-          <div className='mb-2 text-sm'>Bağış kampanyası</div>
+          <div id="Bağış kampanyası" className='mb-2 text-sm'>Bağış kampanyası</div>
           <div className={`rounded-lg ${focusedApiEndpoint == 7 ? "border bg-orange-500 bg-opacity-25 text-orange-800" : ""}`} onClick={() => setFocusedApiEndpoint(7)}>
             <ApiTab title={"Kampanyanın bağış ürünlerini sorgula"} method={"GET"}/>
           </div>
@@ -82,7 +82,7 @@ export default function Home() {
         </div>
 
         <div className='text-slate-600 mt-6'>
-          <div className='mb-2 text-sm'>Otorizasyon</div>
+          <div id="Otorizasyon" className='mb-2 text-sm'>Otorizasyon</div>
           <div className={`rounded-lg ${focusedApiEndpoint == 17 ? "border bg-orange-500 bg-opacity-25 text-orange-800" : ""}`} onClick={() => setFocusedApiEndpoint(17)}>
           <ApiTab title={"Bağışçı (register)"} method={"POST"}/>          
           </div>
@@ -101,7 +101,7 @@ export default function Home() {
         </div>
 
         <div className='text-slate-600 mt-6'>
-          <div className='mb-2 text-sm'>Şirket</div>
+          <div id="Şirket" className='mb-2 text-sm'>Şirket</div>
           <div className={`rounded-lg ${focusedApiEndpoint == 22 ? "border bg-orange-500 bg-opacity-25 text-orange-800" : ""}`} onClick={() => setFocusedApiEndpoint(22)}>
             <ApiTab title={"Kampanyalarınızı sorgulayın"} method={"POST"}/>            
           </div>
@@ -117,21 +117,21 @@ export default function Home() {
         </div>
 
         <div className='text-slate-600 mt-6'>
-          <div className='mb-2 text-sm'>Depo</div>
+          <div id="Depo" className='mb-2 text-sm'>Depo</div>
           <div className={`rounded-lg ${focusedApiEndpoint == 26 ? "border bg-orange-500 bg-opacity-25 text-orange-800" : ""}`} onClick={() => setFocusedApiEndpoint(26)}>
             <ApiTab title={"Depo lokasyonu sorgula"} method={"POST"}/>            
           </div>
         </div>
 
         <div className='text-slate-600 mt-6'>
-          <div className='mb-2 text-sm'>Bağışçı</div>
+          <div id="Bağışçı" className='mb-2 text-sm'>Bağışçı</div>
           <div className={`rounded-lg ${focusedApiEndpoint == 27 ? "border bg-orange-500 bg-opacity-25 text-orange-800" : ""}`} onClick={() => setFocusedApiEndpoint(27)}>
             <ApiTab title={"Fatura bilgisi sorgula"} method={"POST"}/>            
           </div>
         </div>
 
         <div className='text-slate-600 mt-6'>
-          <div className='mb-2 text-sm'>Rapor & sorun bildirme</div>
+          <div id="Rapor & sorun bildirme" className='mb-2 text-sm'>Rapor & sorun bildirme</div>
           <div className={`rounded-lg ${focusedApiEndpoint == 28 ? "border bg-orange-500 bg-opacity-25 text-orange-800" : ""}`} onClick={() => setFocusedApiEndpoint(28)}>
             <ApiTab title={"Raporları sorgula"} method={"GET"}/>            
           </div>
@@ -141,7 +141,7 @@ export default function Home() {
         </div>
 
         <div className='text-slate-600 mt-6'>
-          <div className='mb-2 text-sm'>İhtiyaç</div>
+          <div id="İhtiyaç" className='mb-2 text-sm'>İhtiyaç</div>
           <div className={`rounded-lg ${focusedApiEndpoint == 30 ? "border bg-orange-500 bg-opacity-25 text-orange-800" : ""}`} onClick={() => setFocusedApiEndpoint(30)}>
             <ApiTab title={"İhtiyaçları filtrele"} method={"POST"}/>            
           </div>
@@ -163,7 +163,7 @@ export default function Home() {
         </div>
 
         <div className='text-slate-600 mt-6'>
-          <div className='mb-2 text-sm'>Bağışlar & ödeme</div>
+          <div id="Bağışlar & ödeme" className='mb-2 text-sm'>Bağışlar & ödeme</div>
           <div className={`rounded-lg ${focusedApiEndpoint == 36 ? "border bg-orange-500 bg-opacity-25 text-orange-800" : ""}`} onClick={() => setFocusedApiEndpoint(36)}>
             <ApiTab title={"Bağışla (ödeme gerçekleşmiş)"} method={"POST"}/>            
           </div>
@@ -176,12 +176,19 @@ export default function Home() {
         </div>
 
         <div className='text-slate-600 mt-6'>
-          <div className='mb-2 text-sm'>Bağış ürünü kimliği: tokenUri</div>
+          <div id="tokenUri" className='mb-2 text-sm'>Bağış ürünü kimliği: tokenUri</div>
           <div className={`rounded-lg ${focusedApiEndpoint == 39 ? "border bg-orange-500 bg-opacity-25 text-orange-800" : ""}`} onClick={() => setFocusedApiEndpoint(39)}>
             <ApiTab title={"tokenUri filtrele"} method={"GET"}/>     
           </div>
           <div className={`rounded-lg ${focusedApiEndpoint == 40 ? "border bg-orange-500 bg-opacity-25 text-orange-800" : ""}`} onClick={() => setFocusedApiEndpoint(40)}>
             <ApiTab title={"tokenUri oluştur"} method={"POST"}/>          
+          </div>
+        </div>
+
+        <div className='text-slate-600 mt-6'>
+          <div id="Görsel gizliliği" className='mb-2 text-sm'>Görsel gizliliği</div>
+          <div className={`rounded-lg ${focusedApiEndpoint == 41 ? "border bg-orange-500 bg-opacity-25 text-orange-800" : ""}`} onClick={() => setFocusedApiEndpoint(41)}>
+            <ApiTab title={"Görselin arka planını blur'le"} method={"GET"}/>     
           </div>
         </div>
       </nav>
@@ -1514,7 +1521,23 @@ export default function Home() {
                                               ["companyCode", "string"]
                                             ]}
                                           />
-                                          : ("")
+                                          : focusedApiEndpoint == 41
+                                            ? <ApiSlot 
+                                              title={"Görselin arka planını blur'le"}
+                                              method={"GET"}
+                                              url={"https://api-ledgerise.onrender.com/privacy/blur-visual?ipfsGatewayTokenUri=${ipfsGatewayTokenUri}&x=${x}&y=${y}"}
+                                              description={"Teslim noktasındaki doğrulama görselinin arka planında ihtiyaç sahibine ait hassas bilgiler (oturduğu evin görüntüsü, kişilerin görüntüsü) yer alabilir. Gerekli izin alınmadıysa bu hassas görüntüleri bağışçıya göstermemek için arka planı buzlamak gerekir."}
+                                              importantNote={"Otorizasyona gerek yoktur. Bu metod response olarak arka planı blurlenmiş fotoğrafın base64 string'ini return eder."}
+                                              parameters={[
+                                                ["ipfsGatewayTokenUri", "string", "Resmin tokenUri'sinin gateway formatına çevrilmiş hali. Örnek format: https://ipfs.io/ipfs/<resmin tokenUri'si buraya gelecek>", true],
+                                                ["x", "number", "Koli okutulduğunda QR'ın görseldeki konumu kaydedilir. Bu parametre konumun x değeridir.", true],
+                                                ["y", "number", "Koli okutulduğunda QR'ın görseldeki konumu kaydedilir. Bu parametre konumun y değeridir.", true]
+                                              ]}
+                                              resEx={[
+                                                ["data", "base64_string"]
+                                              ]}
+                                            />
+                                            : ("")
           }
       </div>
     </div>
