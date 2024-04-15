@@ -4,6 +4,7 @@ import { useMoralis, useWeb3Contract } from 'react-moralis'
 import networkMapping from "../constants/networkMapping.json";
 import { getEthToUsdRate } from '@/utils/getEthToUsdRate';
 import { URL, PORT } from '@/serverConfig';
+import axios from 'axios';
 
 
 export default function Home() {
@@ -27,10 +28,9 @@ export default function Home() {
 
 
   useEffect(() => {
-    fetch(`${URL}:${PORT}/subcollection/get-all-collections`)
-      .then(response => response.json())
-      .then(data => {
-
+    axios.post(`${URL}:${PORT}/subcollection/get-all-collections`, {})
+      .then(res => {
+        const data = res.data;
         setCollections(data.subcollections);
       })
   }, [])
