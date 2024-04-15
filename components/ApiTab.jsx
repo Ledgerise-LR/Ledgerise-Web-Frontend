@@ -1,7 +1,7 @@
 
 export default function ApiTab({ title, method }) {
   return (
-    <div className='pl-2 flex text-sm justify-between items-baseline mb-2 cursor-pointer'>
+    <div className='pl-2 pt-2 flex text-sm justify-between items-baseline mb-2 cursor-pointer mr-2'>
       <div>{title}</div>
       {
         method == "GET"

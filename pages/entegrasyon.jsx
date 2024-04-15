@@ -89,7 +89,7 @@ export default function Home() {
 
   const handleListNeedItemClick = () => {
 
-    axios.post(`${URL}:${PORT}/needs/list-need-item`, {
+    axios.post(`${URL}:${PORT}/need/list-need-item`, {
       beneficiaryAddress: beneficiaryAddress,
       needId: needId,
       orderNumber: orderNumber,
@@ -131,13 +131,13 @@ export default function Home() {
         if (data.success && data.donor) {
           const dataDonor = data.donor
           setDonor(data.donor)
-          axios.get(`${URL}:${PORT}/needs/get-all-needs`,
+          axios.get(`${URL}:${PORT}/need/get-all-needs`,
           {})
             .then((res) => {
               const data = res.data;
               setNeeds(data.needs);
               
-              axios.post(`${URL}:${PORT}/needs/get-satisfied-donations-of-donor`, {
+              axios.post(`${URL}:${PORT}/need/get-satisfied-donations-of-donor`, {
                 buyer: dataDonor.school_number
               })
                 .then((res) => {

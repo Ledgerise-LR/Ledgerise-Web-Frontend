@@ -32,7 +32,7 @@ export default function App({ Component, pageProps }) {
           }
           <Component {...pageProps} />
           {
-            router.pathname != "/admin" && router.pathname != "/register" && router.pathname != "/login"
+            router.pathname != "/admin" && router.pathname != "/register" && router.pathname != "/login" && router.pathname != "/api-documentation"
               ? <Footer />
               : <div></div>
           }

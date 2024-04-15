@@ -229,7 +229,7 @@ export default function Home() {
               position: "topR"
             });
             setBuyItemSuccessText(`Donated 1 ${tokenName} successfully. Thanks for your contribution.`);
-            fetch(`${URL}:${PORT}/get-asset?tokenId=${tokenId}&subcollectionId=${subcollectionId}&nftAddress=${nftAddress}`)
+            fetch(`${URL}:${PORT}/active-item/get-asset?tokenId=${tokenId}&subcollectionId=${subcollectionId}&nftAddress=${nftAddress}`)
               .then(response => response.json())
               .then(data => {
                 const asset = {
@@ -289,7 +289,7 @@ export default function Home() {
     await tx.wait(1);
     localStorage.setItem("txHash", "");
     setHasTxHashKey(false);
-    fetch(`${URL}:${PORT}/get-asset?tokenId=${tokenId}&subcollectionId=${subcollectionId}&nftAddress=${nftAddress}`)
+    fetch(`${URL}:${PORT}/active-item/get-asset?tokenId=${tokenId}&subcollectionId=${subcollectionId}&nftAddress=${nftAddress}`)
       .then(response => response.json())
       .then(data => {
         const asset = {
@@ -338,7 +338,7 @@ export default function Home() {
 
   useEffect(() => {
     if (tokenId) {
-      fetch(`${URL}:${PORT}/get-asset?tokenId=${tokenId}&subcollectionId=${subcollectionId}&nftAddress=${nftAddress}`)
+      fetch(`${URL}:${PORT}/active-item/get-asset?tokenId=${tokenId}&subcollectionId=${subcollectionId}&nftAddress=${nftAddress}`)
         .then(response => response.json())
         .then(data => {
           console.log(data.activeItem.collaborators)
@@ -358,12 +358,12 @@ export default function Home() {
             collaborators: data.activeItem.collaborators
           }
           setAsset(asset);
-          fetch(`${URL}:${PORT}/get-single-collection?id=${asset.subcollectionId}&nftAddress=${nftAddress}`)
+          fetch(`${URL}:${PORT}/subcollection/get-single-collection?id=${asset.subcollectionId}&nftAddress=${nftAddress}`)
             .then(response => response.json())
             .then(data => {
               setCollection(data.subcollection);
 
-              fetch(`${URL}:${PORT}/get-all-visual-verifications`)
+              fetch(`${URL}:${PORT}/active-item/get-all-visual-verifications`)
                 .then(response => response.json())
                 .then(data => {
                   setVisualVerifications(data.data);
@@ -510,7 +510,7 @@ export default function Home() {
               position: "topR"
             });
             setBuyItemSuccessText(`Donated 1 ${tokenName} successfully. Thanks for your contribution.`);
-            fetch(`${URL}:${PORT}/get-asset?tokenId=${tokenId}&subcollectionId=${subcollectionId}&nftAddress=${nftAddress}`)
+            fetch(`${URL}:${PORT}/active-item/get-asset?tokenId=${tokenId}&subcollectionId=${subcollectionId}&nftAddress=${nftAddress}`)
               .then(response => response.json())
               .then(data => {
                 const asset = {

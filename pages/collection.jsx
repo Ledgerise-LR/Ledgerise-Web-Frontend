@@ -27,12 +27,12 @@ export default function Home() {
 
   useEffect(() => {
     if (itemId) {
-      fetch(`${URL}:${PORT}/get-collection?subcollectionId=${itemId}&nftAddress=${nftAddress}`)
+      fetch(`${URL}:${PORT}/subcollection/get-collection?subcollectionId=${itemId}&nftAddress=${nftAddress}`)
         .then(response => response.json())
         .then(data => {
           setAssets(data.activeItems);
           handleDefault();
-          fetch(`${URL}:${PORT}/get-single-collection?id=${itemId}&nftAddress=${nftAddress}`)
+          fetch(`${URL}:${PORT}/subcollection/get-single-collection?id=${itemId}&nftAddress=${nftAddress}`)
             .then(response => response.json())
             .then(data => {
               setCollection(data.subcollection);
@@ -54,7 +54,7 @@ export default function Home() {
     setNewestClicked(false);
     const priceFilter = selectedPriceCategories.join(",");
     const availableEditionsFilter = availableEditions.join(",");
-    fetch(`${URL}:${PORT}/get-collection?nftAddress=${nftAddress}&subcollectionId=${itemId}&priceFilter=${priceFilter}&availableEditionsFilter=${availableEditionsFilter}`)
+    fetch(`${URL}:${PORT}/subcollection/get-collection?nftAddress=${nftAddress}&subcollectionId=${itemId}&priceFilter=${priceFilter}&availableEditionsFilter=${availableEditionsFilter}`)
       .then(response => response.json())
       .then(data => {
         setAssets(data.activeItems);
@@ -69,7 +69,7 @@ export default function Home() {
     setNewestClicked(false);
     const priceFilter = selectedPriceCategories.join(",");
     const availableEditionsFilter = availableEditions.join(",");
-    fetch(`${URL}:${PORT}/sort/price-ascending?nftAddress=${nftAddress}&subcollectionId=${itemId}&priceFilter=${priceFilter}&availableEditionsFilter=${availableEditionsFilter}`)
+    fetch(`${URL}:${PORT}/subcollection/sort/price-ascending?nftAddress=${nftAddress}&subcollectionId=${itemId}&priceFilter=${priceFilter}&availableEditionsFilter=${availableEditionsFilter}`)
       .then(response => response.json())
       .then(data => {
         setAssets(data.activeItems);
@@ -84,7 +84,7 @@ export default function Home() {
     setNewestClicked(false);
     const priceFilter = selectedPriceCategories.join(",");
     const availableEditionsFilter = availableEditions.join(",");
-    fetch(`${URL}:${PORT}/sort/price-descending?nftAddress=${nftAddress}&subcollectionId=${itemId}&priceFilter=${priceFilter}&availableEditionsFilter=${availableEditionsFilter}`)
+    fetch(`${URL}:${PORT}/subcollection/sort/price-descending?nftAddress=${nftAddress}&subcollectionId=${itemId}&priceFilter=${priceFilter}&availableEditionsFilter=${availableEditionsFilter}`)
       .then(response => response.json())
       .then(data => {
         setAssets(data.activeItems);
@@ -99,7 +99,7 @@ export default function Home() {
     setNewestClicked(false);
     const priceFilter = selectedPriceCategories.join(",");
     const availableEditionsFilter = availableEditions.join(",");
-    fetch(`${URL}:${PORT}/sort/oldest?nftAddress=${nftAddress}&subcollectionId=${itemId}&priceFilter=${priceFilter}&availableEditionsFilter=${availableEditionsFilter}`)
+    fetch(`${URL}:${PORT}/subcollection/sort/oldest?nftAddress=${nftAddress}&subcollectionId=${itemId}&priceFilter=${priceFilter}&availableEditionsFilter=${availableEditionsFilter}`)
       .then(response => response.json())
       .then(data => {
         setAssets(data.activeItems);
@@ -114,7 +114,7 @@ export default function Home() {
     setNewestClicked(true);
     const priceFilter = selectedPriceCategories.join(",");
     const availableEditionsFilter = availableEditions.join(",");
-    fetch(`${URL}:${PORT}/sort/newest?nftAddress=${nftAddress}&subcollectionId=${itemId}&priceFilter=${priceFilter}&availableEditionsFilter=${availableEditionsFilter}`)
+    fetch(`${URL}:${PORT}/subcollection/sort/newest?nftAddress=${nftAddress}&subcollectionId=${itemId}&priceFilter=${priceFilter}&availableEditionsFilter=${availableEditionsFilter}`)
       .then(response => response.json())
       .then(data => {
         setAssets(data.activeItems);

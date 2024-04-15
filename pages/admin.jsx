@@ -115,12 +115,12 @@ export default function Home() {
   const [collections, setCollections] = useState([]);
 
   useEffect(() => {
-    fetch(`${URL}:${PORT}/get-all-collections`)
+    fetch(`${URL}:${PORT}/subcollection/get-all-collections`)
       .then(response => response.json())
       .then(data => {
         setCollections(data.subcollections);
 
-        fetch(`${URL}:${PORT}/get-all-active-items`)
+        fetch(`${URL}:${PORT}/active-item/get-all-active-items`)
           .then(response => response.json())
           .then(data => {
 
@@ -128,7 +128,7 @@ export default function Home() {
 
             data.activeItems.map(activeItem => {
 
-              fetch(`${URL}:${PORT}/get-asset?tokenId=${activeItem.tokenId}&subcollectionId=${activeItem.subcollectionId}&nftAddress=${activeItem.nftAddress}`)
+              fetch(`${URL}:${PORT}/active-item/get-asset?tokenId=${activeItem.tokenId}&subcollectionId=${activeItem.subcollectionId}&nftAddress=${activeItem.nftAddress}`)
                 .then(response => response.json())
                 .then(async (data) => {
                   const asset = {
@@ -163,7 +163,7 @@ export default function Home() {
   const [tokenUris, setTokenUris] = useState([]);
 
   useEffect(() => {
-    fetch(`${URL}:${PORT}/admin/pinata/tokenuri`)
+    fetch(`${URL}:${PORT}/tokenuri/get-all`)
       .then(response => response.json())
       .then(data => {
         setTokenUris(data.data);
@@ -226,18 +226,28 @@ export default function Home() {
   const handleCreateSubcollectionClick = () => {
 
     if (createSubcollectionCompanyCode != "") {
-      axios.post(`${URL}:${PORT}/company/get-company-from-code`, {
-        code: createSubcollectionCompanyCode
-      })
-        .then((res) => {
-          const data = res.data;
-          const charityAddress = data.company.charityAddress
-          setCreateSubcollectionCharityAddress(charityAddress);
+      const formData = new FormData();
+      formData.append('name', createSubcollectionName);
+      formData.append('image', selectedImage);
+      formData.append('companyCode', createSubcollectionCompanyCode);
 
-          createSubcollection({
-            onSuccess: handleCreateSubcollectionSuccess,
-            onError: (err) => handleTransactionError(err)
-          });
+      axios.post(`${URL}:${PORT}/subcollection/create-subcollection`, formData)
+        .then((res) => {
+          if (res.data.success) {
+            dispatch({
+              type: "success",
+              message: "Tx successful: subcollection created",
+              title: "Transaction Success",
+              position: "topR"
+            });
+          } else {
+            dispatch({
+              type: "error",
+              message: "Sorry for the error. Please refresh and try again.",
+              title: "Transaction failed",
+              position: "topR"
+            })
+          }
         })
     }
   }
@@ -313,7 +323,7 @@ export default function Home() {
     formData.append('companyCode', createSubcollectionCompanyCode);
     formData.append('nftAddress', mainCollectionAddress);
 
-    axios.post(`${URL}:${PORT}/update-subcollection-image`, formData)
+    axios.post(`${URL}:${PORT}/subcollection/update-subcollection-image`, formData)
       .then((res) => {
         const data = res.data;
         if (data.success) {
@@ -388,7 +398,7 @@ export default function Home() {
       formData.append('description', pinataDescription);
       formData.append('attributes', pinataAttributesString);
 
-      axios.post(`${URL}:${PORT}/admin/pinata/upload`, formData)
+      axios.post(`${URL}:${PORT}/tokenuri/create`, formData)
         .then((response) => {
           alert(response.data);
           setUploadingToPinataStatus(false)
@@ -869,7 +879,6 @@ export default function Home() {
                     </div>
                   )}
                 </div>
-                <input className="p-2 border-2 w-auto mb-4" type="text" placeholder="Properties (split with ,)" onChange={(e) => { setCreateSubcollectionProperties(e.currentTarget.value) }} />
                 <Button
                   theme="primary"
                   text="Create subcollection"

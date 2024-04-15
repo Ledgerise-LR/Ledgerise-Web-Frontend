@@ -40,19 +40,19 @@ export default function Home() {
   useEffect(() => {
     async function fetchAsset() {
       console.log(asset.tokenId);
-      fetch(`${URL}:${PORT}/get-random-featured-nft?previousTokenId=${previousTokenId}`)
+      fetch(`${URL}:${PORT}/active-item/get-random-featured-asset?previousTokenId=${previousTokenId}`)
         .then(response => response.json())
         .then(data => {
           const asset = {
-            tokenId: data.data.tokenId,
-            tokenUri: data.data.tokenUri,
-            totalRaised: data.data.totalRaised,
-            collectionName: data.data.collectionName,
-            charityAddress: data.data.charityAddress,
-            nftAddress: data.data.nftAddress,
-            subcollectionId: data.data.subcollectionId,
-            totalDonated: data.data.totalDonated,
-            price: data.data.price
+            tokenId: data.activeItem.tokenId,
+            tokenUri: data.activeItem.tokenUri,
+            totalRaised: data.activeItem.totalRaised,
+            collectionName: data.activeItem.collectionName,
+            charityAddress: data.activeItem.charityAddress,
+            nftAddress: data.activeItem.nftAddress,
+            subcollectionId: data.activeItem.subcollectionId,
+            totalDonated: data.activeItem.totalDonated,
+            price: data.activeItem.price
           }
           setAsset(asset);
         })

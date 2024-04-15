@@ -36,6 +36,9 @@ export default function Home() {
           <div className={`rounded-lg ${focusedApiEndpoint == 3 ? "border bg-orange-500 bg-opacity-25 text-orange-800" : ""}`} onClick={() => setFocusedApiEndpoint(3)}>
             <ApiTab title={"Vitrin için rastgele bir bağış ürünü"} method={"GET"}/>
           </div>
+          <div className={`rounded-lg ${focusedApiEndpoint == 4 ? "border bg-orange-500 bg-opacity-25 text-orange-800" : ""}`} onClick={() => setFocusedApiEndpoint(4)}>
+            <ApiTab title={"QR kodu basıldı olarak işaretle"} method={"POST"}/>
+          </div>
           <div className={`rounded-lg ${focusedApiEndpoint == 5 ? "border bg-orange-500 bg-opacity-25 text-orange-800" : ""}`} onClick={() => setFocusedApiEndpoint(5)}>
             <ApiTab title={"Verifikasyonları filtrele"} method={"POST"}/>
           </div>
@@ -312,6 +315,29 @@ export default function Home() {
                       ["totalDonated", "number"]
                     ]}
                   />
+                    : focusedApiEndpoint == 4
+                    ? <ApiSlot
+                      title={"QR kodu basıldı olarak işaretle"}
+                      method={"POST"}
+                      url={"https://api-ledgerise.onrender.com/active-item/mark-qr-code-as-printed"}
+                      description={"Bağış ürünleri bağışlandığında ürün adına bir QR kod oluşturur. Printer'ınızdan QR kodu bastığınız satın alımı 'QR kod basıldı' olarak güncelleyin."}
+                      importantNote={"Otorizasyon gerekli. Şirket olarak hesap açmış olmalısınız. Detaylar için Şirket (login) sekmesine tıklayın."}
+                      parameters={[
+                        ["nftAddress", "string", "Bağış kolisinin NFT adresi.", true],
+                        ["tokenId", "string", "Bağış ürünün blockchain id'si.", true],
+                        ["openseaTokenIdArray", "array", "Satın alma numarası array'i.", true, [
+                          ["openseaTokenId", "number", "Satın alma numarası olarak geçer.", true]
+                        ]]
+                      ]}
+                      resEx={[
+                        ["event", "string"],
+                        ["date", "string"],
+                        ["price", "string"],
+                        ["buyer", "string"],
+                        ["openseaTokenId", "number"],
+                        ["transactionHash", "string"],
+                      ]}
+                    />
                     : focusedApiEndpoint == 5
                       ? <ApiSlot
                       title={"Verifikasyonları filtrele"}

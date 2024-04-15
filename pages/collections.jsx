@@ -27,7 +27,7 @@ export default function Home() {
 
 
   useEffect(() => {
-    fetch(`${URL}:${PORT}/get-all-collections`)
+    fetch(`${URL}:${PORT}/subcollection/get-all-collections`)
       .then(response => response.json())
       .then(data => {
 

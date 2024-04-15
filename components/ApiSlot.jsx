@@ -54,7 +54,7 @@ export default function ApiSlot({ title, method, url, description, importantNote
                     </div>
                     <div className="text-sm">{eachParameter[2]}</div>
                     {
-                      eachParameter[1] == "object"
+                      eachParameter[1] == "object" || eachParameter[1] == "array"
                         ? eachParameter[4].map(eachParameterSub1 => {
                           return (<div className='w-full h-fit p-4 border-b'>
                           <div className='flex items-baseline'>

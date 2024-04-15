@@ -7,7 +7,7 @@ import axios from "axios";
 import { useRouter } from "next/router";
 import { URL, PORT } from '@/serverConfig';
 
-export default function Header() {
+export default function Header(isApiHeader) {
 
   const router = useRouter();
 
@@ -63,8 +63,6 @@ export default function Header() {
     localStorage.setItem("_id", "");
     window.location.reload();
   }
-
-  console.log(windowSize.width)
 
   return (
     <nav>
