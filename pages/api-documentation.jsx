@@ -1525,6 +1525,7 @@ export default function Home() {
                                               ["description", "string", "Ürünün detaylı açıklaması.", true],
                                               ["attributes", "string", "Ürünün özellikleri. Bu formatta yazmanız gerekiyor: 'özellik_ismi:10,ozellik_ismi:15,özellik_ismi:20'", true]
                                             ]}
+                                            header={"formdata"}
                                             resEx={[
                                               ["_id", "ObjectId"],
                                               ["name", "string"],
