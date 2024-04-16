@@ -20,7 +20,7 @@ export default function ApiSlot({ title, method, url, description, importantNote
     <div className="flex">
       <div className='w-7/12 overflow-y-scroll h-full p-8 flex flex-col'>
         <div>
-          <div className='text-3xl mb-4 text-gray-800 font-medium'>{title}</div>
+          <div className='text-3xl mb-4 text-gray-600 font-medium'>{title}</div>
           <div className='flex w-full items-baseline'>
             {
               method == "GET"

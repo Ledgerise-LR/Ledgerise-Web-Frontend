@@ -4,6 +4,7 @@ import axios from 'axios';
 import { URL, PORT } from '@/serverConfig';
 import ApiSlot from '@/components/ApiSlot';
 import ApiTab from '@/components/ApiTab';
+import { CodeArea } from 'web3uikit';
 
 export default function Home() {
 
@@ -189,6 +190,12 @@ export default function Home() {
           <div id="Görsel gizliliği" className='mb-2 text-sm'>Görsel gizliliği</div>
           <div className={`rounded-lg ${focusedApiEndpoint == 41 ? "border bg-orange-500 bg-opacity-25 text-orange-800" : ""}`} onClick={() => setFocusedApiEndpoint(41)}>
             <ApiTab title={"Görselin arka planını blur'le"} method={"GET"}/>     
+          </div>
+        </div>
+        <div className='text-slate-600 mt-6'>
+          <div id="Görsel gizliliği" className='mb-2 text-sm'>LR Lens</div>
+          <div className={`rounded-lg ${focusedApiEndpoint == 42 ? "border bg-orange-500 bg-opacity-25 text-orange-800" : ""}`} onClick={() => setFocusedApiEndpoint(42)}>
+            <ApiTab title={"Görüntü doğrulaması"} method={"SOCKET"}/>     
           </div>
         </div>
       </nav>
@@ -1537,7 +1544,169 @@ export default function Home() {
                                                 ["data", "base64_string"]
                                               ]}
                                             />
-                                            : ("")
+                                            : focusedApiEndpoint == 42
+                                              ? (
+                                                <div className='w-full h-full flex flex-col p-8'>
+                                                  <div className='text-3xl mb-4 text-gray-600 font-medium'>Görüntü doğrulaması</div>
+                                                  <div className='flex w-full items-baseline'>
+                                                    <div className='w-fit h-4 mr-2 bg-orange-600 text-slate-50 text-xxs flex justify-between items-center px-3 py-0.5 rounded-full'>SOCKET</div>
+                                                    <div className='text-slate-600 text-sm'>https://api-ledgerise.onrender.com/realtime</div>
+                                                  </div>
+                                                  <div className='mt-4 mb-4'>
+                                                    <div className='text-lg mb-4 text-slate-500'>Görüntü doğrulaması</div>
+                                                    <hr />
+                                                    <div className='mt-2 text-gray-700 text-sm'>Bağışlar üzerlerindeki QR kodlar ile takip edilir. Üretim, depo ve teslim gibi kritik noktalarda bir mobil uygulama üzerinden kameranın bağış kolisinin qr kodu içeren yüzünü görmesi gerekir. Kamera kolinin qr kod içeren yüzüne doğrultuğunda uygulamanın; kolinin lokasyonunu, zamanı ve görüntüyü kaydetmesi gerekir. Bu hususta izlenecek adımlar aşağıda belirtilmiştir.</div>
+                                                    <div className='mt-4 text-gray-700 text-sm'><strong>*Önemli:</strong> Bu işlem kamera ve lokasyon servislerine erişimi olan bir cihaz üzerinden gerçekleşmelidir. API'nin bu metodu WebSockets sistemini kullanır, http request değil.</div>
+                                                    <div className='mt-4 text-gray-700 text-sm'>*Önemli: Doğrulancak ürün ve doğrulama yeri (üretim, depo, teslim) mobil uygulamanız üzerinden seçilmeli. Ürünün nftAddress'i ve subcollectionId'si kullanılıyor.</div>
+                                                  </div>
+                                                  <hr />
+                                                  <div className='mt-4 w-full flex flex-col'>
+                                                    <div className='text-gray-600 text-sm uppercase'>Metodlar</div>
+                                                    <div>
+                                                      <div className='w-full flex flex-col p-4 bg-yellow-50 my-4 rounded border'>
+                                                        <div className='font-semibold'>cameraFrame</div>
+                                                        <div>Bu metod bağış ürünü hakkında görüntü ve diğer önemli bilgilerin gönderilmesine yarar.</div>
+                                                      </div>
+                                                      <div className='w-full p-4 border mb-4 rounded'>
+                                                        <div className='font-medium mb-2'>Adım 1</div>
+                                                        <div className='text-gray-800'>İlk olarak kamera bir QR kod bulduğunda bir resim çekmesi gerekir. Bu resim base64 string formatına çevrildikten sonra 2048'lik chunk'lar halinde "cameraFrame" kanalına gönderilmelidir.</div>
+                                                        <div className='w-2/3 mx-auto my-8'>
+                                                          <CodeArea headerComponent={<div className='text-sm'>React Native</div>}
+                                                            text={`import io from 'socket.io-client'
+
+const [socket, setSocket] = useState(io(https://api-ledgerise.onrender.com/realtime));
+
+const chunkSize = 2048;
+for (let offset = 0; offset < imageBase64.length; offset += chunkSize) {
+  const chunk = await imageBase64.substring(offset, offset + chunkSize);
+  await socket.emit('cameraFrame', chunk);
+}
+                                                            `}
+                                                          />
+                                                        </div>
+                                                      </div>
+                                                      <div className='w-full p-4 border mb-4 rounded'>
+                                                        <div className='font-medium mb-2'>Adım 2</div>
+                                                        <div className='text-gray-800'>Bu işlem tamamlandıktan sonra ürünün lokasyonu, zamanı, key'i, QR kod verisi, QR kod koordinatları, subcollectionId'si ve nftAddress değeri "cameraFrame" kanalı üzerinden gönderilmelidir. Aşağıdaki format takip edilmelidir.</div>
+                                                        <div className='w-2/3 mx-auto my-8'>
+                                                          <CodeArea headerComponent={<div className='text-sm'>React Native</div>}
+                                                            text={`
+await socket.emit('cameraFrame', {
+  socketCallKey: "locationAndDate",  // ürün bilgelirinin gönderildiğinin indikatörü
+  location: {
+  latitude: location.latitude,
+  longitude: location.longitude
+  },
+  date: date.toString(),
+  key: key,  // stamp, shipped, delivered
+  user_info: scannedData.toString(),
+  barcode_bounds: barcodeBounds,  // barkodun resim üstündeki konumu
+  subcollectionId: subcollectionId,
+  nftAddress: nftAddress
+})
+
+await socket.emit('cameraFrame', 'done');
+`}
+                                                          />
+                                                        </div>
+                                                      </div>
+                                                    </div>
+                                                    <div className='text-gray-600 text-sm uppercase'>Sunucu response kanalı</div>
+                                                    <div>
+                                                      <div className='w-full flex flex-col p-4 bg-yellow-50 my-4 rounded border'>
+                                                        <div className='font-semibold'>processedImage</div>
+                                                        <div>Bu kanalı dinlediğinizde sunucunun fotoğrafları inceleyip kaydetmesinden sonra gönderdiği cevaba ulaşabilirsiniz. Bu kanal üzerinden yayınladığı response'un içeriği aşağıdaki gibidir.</div>
+                                                        <div className='p-4 my-4 border'>
+                                                          <div className='mb-2'><span className='font-medium'>found_status</span> (boolean): Bağış kolisinin ekranda bulunup bulunamadığını gösterir.</div>
+                                                          <div><span className='font-medium'>coordinates_array</span> (array): Bağış kolisi ekranda bulunduysa, kolinin koordinatlarını gösterir [x, w, y, h]. Sırayla x, width, y, height...</div>
+                                                        </div>
+                                                        <div className='w-full p-4 border mb-4 rounded'>
+                                                          <div className='text-gray-800'>Bu kanalı dinlemek ve devamında çeşitli işlemleri gerçekleştirmek için aşağıdaki örnek koddan yardım alabilirsiniz.</div>
+                                                          <div className='w-2/3 mx-auto my-8'>
+                                                            <CodeArea headerComponent={<div className='text-sm'>React Native</div>}
+                                                              text={`
+socket.on("processedImage", async (processedImageData: any) => {
+    setIsAlreadyVerified(false);
+    setIsErrorOccured(false);
+
+    // console.log(processedImageData);
+
+    if (processedImageData["found_status"] == "false") {
+        setRectX(0);
+        setRectY(0);
+        setRectW(0);
+        setRectH(0);
+        setFoundStatus(false);
+        setIsProcessing(false);
+    } else if (processedImageData["found_status"] == "true") {
+
+        setFoundStatus(true);
+        setScannedQrData("");
+
+        const x = processedImageData["coordinates_array"][0];
+        const w = processedImageData["coordinates_array"][1];
+
+        const y = processedImageData["coordinates_array"][2];
+        const h = processedImageData["coordinates_array"][3];
+
+        setRectX(x);
+        setRectY(y);
+        setRectW(w);
+        setRectH(h);
+
+        setIsUploadInProgress(true);
+
+        //  Aşağıda upload kanalını dinleyen kod bloğunu çalıştırın.
+    }
+
+  });
+`}
+                                                            />
+                                                          </div>
+                                                        </div>
+                                                      </div>
+                                                      
+                                                      <div className='w-full flex flex-col p-4 bg-yellow-50 my-4 rounded border'>
+                                                        <div className='font-semibold'>upload</div>
+                                                        <div>Eğer bağış kolisi lens tarafından fotoğrafta tespit edildiyse fotoğraf, lokasyon ve zaman bilgileri verifikasyon olarak sisteme yüklenir.</div>
+                                                        <div className='p-4 my-4 border'>
+                                                          <div className='mb-2'><span className='font-medium'>message</span> (string): Bağış kolisinin sisteme yüklenmesi hakkında bir mesaj verir: complete / already_verified / incompatible_data / error.</div>
+                                                          <div className='mb-2'><span className='font-medium'>donorIndex</span> (number): LR Collaborate ile bir koli birden fazla bağışçıya işaret edebilir. Bu hususta verifikasyon bütün bağışçılar adına kaydedilmelidir. Bu alan verifikasyonu kaydedilen bağışçı sayını gösterir.</div>
+                                                          <div><span className='font-medium'>lengthOfQrArray</span> (number): Bu alan bu kolinin kaç bağışçı tarafından bağışlandığını gösterir. LR collaborate için bu değişebilir. LR collaborate dışı bağışlarda bu sayı 1'dir.</div>
+                                                        </div>
+                                                        <div className='w-full p-4 border mb-4 rounded'>
+                                                          <div className='text-gray-800'>Bu kanalı dinlemek ve devamında çeşitli işlemleri gerçekleştirmek için aşağıdaki örnek koddan yardım alabilirsiniz.</div>
+                                                          <div className='w-2/3 mx-auto my-8'>
+                                                            <CodeArea headerComponent={<div className='text-sm'>React Native</div>}
+                                                              text={`
+socket.on("upload", async (data: string) => {
+
+    const message = data.split("-")[0];
+    const donorIndex = parseInt(data.split("-")[1]);
+    const lengthOfQrArray = parseInt(data.split("-")[2]);
+    
+    setCurrentDonorIndex(donorIndex + 1);
+    if ((donorIndex + 1) == lengthOfQrArray) {
+      return setIsProcessing(false);
+    }
+    if (message == "error") return setIsErrorOccured(true);
+    else if (message == "already_verified") return setIsAlreadyVerified(true);
+    else if (message == "incompatible_data") return setIncompatibleData(true);
+    else if (message == "complete") {
+      setIsUploadInProgress(false)
+      setIsUploadComplete(true)
+    };
+})
+                                                              `}
+                                                            />
+                                                          </div>
+                                                        </div>
+                                                      </div>
+                                                    </div>
+                                                  </div>
+                                                </div>
+                                              )
+                                              : ("")
           }
       </div>
     </div>

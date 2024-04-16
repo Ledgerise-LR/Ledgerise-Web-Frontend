@@ -6,7 +6,9 @@ export default function ApiTab({ title, method }) {
       {
         method == "GET"
           ? <div className='bg-green-700 text-slate-50 text-xxs flex justify-between items-center px-3 h-4 rounded-full'>GET</div>
-          : <div className='bg-blue-600 text-slate-50 text-xxs flex justify-between items-center px-2 h-4 rounded-full'>POST</div>
+          : method == "POST" 
+            ? <div className='bg-blue-600 text-slate-50 text-xxs flex justify-between items-center px-2 h-4 rounded-full'>POST</div>
+            : <div className='bg-orange-600 text-slate-50 text-xxs flex justify-between items-center px-2 h-4 rounded-full'>SOCKET</div>
       }
     </div>
   )
