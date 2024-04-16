@@ -5,6 +5,7 @@ import { URL, PORT } from '@/serverConfig';
 import ApiSlot from '@/components/ApiSlot';
 import ApiTab from '@/components/ApiTab';
 import { CodeArea } from 'web3uikit';
+import {Phone} from '@web3uikit/icons'
 
 export default function Home() {
 
@@ -12,16 +13,19 @@ export default function Home() {
 
   return (
     <div className='w-screen h-screen'>
-      <div className='w-full border-t-4 border-t-yellow-500 border-b flex items-center h-12 p-1 pl-4 text-sm text-gray-700'>
-        <a href='#Bağış ürünü' className='mr-4 rounded-lg p-1 cursor-pointer hover:border'>Bağış ürünü</a>
-        <a href='#Bağış kampanyası' className='mr-4 rounded-lg p-1 cursor-pointer hover:border'>Bağış kampanyası</a>
-        <a href='#Otorizasyon' className='mr-4 rounded-lg p-1 cursor-pointer hover:border'>Otorizasyon</a>
-        <a href='#Şirket' className='mr-4 rounded-lg p-1 cursor-pointer hover:border'>Şirket</a>
-        <a href='#Depo' className='mr-4 rounded-lg p-1 cursor-pointer hover:border'>Depo</a>
-        <a href='#Bağışçı' className='mr-4 rounded-lg p-1 cursor-pointer hover:border'>Bağışçı</a>
-        <a href='#İhtiyaç' className='mr-4 rounded-lg p-1 cursor-pointer hover:border'>İhtiyaç</a>
-        <a href='#Bağışlar & ödeme' className='mr-4 rounded-lg p-1 cursor-pointer hover:border'>Bağışlar & ödeme</a>
-        <a href='#tokenUri' className='mr-4 rounded-lg p-1 cursor-pointer hover:border'>tokenUri</a>
+      <div className='flex justify-between border-t-4 border-t-yellow-500 border-b pr-8 items-baseline'>
+        <div className='flex items-center h-12 p-1 pl-4 text-sm text-gray-700'>
+          <a href='#Bağış ürünü' className='mr-4 rounded-lg p-1 cursor-pointer hover:border'>Bağış ürünü</a>
+          <a href='#Bağış kampanyası' className='mr-4 rounded-lg p-1 cursor-pointer hover:border'>Bağış kampanyası</a>
+          <a href='#Otorizasyon' className='mr-4 rounded-lg p-1 cursor-pointer hover:border'>Otorizasyon</a>
+          <a href='#Şirket' className='mr-4 rounded-lg p-1 cursor-pointer hover:border'>Şirket</a>
+          <a href='#Depo' className='mr-4 rounded-lg p-1 cursor-pointer hover:border'>Depo</a>
+          <a href='#Bağışçı' className='mr-4 rounded-lg p-1 cursor-pointer hover:border'>Bağışçı</a>
+          <a href='#İhtiyaç' className='mr-4 rounded-lg p-1 cursor-pointer hover:border'>İhtiyaç</a>
+          <a href='#Bağışlar & ödeme' className='mr-4 rounded-lg p-1 cursor-pointer hover:border'>Bağışlar & ödeme</a>
+          <a href='#tokenUri' className='mr-4 rounded-lg p-1 cursor-pointer hover:border'>tokenUri</a>
+        </div>
+        <div className='text-sm text-medium text-gray-600 flex items-center'>Destek <Phone className='mx-2' fontSize='20px'/> +90 530 349 75 38</div>
       </div>
     <div className='w-full h-full flex overflow-x-hidden'>
       <nav className='h-full w-2/12 border-r-2 p-4 overflow-y-scroll'>
