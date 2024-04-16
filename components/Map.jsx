@@ -10,7 +10,7 @@ import { useEffect, useState } from "react";
 import blockExplorerMapping from "../constants/blockExplorerMapping.json";
 import { URL, PORT } from '@/serverConfig';
 
-export default function MyMap({ nftAddress, stampCoordinates, shippedCoordinates, deliveredCoordinates, route, stampVisualTokenId, shipVisualTokenId, deliverVisualTokenId, visualVerifications, zoom, isNeedItem, needItemInfo, needTokenUri, need }) {
+export default function MyMap({ center, nftAddress, stampCoordinates, shippedCoordinates, deliveredCoordinates, route, stampVisualTokenId, shipVisualTokenId, deliverVisualTokenId, visualVerifications, zoom, isNeedItem, needItemInfo, needTokenUri, need }) {
 
   const [needImageUri, setNeedImageUri] = useState("");
 
@@ -82,9 +82,9 @@ export default function MyMap({ nftAddress, stampCoordinates, shippedCoordinates
     iconAnchor: [0, 0],
   });
 
-  let center = [41, 29];
+  console.log(center)
 
-  return <MapContainer className="w-full h-full" center={center} zoom={zoom} scrollWheelZoom={true}>
+  return <MapContainer className="w-full h-full" center={[center.latitude / 1000, center.longitude / 1000]} zoom={zoom} scrollWheelZoom={true}>
     <TileLayer
       attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
       url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"

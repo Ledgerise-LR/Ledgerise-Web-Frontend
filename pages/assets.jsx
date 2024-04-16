@@ -789,8 +789,9 @@ export default function Home() {
                     stampVisualTokenId={displayedStampTokenId}
                     visualVerifications={visualVerifications}
                     route={asset.route}
-                    zoom={10}
+                    zoom={20}
                     nftAddress={asset.nftAddress}
+                    center={displayedStampLocation ? displayedStampLocation : displayedShippedLocation ? displayedShippedLocation : displayedDeliveredLocation ? displayedDeliveredLocation : (0, 0) }
                   />
                 </div>
               </Modal>
