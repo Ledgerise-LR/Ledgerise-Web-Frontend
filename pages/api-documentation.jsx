@@ -50,6 +50,12 @@ export default function Home() {
           <div className={`rounded-lg ${focusedApiEndpoint == 6 ? "border bg-orange-500 bg-opacity-25 text-orange-800" : ""}`} onClick={() => setFocusedApiEndpoint(6)}>
             <ApiTab title={"Bağış ürünü listele"} method={"POST"}/>
           </div>
+          <div className={`rounded-lg ${focusedApiEndpoint == 43 ? "border bg-orange-500 bg-opacity-25 text-orange-800" : ""}`} onClick={() => setFocusedApiEndpoint(43)}>
+            <ApiTab title={"Bağış ürünü güncelle"} method={"POST"}/>
+          </div>
+          <div className={`rounded-lg ${focusedApiEndpoint == 44 ? "border bg-orange-500 bg-opacity-25 text-orange-800" : ""}`} onClick={() => setFocusedApiEndpoint(44)}>
+            <ApiTab title={"Bağış ürünü iptal et"} method={"POST"}/>
+          </div>
         </div>
         
         <div className='text-slate-600 mt-6'>
@@ -1711,7 +1717,109 @@ socket.on("upload", async (data: string) => {
                                                   </div>
                                                 </div>
                                               )
-                                              : ("")
+                                              : focusedApiEndpoint == 43
+                                                ? <ApiSlot 
+                                                  title={"Bağış ürünü güncelle"}
+                                                  method={"POST"}
+                                                  url={"https://api-ledgerise.onrender.com/active-item/update-item"}
+                                                  parameters={[
+                                                    ["nftAddress", "string", "Bağış ürününün NFT adresi (nftAddress değeri).", true],
+                                                    ["tokenId", "number", "Bağış ürününün tokenId değeri Blockchain id'si olarak kullanılır.", true],
+                                                    ["tokenUri", "string", "Bağış ürününün tokenUri'sini (kimliğini) güncelleyebilirsiniz: resim, isim, özellikler, açıklama.", true],
+                                                    ["price", "number", "Bağış ürününün güncel fiyatı.", true]
+                                                  ]}
+                                                  resEx={[
+                                                    ["seller", "string"],
+                                                    ["nftAddress", "string"],
+                                                    ["tokenId", "number"],
+                                                    ["charityAddress", "string"],
+                                                    ["tokenUri", "string"],
+                                                    ["price", "string"],
+                                                    ["availableEditions", "string"],
+                                                    ["subcollectionId", "string"],
+                                                    ["history", "Array", [
+                                                      ["event", "string"],
+                                                      ["date", "string"],
+                                                      ["price", "string"],
+                                                      ["buyer", "string"],
+                                                      ["openseaTokenId", "number"],
+                                                      ["transactionHash", "string"],
+                                                    ]],
+                                                    ["attributes", "Array", [
+                                                      ["trait_type", "string"],
+                                                      ["value", "number"]
+                                                    ]],
+                                                    ["real_item_history", "Array", [
+                                                      ["key", "string"],
+                                                      ["buyer", "string"],
+                                                      ["openseaTokenId", "number"],
+                                                      ["date", "string"],
+                                                      ["location", "object"],
+                                                      ["transactionHash", "string"],
+                                                      ["visualVerificationTokenId", "number"]
+                                                    ]],
+                                                    ["route", "Array", [
+                                                      ["stampLocation", "location"],
+                                                      ["shippedLocation", "location"]
+                                                      ["deliveryLocation", "location"]
+                                                    ]],
+                                                    ["listTransactionHash", "string"],
+                                                    ["collaborators", "Array", [
+                                                      ["openseaTokenId", "number"]
+                                                    ]],
+                                                  ]}
+                                                />
+                                                : focusedApiEndpoint == 44
+                                                  ? <ApiSlot
+                                                    title={"Bağış ürünü iptal et"}
+                                                    method={"POST"}
+                                                    url={"https://api-ledgerise.onrender.com/active-item/cancel-item"}
+                                                    parameters={[
+                                                      ["nftAddress", "string", "Bağış ürününün NFT adresi (nftAddress değeri).", true],
+                                                      ["tokenId", "number", "Bağış ürününün tokenId değeri Blockchain id'si olarak kullanılır.", true],  
+                                                    ]}
+                                                    resEx={[
+                                                      ["seller", "string"],
+                                                      ["nftAddress", "string"],
+                                                      ["tokenId", "number"],
+                                                      ["charityAddress", "string"],
+                                                      ["tokenUri", "string"],
+                                                      ["price", "string"],
+                                                      ["availableEditions", "string"],
+                                                      ["subcollectionId", "string"],
+                                                      ["history", "Array", [
+                                                        ["event", "string"],
+                                                        ["date", "string"],
+                                                        ["price", "string"],
+                                                        ["buyer", "string"],
+                                                        ["openseaTokenId", "number"],
+                                                        ["transactionHash", "string"],
+                                                      ]],
+                                                      ["attributes", "Array", [
+                                                        ["trait_type", "string"],
+                                                        ["value", "number"]
+                                                      ]],
+                                                      ["real_item_history", "Array", [
+                                                        ["key", "string"],
+                                                        ["buyer", "string"],
+                                                        ["openseaTokenId", "number"],
+                                                        ["date", "string"],
+                                                        ["location", "object"],
+                                                        ["transactionHash", "string"],
+                                                        ["visualVerificationTokenId", "number"]
+                                                      ]],
+                                                      ["route", "Array", [
+                                                        ["stampLocation", "location"],
+                                                        ["shippedLocation", "location"]
+                                                        ["deliveryLocation", "location"]
+                                                      ]],
+                                                      ["listTransactionHash", "string"],
+                                                      ["collaborators", "Array", [
+                                                        ["openseaTokenId", "number"]
+                                                      ]],
+                                                    ]}
+                                                  />
+                                                  : ("")
           }
       </div>
     </div>
