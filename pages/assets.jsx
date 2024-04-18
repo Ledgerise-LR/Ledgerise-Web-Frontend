@@ -18,17 +18,6 @@ const { MapContainer, TileLayer, Popup, Marker } = dynamic(() => import("react-l
 
 export default function Home() {
 
-  const [ethToUsdRate, setEthToUsdRate] = useState(null);
-
-  useEffect(() => {
-    const fetchEthToUsdRate = async () => {
-      const rate = await getEthToUsdRate();
-      setEthToUsdRate(rate);
-    };
-
-    fetchEthToUsdRate();
-  }, []);
-
   const Map = useMemo(() => dynamic(
     () => import('@/components/Map'),
     {
@@ -366,6 +355,7 @@ export default function Home() {
               fetch(`${URL}:${PORT}/active-item/get-all-visual-verifications`)
                 .then(response => response.json())
                 .then(data => {
+                  console.log(data.data)
                   setVisualVerifications(data.data);
                 })
             })

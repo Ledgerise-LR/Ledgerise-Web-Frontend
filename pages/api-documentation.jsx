@@ -36,7 +36,7 @@ export default function Home() {
             <ApiTab title={"Bağış ürünü detayları"} method={"GET"}/>
           </div>
           <div className={`rounded-lg ${focusedApiEndpoint == 2 ? "border bg-orange-500 bg-opacity-25 text-orange-800" : ""}`} onClick={() => setFocusedApiEndpoint(2)}>
-            <ApiTab title={"Bağış ürünlerini filtrele"} method={"POST"}/>
+            <ApiTab title={"Bağış ürünlerini filtrele"} method={"GET"}/>
           </div>
           <div className={`rounded-lg ${focusedApiEndpoint == 3 ? "border bg-orange-500 bg-opacity-25 text-orange-800" : ""}`} onClick={() => setFocusedApiEndpoint(3)}>
             <ApiTab title={"Vitrin için rastgele bir bağış ürünü"} method={"GET"}/>
@@ -64,7 +64,7 @@ export default function Home() {
             <ApiTab title={"Kampanyanın bağış ürünlerini sorgula"} method={"GET"}/>
           </div>
           <div className={`rounded-lg ${focusedApiEndpoint == 8 ? "border bg-orange-500 bg-opacity-25 text-orange-800" : ""}`} onClick={() => setFocusedApiEndpoint(8)}>
-            <ApiTab title={"Bağış kampanyalarını filtrele"} method={"POST"}/>
+            <ApiTab title={"Bağış kampanyalarını filtrele"} method={"GET"}/>
           </div>
           <div className={`rounded-lg ${focusedApiEndpoint == 9 ? "border bg-orange-500 bg-opacity-25 text-orange-800" : ""}`} onClick={() => setFocusedApiEndpoint(9)}>
             <ApiTab title={"Kampanya detayları"} method={"GET"}/>
@@ -270,7 +270,7 @@ export default function Home() {
                 ?(
                   <ApiSlot
                     title={"Bağış ürünlerini filtrele"}
-                    method={"POST"}
+                    method={"GET"}
                     url={"https://api-ledgerise.onrender.com/active-item/get-all-active-items"}
                     description={"Ledgerise kapsamındaki bütün kolilere uyguladığınız filtreler kapsamında ulaşabilirsiniz"}
                     importantNote={"Otorizasyona gerek yoktur."}
@@ -511,7 +511,7 @@ export default function Home() {
                           : focusedApiEndpoint == 8
                             ? <ApiSlot
                             title={"Bağış kampanyalarını filtrele"}
-                            method={"POST"}
+                            method={"GET"}
                             url={"https://api-ledgerise.onrender.com/active-item/get-all-collections"}
                             description={"Bu metod yardım kampanyaları hakkında detayları sorgulamaya yarar. Bunu yaparken çeşitli filtreler uygulayabilirsiniz."}
                             importantNote={"Otorizasyona gerek yoktur."}

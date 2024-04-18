@@ -491,7 +491,6 @@ export default function Home() {
       subcollectionId: listItemSubcollectionId,
       availableEditions: listItemAvailableEditions,
       route: listItemRoute,
-      charityAddress: listItemCharityAddress,
       tokenUri: listItemTokenUri
     })
       .then((res) => {
@@ -537,7 +536,7 @@ export default function Home() {
     axios.post(`${URL}:${PORT}/donate/payment/already_bought`, {
       nftAddress: buyItemNftAddress,
       tokenId: buyItemTokenId,
-      school_number: buyItemDonorEmail
+      phone_number: buyItemDonorEmail
     }).then((res) => {
       if (res.data.success) {
         alert("Successfully donated.")
@@ -679,7 +678,7 @@ export default function Home() {
                               <hr className="my-4" />
                               <div className='flex'>
                                 {assets.map(asset => {
-                                  if (asset.subcollectionId == collection.itemId) {
+                                  if (asset.subcollectionId == collection.itemId && asset.nftAddress == collection.nftAddress) {
                                     return (
                                       <div className='w-72 mr-5 mb-5' key={`${asset.nftAddress}${asset.tokenId}`}>
                                         <a href={`/assets?id=${asset.tokenId}&subcollectionId=${asset.subcollectionId}&nftAddress=${asset.nftAddress}`}>

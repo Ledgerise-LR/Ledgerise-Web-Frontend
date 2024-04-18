@@ -1,11 +1,15 @@
 {
   "blockExplorer": {
     "80001": "mumbai.polygonscan.com",
-    "11155111": "sepolia.etherscan.io"
+    "80002": "amoy.polygonscan.com",
+    "11155111": "sepolia.etherscan.io",
+    "2442": "https://cardona-zkevm.polygonscan.com/"
   },
 
   "nftExplorer": {
     "80001": "mumbai",
-    "11155111": "sepolia"
+    "80002": "amoy",
+    "11155111": "sepolia",
+    "2442": "cardona"
   }
 }

@@ -28,7 +28,7 @@ export default function Home() {
 
 
   useEffect(() => {
-    axios.post(`${URL}:${PORT}/subcollection/get-all-collections`, {})
+    axios.get(`${URL}:${PORT}/subcollection/get-all-collections`)
       .then(res => {
         const data = res.data;
         setCollections(data.subcollections);

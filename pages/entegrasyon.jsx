@@ -131,21 +131,19 @@ export default function Home() {
         if (data.success && data.donor) {
           const dataDonor = data.donor
           setDonor(data.donor)
-          axios.get(`${URL}:${PORT}/need/get-all-needs`,
+          axios.post(`${URL}:${PORT}/need/get-all-needs`,
           {})
             .then((res) => {
               const data = res.data;
               setNeeds(data.needs);
               
-              axios.post(`${URL}:${PORT}/need/get-satisfied-donations-of-donor`, {
-                buyer: dataDonor.school_number
-              })
+              axios.get(`${URL}:${PORT}/need/get-satisfied-donations-of-donor?buyer=${dataDonor.school_number}`)
                 .then((res) => {
                   const data = res.data;
                   if (data.success) {
                     setNeedItemsArray(data.needItemsArray);
 
-                    fetch(`${URL}:${PORT}/get-all-visual-verifications`)
+                    fetch(`${URL}:${PORT}/active-item/get-all-visual-verifications`)
                       .then(response => response.json())
                       .then(data => {
                         setVisualVerifications(data.data);
@@ -173,6 +171,7 @@ export default function Home() {
                 isNeedItem={true}
                 needItemInfo={displayedStampDetails}
                 zoom={10}
+                center={displayedStampLocation}
                 needTokenUri={displayedNeedTokenUri}
                 need={displayedNeed}
                 visualVerifications={visualVerifications}
