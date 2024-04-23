@@ -60,8 +60,8 @@ export default function Home() {
                       </div>
                     </div>
                     <div className=''>
-                      <span className='text-slate-600 text-sm'>Supporting </span>
-                      <span className='text-slate-700 text-sm'>{collection.charityName}</span>
+                      <span className='text-slate-600 text-sm'>Powered by </span>
+                      <span className='text-slate-700 text-sm font-semibold'>{collection.charityName}</span>
                     </div>
                     <div className=''>
                       <a href='' className='text-sm text-slate-700'>{(collection.charityAddress).slice(0, 6) + "..." + (collection.charityAddress).slice(collection.charityAddress.length - 6, collection.charityAddress.length)} </a>

@@ -21,14 +21,12 @@ export default function Home() {
 
   useEffect(() => {
 
-    axios.post(`${URL}:${PORT}/company/get-all-items`, {
-      code: itemId
-    })
+    axios.get(`${URL}:${PORT}/company/get-all-items?code=${itemId}`)
       .then(res => {
         const data = res.data;
         setAssets(data.assets);
 
-        axios.post(`${URL}:${PORT}/company/get-company-from-code`, { code: itemId })
+        axios.get(`${URL}:${PORT}/company/get-company-from-code?code=${itemId}`)
         .then((res) => {
           const companyData = res.data;
           console.log(companyData.company)

@@ -234,7 +234,8 @@ export default function Home() {
                   attributes: data.activeItem.attributes,
                   real_item_history: data.activeItem.real_item_history,
                   route: data.activeItem.route,
-                  collaborators: data.activeItem.collaborators
+                  collaborators: data.activeItem.collaborators,
+                  chainId: data.activeItem.chainId
                 }
                 setAsset(asset);
               })
@@ -294,7 +295,8 @@ export default function Home() {
           attributes: data.activeItem.attributes,
           real_item_history: data.activeItem.real_item_history,
           route: data.activeItem.route,
-          collaborators: data.activeItem.collaborators
+          collaborators: data.activeItem.collaborators,
+          chainId: data.activeItem.chainId
         }
         setAsset(asset);
       })
@@ -316,9 +318,12 @@ export default function Home() {
   const [nftExplorerUrl, setNftExplorerUrl] = useState("");
 
   useEffect(() => {
-    setBlockExplorerUrl(blockExplorerMapping["blockExplorer"][chainString]);
-    setNftExplorerUrl(blockExplorerMapping["nftExplorer"][chainString]);
-  }, [chainString]);
+
+    if (asset.chainId) {
+      setBlockExplorerUrl(blockExplorerMapping["blockExplorer"][asset.chainId.toString()]);
+      setNftExplorerUrl(blockExplorerMapping["nftExplorer"][asset.chainId.toString()]);  
+    }
+  }, [chainString, asset]);
 
 
   const marketplaceAddress = networkMapping["Marketplace"][chainString];
@@ -344,7 +349,8 @@ export default function Home() {
             attributes: data.activeItem.attributes,
             real_item_history: data.activeItem.real_item_history,
             route: data.activeItem.route,
-            collaborators: data.activeItem.collaborators
+            collaborators: data.activeItem.collaborators,
+            chainId: data.activeItem.chainId
           }
           setAsset(asset);
           fetch(`${URL}:${PORT}/subcollection/get-single-collection?id=${asset.subcollectionId}&nftAddress=${nftAddress}`)
@@ -365,7 +371,7 @@ export default function Home() {
 
   useEffect(() => {
     if (collection.companyCode) {
-      axios.post(`${URL}:${PORT}/company/get-company-from-code`, { code: collection.companyCode })
+      axios.get(`${URL}:${PORT}/company/get-company-from-code?code=${collection.companyCode}`)
         .then((res) => {
           const companyData = res.data;
           setCompany(companyData.company);
@@ -516,7 +522,8 @@ export default function Home() {
                   attributes: data.activeItem.attributes,
                   real_item_history: data.activeItem.real_item_history,
                   route: data.activeItem.route,
-                  collaborators: data.activeItem.collaborators
+                  collaborators: data.activeItem.collaborators,
+                  chainId: data.activeItem.chainId
                 }
                 setAsset(asset);
               })

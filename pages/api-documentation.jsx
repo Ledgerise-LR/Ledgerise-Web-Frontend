@@ -114,16 +114,16 @@ export default function Home() {
         <div className='text-slate-600 mt-6'>
           <div id="Şirket" className='mb-2 text-sm'>Şirket</div>
           <div className={`rounded-lg ${focusedApiEndpoint == 22 ? "border bg-orange-500 bg-opacity-25 text-orange-800" : ""}`} onClick={() => setFocusedApiEndpoint(22)}>
-            <ApiTab title={"Kampanyalarınızı sorgulayın"} method={"POST"}/>            
+            <ApiTab title={"Kampanyalarınızı sorgulayın"} method={"GET"}/>            
           </div>
           <div className={`rounded-lg ${focusedApiEndpoint == 23 ? "border bg-orange-500 bg-opacity-25 text-orange-800" : ""}`} onClick={() => setFocusedApiEndpoint(23)}>
-            <ApiTab title={"Şirket detayları"} method={"POST"}/>            
+            <ApiTab title={"Şirket detayları"} method={"GET"}/>            
           </div>
           <div className={`rounded-lg ${focusedApiEndpoint == 24 ? "border bg-orange-500 bg-opacity-25 text-orange-800" : ""}`} onClick={() => setFocusedApiEndpoint(24)}>
             <ApiTab title={"Şirket ismi sorgula"} method={"POST"}/>            
           </div>
           <div className={`rounded-lg ${focusedApiEndpoint == 25 ? "border bg-orange-500 bg-opacity-25 text-orange-800" : ""}`} onClick={() => setFocusedApiEndpoint(25)}>
-            <ApiTab title={"Bağış ürünlerinizi sorgulayın"} method={"POST"}/>            
+            <ApiTab title={"Bağış ürünlerinizi sorgulayın"} method={"GET"}/>            
           </div>
         </div>
 
@@ -977,7 +977,7 @@ export default function Home() {
                                         title={"Kampanyalarınızı sorgulayın"}
                                         url={"https://api-ledgerise.onrender.com/company/get-all-collections"}
                                         description={"Şirketinizin yürütmekte olduğu bütün bağış kampanyalarına ulaşabilirsiniz."}
-                                        method={"POST"}
+                                        method={"GET"}
                                         importantNote={"*Şirket olarak login olduktan sonra bu detaylara ulaşabilirsiniz. Otorizasyon gerekiyor."}
                                         parameters={[]}
                                         resEx={[["subcollections", "Array", [
@@ -998,8 +998,8 @@ export default function Home() {
                                       : focusedApiEndpoint == 23
                                       ? <ApiSlot
                                       title={"Şirket detayları"}
-                                      method={"POST"}
-                                      url={"https://api-ledgerise.onrender.com/company/get-company-from-code"}
+                                      method={"GET"}
+                                      url={"https://api-ledgerise.onrender.com/company/get-company-from-code?code=${code}"}
                                       description={"Şirketinizin detaylarına ulaşabilirsiniz."}
                                       importantNote={"Otorizasyona gerek yok."}
                                       parameters={[
@@ -1033,8 +1033,8 @@ export default function Home() {
                                       : focusedApiEndpoint == 25
                                       ? <ApiSlot
                                       title={"Bağış ürünlerinizi sorgulayın"}
-                                      method={"POST"}
-                                      url={"https://api-ledgerise.onrender.com/company/get-all-items"}
+                                      method={"GET"}
+                                      url={"https://api-ledgerise.onrender.com/company/get-all-items?code=${code}"}
                                       description={"Şirketiniz bütün bağış kampanyaları kapsamındaki bütün bağış ürünlerini sorgulayabilirsiniz."}
                                       importantNote={"Otorizasyona gerek yok."}
                                       parameters={[
