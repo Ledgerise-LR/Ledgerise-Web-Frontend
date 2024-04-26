@@ -10,7 +10,7 @@ import { useEffect, useState } from "react";
 import blockExplorerMapping from "../constants/blockExplorerMapping.json";
 import { URL, PORT } from '@/serverConfig';
 
-export default function MyMap({ center, nftAddress, stampCoordinates, shippedCoordinates, deliveredCoordinates, route, stampVisualTokenId, shipVisualTokenId, deliverVisualTokenId, visualVerifications, zoom, isNeedItem, needItemInfo, needTokenUri, need }) {
+export default function MyMap({ center, nftAddress, stampCoordinates, shippedCoordinates, deliveredCoordinates, route, stampVisualTokenId, shipVisualTokenId, deliverVisualTokenId, visualVerifications, zoom, isNeedItem, needItemInfo, needTokenUri, need, chainId, ledgeriseLensNftAddress }) {
 
   const [needImageUri, setNeedImageUri] = useState("");
 
@@ -46,12 +46,6 @@ export default function MyMap({ center, nftAddress, stampCoordinates, shippedCoo
     });
     return formattedDate;
   }
-
-  const { chainId } = useMoralis();
-
-  const chainString = chainId ? parseInt(chainId, 16).toString() : "80001";
-
-  const ledgeriseLensNftAddress = networkMapping["LedgeriseLens"][chainString];
 
   const [deliverImageSrc, setDeliverImageSrc] = useState(null);
 
@@ -137,8 +131,8 @@ export default function MyMap({ center, nftAddress, stampCoordinates, shippedCoo
                       <hr />
                       <div>{prettyDate(verification.date)}</div>
                       <hr />
-                      <a className="p-2 mt-2 mb-2 bg-green-500 shadow-green-500 shadow rounded" target="_blank" href={`https://${blockExplorerMapping["blockExplorer"][chainString]}/tx/${verification.transactionHash}`}><span className="text-slate-50 text-xs">Verifikasyonu gör</span></a>
-                      <a className="p-2 bg-blue-500 shadow-blue-500 shadow rounded" target="_blank" href={`https://testnets.opensea.io/assets/${blockExplorerMapping["nftExplorer"][chainString]}/${ledgeriseLensNftAddress}/${verification.visualVerificationTokenId}`}><span className="text-slate-50 text-xs">Sertifikayı gör</span></a>
+                      <a className="p-2 mt-2 mb-2 bg-green-500 shadow-green-500 shadow rounded" target="_blank" href={`https://${blockExplorerMapping["blockExplorer"][chainId || "80002"]}/tx/${verification.transactionHash}`}><span className="text-slate-50 text-xs">Verifikasyonu gör</span></a>
+                      <a className="p-2 bg-blue-500 shadow-blue-500 shadow rounded" target="_blank" href={`https://testnets.opensea.io/assets/${blockExplorerMapping["nftExplorer"][chainId || "80002"]}/${ledgeriseLensNftAddress}/${verification.visualVerificationTokenId}`}><span className="text-slate-50 text-xs">Sertifikayı gör</span></a>
                     </div>
                   </div>
                 )
@@ -174,8 +168,8 @@ export default function MyMap({ center, nftAddress, stampCoordinates, shippedCoo
                       <hr />
                       <div>{prettyDate(verification.date)}</div>
                       <hr />
-                      <a className="p-2 mt-2 mb-2 bg-green-500 shadow-green-500 shadow rounded" target="_blank" href={`https://${blockExplorerMapping["blockExplorer"][chainString]}/tx/${verification.transactionHash}`}><span className="text-slate-50 text-xs">Verifikasyonu gör</span></a>
-                      <a className="p-2 bg-blue-500 shadow-blue-500 shadow rounded" target="_blank" href={`https://testnets.opensea.io/assets/mumbai/${ledgeriseLensNftAddress}/${verification.visualVerificationTokenId}`}><span className="text-slate-50 text-xs">Sertifikayı gör</span></a>
+                      <a className="p-2 mt-2 mb-2 bg-green-500 shadow-green-500 shadow rounded" target="_blank" href={`https://${blockExplorerMapping["blockExplorer"][chainId || "80002"]}/tx/${verification.transactionHash}`}><span className="text-slate-50 text-xs">Verifikasyonu gör</span></a>
+                      <a className="p-2 bg-blue-500 shadow-blue-500 shadow rounded" target="_blank" href={`https://testnets.opensea.io/assets/${blockExplorerMapping["nftExplorer"][chainId || "80002"]}/${ledgeriseLensNftAddress}/${verification.visualVerificationTokenId}`}><span className="text-slate-50 text-xs">Sertifikayı gör</span></a>
                     </div>
                   </div>
                 )
@@ -227,8 +221,8 @@ export default function MyMap({ center, nftAddress, stampCoordinates, shippedCoo
                       <hr />
                       <div>{prettyDate(verification.date)}</div>
                       <hr />
-                      <a className="p-2 mt-2 mb-2 bg-green-500 shadow-green-500 shadow rounded" target="_blank" href={`https://${blockExplorerMapping["blockExplorer"][chainString]}/tx/${verification.transactionHash}`}><span className="text-slate-50 text-xs">Verifikasyonu gör</span></a>
-                      <a className="p-2 bg-blue-500 shadow-blue-500 shadow rounded" target="_blank" href={`https://testnets.opensea.io/assets/mumbai/${ledgeriseLensNftAddress}/${verification.visualVerificationTokenId}`}><span className="text-slate-50 text-xs">Sertifikayı gör</span></a>
+                      <a className="p-2 mt-2 mb-2 bg-green-500 shadow-green-500 shadow rounded" target="_blank" href={`https://${blockExplorerMapping["blockExplorer"][chainId || "80002"]}/tx/${verification.transactionHash}`}><span className="text-slate-50 text-xs">Verifikasyonu gör</span></a>
+                      <a className="p-2 bg-blue-500 shadow-blue-500 shadow rounded" target="_blank" href={`https://testnets.opensea.io/assets/${blockExplorerMapping["nftExplorer"][chainId || "80002"]}/${ledgeriseLensNftAddress}/${verification.visualVerificationTokenId}`}><span className="text-slate-50 text-xs">Sertifikayı gör</span></a>
                     </div>
                   </div>
                 )

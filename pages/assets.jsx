@@ -51,8 +51,6 @@ export default function Home() {
 
   const position = [51.505, -0.09];
 
-  const { isWeb3Enabled, chainId, account } = useMoralis();
-
   const [asset, setAsset] = useState({
     seller: "0x0000000",
     nftAddress: "0x0000000",
@@ -235,7 +233,8 @@ export default function Home() {
                   real_item_history: data.activeItem.real_item_history,
                   route: data.activeItem.route,
                   collaborators: data.activeItem.collaborators,
-                  chainId: data.activeItem.chainId
+                  chainId: data.activeItem.chainId,
+                  ledgeriseLensAddress: data.activeItem.ledgeriseLensAddress
                 }
                 setAsset(asset);
               })
@@ -296,7 +295,8 @@ export default function Home() {
           real_item_history: data.activeItem.real_item_history,
           route: data.activeItem.route,
           collaborators: data.activeItem.collaborators,
-          chainId: data.activeItem.chainId
+          chainId: data.activeItem.chainId,
+          ledgeriseLensAddress: data.activeItem.ledgeriseLensAddress
         }
         setAsset(asset);
       })
@@ -314,8 +314,8 @@ export default function Home() {
 
   const chainString = "80002";
 
-  const [blockExplorerUrl, setBlockExplorerUrl] = useState("");
-  const [nftExplorerUrl, setNftExplorerUrl] = useState("");
+  const [blockExplorerUrl, setBlockExplorerUrl] = useState("80002");
+  const [nftExplorerUrl, setNftExplorerUrl] = useState("amoy");
 
   useEffect(() => {
 
@@ -350,7 +350,8 @@ export default function Home() {
             real_item_history: data.activeItem.real_item_history,
             route: data.activeItem.route,
             collaborators: data.activeItem.collaborators,
-            chainId: data.activeItem.chainId
+            chainId: data.activeItem.chainId,
+            ledgeriseLensAddress: data.activeItem.ledgeriseLensAddress
           }
           setAsset(asset);
           fetch(`${URL}:${PORT}/subcollection/get-single-collection?id=${asset.subcollectionId}&nftAddress=${nftAddress}`)
@@ -523,7 +524,8 @@ export default function Home() {
                   real_item_history: data.activeItem.real_item_history,
                   route: data.activeItem.route,
                   collaborators: data.activeItem.collaborators,
-                  chainId: data.activeItem.chainId
+                  chainId: data.activeItem.chainId,
+                  ledgeriseLensAddress: data.activeItem.ledgeriseLensAddress
                 }
                 setAsset(asset);
               })
@@ -789,6 +791,8 @@ export default function Home() {
                     zoom={20}
                     nftAddress={asset.nftAddress}
                     center={displayedStampLocation ? displayedStampLocation : displayedShippedLocation ? displayedShippedLocation : displayedDeliveredLocation ? displayedDeliveredLocation : (0, 0) }
+                    chainId={asset.chainId}
+                    ledgeriseLensNftAddress={asset.ledgeriseLensAddress}
                   />
                 </div>
               </Modal>
