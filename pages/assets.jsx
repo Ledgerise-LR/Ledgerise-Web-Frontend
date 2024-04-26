@@ -312,7 +312,7 @@ export default function Home() {
     })
   }
 
-  const chainString = "80001";
+  const chainString = "80002";
 
   const [blockExplorerUrl, setBlockExplorerUrl] = useState("");
   const [nftExplorerUrl, setNftExplorerUrl] = useState("");
