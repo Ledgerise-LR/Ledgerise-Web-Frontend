@@ -180,6 +180,16 @@ export default function Home() {
       })
   }, []);
 
+  const [whatsappVerifiers, setWhatsappVerifiers] = useState([]);
+
+  useEffect(() => {
+    axios.get(`${URL}:${PORT}/whatsapp-verifier/get-all`)
+      .then(res => {
+        const data = res.data;
+        setWhatsappVerifiers(data.whatsappVerifiers);
+      })
+  }, []);
+
   const { runContractFunction: getListTokenCounter } = useWeb3Contract({
     abi: marketplaceAbi,
     contractAddress: marketplaceAddress,
@@ -546,10 +556,36 @@ export default function Home() {
     })
   }
 
+
+  const [wpVerifierPhoneNumber, setWpVerifierPhoneNumber] = useState("");
+  const [wpVerifierNftAddress, setWpVerifierNftAddress] = useState("");
+  const [wpVerifierSubcollectionId, setWpVerifierSubcollectionId] = useState("");
+  const [wpVerifierQrCodeData, setWpVerifierQrCodeData] = useState("");
+  const [wpVerifierTelegramId, setWpVerifierTelegramId] = useState("");
+
+  const handleCreateWpVerifierClick = () => {
+
+    axios.post(`${URL}:${PORT}/whatsapp-verifier/create`, {
+      phone_number: wpVerifierPhoneNumber,
+      qrCodeData: wpVerifierQrCodeData,
+      nftAddress: wpVerifierNftAddress,
+      subcollectionId: wpVerifierSubcollectionId,
+      telegramId: wpVerifierTelegramId
+    })
+      .then(res => {
+        const data = res.data;
+        if (data.success) {
+          alert("Successfully created");
+        } else {
+          alert("Error occured");
+        }
+      })
+  }
+
+
   useEffect(() => {
     updateUI();
   }, [isWeb3Enabled, assets, listingStatus, listItemPrice]);
-
 
   const handleQrCodeHover = (e, tokenId) => {
 
@@ -985,6 +1021,29 @@ export default function Home() {
                       : ("")
                   }
                 </div>
+              </div>
+              <div className="flex flex-1 flex-col mt-8 mb-8">
+                <h1>Create Whatsapp Verifier (doesn't include blockchain)</h1>
+                <input className="p-2 border-2 w-auto mb-4" type="text" placeholder="telegram Id" onChange={(e) => { setWpVerifierTelegramId(e.currentTarget.value) }} />s
+                <input className="p-2 border-2 w-auto mb-4" type="text" placeholder="phone number" onChange={(e) => { setWpVerifierPhoneNumber(e.currentTarget.value) }} />
+                <input className="p-2 border-2 w-auto mb-4" type="text" placeholder="qr code data" onChange={(e) => { setWpVerifierQrCodeData(e.currentTarget.value) }} />
+                <input className="p-2 border-2 w-auto mb-4" type="text" placeholder="nft address" onChange={(e) => { setWpVerifierNftAddress(e.currentTarget.value) }} />
+                <input className="p-2 border-2 w-auto mb-4" type="text" placeholder="subcollection id" onChange={(e) => { setWpVerifierSubcollectionId(e.currentTarget.value) }} />
+                <Button 
+                  theme="primary"
+                  text="Create Whatsapp Verifier"
+                  isFullWidth="true" type='button'
+                  onClick={handleCreateWpVerifierClick}
+                />
+                {
+                  whatsappVerifiers
+                    ? whatsappVerifiers.map(eachWpVerifier => {
+                      return (
+                        <div>{eachWpVerifier.phone_number}  {eachWpVerifier.qrCodeData}  {eachWpVerifier.telegramId}</div>
+                      )
+                    })
+                    : ("")
+                }
               </div>
             </div>
           </div>
