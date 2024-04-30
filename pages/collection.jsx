@@ -151,10 +151,31 @@ export default function Home() {
 
   const checkboxClassName = "w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600";
 
+  const [windowSize, setWindowSize] = useState({
+    width: "",
+    height: ""
+  })
+
+  useEffect(() => {
+
+    const handleResize = () => {
+      setWindowSize({
+        width: window.innerWidth,
+        height: window.innerHeight
+      });
+    };
+
+    window.addEventListener("resize", handleResize);
+
+    handleResize();
+
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
   return (
     <>
       <div className='flex flex-1 py-16'>
-        <div className='w-1/4 hidden flex-col px-16 h-fit'>
+        <div className={`w-1/4 ${windowSize.width < 800 ? "hidden" : "flex" } flex-col px-16 h-fit`}>
           <div className='text-xl w-full h-full mb-4 mt-3'>Filtrele</div>
           <div className='border-b w-full bg-black'></div>
           <div className='w-full h-max border-b mt-4 p-2'>
