@@ -32,6 +32,7 @@ export default function Home() {
       axios.post(`${URL}:${PORT}/auth/register`, {
         email: email,
         school_number: email,
+        phone_number: email,
         password: password
       })
         .then(data => {
