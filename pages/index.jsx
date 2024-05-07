@@ -155,11 +155,11 @@ export default function Home() {
         </div>
       </div>
       <div className='w-full h-100 mt-4'>
-        <div className='w-full mb-4 border-b pb-4 text-xl'>%100 şeffaf bağış ağını keşfedin!</div>
+        <div className='w-full mb-4 border-b pb-4 text-2xl'>%100 şeffaf bağış ağını keşfedin!</div>
         <Map
-          center={{latitude: 41025, longitude: 29150}}
+          center={{latitude: ((36 + 42) / 2) * 1000, longitude: ((26 + 45) / 2) * 1000}}
           visualVerifications={visualVerifications}
-          zoom={11}
+          zoom={6}
         />
       </div>
       <div className='mt-24 w-screen -ml-12 overflow-hidden'>
