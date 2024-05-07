@@ -76,8 +76,6 @@ export default function MyMap({ center, nftAddress, stampCoordinates, shippedCoo
     iconAnchor: [0, 0],
   });
 
-  console.log(center)
-
   return <MapContainer className="w-full h-full" center={[center.latitude / 1000, center.longitude / 1000]} zoom={zoom} scrollWheelZoom={true}>
     <TileLayer
       attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'

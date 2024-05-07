@@ -1,26 +1,24 @@
 import Head from 'next/head'
 import Image from 'next/image'
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { useMoralis } from 'react-moralis';
 import { ethers } from 'ethers';
 import { getEthToUsdRate } from '@/utils/getEthToUsdRate';
 import { Button } from 'web3uikit'
 import blockExplorerMapping from "../constants/blockExplorerMapping.json";
 import { URL, PORT } from '@/serverConfig';
+import dynamic from 'next/dynamic';
 
 export default function Home() {
 
-  const [ethToUsdRate, setEthToUsdRate] = useState(null);
-
-  useEffect(() => {
-    const fetchEthToUsdRate = async () => {
-      const rate = await getEthToUsdRate();
-      setEthToUsdRate(rate);
-    };
-
-    fetchEthToUsdRate();
-  }, []);
-
+  const Map = useMemo(() => dynamic(
+    () => import('@/components/DisplayMap'),
+    {
+      loading: () => <p>The map is loading...</p>,
+      ssr: false
+    }
+  ), [])
+  
   const [imageURI, setImageURI] = useState("");
   const [tokenName, setTokenName] = useState("");
   const [tokenDescription, setTokenDescription] = useState("");
@@ -36,6 +34,8 @@ export default function Home() {
     charityAddress: "0x",
     subcollectionId: "",
   });
+
+  const [visualVerifications, setVisualVerifications] = useState([]);
 
   useEffect(() => {
     async function fetchAsset() {
@@ -60,11 +60,21 @@ export default function Home() {
 
     fetchAsset();
 
+
     const randomAssetInterval = setInterval(() => {
       fetchAsset();
     }, 4000);
     return () => clearInterval(randomAssetInterval);
   }, []);
+
+  useEffect(() => {
+    fetch(`${URL}:${PORT}/active-item/get-all-visual-verifications`)
+    .then(response => response.json())
+    .then(data => {
+      setVisualVerifications(data.data);
+      return;
+    })
+  }, [])
 
   async function updateUI() {
     // get the token Uri
@@ -144,7 +154,15 @@ export default function Home() {
           </div>
         </div>
       </div>
-      <div className='mt-16 w-screen -ml-12 overflow-hidden'>
+      <div className='w-full h-100 mt-4'>
+        <div className='w-full mb-4 border-b pb-4 text-xl'>%100 şeffaf bağış ağını keşfedin!</div>
+        <Map
+          center={{latitude: 41025, longitude: 29150}}
+          visualVerifications={visualVerifications}
+          zoom={11}
+        />
+      </div>
+      <div className='mt-24 w-screen -ml-12 overflow-hidden'>
         <img className='w-screen' src="supplyChain.svg" alt="Supply chain" />
       </div>
     </div >
