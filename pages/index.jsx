@@ -37,6 +37,28 @@ export default function Home() {
 
   const [visualVerifications, setVisualVerifications] = useState([]);
 
+  const [testimonials, setTestimonials] = useState([{
+    name: "Ö*** K****",
+    description: "Pazarlama uzmanı, Hepsiburada, Türkiye",
+    testimonial: "Ledgerise sayesinde bu ramazanda yaptığım bağışın güvenle teslim edildiğini görebildim."
+  },
+  {
+    name: "E*** K****",
+    description: "Bankacı, BNP Paribas, Almanya",
+    testimonial: "Ülke fark etmeksizin, bireysel rapor üzerinden tüm süreci takip edebiliyorum."
+  },
+  {
+    name: "O*** S*******",
+    description: "Avukat, Honeywell, Ukrayna",
+    testimonial: "Yaptığım bağışları takip ederek teslimatın gerçekleşteğini görmek beni mutlu etti.."
+  },
+  {
+    name: "U**** D******",
+    description: "CEO, Türkiye",
+    testimonial: "Mükemmel bir insiyatif. Bağışımın doğru yerde kullanılması benim için farklı bir deneyim."
+  }
+  ]);
+
   useEffect(() => {
     async function fetchAsset() {
       console.log(asset.tokenId);
@@ -104,9 +126,9 @@ export default function Home() {
     <div className='w-full h-full py-28 px-10 overflow-hidden'>
       <div className='w-full h-full flex justify-center items-center'>
         <div className='flex flex-1 w-3/5 h-4/5 justify-center flex-wrap'>
-          <div className='flex-col w-128 mb-12'>
+          <div className='flex-col w-128 mb-12 mr-8'>
             <div className='w-full'>
-              <div className='text-4xl w-1/2 font-playfair'>Güvenilir,{"\n"}Şeffaf,{"\n"}Değiştirilemez</div>
+              <div className='text-5xl w-1/2 font-playfair'>Güvenilir,{"\n"}Şeffaf,{"\n"}Değiştirilemez</div>
               <div className='text-xl text-slate-500 mt-12 font-serif'><strong>Gönül rahatlığıyla</strong> bağış yapın. Bağışınızın <strong>ihtiyaç sahibine ulaştığını</strong> görün.</div>
             </div>
             <div className='w-1/2 mt-16'>
@@ -130,7 +152,7 @@ export default function Home() {
           </div>
           <div className={`w-fit h-max ${imageURI ? `animate-fade` : ``}`}>
             <a href={`/assets?id=${asset.tokenId}&subcollectionId=${asset.subcollectionId}&nftAddress=${asset.nftAddress}`}>
-              <div className='h-max flex flex-1 flex-col justify-center border-2 p-2 rounded'>
+              <div className='w-96 h-100 flex flex-1 flex-col justify-center border-2 p-2 rounded'>
                 <img src={imageURI} alt={tokenName} className='border-b-2 rounded h-96' />
                 <div className='w-full h-max mt-2 p-2'>
                   <div className='text-2xl text-slate-800 font-medium mb-1'>{asset.collectionName}</div>
@@ -154,15 +176,38 @@ export default function Home() {
           </div>
         </div>
       </div>
-      <div className='w-full h-100 mt-4'>
-        <div className='w-full mb-4 border-b pb-4 text-2xl'>%100 şeffaf bağış ağını keşfedin!</div>
+      <div className='w-full h-100 mt-16 mb-60'>
+        <div className='w-full flex justify-center text-center text-sm pt-12 text-yellow-500 font-bold'>Teslim edildi bile!</div>
+        <div className='w-full flex justify-center text-center border-b mb-4 pb-12 text-3xl'>%100 şeffaf bağış ağımızı keşfedin!</div>
         <Map
           center={{latitude: ((36 + 42) / 2) * 1000, longitude: ((26 + 45) / 2) * 1000}}
           visualVerifications={visualVerifications}
           zoom={6}
         />
       </div>
-      <div className='mt-24 w-screen -ml-12 overflow-hidden'>
+      <div className='mb-12'>
+        <div className='w-full flex justify-center text-center text-sm text-yellow-500 font-bold'>Güvenle bağış yapanlar</div>
+        <div className='w-full flex justify-center text-center border-b mb-4 pb-12 text-3xl'>Bağışçı gözünden Ledgerise...</div>
+        <div className='w-max flex-1 flex pb-4 overflow-x-scroll'>
+          {
+            testimonials.map(eachTestimonial => {
+              return (
+                <div className='w-96 shadow-lg rounded-md p-4 mr-4'>
+                  <div className='mb-8 text-end w-full text-slate-800'>"{eachTestimonial.testimonial}"</div>
+                  <div className='flex items-center justify-end'>
+                    <div>
+                      <div className='text-end text-slate-600'>{eachTestimonial.name}</div>
+                      <div className='text-end text-slate-400'>{eachTestimonial.description}</div>
+                    </div>
+                    <div className='w-12 h-12 ml-4 rounded-full bg-slate-400'></div>
+                  </div>
+                </div>
+              )
+            })
+          }
+        </div>
+      </div>
+      <div className='w-screen -ml-12 overflow-hidden'>
         <img className='w-screen' src="supplyChain.svg" alt="Supply chain" />
       </div>
     </div >

@@ -31,7 +31,7 @@ export default function DisplayMap({ center, visualVerifications, zoom, chainId,
 
   const randArr = [0.2, 0.1, 0.5, 0.6, 0.3, 0.4, 0.9, 0.8, 0.7, 1.0, 0.2, 0.4, 0.6]
   
-  return <MapContainer className="w-full h-full" center={[center.latitude / 1000, center.longitude / 1000]} zoom={zoom} scrollWheelZoom={true}>
+  return <MapContainer className="w-full h-full" center={[center.latitude / 1000, center.longitude / 1000]} zoom={zoom} scrollWheelZoom={false}>
     <TileLayer
       attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
       url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
