@@ -24,8 +24,6 @@ export default function Home() {
   const [tokenDescription, setTokenDescription] = useState("");
   const [previousTokenId, setPreviousTokenId] = useState(0);
 
-  const { isWeb3Enabled } = useMoralis();
-
   const [asset, setAsset] = useState({
     tokenUri: "",
     tokenId: "0",
@@ -50,7 +48,7 @@ export default function Home() {
   {
     name: "O*** S*******",
     description: "Avukat, Honeywell, Ukrayna",
-    testimonial: "Yaptığım bağışları takip ederek teslimatın gerçekleşteğini görmek beni mutlu etti.."
+    testimonial: "Yaptığım bağışları takip ederek teslimatın gerçekleşteğini görmek beni mutlu etti."
   },
   {
     name: "U**** D******",
@@ -185,10 +183,28 @@ export default function Home() {
           zoom={6}
         />
       </div>
-      <div className='mb-12'>
+      <div className='mb-12 w-full h-fit'>
         <div className='w-full flex justify-center text-center text-sm text-yellow-500 font-bold'>Güvenle bağış yapanlar</div>
         <div className='w-full flex justify-center text-center border-b mb-4 pb-12 text-3xl'>Bağışçı gözünden Ledgerise...</div>
-        <div className='w-max flex-1 flex pb-4 overflow-x-scroll'>
+        <div className='w-fit h-fit flex pb-4' id='slider' onMouseDown={(e1) => {
+
+          const slider = document.getElementById("slider");
+
+          const initialX = e1.clientX;
+          
+          const mouseMoveEventListener = (e2) => {
+            const movedX = e2.clientX;
+            slider.style.marginLeft = `-${initialX - movedX}px`
+          }
+
+          document.addEventListener("mousemove", mouseMoveEventListener);
+
+          document.addEventListener("mouseup", (e3) => {
+
+            document.removeEventListener("mousemove", mouseMoveEventListener)
+            return;
+          })
+        }}>
           {
             testimonials.map(eachTestimonial => {
               return (
