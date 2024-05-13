@@ -6,7 +6,7 @@ function formatTime(seconds) {
   const minutes = Math.floor((seconds % (60 * 60)) / 60);
   const remainingSeconds = Math.floor(seconds % 60);
 
-  const formattedTime = `${days}:${padZero(hours)}:${padZero(minutes)}:${padZero(remainingSeconds)}`;
+  const formattedTime = `${padZero(minutes)}:${padZero(remainingSeconds)}`;
   return formattedTime;
 }
 
@@ -30,7 +30,7 @@ function RealTimeCounter({ interval }) {
 
   return (
     <div className='flex flex-1 items-center ml-4'>
-      <div className='text-xl text-white'>{formatTime(interval - counter)}</div>
+      <div className='text-black text-7xl'>{formatTime(interval - counter)}</div>
     </div>
   );
 }

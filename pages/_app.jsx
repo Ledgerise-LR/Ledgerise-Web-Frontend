@@ -6,6 +6,7 @@ import Footer from "../components/Footer";
 import { NotificationProvider } from "web3uikit";
 import Head from 'next/head';
 import { useRouter } from 'next/router';
+import { GoogleTagManager } from '@next/third-parties/google';
 
 export default function App({ Component, pageProps }) {
 
@@ -31,6 +32,7 @@ export default function App({ Component, pageProps }) {
               : <div></div>
           }
           <Component {...pageProps} />
+          <GoogleTagManager gtmId='G-C50VJCBVP8' />
           {
             router.pathname != "/admin" && router.pathname != "/register" && router.pathname != "/login" && router.pathname != "/api-documentation"
               ? <Footer />
