@@ -169,7 +169,7 @@ export default function Header(isApiHeader) {
               <div>
                 <h1 className="w-24 h-20">
                   <a href="/">
-                    <img className="h-20" src="logo.svg" alt="Ledgerise | Decentralized Fundrasing-delivering trace protocol" />
+                    <img className="h-20" src="logo.svg" alt="Ledgerise | Bağış hiç olmadığı kadar şeffaf" />
                   </a>
                 </h1>
               </div>
