@@ -29,7 +29,6 @@ export default function Home() {
         axios.get(`${URL}:${PORT}/company/get-company-from-code?code=${itemId}`)
         .then((res) => {
           const companyData = res.data;
-          console.log(companyData.company)
           setCompany(companyData.company);
         })
       });

@@ -59,8 +59,11 @@ export default function Home() {
 
   useEffect(() => {
     async function fetchAsset() {
-      console.log(asset.tokenId);
-      fetch(`${URL}:${PORT}/active-item/get-random-featured-asset?previousTokenId=${previousTokenId}`)
+      
+      const showroom = document.getElementById("showroom");
+      showroom.style.opacity = 0;
+
+        fetch(`${URL}:${PORT}/active-item/get-random-featured-asset?previousTokenId=${previousTokenId}`)
         .then(response => response.json())
         .then(data => {
           const asset = {
@@ -75,6 +78,12 @@ export default function Home() {
             price: data.activeItem.price
           }
           setAsset(asset);
+
+          showroom.style.opacity = 1;
+
+          if (window) {
+            window.document.body.style.overflowX = "hidden";
+          }
         })
     }
 
@@ -121,24 +130,38 @@ export default function Home() {
   }, [asset, asset.tokenUri])
 
   return (
-    <div className='w-full h-full py-28 px-10 overflow-hidden'>
+    <div className='w-full h-full py-28 px-10 overflow-hidden overflow-x-hidden'>
+      <div className='w-32 right-24 -mt-16 h-64 bg-yellow-300 absolute z-0 rounded-full'></div>
+      <div className='w-96 -right-12 mt-98 h-96 bg-yellow-500 absolute z-0 rounded-full'></div>
+      <div className='w-96 right-0 mr-96 -mt-12 h-24 bg-yellow-400 absolute z-0 rounded-full'></div>
       <div className='w-full h-full flex justify-center items-center'>
         <div className='flex flex-1 w-3/5 h-4/5 justify-center flex-wrap'>
-          <div className='flex-col w-128 mb-12 mr-8'>
+          <div className='flex-col w-128 mb-12 mr-8 z-10'>
             <div className='w-full'>
-              <div className='text-5xl w-1/2 font-playfair'>Güvenilir,{"\n"}Şeffaf,{"\n"}Değiştirilemez</div>
-              <div className='text-xl text-slate-500 mt-12 font-serif'><strong>Gönül rahatlığıyla</strong> bağış yapın. Bağışınızın <strong>ihtiyaç sahibine ulaştığını</strong> görün.</div>
+              <div 
+              style={{
+                background: "-webkit-linear-gradient(#FF9900, #B881FF)",
+                WebkitBackgroundClip: "text",
+                WebkitTextFillColor: "transparent"
+              }} 
+              className='text-5xl w-96 h-fit py-2 font-bold font-sans pl-8'
+              >
+                <div>Güvenilir,</div>
+                <div>Şeffaf,</div>
+                <div>Değiştirilemez,</div>
+              </div>
+              <div className='text-xl text-slate-500 mt-12 font-sans w-96 pl-8'>Bağışınızın ihtiyaç sahibine ulaştığından <strong>emin olun</strong></div>
             </div>
-            <div className='w-1/2 mt-16'>
+            <div className='w-1/2 mt-32 z-10 pl-8'>
               <a href="/collections">
                 <Button
                   style={{
-                    backgroundColor: "black",
-                    color: "white"
+                    backgroundColor: "#404040",
+                    color: "#fefefe",
+                    borderRadius: "100px"
                   }}
                   customize={{
                     onHover: "lighten",
-                    color: "white"
                   }}
                   isFullWidth="true"
                   text='Kampanyaları görüntüleyin!'
@@ -148,9 +171,9 @@ export default function Home() {
               </a>
             </div>
           </div>
-          <div className={`w-fit h-max ${imageURI ? `animate-fade` : ``}`}>
+          <div className={`w-fit h-max relative bg-white z-10`}>
             <a href={`/assets?id=${asset.tokenId}&subcollectionId=${asset.subcollectionId}&nftAddress=${asset.nftAddress}`}>
-              <div className='w-96 h-100 flex flex-1 flex-col justify-center border-2 p-2 rounded'>
+              <div id='showroom' className={`w-96 h-108 flex flex-1 transition-all flex-col justify-center border-2 p-2 rounded`}>
                 <img src={imageURI} alt={tokenName} className='border-b-2 rounded h-96' />
                 <div className='w-full h-max mt-2 p-2'>
                   <div className='text-2xl text-slate-800 font-medium mb-1'>{asset.collectionName}</div>
@@ -161,9 +184,8 @@ export default function Home() {
                     </div>
                     <div className='flex-col flex items-end'>
                       <div className='text-xs text-slate-500'>Toplam Bağış:</div>
-                      <div className='w-48 mt-1 p-2 rounded-full bg-black text-slate-100 flex justify-end items-center px-5'>
-                        <span className='text-slate-200 mr-2'>{Number(asset.price)*asset.totalDonated} ₺</span>
-                        <span className='text-xs text-slate-400'>{Number(asset.totalDonated)} bağış kolisi</span>
+                      <div style={{backgroundColor: "#343434"}} className='w-48 p-2 rounded-full text-slate-100 flex justify-end items-center px-5'>
+                        <span className='text-slate-200 mr-2 text-sm'>{Number(asset.totalDonated)} bağış kolisi</span>
                       </div>
                     </div>
                   </div>
@@ -222,6 +244,10 @@ export default function Home() {
             })
           }
         </div>
+      </div>
+      <div className='text-3xl my-12 relative h-12'>
+        <div className='z-0 absolute w-52 h-52 -left-40 rounded-full bg-yellow-400'></div>
+        <div style={{color: "#343434"}} className='z-20 absolute'>ADIM ADIM LEDGERISE</div>
       </div>
       <div className='w-screen -ml-12 overflow-hidden'>
         <img className='w-screen' src="supplyChain.svg" alt="Supply chain" />

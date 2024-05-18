@@ -65,18 +65,18 @@ export default function Header(isApiHeader) {
   }
 
   return (
-    <nav>
-      <div id="hamburger-menu" className="hamburger-menu w-screen h-screen absolute bg-white z-10 p-8 transition-all hidden">
-        <div className="flex justify-between items-center">
+    <nav className="overflow-x-hidden">
+      <div id="hamburger-menu" className="hamburger-menu w-screen h-screen absolute bg-white z-20 p-8 transition-all hidden overflow-x-hidden">
+        <div className="flex justify-between items-center overflow-x-hidden">
           <a href="/">
-            <img className="h-12" src="logo.svg" alt="Ledgerise | Decentralized Fundrasing-delivering trace protocol" />
+            <img className="h-12" src="logo.svg" alt="Ledgerise | Bağış hiç olmadığı kadar şeffaf" />
           </a>
           <div className="text-3xl text-slate-700" onClick={() => {
             const hamburgerMenu = document.getElementById("hamburger-menu");
             hamburgerMenu.style.left = `-${windowSize.width}px`;
           }}>✕</div>
         </div>
-        <div className="flex flex-col pt-16 px-4 h-1/2 justify-between">
+        <div className="flex flex-col pt-16 px-4 h-1/2 justify-between overflow-x-hidden">
           <a href="/" className="flex justify-between items-center">
             <div className="text-2xl text-slate-700">Anasayfa</div>
             <img className="w-4" src="right-arrow.png" alt="right-arrow" />
@@ -94,7 +94,7 @@ export default function Header(isApiHeader) {
             <img className="w-4" src="right-arrow.png" alt="right-arrow" />
           </a>
         </div>
-        <div className='w-6/7 mt-16 ml-auto mr-auto'>
+        <div className='w-6/7 mt-16 ml-auto mr-auto overflow-x-hidden'>
               <a href="/collections">
                 <Button
                   style={{
@@ -126,17 +126,23 @@ export default function Header(isApiHeader) {
             }
       </div>
       {
-        windowSize.width > 400
+        windowSize.width > 420
           ? (
-            <div className={`p-2 border-b-2 flex flex-row justify-between items-center w-full overflow-x-hidden ${router.pathname == "/api-documentation" ? "h-16 overflow-y-hidden" : ""}`}>
-      <h1 className={`pl-12 ${router.pathname == "/api-documentation" ? "w-36" : "w-40"}`}>
+            <div className={`p-2 border-b-2 flex flex-row justify-between items-center w-full overflow-x-hidden ${router.pathname == "/api-documentation" ? "h-16 overflow-y-hidden" : "h-16 overflow-y-hidden"}`}>
+      <h1 className={`pl-12 ${router.pathname == "/api-documentation" ? "w-36" : "w-36"}`}>
         <a href="/">
-          <img className="h-20" src="logo.svg" alt="Ledgerise | Decentralized Fundrasing-delivering trace protocol" />
+          <img className="h-20" src="logo.svg" alt="Ledgerise | Bağış hiç olmadığı kadar şeffaf" />
         </a>
       </h1>
-      <div className="w-fit flex flex-row items-center">
-        <Link href="/collections" className="p-6 text-sm" >
+      <div className="w-fit flex flex-row items-center" style={{color: "#343434"}}>
+        <Link href="/collections" className="p-6 text-sm font-semibold mr-4" >
           Kampanyalar
+        </Link>
+        <Link href="/how-to-donate-collections" className="p-6 text-sm font-semibold mr-4" >
+          Nasıl bağış yapılır?
+        </Link>
+        <Link href="/api-documentation" className="p-6 text-sm font-semibold mr-8" >
+          STK'lar için
         </Link>
         {
           router.pathname == "/admin"
