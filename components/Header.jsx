@@ -65,7 +65,7 @@ export default function Header(isApiHeader) {
   }
 
   return (
-    <nav className="overflow-x-hidden">
+    <nav className="overflow-x-hidden z-30 w-full bg-white">
       <div id="hamburger-menu" className="hamburger-menu w-screen h-screen absolute bg-white z-20 p-8 transition-all hidden overflow-x-hidden">
         <div className="flex justify-between items-center overflow-x-hidden">
           <a href="/">
@@ -128,13 +128,13 @@ export default function Header(isApiHeader) {
       {
         windowSize.width > 420
           ? (
-            <div className={`p-2 border-b-2 flex flex-row justify-between items-center w-full overflow-x-hidden ${router.pathname == "/api-documentation" ? "h-16 overflow-y-hidden" : "h-16 overflow-y-hidden"}`}>
-      <h1 className={`pl-12 ${router.pathname == "/api-documentation" ? "w-36" : "w-36"}`}>
+            <div className={`p-2 z-20 bg-white border-b-2 flex flex-row justify-between items-center w-full overflow-x-hidden ${router.pathname == "/api-documentation" ? "h-16 overflow-y-hidden" : "h-16 overflow-y-hidden"}`}>
+      <h1 className={`pl-12 z-20 ${router.pathname == "/api-documentation" ? "w-36" : "w-36"}`}>
         <a href="/">
           <img className="h-20" src="logo.svg" alt="Ledgerise | Bağış hiç olmadığı kadar şeffaf" />
         </a>
       </h1>
-      <div className="w-fit flex flex-row items-center" style={{color: "#343434"}}>
+      <div className="z-30 w-fit flex flex-row items-center" style={{color: "#343434"}}>
         <Link href="/collections" className="p-6 text-sm font-semibold mr-4" >
           Kampanyalar
         </Link>
@@ -171,7 +171,7 @@ export default function Header(isApiHeader) {
             </div>
           )
           : (
-            <div className="flex justify-between py-2 px-8 w-full border-b-2 items-center">
+            <div className="flex z-20 justify-between py-2 px-8 w-full border-b-2 items-center">
               <div>
                 <h1 className="w-24 h-20">
                   <a href="/">

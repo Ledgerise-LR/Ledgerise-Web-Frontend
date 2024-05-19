@@ -131,9 +131,10 @@ export default function Home() {
 
   return (
     <div className='w-full h-full py-28 px-10 overflow-hidden overflow-x-hidden'>
-      <div className='w-32 right-24 -mt-16 h-64 bg-yellow-300 absolute z-0 rounded-full'></div>
-      <div className='w-96 -right-12 mt-98 h-96 bg-yellow-500 absolute z-0 rounded-full'></div>
-      <div className='w-96 right-0 mr-96 -mt-12 h-24 bg-yellow-400 absolute z-0 rounded-full'></div>
+      <div className='w-64 left-0 top-36 h-64 bg-yellow-100 absolute z-0 rounded-full blur-3xl'></div>
+      <div className='w-32 right-24 -mt-16 h-64 bg-yellow-200 absolute z-0 rounded-full'></div>
+      <div className='w-96 -right-12 mt-98 h-96 bg-yellow-400 absolute z-0 rounded-full'></div>
+      <div className='w-96 right-0 mr-96 -mt-12 h-24 bg-yellow-300 absolute z-0 rounded-full'></div>
       <div className='w-full h-full flex justify-center items-center'>
         <div className='flex flex-1 w-3/5 h-4/5 justify-center flex-wrap'>
           <div className='flex-col w-128 mb-12 mr-8 z-10'>
