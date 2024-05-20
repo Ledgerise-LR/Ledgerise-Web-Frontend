@@ -126,7 +126,7 @@ export default function Header(isApiHeader) {
             }
       </div>
       {
-        windowSize.width > 420
+        windowSize.width > 800
           ? (
             <div className={`p-2 z-20 bg-white border-b-2 flex flex-row justify-between items-center w-full overflow-x-hidden ${router.pathname == "/api-documentation" ? "h-16 overflow-y-hidden" : "h-16 overflow-y-hidden"}`}>
       <h1 className={`pl-12 z-20 ${router.pathname == "/api-documentation" ? "w-36" : "w-36"}`}>
@@ -171,11 +171,11 @@ export default function Header(isApiHeader) {
             </div>
           )
           : (
-            <div className="flex z-20 justify-between py-2 px-8 w-full border-b-2 items-center">
+            <div className="flex z-20 justify-between px-8 w-full border-b-2 items-center h-16">
               <div>
-                <h1 className="w-24 h-20">
+                <h1 className="w-24 h-16">
                   <a href="/">
-                    <img className="h-20" src="logo.svg" alt="Ledgerise | Bağış hiç olmadığı kadar şeffaf" />
+                    <img className="h-16" src="logo.svg" alt="Ledgerise | Bağış hiç olmadığı kadar şeffaf" />
                   </a>
                 </h1>
               </div>
@@ -184,7 +184,7 @@ export default function Header(isApiHeader) {
                 hamburgerMenu.style.left = "0";
               }}>
                 <div className="w-8 border border-black"></div>
-                <div className="w-8 border border-black my-1.5"></div>
+                <div className="w-8 border border-black my-1"></div>
                 <div className="w-8 border border-black"></div>
               </div>
             </div>
