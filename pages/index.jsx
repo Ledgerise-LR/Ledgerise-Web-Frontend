@@ -123,6 +123,24 @@ export default function Home() {
     }
   }
 
+  const [sliderTranslate, setSliderTranslate] = useState(0);
+
+  useEffect(() => {
+    setInterval(() => {
+      setSliderTranslate(old => old - 100);
+      
+      try {
+        const slider = window.document.getElementById("slider");
+
+        for (let i = 0; i < testimonials.length; i++) {
+          const eachChild = slider.children[i];
+          const copyChild = eachChild.cloneNode(true);
+          slider.appendChild(copyChild);  
+        }  
+      } catch (e) { ; }
+    }, 2000)  
+  }, [])
+
   useEffect(() => {
     if (asset && asset.tokenUri) {
       updateUI();
@@ -209,25 +227,7 @@ export default function Home() {
       <div className='mb-12 w-full h-fit'>
         <div className='w-full flex justify-center text-center text-sm text-yellow-500 font-bold'>Güvenle bağış yapanlar</div>
         <div className='w-full flex justify-center text-center border-b mb-4 pb-12 text-3xl'>Bağışçı gözünden Ledgerise...</div>
-        <div className='w-fit h-fit flex pb-4' id='slider' onMouseDown={(e1) => {
-
-          const slider = document.getElementById("slider");
-
-          const initialX = e1.clientX;
-          
-          const mouseMoveEventListener = (e2) => {
-            const movedX = e2.clientX;
-            slider.style.marginLeft = `-${initialX - movedX}px`
-          }
-
-          document.addEventListener("mousemove", mouseMoveEventListener);
-
-          document.addEventListener("mouseup", (e3) => {
-
-            document.removeEventListener("mousemove", mouseMoveEventListener)
-            return;
-          })
-        }}>
+        <div className='w-fit h-fit flex pb-4' style={{transform: `translateX(${sliderTranslate}px)`, transition: "all 2s ease"}} id='slider'>
           {
             testimonials.map(eachTestimonial => {
               return (
