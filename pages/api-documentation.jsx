@@ -216,7 +216,7 @@ export default function Home() {
               <ApiSlot
                 title={"Bağış ürünü detayları"}
                 method={"GET"}
-                url={"https://api-ledgerise.onrender.com/active-item/get-asset?tokenId=<tokenId>&subcollectionId=<subcollectionId>&nftAddress=<nftAddress>"}
+                url={"https://api.ledgerise.org/active-item/get-asset?tokenId=<tokenId>&subcollectionId=<subcollectionId>&nftAddress=<nftAddress>"}
                 description={"Ledgerise da her koli veya karşılanan her ihtiyaç bir bağış ürünü olarak adlandırılır. Söz konusu metod bu ürünler hakkında bilgi almak için kullanılır."}
                 importantNote={"openseaTokenId parametresi Satın alma numarasına karşılık gelmektedir."}
                 parameters={[
@@ -271,7 +271,7 @@ export default function Home() {
                   <ApiSlot
                     title={"Bağış ürünlerini filtrele"}
                     method={"GET"}
-                    url={"https://api-ledgerise.onrender.com/active-item/get-all-active-items"}
+                    url={"https://api.ledgerise.org/active-item/get-all-active-items"}
                     description={"Ledgerise kapsamındaki bütün kolilere uyguladığınız filtreler kapsamında ulaşabilirsiniz"}
                     importantNote={"Otorizasyona gerek yoktur."}
                     parameters={[
@@ -323,7 +323,7 @@ export default function Home() {
                     ? <ApiSlot
                     title={"Vitrin için rastgele bir bağış ürün"}
                     method={"GET"}
-                    url={"https://api-ledgerise.onrender.com/active-item/get-random-featured-asset"}
+                    url={"https://api.ledgerise.org/active-item/get-random-featured-asset"}
                     description={"Bu metod herhangi bir anasayfada veya tasarım kapsamında bir slayt gösterimi olarak sergilemek için rastgele bir bağış ürününü sunar."}
                     importantNote={"Otorizasyona gerek yoktur."}
                     parameters={[]}
@@ -343,7 +343,7 @@ export default function Home() {
                     ? <ApiSlot
                       title={"QR kodu basıldı olarak işaretle"}
                       method={"POST"}
-                      url={"https://api-ledgerise.onrender.com/active-item/mark-qr-code-as-printed"}
+                      url={"https://api.ledgerise.org/active-item/mark-qr-code-as-printed"}
                       description={"Bağış ürünleri bağışlandığında ürün adına bir QR kod oluşturur. Printer'ınızdan QR kodu bastığınız satın alımı 'QR kod basıldı' olarak güncelleyin."}
                       importantNote={"Otorizasyon gerekli. Şirket olarak hesap açmış olmalısınız. Detaylar için Şirket (login) sekmesine tıklayın."}
                       parameters={[
@@ -366,7 +366,7 @@ export default function Home() {
                       ? <ApiSlot
                       title={"Verifikasyonları filtrele"}
                       method={"POST"}
-                      url={"https://api-ledgerise.onrender.com/active-item/get-visual-verifications-filter"}
+                      url={"https://api.ledgerise.org/active-item/get-visual-verifications-filter"}
                       description={"Bağış ürünleri kritik noktalarda (üretim, depo, teslim) eş zamanlı olarak QR kodları okutulup fotoğrafları çekilerek doğrulanır. Bu metod sayesinde bu doğrulamalara istediğiniz filtreleri uygulayarak ulaşabilirsiniz."}
                       importantNote={"Otorizasyona gerek yoktur."}
                       parameters={[
@@ -405,7 +405,7 @@ export default function Home() {
                         ? <ApiSlot
                         title={"Bağış ürünü listele"}
                         method={"POST"}
-                        url={"https://api-ledgerise.onrender.com/active-item/list-item"}
+                        url={"https://api.ledgerise.org/active-item/list-item"}
                         description={"Önceden stoklarınızda hazır bulunan bağış ürünleriniz var ise, bağış kolisi gibi, bu metod bu ürünleri ledgerise'da listelemeye yarıyor."}
                         importantNote={"Önemli: Otorizasyon gerekiyor. Şirket (login) sekmesine tıklayarak bu metodu çağırmadan önce adımları takip ederek login olmalısınız."}
                         parameters={[
@@ -461,7 +461,7 @@ export default function Home() {
                           ? <ApiSlot
                           title={"Kampanyanın bağış ürünlerini sorgula"}
                           method={"GET"}
-                          url={"https://api-ledgerise.onrender.com/subcollection/get-collection?nftAddress=${nftAddress}&subcollectionId=${itemId}&priceFilter=${priceFilter}&availableEditionsFilter=${availableEditionsFilter}"}
+                          url={"https://api.ledgerise.org/subcollection/get-collection?nftAddress=${nftAddress}&subcollectionId=${itemId}&priceFilter=${priceFilter}&availableEditionsFilter=${availableEditionsFilter}"}
                           description={"Bu metod kapsamında bir bağış kampanyasının altındaki bağış ürünlerine filtreler uygulayarak bu ürünleri sorgulayabilirsiniz."}
                           importantNote={"Otorizasyona gerek yoktur."}
                           parameters={[
@@ -512,7 +512,7 @@ export default function Home() {
                             ? <ApiSlot
                             title={"Bağış kampanyalarını filtrele"}
                             method={"GET"}
-                            url={"https://api-ledgerise.onrender.com/active-item/get-all-collections"}
+                            url={"https://api.ledgerise.org/active-item/get-all-collections"}
                             description={"Bu metod yardım kampanyaları hakkında detayları sorgulamaya yarar. Bunu yaparken çeşitli filtreler uygulayabilirsiniz."}
                             importantNote={"Otorizasyona gerek yoktur."}
                             parameters={[
@@ -540,7 +540,7 @@ export default function Home() {
                             ? <ApiSlot
                             title={"Kampanya detayları"}
                             method={"GET"}
-                            url={"https://api-ledgerise.onrender.com/subcollection/get-single-collection?id=${itemId}&nftAddress=${nftAddress}"}
+                            url={"https://api.ledgerise.org/subcollection/get-single-collection?id=${itemId}&nftAddress=${nftAddress}"}
                             description={"Bu metod tek bir yardım kampanyası hakkındaki detaylara ulaşmaya yarar."}
                             importantNote={"Otorizasyona gerek yoktur."}
                             parameters={[
@@ -566,7 +566,7 @@ export default function Home() {
                               ? <ApiSlot
                               title={"Sırala & filtrele (fiyat artan)"}
                               method={"GET"}
-                              url={"https://api-ledgerise.onrender.com/subcollection/sort/price-ascending?nftAddress=${nftAddress}&subcollectionId=${itemId}&priceFilter=${priceFilter}&availableEditionsFilter=${availableEditionsFilter}"}
+                              url={"https://api.ledgerise.org/subcollection/sort/price-ascending?nftAddress=${nftAddress}&subcollectionId=${itemId}&priceFilter=${priceFilter}&availableEditionsFilter=${availableEditionsFilter}"}
                               description={"Bu metod kapsamında bir bağış kampanyasının altındaki bağış ürünlerine filtreler uygulayarak bu ürünleri sorgulayabilirsiniz."}
                               importantNote={"Otorizasyona gerek yoktur."}
                               parameters={[
@@ -617,7 +617,7 @@ export default function Home() {
                               ? <ApiSlot
                               title={"Sırala & filtrele (fiyat azalan)"}
                               method={"GET"}
-                              url={"https://api-ledgerise.onrender.com/subcollection/sort/price-descending?nftAddress=${nftAddress}&subcollectionId=${itemId}&priceFilter=${priceFilter}&availableEditionsFilter=${availableEditionsFilter}"}
+                              url={"https://api.ledgerise.org/subcollection/sort/price-descending?nftAddress=${nftAddress}&subcollectionId=${itemId}&priceFilter=${priceFilter}&availableEditionsFilter=${availableEditionsFilter}"}
                               description={"Bu metod kapsamında bir bağış kampanyasının altındaki bağış ürünlerine filtreler uygulayarak bu ürünleri sorgulayabilirsiniz."}
                               importantNote={"Otorizasyona gerek yoktur."}
                               parameters={[
@@ -668,7 +668,7 @@ export default function Home() {
                               ? <ApiSlot
                               title={"Sırala & filtrele (eski-yeni)"}
                               method={"GET"}
-                              url={"https://api-ledgerise.onrender.com/subcollection/sort/oldest?nftAddress=${nftAddress}&subcollectionId=${itemId}&priceFilter=${priceFilter}&availableEditionsFilter=${availableEditionsFilter}"}
+                              url={"https://api.ledgerise.org/subcollection/sort/oldest?nftAddress=${nftAddress}&subcollectionId=${itemId}&priceFilter=${priceFilter}&availableEditionsFilter=${availableEditionsFilter}"}
                               description={"Bu metod kapsamında bir bağış kampanyasının altındaki bağış ürünlerine filtreler uygulayarak bu ürünleri sorgulayabilirsiniz."}
                               importantNote={"Otorizasyona gerek yoktur."}
                               parameters={[
@@ -719,7 +719,7 @@ export default function Home() {
                               ? <ApiSlot
                               title={"Sırala & filtrele (yeni-eski)"}
                               method={"GET"}
-                              url={"https://api-ledgerise.onrender.com/subcollection/sort/newest?nftAddress=${nftAddress}&subcollectionId=${itemId}&priceFilter=${priceFilter}&availableEditionsFilter=${availableEditionsFilter}"}
+                              url={"https://api.ledgerise.org/subcollection/sort/newest?nftAddress=${nftAddress}&subcollectionId=${itemId}&priceFilter=${priceFilter}&availableEditionsFilter=${availableEditionsFilter}"}
                               description={"Bu metod kapsamında bir bağış kampanyasının altındaki bağış ürünlerine filtreler uygulayarak bu ürünleri sorgulayabilirsiniz."}
                               importantNote={"Otorizasyona gerek yoktur."}
                               parameters={[
@@ -770,7 +770,7 @@ export default function Home() {
                                 ? <ApiSlot
                                 title={"Kampanyanın bağış ürünlerini (filtresiz)"}
                                 method={"POST"}
-                                url={"https://api-ledgerise.onrender.com/subcollection/get-all-items-collection?nftAddress=${nftAddress}&subcollectionId=${itemId}&priceFilter=${priceFilter}&availableEditionsFilter=${availableEditionsFilter}"}
+                                url={"https://api.ledgerise.org/subcollection/get-all-items-collection?nftAddress=${nftAddress}&subcollectionId=${itemId}&priceFilter=${priceFilter}&availableEditionsFilter=${availableEditionsFilter}"}
                                 description={"Bu metod kapsamında bir bağış kampanyasının altındaki bağış ürünlerini sorgulayabilirsiniz."}
                                 importantNote={"Otorizasyona gerek yoktur."}
                                 parameters={[
@@ -819,7 +819,7 @@ export default function Home() {
                                 ? <ApiSlot
                                 title={"Kampanya yarat"}
                                 method={"POST"}
-                                url={"https://api-ledgerise.onrender.com/subcollection/create-subcollection"}
+                                url={"https://api.ledgerise.org/subcollection/create-subcollection"}
                                 description={"Bu metod şirketiniz bünyesinde bir yardım kampanyası başlatabilirsiniz. Otorizasyon gerekiyor. Şirket (login) sekmesine tıklayın. Login olduktan sonra bu api üzerinden kampanya başlatabilirsiniz."}
                                 importantNote={"*Önemli body'de formData formatını kullanmalısınız."}
                                 parameters={[
@@ -846,7 +846,7 @@ export default function Home() {
                                   ? <ApiSlot
                                   title={"Kampanya görselini güncelle"}
                                   method={"POST"}
-                                  url={"https://api-ledgerise.onrender.com/subcollection/update-subcollection-image"}
+                                  url={"https://api.ledgerise.org/subcollection/update-subcollection-image"}
                                   description={"Daha önceden başlattığınız bir kampanyanın görselini güncelleyebilirsiniz. Otorizasyon gerekiyor. Şirket (login) sekmesine tıklayın. Login olduktan sonra bu api üzerinden kampanya başlatabilirsiniz."}
                                   importantNote={"*Önemli body'de formData formatını kullanmalısınız."}
                                   header={"formdata"}
@@ -872,7 +872,7 @@ export default function Home() {
                                   : focusedApiEndpoint == 17
                                     ? <ApiSlot 
                                       title={"Bağışçı (register)"}
-                                      url={"https://api-ledgerise.onrender.com/auth/register"}
+                                      url={"https://api.ledgerise.org/auth/register"}
                                       method={"POST"}
                                       description={"Ledgerise'da bir bağışçı oluşturmaya yarar. Mevcut sisteminizdekşi register fonksiyonundan sonra çağırabilirsiniz."}
                                       importantNote={"Otorizasyona gerek yok"}
@@ -889,7 +889,7 @@ export default function Home() {
                                     : focusedApiEndpoint == 18
                                     ? <ApiSlot 
                                     title={"Bağışçı (login)"}
-                                    url={"https://api-ledgerise.onrender.com/auth/login"}
+                                    url={"https://api.ledgerise.org/auth/login"}
                                     method={"POST"}
                                     description={"Bağışçıları ilgilendiren çeşitli operasyonları gerçekleştirmeden önce login işlemi gerçekleşmeli. Hali hazırda kendi sisteminiz için bulunan login komutundan sonra çağırabilirsiniz."}
                                     importantNote={"Otorizasyona gerek yok"}
@@ -905,7 +905,7 @@ export default function Home() {
                                     : focusedApiEndpoint == 19
                                     ? <ApiSlot 
                                     title={"İhtiyaç sahibi (register)"}
-                                    url={"https://api-ledgerise.onrender.com/auth/register-beneficiary"}
+                                    url={"https://api.ledgerise.org/auth/register-beneficiary"}
                                     method={"POST"}
                                     description={"Ledgerise sisteminde bir ihtiyaç sahibi yaratmaya yarar. Hali hazırda kendi sisteminiz için bulunan register komutundan sonra çağırabilirsiniz."}
                                     importantNote={"Otorizasyona gerek yok"}
@@ -930,7 +930,7 @@ export default function Home() {
                                     : focusedApiEndpoint == 20
                                     ? <ApiSlot 
                                     title={"İhtiyaç sahibi (login)"}
-                                    url={"https://api-ledgerise.onrender.com/auth/login-beneficiary"}
+                                    url={"https://api.ledgerise.org/auth/login-beneficiary"}
                                     method={"POST"}
                                     description={"İhtiyaç sahiplerini ilgilendiren çeşitli operasyonları gerçekleştirmeden önce login işlemi gerçekleşmeli. Hali hazırda kendi sisteminiz için bulunan login komutundan sonra çağırabilirsiniz."}
                                     importantNote={"Otorizasyona gerek yok"}
@@ -953,7 +953,7 @@ export default function Home() {
                                     : focusedApiEndpoint == 21
                                     ? <ApiSlot 
                                     title={"Şirket (login)"}
-                                    url={"https://api-ledgerise.onrender.com/auth/login-company"}
+                                    url={"https://api.ledgerise.org/auth/login-company"}
                                     method={"POST"}
                                     description={"Şirket hesabınız üzerinden gerçekleştirmek istediğiniz işlemler öncesinde login olmanız gerek."}
                                     importantNote={"*Ledgerise'a entegrasyon başvurusunda bulunduğunuzda tarafınıza temin edilen şirket kodu (companyCode) ve şifre (password) ile login olabilirsiniz."}
@@ -975,7 +975,7 @@ export default function Home() {
                                     : focusedApiEndpoint == 22
                                       ? <ApiSlot
                                         title={"Kampanyalarınızı sorgulayın"}
-                                        url={"https://api-ledgerise.onrender.com/company/get-all-collections"}
+                                        url={"https://api.ledgerise.org/company/get-all-collections"}
                                         description={"Şirketinizin yürütmekte olduğu bütün bağış kampanyalarına ulaşabilirsiniz."}
                                         method={"GET"}
                                         importantNote={"*Şirket olarak login olduktan sonra bu detaylara ulaşabilirsiniz. Otorizasyon gerekiyor."}
@@ -999,7 +999,7 @@ export default function Home() {
                                       ? <ApiSlot
                                       title={"Şirket detayları"}
                                       method={"GET"}
-                                      url={"https://api-ledgerise.onrender.com/company/get-company-from-code?code=${code}"}
+                                      url={"https://api.ledgerise.org/company/get-company-from-code?code=${code}"}
                                       description={"Şirketinizin detaylarına ulaşabilirsiniz."}
                                       importantNote={"Otorizasyona gerek yok."}
                                       parameters={[
@@ -1020,7 +1020,7 @@ export default function Home() {
                                       ? <ApiSlot
                                       title={"Şirket ismi sorgula"}
                                       method={"POST"}
-                                      url={"https://api-ledgerise.onrender.com/company/get-name-from-code"}
+                                      url={"https://api.ledgerise.org/company/get-name-from-code"}
                                       description={"Şirketinizin kurum kodundan ismine ulaşabilirsiniz."}
                                       importantNote={"Otorizasyona gerek yok."}
                                       parameters={[
@@ -1034,7 +1034,7 @@ export default function Home() {
                                       ? <ApiSlot
                                       title={"Bağış ürünlerinizi sorgulayın"}
                                       method={"GET"}
-                                      url={"https://api-ledgerise.onrender.com/company/get-all-items?code=${code}"}
+                                      url={"https://api.ledgerise.org/company/get-all-items?code=${code}"}
                                       description={"Şirketiniz bütün bağış kampanyaları kapsamındaki bütün bağış ürünlerini sorgulayabilirsiniz."}
                                       importantNote={"Otorizasyona gerek yok."}
                                       parameters={[
@@ -1082,7 +1082,7 @@ export default function Home() {
                                       ? <ApiSlot
                                       title={"Depo lokasyonu sorgula"}
                                       method={"POST"}
-                                      url={"https://api-ledgerise.onrender.com/depot/get-depot-location"}
+                                      url={"https://api.ledgerise.org/depot/get-depot-location"}
                                       description={"Herhangi bir deponun isminden koordinat formatındaki lokasyonuna ulaşabilirsiniz."}
                                       importantNote={"Otorizasyona gerek yok."}
                                       parameters={[
@@ -1099,7 +1099,7 @@ export default function Home() {
                                       ? <ApiSlot
                                       title={"Fatura bilgisi sorgula"}
                                       method={"POST"}
-                                      url={"https://api-ledgerise.onrender.com/donor/get-receipt-data"}
+                                      url={"https://api.ledgerise.org/donor/get-receipt-data"}
                                       description={"Herhangi bir fatura veya sanal makbuz oluşturmak istiyorsanız bu metod ile bir fatura için gerekli bilgileri sorgulayabilirsiniz."}
                                       importantNote={"Otorizasyon gerekiyor. Bağışçının daha önceden ledgerise'a login olması gerekli. Daha fazlası için bağışçı (login) sekmesine tıklayın."}
                                       parameters={[
@@ -1120,7 +1120,7 @@ export default function Home() {
                                     ? <ApiSlot
                                     title={"Raporları sorgula"}
                                     method={"GET"}
-                                    url={"https://api-ledgerise.onrender.com/reports/get-past?reporter=${reporter}"}
+                                    url={"https://api.ledgerise.org/reports/get-past?reporter=${reporter}"}
                                     description={"Bir aksaklık olduğunda bağışçılar doğrudan blockchain üzerinden bir sorun bildirebilirler. Bu şekilde şikayetleri manipüle edilemez. Belli bir bağışçının oluşturduğu raporları sorgulayabilirsiniz."}
                                     importantNote={"Otorizasyon gerekmiyor."}
                                     parameters={[
@@ -1140,7 +1140,7 @@ export default function Home() {
                                   ? <ApiSlot
                                   title={"Rapor & sorun bildir"}
                                   method={"POST"}
-                                  url={"https://api-ledgerise.onrender.com/reports/report-issue"}
+                                  url={"https://api.ledgerise.org/reports/report-issue"}
                                   description={"Bir aksaklık olduğunda bağışçılar doğrudan blockchain üzerinden bir sorun bildirebilirler. Bu şekilde şikayetleri manipüle edilemez. Belli bir bağışçının oluşturduğu raporları sorgulayabilirsiniz."}
                                   importantNote={"Otorizasyon gerekmiyor."}
                                   parameters={[
@@ -1163,7 +1163,7 @@ export default function Home() {
                                 ? <ApiSlot
                                 title={"İhtiyaçları filtrele"}
                                 method={"POST"}
-                                url={"https://api-ledgerise.onrender.com/need/get-all-needs"}
+                                url={"https://api.ledgerise.org/need/get-all-needs"}
                                 description={"Başvuruda bulunulan ihtiyaçları filtreleyebilir ve detayları sorgulayabilirsiniz"}
                                 importantNote={"Otorizasyon gerekmiyor."}
                                 parameters={[
@@ -1196,7 +1196,7 @@ export default function Home() {
                               ? <ApiSlot
                               title={"İhtiyaç başvurusu"}
                               method={"POST"}
-                              url={"https://api-ledgerise.onrender.com/need/create"}
+                              url={"https://api.ledgerise.org/need/create"}
                               description={"İhtiyaç başvurusunu ledgerise sistemine işlemek için bu metodu çağırmalısınız. Mevcut sisteminizdeki ihtiyaç başvurusu metodundan sonra kullanınız."}
                               importantNote={"Otorizasyon gerekiyor. İhtiyaç sahibinin bu metodu çağırmadan önce login olması gerekmektedir. Detaylar için ihtiyaç sahibi (login) sekmesine göz atın."}
                               parameters={[
@@ -1231,7 +1231,7 @@ export default function Home() {
                             ? <ApiSlot
                             title={"İhtiyacı karşıla"}
                             method={"POST"}
-                            url={"https://api-ledgerise.onrender.com/need/list-need-item"}
+                            url={"https://api.ledgerise.org/need/list-need-item"}
                             description={"Bir ihtiyaç bir online market üzerinden karşılandığında (Hepsiburada, Trendyol gibi) ihtiyacın karşılandığı ürünün bilgileri ledgerise'a kaydedilir ve bağışçıya izlenilebilirlik sağlanır."}
                             importantNote={"Otorizasyon gerekiyor. Bağışçının bu metodu çağırmadan önce login olması gerekmektedir. Detaylar için bağışçı (login) sekmesine göz atın."}
                             parameters={[
@@ -1269,7 +1269,7 @@ export default function Home() {
                           : focusedApiEndpoint == 33
                             ? <ApiSlot 
                               title={"İhtiyacın karşılandığı ürünün detaylarını sorgula"}
-                              url={"https://api-ledgerise.onrender.com/need/get-need-item-need-details?needDetailsId=${needDetailsId}"}
+                              url={"https://api.ledgerise.org/need/get-need-item-need-details?needDetailsId=${needDetailsId}"}
                               method={"GET"}
                               description={"Online pazaryeri üzerinden gönderilen ihtiyaç ürünlerinin gönderim hakkındaki detaylarına ulaşabilirsiniz."}
                               importantNote={"Otorizasyon gerekiyor. Bağışçı bu metodu çağırmadan önce login olmalı. Detaylar için bağışçı (login) sekmesine tıklayın."}
@@ -1291,7 +1291,7 @@ export default function Home() {
                               ? <ApiSlot 
                                   title={"Bağışçının karşıladığı ihtiyaçları sorgula"}
                                   method={"GET"}
-                                  url={"https://api-ledgerise.onrender.com/need/get-satisfied-donations-of-donor?buyer=${buyer}"}
+                                  url={"https://api.ledgerise.org/need/get-satisfied-donations-of-donor?buyer=${buyer}"}
                                   description={"Bir bağışçının karşıladığı ihtiyaçların detaylarını listele."}
                                   importantNote={"Otorizasyona gerek yok"}
                                   parameters={[
@@ -1320,7 +1320,7 @@ export default function Home() {
                                 ? <ApiSlot 
                                 title={"Bağışçının karşıladığı ihtiyaçları sorgula"}
                                 method={"GET"}
-                                url={"https://api-ledgerise.onrender.com/need/get-needs-of-beneficiary?beneficiary_id=${beneficiary_id}"}
+                                url={"https://api.ledgerise.org/need/get-needs-of-beneficiary?beneficiary_id=${beneficiary_id}"}
                                 description={"Bir ihtiyaç sahibinin başvuruda bulunduğu bütün ihtiyaçları sorgulayın."}
                                 importantNote={"Otorizasyon gerekli. İhtiyaç sahibi bu metodu çağırmadan önce login olmalı. Detaylar için İhtiyaç sahibi (login) sekmesine tıklayın."}
                                 parameters={[
@@ -1348,7 +1348,7 @@ export default function Home() {
                                 : focusedApiEndpoint == 36
                                   ? <ApiSlot
                                     title={"Bağışla (ödeme gerçekleşmiş)"}
-                                    url={"https://api-ledgerise.onrender.com/donate/payment/already_bought"}
+                                    url={"https://api.ledgerise.org/donate/payment/already_bought"}
                                     method={"POST"}
                                     description={"Bağış toplamak için daha önceden kurulu bir ödeme sisteminiz varsa ödeme başarıyla gerçekleştikten sonra bu metodu çağırmanız gerekiyor."}
                                     importantNote={"Otorizasyon gerekiyor. Bağışçı bu metodu çağırmadan önce login olmalı. Detaylar için Bağışçı (login) sekmesine tıklayın"}
@@ -1398,7 +1398,7 @@ export default function Home() {
                                     : focusedApiEndpoint == 37
                                     ? <ApiSlot
                                     title={"Bağışla (kredi kartı)"}
-                                    url={"https://api-ledgerise.onrender.com/donate/payment/TRY"}
+                                    url={"https://api.ledgerise.org/donate/payment/TRY"}
                                     method={"POST"}
                                     description={"Kredi kartı ile bağış ürününü almak için bu metodu kullanabilirsiniz."}
                                     importantNote={"Otorizasyon gerekiyor. Bağışçı bu metodu çağırmadan önce login olmalı. Detaylar için Bağışçı (login) sekmesine tıklayın"}
@@ -1454,7 +1454,7 @@ export default function Home() {
                                     : focusedApiEndpoint == 38
                                       ? <ApiSlot
                                       title={"Bağışla (kripto)"}
-                                      url={"https://api-ledgerise.onrender.com/donate/payment/crypto/eth"}
+                                      url={"https://api.ledgerise.org/donate/payment/crypto/eth"}
                                       method={"POST"}
                                       description={"Kripto ile bağış almak için bu metodu kullanabilirsiniz."}
                                       importantNote={"Otorizasyon gerekiyor. Bağışçı bu metodu çağırmadan önce login olmalı. Detaylar için Bağışçı (login) sekmesine tıklayın"}
@@ -1505,7 +1505,7 @@ export default function Home() {
                                         ? <ApiSlot
                                           title={"tokenUri filtrele"}
                                           method={"GET"}
-                                          url={"https://api-ledgerise.onrender.com/tokenuri/get-all?companyCode=${companyCode}"}
+                                          url={"https://api.ledgerise.org/tokenuri/get-all?companyCode=${companyCode}"}
                                           description={"Önceden yarattığınız tokenUri'leri filtreleyip bağış ürünü listelemelerinde kullanabilirsiniz."}
                                           importantNote={"Otorizasyona gerek yok."}
                                           parameters={[
@@ -1522,7 +1522,7 @@ export default function Home() {
                                           ? <ApiSlot
                                             title={"tokenUri oluştur"}
                                             method={"POST"}
-                                            url={"https://api-ledgerise.onrender.com/tokenuri/create"}
+                                            url={"https://api.ledgerise.org/tokenuri/create"}
                                             description={"TokenUri'ler bir ürünün kimliğini temsil eder. Resim ve özellikler gibi veriler içerir. TokenUri gereken işlemlerden önce bu metod ile tokenUri oluşturmanız gerekir."}
                                             importantNote={"Otorizasyon gerekiyor. Bu metodu çağırmadan önce şirket olarak login olmalısınız. Detaylar için Şirket (login) sekmesine tıklayın. *Önemli: Body formData formatında olmalı."}
                                             parameters={[
@@ -1543,7 +1543,7 @@ export default function Home() {
                                             ? <ApiSlot 
                                               title={"Görselin arka planını blur'le"}
                                               method={"GET"}
-                                              url={"https://api-ledgerise.onrender.com/privacy/blur-visual?ipfsGatewayTokenUri=${ipfsGatewayTokenUri}&x=${x}&y=${y}"}
+                                              url={"https://api.ledgerise.org/privacy/blur-visual?ipfsGatewayTokenUri=${ipfsGatewayTokenUri}&x=${x}&y=${y}"}
                                               description={"Teslim noktasındaki doğrulama görselinin arka planında ihtiyaç sahibine ait hassas bilgiler (oturduğu evin görüntüsü, kişilerin görüntüsü) yer alabilir. Gerekli izin alınmadıysa bu hassas görüntüleri bağışçıya göstermemek için arka planı buzlamak gerekir."}
                                               importantNote={"Otorizasyona gerek yoktur. Bu metod response olarak arka planı blurlenmiş fotoğrafın base64 string'ini return eder."}
                                               parameters={[
@@ -1561,7 +1561,7 @@ export default function Home() {
                                                   <div className='text-3xl mb-4 text-gray-600 font-medium'>Görüntü doğrulaması</div>
                                                   <div className='flex w-full items-baseline'>
                                                     <div className='w-fit h-4 mr-2 bg-orange-600 text-slate-50 text-xxs flex justify-between items-center px-3 py-0.5 rounded-full'>SOCKET</div>
-                                                    <div className='text-slate-600 text-sm'>https://api-ledgerise.onrender.com/realtime</div>
+                                                    <div className='text-slate-600 text-sm'>https://api.ledgerise.org/realtime</div>
                                                   </div>
                                                   <div className='mt-4 mb-4'>
                                                     <div className='text-lg mb-4 text-slate-500'>Görüntü doğrulaması</div>
@@ -1585,7 +1585,7 @@ export default function Home() {
                                                           <CodeArea headerComponent={<div className='text-sm'>React Native</div>}
                                                             text={`import io from 'socket.io-client'
 
-const [socket, setSocket] = useState(io(https://api-ledgerise.onrender.com/realtime));
+const [socket, setSocket] = useState(io(https://api.ledgerise.org/realtime));
 
 const chunkSize = 2048;
 for (let offset = 0; offset < imageBase64.length; offset += chunkSize) {
@@ -1721,7 +1721,7 @@ socket.on("upload", async (data: string) => {
                                                 ? <ApiSlot 
                                                   title={"Bağış ürünü güncelle"}
                                                   method={"POST"}
-                                                  url={"https://api-ledgerise.onrender.com/active-item/update-item"}
+                                                  url={"https://api.ledgerise.org/active-item/update-item"}
                                                   parameters={[
                                                     ["nftAddress", "string", "Bağış ürününün NFT adresi (nftAddress değeri).", true],
                                                     ["tokenId", "number", "Bağış ürününün tokenId değeri Blockchain id'si olarak kullanılır.", true],
@@ -1773,7 +1773,7 @@ socket.on("upload", async (data: string) => {
                                                   ? <ApiSlot
                                                     title={"Bağış ürünü iptal et"}
                                                     method={"POST"}
-                                                    url={"https://api-ledgerise.onrender.com/active-item/cancel-item"}
+                                                    url={"https://api.ledgerise.org/active-item/cancel-item"}
                                                     parameters={[
                                                       ["nftAddress", "string", "Bağış ürününün NFT adresi (nftAddress değeri).", true],
                                                       ["tokenId", "number", "Bağış ürününün tokenId değeri Blockchain id'si olarak kullanılır.", true],  
