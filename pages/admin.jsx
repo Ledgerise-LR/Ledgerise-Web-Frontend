@@ -15,6 +15,7 @@ import QrCode from "react-qr-code";
 import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
 import { URL, PORT } from '@/serverConfig';
+import { QRCode } from 'react-qrcode-logo';
 
 
 export default function Home() {
@@ -24,7 +25,7 @@ export default function Home() {
 
     const canvas = await html2canvas(div);
 
-    const pdf = new jsPDF();
+    const pdf = new jsPDF("l");
     const imgData = canvas.toDataURL('image/png');
 
     pdf.addImage(imgData, 'PNG', pdf.internal.pageSize.getWidth() * 0 * -1, 0, pdf.internal.pageSize.getWidth() * 1, pdf.internal.pageSize.getHeight());
@@ -32,8 +33,8 @@ export default function Home() {
     pdf.save(fileName);
   };
 
-  const handleDownloadPDF = () => {
-    downloadAsPDF('main', 'LedgeriseQRs.pdf');
+  const handleDownloadPDF = (qrValue) => {
+    downloadAsPDF('QRTemplate', `LR_${qrValue}.pdf`);
   };
 
   const Map = useMemo(() => dynamic(
@@ -587,7 +588,7 @@ export default function Home() {
     updateUI();
   }, [isWeb3Enabled, assets, listingStatus, listItemPrice]);
 
-  const handleQrCodeHover = (e, tokenId) => {
+  const handleQrCodeHover = (e, nftAddress, tokenId, donors) => {
 
     const printButtonWrapper = document.createElement("div");
     const printButton = document.createElement("div");
@@ -628,25 +629,35 @@ export default function Home() {
 
       e.preventDefault();
 
-      const qrCodeSvgs = document.getElementsByClassName(`asset-${tokenId}`);
+      // const qrCodeSvgs = document.getElementsByClassName(`qr.${nftAddress}-${tokenId}`);
 
-      for (let i = 0; i < qrCodeSvgs.length; i++) {
-        const qrCodeSvg = qrCodeSvgs[i];
-        const copyQrCodeSvg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-        copyQrCodeSvg.setAttribute("width", "35");
-        copyQrCodeSvg.setAttribute("height", "35");
-        copyQrCodeSvg.setAttribute("viewBox", "0 0 21 21");
+      // for (let i = 0; i < qrCodeSvgs.length; i++) {
+      //   const qrCodeSvg = qrCodeSvgs[i];
+      //   const copyQrCodeSvg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+      //   copyQrCodeSvg.setAttribute("width", "35");
+      //   copyQrCodeSvg.setAttribute("height", "35");
+      //   copyQrCodeSvg.setAttribute("viewBox", "0 0 21 21");
 
-        copyQrCodeSvg.innerHTML = qrCodeSvg.innerHTML;
+      //   copyQrCodeSvg.innerHTML = qrCodeSvg.innerHTML;
 
-        main.appendChild(copyQrCodeSvg);
+      //   main.appendChild(copyQrCodeSvg);
 
-        if (i % 4 == 0) {
-          handleDownloadPDF();
-          main.innerHTML = "";
-        }
-      }
+      //   if (i % 4 == 0) {
+      //     handleDownloadPDF();
+      //     main.innerHTML = "";
+      //   }
+      // }
 
+      axios.get(`${URL}:${PORT}/active-item/get-general-qr-data?nftAddress=${nftAddress}&tokenId=${tokenId}`)
+        .then(res => {
+          const data = res.data.data;
+          const qrValue = `${tokenId}-${JSON.stringify(donors)}`;
+          setSelectedQrCodeValue(`${tokenId}-${JSON.stringify(donors)}`);
+          setGeneralQrCodeData(data);
+          setTimeout(() => {
+            handleDownloadPDF(qrValue);
+          }, 1000)
+        })
     })
 
     printButtonWrapper.addEventListener("mouseleave", (e) => {
@@ -657,6 +668,14 @@ export default function Home() {
       }
     })
   }
+
+
+  const [selectedQrCodeValue, setSelectedQrCodeValue] = useState("empty");
+  const [generalQrCodeData, setGeneralQrCodeData] = useState({
+    stampLocation: {latitude: 0, longitude: 0},
+    shipLocation: {latitude: 0, longitude: 0},
+    deliverLocation: {latitude: 0, longitude: 0}
+  });
 
 
   return (
@@ -760,7 +779,6 @@ export default function Home() {
                               <div className='bg-slate-200 mb-5 p-8'>
                                 <div className='flex justify-between px-4'>
                                   <div className='mb-4 text-xl'>{asset.tokenName} - {asset.tokenId}</div>
-                                  <div className='bg-blue-900 text-slate-50 rounded-xl flex justify-center items-center px-4 cursor-pointer'>Print All</div>
                                 </div>
                                 <hr className='bg-slate-900 border-slate-800 my-4' />
                                 <div className='flex'>
@@ -786,7 +804,7 @@ export default function Home() {
                                                 }
                                                 <div className='w-full h-full absolute top-0 l-0 z-10'
                                                   onMouseEnter={(e) => {
-                                                    handleQrCodeHover(e, asset.tokenId);
+                                                    handleQrCodeHover(e, asset.nftAddress, asset.tokenId, [event.openseaTokenId]);
                                                   }}></div>
                                               </div>
                                             )
@@ -809,12 +827,13 @@ export default function Home() {
                                                   return (
                                                     <div className='w-24 flex flex-col items-center aspect-square mr-10 relative p-4 bg-slate-100 cursor-pointer'>
                                                       <QrCode
-                                                        className={`w-full z-10 h-full asset-${asset.tokenId}`} value={`${asset.tokenId}-${JSON.stringify(eachCollaboratorCluster)}`}
+                                                        id={`qr.${asset.nftAddress}-${asset.tokenId}-${JSON.stringify(eachCollaboratorCluster)}`}
+                                                        className={`w-full z-10 h-full`} value={`${asset.tokenId}-${JSON.stringify(eachCollaboratorCluster)}`}
                                                       />
                                                       <div>{`${asset.tokenId}-${JSON.stringify(eachCollaboratorCluster)}`}</div>
                                                       <div className='w-full h-full absolute top-0 l-0 z-10'
                                                         onMouseEnter={(e) => {
-                                                          handleQrCodeHover(e, asset.tokenId);
+                                                          handleQrCodeHover(e, asset.nftAddress, asset.tokenId, eachCollaboratorCluster);
                                                         }}></div>
                                                     </div>
                                                   )
@@ -1024,7 +1043,7 @@ export default function Home() {
               </div>
               <div className="flex flex-1 flex-col mt-8 mb-8">
                 <h1>Create Whatsapp Verifier (doesn't include blockchain)</h1>
-                <input className="p-2 border-2 w-auto mb-4" type="text" placeholder="telegram Id" onChange={(e) => { setWpVerifierTelegramId(e.currentTarget.value) }} />s
+                <input className="p-2 border-2 w-auto mb-4" type="text" placeholder="telegram Id" onChange={(e) => { setWpVerifierTelegramId(e.currentTarget.value) }} />
                 <input className="p-2 border-2 w-auto mb-4" type="text" placeholder="phone number" onChange={(e) => { setWpVerifierPhoneNumber(e.currentTarget.value) }} />
                 <input className="p-2 border-2 w-auto mb-4" type="text" placeholder="qr code data" onChange={(e) => { setWpVerifierQrCodeData(e.currentTarget.value) }} />
                 <input className="p-2 border-2 w-auto mb-4" type="text" placeholder="nft address" onChange={(e) => { setWpVerifierNftAddress(e.currentTarget.value) }} />
@@ -1044,6 +1063,61 @@ export default function Home() {
                     })
                     : ("")
                 }
+              </div>
+            </div>
+          </div>
+          <div className='w-full flex justify-center mb-12'>
+            <div id='QRTemplate' className='w-128 h-fit border rounded-lg border-black p-4'>
+              <div className='flex'>
+                <div className='w-1/4'>
+                  <div className='w-full aspect-square relative flex justify-center items-center'>
+                    <QRCode logoImage='/qrlogo.png' className='w-full h-full' value={`${selectedQrCodeValue}`} />
+                  </div>
+                  <div className='w-full flex items-center flex-col'>
+                    <div className='text-xs'>bağış bilgisi</div>
+                    <div className='-mt-1 text-xs font-bold'>{selectedQrCodeValue}</div>
+                  </div>
+                  <div className='flex w-full h-24'><QrCode className='w-1/2 aspect-square h-full mr-4' value={`${selectedQrCodeValue}`} /><QrCode className='w-1/2 aspect-square h-full' value={`${selectedQrCodeValue}`} /></div>
+                </div>
+                <div className="w-3/4 ml-4 h-fit">
+                  <div className='border border-black'>
+                    <div className='w-full h-4 bg-black'></div>
+                    <div className='pb-4 border-b border-black h-fit text-sm'>Kampanya ismi: <strong>{generalQrCodeData.campaignName || "empty"}</strong></div>
+                    <div className='pb-4 border-b border-black h-fit text-sm'>Ürüm ismi: <strong>{generalQrCodeData.assetName || "empty"}</strong></div>
+                    <div className='flex border-b border-black'>
+                      <div className='border-r border-black p-2 text-sm'>
+                        <div className='text-xs'>Üretim lokasyonu</div>
+                        <div className='font-bold'>{generalQrCodeData.stampLocation.latitude || ""}, {generalQrCodeData.stampLocation.longitude || ""}</div>
+                      </div>
+                      <div className='border-r border-black p-2 text-sm'>
+                        <div className='text-xs'>Depo lokasyonu</div>
+                        <div className='font-bold'>{generalQrCodeData.shipLocation.latitude || ""}, {generalQrCodeData.shipLocation.longitude || ""}</div>
+                      </div>
+                      <div className='p-2 text-sm'>
+                        <div className='text-xs'>Teslim lokasyonu</div>
+                        <div className='font-bold'>{generalQrCodeData.deliverLocation.latitude || ""}, {generalQrCodeData.deliverLocation.longitude || ""}</div>
+                      </div>
+                    </div>
+                    <div>
+                      <div className='border-b border-black pb-2'>
+                        <div className='text-xs'>{"Pazaryeri  adresi"}</div>
+                        <div className='text-xs font-bold'>{generalQrCodeData.marketplaceAddress}</div>
+                      </div>
+                      <div className='border-b border-black pb-2'>
+                        <div className='text-xs'>{"Ana  koleksiyon  adresi"}</div>
+                        <div className='text-xs font-bold'>{generalQrCodeData.nftAddress}</div>
+                      </div>
+                      <div className='pb-2'>
+                        <div className='text-xs'>{"LR  Lens  adresi"}</div>
+                        <div className='text-xs font-bold'>{generalQrCodeData.ledgeriseLensAddress}</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className='text-white bg-black w-fit font-bold px-2 ml-auto mt-8 mb-4 pb-4 h-8'>BAĞIŞ ÜRÜNÜDÜR</div>
+                  <div className='h-12 w-fit ml-auto'>
+                    <img className='w-full h-full' src="/labellogo.png" alt="labellogo" />
+                  </div>
+                </div>
               </div>
             </div>
           </div>
