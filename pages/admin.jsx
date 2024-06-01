@@ -656,6 +656,14 @@ export default function Home() {
           setGeneralQrCodeData(data);
           setTimeout(() => {
             handleDownloadPDF(qrValue);
+            axios.post(`${URL}:${PORT}/active-item/mark-qr-code-as-printed`, {
+              nftAddress: nftAddress,
+              tokenId: tokenId,
+              openseaTokenIdArray: donors
+            }, (res) => {
+              if (res.data.success) return window.location.reload();
+              else alert("error");
+            })
           }, 1000)
         })
     })
@@ -831,6 +839,17 @@ export default function Home() {
                                                         className={`w-full z-10 h-full`} value={`${asset.tokenId}-${JSON.stringify(eachCollaboratorCluster)}`}
                                                       />
                                                       <div>{`${asset.tokenId}-${JSON.stringify(eachCollaboratorCluster)}`}</div>
+                                                      {
+                                                        asset.history.map(event => {
+                                                          return event.isQrCodePrinted && event.openseaTokenId == eachCollaboratorCluster[0]
+                                                          ? (
+                                                            <div className='text-2xl z-30 absolute w-full h-full left-0 top-0 flex justify-center items-center bg-opacity-10 bg-black'>
+                                                              ✅
+                                                            </div>
+                                                          )
+                                                          : ("")
+                                                        })
+                                                      }
                                                       <div className='w-full h-full absolute top-0 l-0 z-10'
                                                         onMouseEnter={(e) => {
                                                           handleQrCodeHover(e, asset.nftAddress, asset.tokenId, eachCollaboratorCluster);
@@ -1067,7 +1086,7 @@ export default function Home() {
             </div>
           </div>
           <div className='w-full flex justify-center mb-12'>
-            <div id='QRTemplate' className='w-128 h-fit border rounded-lg border-black p-4'>
+            <div id='QRTemplate' className='w-128 py-12 h-fit border rounded-lg border-black p-4'>
               <div className='flex'>
                 <div className='w-1/4'>
                   <div className='w-full aspect-square relative flex justify-center items-center'>
@@ -1113,9 +1132,11 @@ export default function Home() {
                       </div>
                     </div>
                   </div>
-                  <div className='text-white bg-black w-fit font-bold px-2 ml-auto mt-8 mb-4 pb-4 h-8'>BAĞIŞ ÜRÜNÜDÜR</div>
-                  <div className='h-12 w-fit ml-auto'>
-                    <img className='w-full h-full' src="/labellogo.png" alt="labellogo" />
+                  <div className='flex items-center'>
+                    <div className='ml-auto mr-4 text-white bg-black w-fit font-bold px-2 mt-4 mb-4 pb-4 h-8'>BAĞIŞ ÜRÜNÜDÜR</div>
+                    <div className='h-12 w-fit'>
+                      <img className='w-full h-full' src="/labellogo.png" alt="labellogo" />
+                    </div>
                   </div>
                 </div>
               </div>
