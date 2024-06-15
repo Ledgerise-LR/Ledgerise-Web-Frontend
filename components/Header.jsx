@@ -43,7 +43,6 @@ export default function Header(isApiHeader) {
   }, []);
 
   useEffect(() => {
-    console.log(localStorage.getItem("_id"))
     axios.post(`${URL}:${PORT}/auth/authenticate`, {
       _id: localStorage.getItem("_id") || "null"
     })
@@ -65,8 +64,8 @@ export default function Header(isApiHeader) {
   }
 
   return (
-    <nav className="overflow-x-hidden z-30 w-full bg-white">
-      <div id="hamburger-menu" className="hamburger-menu w-screen h-screen absolute bg-white z-20 p-8 transition-all hidden overflow-x-hidden">
+    <nav className="overflow-x-hidden z-0 w-full bg-white">
+      <div id="hamburger-menu" className="hamburger-menu w-screen h-screen absolute bg-white z-0 p-8 transition-all hidden overflow-x-hidden">
         <div className="flex justify-between items-center overflow-x-hidden">
           <a href="/">
             <img className="h-12" src="logo.svg" alt="Ledgerise | Bağış hiç olmadığı kadar şeffaf" />
@@ -128,13 +127,13 @@ export default function Header(isApiHeader) {
       {
         windowSize.width > 800
           ? (
-            <div className={`p-2 z-20 bg-white border-b-2 flex flex-row justify-between items-center w-full overflow-x-hidden ${router.pathname == "/api-documentation" ? "h-16 overflow-y-hidden" : "h-16 overflow-y-hidden"}`}>
-      <h1 className={`pl-12 z-20 ${router.pathname == "/api-documentation" ? "w-36" : "w-36"}`}>
+            <div className={`p-2 z-0 bg-white border-b-2 flex flex-row justify-between items-center w-full overflow-x-hidden ${router.pathname == "/api-documentation" ? "h-16 overflow-y-hidden" : "h-16 overflow-y-hidden"}`}>
+      <h1 className={`pl-12 z-0 ${router.pathname == "/api-documentation" ? "w-36" : "w-36"}`}>
         <a href="/">
           <img className="h-20" src="logo.svg" alt="Ledgerise | Bağış hiç olmadığı kadar şeffaf" />
         </a>
       </h1>
-      <div className="z-30 w-fit flex flex-row items-center" style={{color: "#343434"}}>
+      <div className="z-0 w-fit flex flex-row items-center" style={{color: "#343434"}}>
         <Link href="/collections" className="p-6 text-sm font-semibold mr-4" >
           Kampanyalar
         </Link>
@@ -147,25 +146,27 @@ export default function Header(isApiHeader) {
         {
           router.pathname == "/admin"
             ? <ConnectButton moralisAuth={false} />
-            : (<div className="mr-36 h-fit">
-              {
-                isAuthenticated
-                  ? (<div className="flex items-center">
-                    <div className="text-sm">{username}</div>
-                    <div className="w-6 ml-2 text-sm cursor-pointer hover:animate-pulse" onClick={() => { handleLogoutClick() }}>
-                      <img src="/logout.png" alt="Logout" />
-                    </div>
-                    <div>
-                      <img src="/user.png" alt="" />
-                    </div>
-                  </div>)
-                  : (
-                    <div className="flex items-center border-2 rounded-full pr-2">
-                      <a href="/login" onClick={() => { setLastVisitedUrl() }} className="border-2 text-sm rounded-full px-12 py-2 mr-2 bg-blue-900 text-slate-100 cursor-pointer hover:bg-blue-800 transition-all">Login</a>
-                    </div>
-                  )
-              }
+            : router.pathname != "/company" 
+              ? (<div className="mr-36 h-fit">
+                {
+                  isAuthenticated
+                    ? (<div className="flex items-center">
+                      <div className="text-sm">{username}</div>
+                      <div className="w-6 ml-2 text-sm cursor-pointer hover:animate-pulse" onClick={() => { handleLogoutClick() }}>
+                        <img src="/logout.png" alt="Logout" />
+                      </div>
+                      <div>
+                        <img src="/user.png" alt="" />
+                      </div>
+                    </div>)
+                    : (
+                      <div className="flex items-center border-2 rounded-full pr-2">
+                        <a href="/login" onClick={() => { setLastVisitedUrl() }} className="border-2 text-sm rounded-full px-12 py-2 mr-2 bg-blue-900 text-slate-100 cursor-pointer hover:bg-blue-800 transition-all">Login</a>
+                      </div>
+                    )
+                }
             </div>)
+            : ("")
         }
       </div>
             </div>

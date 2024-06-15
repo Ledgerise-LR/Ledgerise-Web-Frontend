@@ -11,11 +11,11 @@ import blockExplorerMapping from "../constants/blockExplorerMapping.json";
 import NFTBox from '../components/NftCard';
 import axios from "axios";
 import dynamic from "next/dynamic";
-import QrCode from "react-qr-code";
 import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
 import { URL, PORT } from '@/serverConfig';
 import { QRCode } from 'react-qrcode-logo';
+import QrCode from "react-qr-code";
 
 
 export default function Home() {
