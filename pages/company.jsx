@@ -385,7 +385,7 @@ export default function Home() {
 
 
   return (
-    <div className='w-screen h-fit py-8 px-12 bg-slate-50'>
+    <div className='w-screen h-fit py-8 px-12 bg-slate-50 scroll-smooth'>
         {
           isLabelModalOpen
             ? (<Modal title={"Etiketlerinizi görüntüleyin, indirin ve yazdırın"} okText='İleri' cancelText='geri' isCancelDisabled={true} width='100%' onCancel={() => hideLabelModal()}  onOk={() => hideLabelModal()} onCloseButtonPressed={() => hideLabelModal()}>
@@ -717,26 +717,55 @@ export default function Home() {
                       </Modal>
                     : ("")
         }
-        <div className='w-full h-full'>
-        <div className='w-3/4 h-fit border pb-4 bg-white rounded-xl overflow-hidden'>
-          <div className='w-full h-24 bg-[linear-gradient(0deg,rgba(255,100,0,0.2)_0%,rgba(20,50,150,0.2)_75%)]'></div>
-          <div className='flex w-full px-24 mb-8'>
-            <div className='h-32 aspect-square shadow-md mr-4 -mt-12'>
-              <img className='w-full h-full' src={company.image} alt={company.name} />
+        <div className='w-full h-full scroll-smooth'>
+          <div className='flex w-full'>
+            <div className='w-3/4 h-80 border pb-4 bg-white rounded-xl overflow-hidden mr-4'>
+              <div className='w-full h-24 bg-[linear-gradient(0deg,rgba(255,100,0,0.2)_0%,rgba(20,50,150,0.2)_75%)]'></div>
+              <div className='flex w-full px-24 mb-8'>
+                <div className='h-32 aspect-square shadow-md mr-4 -mt-12'>
+                  <img className='w-full h-full' src={company.image} alt={company.name} />
+                </div>
+                <div>
+                  <div className='text-slate-600 uppercase text-4xl font-semibold'>{company.name}</div>
+                  <div className='text-sm text-slate-500 -mt-2'>{company.code}</div>
+                  <div className='text-sm text-slate-600'>{company.receipientName} • {(company.charityAddress || "")} • {company.IBAN} </div>
+                </div>
+              </div>
+              <div className='w-full flex justify-end text-gray-700 px-4'>
+                <div className='font-semibold mx-2'>{statistics.collectionCount}</div> bağış kampanyası
+                <div className='font-semibold mx-2'>• {statistics.donationCount}</div> bağışçı
+                <div className='font-semibold mx-2'>• {statistics.activeItemsCount}</div> bağış ürünü
+                <div className='font-semibold mx-2'>• {statistics.verificationCount}</div> gönderi
+              </div>
             </div>
-            <div>
-              <div className='text-slate-600 uppercase text-4xl font-semibold'>{company.name}</div>
-              <div className='text-sm text-slate-500 -mt-2'>{company.code}</div>
-              <div className='text-sm text-slate-600'>{company.receipientName} • {(company.charityAddress || "")} • {company.IBAN} </div>
+            <div className='w-1/4 bg-white rounded-xl border p-4 h-80 overflow-y-auto'>
+              <div className='text-sm uppercase font-semibold text-gray-600 border-b mb-4'>Kampanyalar</div>
+              {
+                collections && collections.length
+                  ? collections.map(collection => {
+                    return (
+                        <div 
+                        onClick={(e) => {
+                          e.preventDefault();
+                          document.getElementById(`${collection.nftAddress}-${collection.subcollectionId}`).scrollIntoView({ behavior: "smooth" });
+                        }} className='flex w-full items-center mb-2 border-b pb-1 cursor-pointer'>
+                          <div className='mr-4'><img className="w-3" src="right-arrow.png" alt="right-arrow" /></div>
+                          <div className='text-sm'>
+                            <div className='font-semibold text-gray-800 hover:text-gray-500 transition-all'>{collection.name}</div>
+                            <div className='text-xs text-gray-500'>{prettyAddress(collection.nftAddress)}-{collection.subcollectionId}</div>
+                          </div>
+                        </div>
+                    )
+                  })
+                  : ("")
+              }
+              <div className='flex w-full items-center'>
+                <div className='mr-4'><img className="w-3" src="right-arrow.png" alt="right-arrow" /></div>
+                <div className='w-3/5 bg-gray-100 h-8 mr-4'></div>
+                <div className='w-8 flex justify-center items-center text-slate-100 bg-opacity-90 hover:bg-opacity-100 transition-all cursor-pointer rounded-full aspect-square bg-green-500 mr-4' onClick={() => {showCreateCampaignModal()}}>+</div>
+              </div>
             </div>
           </div>
-          <div className='w-full flex justify-end text-gray-700 px-4'>
-            <div className='font-semibold mx-2'>{statistics.collectionCount}</div> bağış kampanyası
-            <div className='font-semibold mx-2'>• {statistics.donationCount}</div> bağışçı
-            <div className='font-semibold mx-2'>• {statistics.activeItemsCount}</div> bağış ürünü
-            <div className='font-semibold mx-2'>• {statistics.verificationCount}</div> gönderi
-          </div>
-        </div>
         <div className='w-full h-full'>
           <div className='uppercase font-semibold text-lg text-gray-600 mb-4'>Kampanyalarım</div>
           <div className='bg-white rounded-lg'>
@@ -744,7 +773,7 @@ export default function Home() {
               collections && collections.length > 0
               ? collections.map(collection => {
                 return (
-                  <div className='w-full rounded shadow-md mb-4 p-4'>
+                  <div className='w-full rounded shadow-md mb-4 p-4' id={`${collection.nftAddress}-${collection.subcollectionId}`}>
                     <div>
                       <div className='font-semibold text-gray-700'>{collection.name} <span className='text-gray-500 font-normal text-sm'># {collection.subcollectionId}</span></div>
                       <div className='text-xs -mt-1 text-gray-600'>{collection.assets.length} bağış ürünü</div>

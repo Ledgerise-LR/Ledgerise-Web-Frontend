@@ -1,5 +1,5 @@
 
-const URL = "http://localhost";
-const PORT = "4000";
+const URL = "https://api.ledgerise.org";
+const PORT = "";
 
 module.exports = { URL, PORT };

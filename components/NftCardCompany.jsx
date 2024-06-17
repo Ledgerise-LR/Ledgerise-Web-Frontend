@@ -59,17 +59,17 @@ export default function NFTBoxCompany({ price, tokenUri, availableEditions, hand
                         onClick={() => { handleCancelItem() }}
                         text="Ürünü iptal et"
                         textColor="#f4f4f4"
-                        textSize={16}
-                        width={250}
+                        textSize={14}
+                        width={200}
                       />
                       <PopoverElement
                         backgroundColor="transparent"
                         height={30}
                         onClick={() => { handleUpdateItem() }}
-                        text="Ürün fiyatını güncelle"
+                        text="Ürünü güncelle"
                         textColor="#f4f4f4"
-                        textSize={16}
-                        width={250}
+                        textSize={14}
+                        width={200}
                       />
                     </PopoverDropdown>
                   </div>
