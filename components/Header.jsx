@@ -65,7 +65,7 @@ export default function Header(isApiHeader) {
 
   return (
     <nav className="overflow-x-hidden z-0 w-full bg-white">
-      <div id="hamburger-menu" className="hamburger-menu w-screen h-screen absolute bg-white z-0 p-8 transition-all hidden overflow-x-hidden">
+      <div id="hamburger-menu" className="hamburger-menu w-screen h-screen absolute bg-white z-20 p-8 transition-all hidden overflow-x-hidden">
         <div className="flex justify-between items-center overflow-x-hidden">
           <a href="/">
             <img className="h-12" src="logo.svg" alt="Ledgerise | Bağış hiç olmadığı kadar şeffaf" />
