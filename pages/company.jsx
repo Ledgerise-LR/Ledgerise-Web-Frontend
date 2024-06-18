@@ -432,7 +432,7 @@ export default function Home() {
                    qrCodesArray
                     ? qrCodesArray.map(eachQrData => {
                       if (eachQrData) return (
-                        <div className='relative w-1/2'>
+                        <div className='relative w-102'>
                         <div className='w-full p-4 py-12 relative z-0' id={`${generalQrCodeData.tokenId}-[${eachQrData}]`}>
                         <div className='flex'>
                         <div className='w-1/4'>
