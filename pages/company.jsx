@@ -92,7 +92,7 @@ export default function Home() {
 
     const companyCode = localStorage.getItem("company_code");
     if (companyCode) {
-      axios.get(`${URL}:${PORT}/auth/authenticate-verifier?code=${companyCode}`)
+      axios.get(`${URL}:${PORT}/auth/authenticate-company?code=${companyCode}`)
         .then((res) => {
           const data = res.data;
           if (data.success && data.company) {
