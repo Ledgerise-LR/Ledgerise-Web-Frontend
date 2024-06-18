@@ -1,7 +1,7 @@
 
 import { useState, useEffect, useMemo } from 'react';
 import axios from "axios";
-import { Modal, useNotification, Upload, Loading } from 'web3uikit';
+import { Modal, useNotification, Checkbox, Input, Loading } from 'web3uikit';
 import NFTBoxCompany from '@/components/NftCardCompany';
 import blockExplorerMapping from "../constants/blockExplorerMapping.json";
 import { URL, PORT } from '@/serverConfig';
@@ -383,6 +383,43 @@ export default function Home() {
     setIsUpdateModalOpen(false);
   }
 
+  
+  const [isDonateModalOpen, setIsDonateModalOpen] = useState(false);
+  const [donateAsset, setDonateAsset] = useState({});
+
+  const [donateAssetDonorEmail, setDonateAssetDonorEmail] = useState("");
+  const [donateAssetIsApprovalChecked, setDonateAssetIsApprovalChecked] = useState(false);
+
+  const showDonateModal = (asset) => {
+    setIsDonateModalOpen(true);
+    setDonateAsset(asset);
+  }
+  
+  const hideDonateModal = () => {
+    setIsDonateModalOpen(false);
+    setDonateAsset({});
+  } 
+
+  const handleDonateAsset = () => {
+    if (donateAssetIsApprovalChecked && donateAssetDonorEmail && donateAsset.nftAddress && donateAsset.tokenId.toString()) {
+      axios.post(`${URL}:${PORT}/donate/payment/already_bought`, {
+        nftAddress: donateAsset.nftAddress,
+        tokenId: donateAsset.tokenId,
+        phone_number: donateAssetDonorEmail
+      })
+        .then(res => {
+          if (res.data.success && !res.data.err) {
+            dispatch({  type: "success",  message: "Manuel bağış başarıyla kaydedildi",  title: "İşlem tamamlandı",  position: "topR"});
+            updateUI();
+          } else if (!res.data.success && res.data.err) {
+            dispatch({  type: "warning",  message: "Manuel bağış girdisi kaydedilemedi",  title: "Tamamlanmayan işlem",  position: "topR"});
+          }
+        })
+    } else {
+      dispatch({  type: "warning",  message: "Manuel bağış girdisi kaydedilemedi",  title: "Tamamlanmayan işlem",  position: "topR"});
+    }
+  }
+
 
   return (
     <div className='w-screen h-fit py-8 px-12 bg-slate-50 scroll-smooth'>
@@ -715,7 +752,45 @@ export default function Home() {
                             </div>
                         </div>
                       </Modal>
-                    : ("")
+                    : isDonateModalOpen
+                        ? (
+                          <Modal title={"Manuel bağış ekleyin"} okText='İleri' cancelText='geri' isCancelDisabled={true} width='50%' onCancel={() => hideDonateModal()}  onOk={() => hideDonateModal()} onCloseButtonPressed={() => hideDonateModal()}>
+                            {
+                              donateAsset
+                                ? <div className='w-full'>
+                                <div className='mb-4'>
+                                  <Input
+                                    onChange={(e) => {setDonateAssetDonorEmail(e.target.value)}}
+                                    width='full'
+                                    label="Bağışçı e-posta adresi"
+                                    placeholder="hello@ledgerise.org"
+                                    type="email"
+                                    validation={{
+                                      maxLength: 48,
+                                      minLength: 1,
+                                      pattern: '^[^@s]+@[^@s]+.[^@s]+$',
+                                      regExpInvalidMessage: 'That is not a valid email address',
+                                      required: true
+                                    }}
+                                  />
+                                </div>
+                                <div>
+                                  <Checkbox
+                                    id={`${donateAsset.nftAddress}-${donateAsset.tokenId}`}
+                                    label={<div className='text-sm'>{`Yukarıda e-posta adresini belirttiğim bağışçının ${donateAsset.price} TL değerindeki ${donateAsset.name} ürününü ayni veya nakdi surette bağışladığını onaylıyorum.`}</div>}
+                                    name={`${donateAsset.nftAddress}-${donateAsset.tokenId}-checkbox`}
+                                    onChange={(e) => {setDonateAssetIsApprovalChecked(e.target.value.toString() == "false")}}
+                                  />
+                                </div>
+                                <div className='px-4 flex justify-center items-center bg-blue-500 w-fit text-slate-50 font-semibold py-2 rounded-lg my-4 cursor-pointer' onClick={() => { handleDonateAsset() }}>
+                                  Bağışı kaydet
+                                </div>
+                              </div>
+                                : ("")
+                            }
+                          </Modal>
+                        )
+                        : ("")
         }
         <div className='w-full h-full scroll-smooth'>
           <div className='flex w-full'>
@@ -811,6 +886,7 @@ export default function Home() {
                                   }}
                                   handleCancelItem={() => { handleCancelAsset(collection.nftAddress, asset.tokenId) }}
                                   handleUpdateItem={() => { showUpdateModal(asset) }}
+                                  handleDonateItemClick={() => { showDonateModal(asset) }}
                                 />
                                 {
                                   asset.isCanceled

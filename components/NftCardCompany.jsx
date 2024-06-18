@@ -6,7 +6,7 @@ import { ethers } from "ethers";
 import { useRouter } from "next/router";
 import { getEthToUsdRate } from '@/utils/getEthToUsdRate';
 
-export default function NFTBoxCompany({ price, tokenUri, availableEditions, handleViewLabelsClick, handleCancelItem, handleUpdateItem }) {
+export default function NFTBoxCompany({ price, tokenUri, availableEditions, handleViewLabelsClick, handleCancelItem, handleUpdateItem, handleDonateItemClick }) {
 
   const [imageURI, setImageURI] = useState("");
   const [tokenName, setTokenName] = useState("");
@@ -67,6 +67,15 @@ export default function NFTBoxCompany({ price, tokenUri, availableEditions, hand
                         height={30}
                         onClick={() => { handleUpdateItem() }}
                         text="Ürünü güncelle"
+                        textColor="#f4f4f4"
+                        textSize={14}
+                        width={200}
+                      />
+                      <PopoverElement
+                        backgroundColor="transparent"
+                        height={30}
+                        onClick={() => { handleDonateItemClick() }}
+                        text="Manuel bağış gir"
                         textColor="#f4f4f4"
                         textSize={14}
                         width={200}
