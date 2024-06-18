@@ -480,8 +480,8 @@ export default function Home() {
                             </div>
                           </div>
                           <div className='flex items-center'>
-                            <div className='ml-auto mr-4 text-white bg-black w-fit font-bold px-2 mt-4 mb-4 pb-4 h-8'>BAĞIŞ ÜRÜNÜDÜR</div>
-                            <div className='h-12 w-fit'>
+                            <div className='ml-auto mr-4 text-white bg-black w-42 font-bold px-2 mt-4 mb-4 pb-4 h-8'>BAĞIŞ ÜRÜNÜDÜR</div>
+                            <div className='h-12 w-24'>
                               <img className='w-full h-full' src="/labellogo.png" alt="labellogo" />
                             </div>
                           </div>
