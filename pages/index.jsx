@@ -218,11 +218,11 @@ export default function Home() {
       <div className='w-full h-100 mt-16 mb-60'>
         <div className='w-full flex justify-center text-center text-sm pt-12 text-yellow-500 font-bold'>Teslim edildi bile!</div>
         <div className='w-full flex justify-center text-center border-b mb-4 pb-12 text-3xl'>%100 şeffaf bağış ağımızı keşfedin!</div>
-        <Map
-          center={{latitude: ((36 + 42) / 2) * 1000, longitude: ((26 + 45) / 2) * 1000}}
-          visualVerifications={visualVerifications}
-          zoom={6}
-        />
+          <Map
+            center={{latitude: ((41.3202 + 40.8021) / 2) * 1000, longitude: ((29.4316 + 29.9983) / 2) * 1000}}
+            visualVerifications={visualVerifications}
+            zoom={9}
+          />
       </div>
       <div className='mb-12 w-full h-fit'>
         <div className='w-full flex justify-center text-center text-sm text-yellow-500 font-bold'>Güvenle bağış yapanlar</div>
