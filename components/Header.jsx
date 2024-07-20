@@ -140,8 +140,11 @@ export default function Header(isApiHeader) {
         <Link href="/how-to-donate-collections" className="p-6 text-sm font-semibold mr-4" >
           Nasıl bağış yapılır?
         </Link>
-        <Link href="/api-documentation" className="p-6 text-sm font-semibold mr-8" >
-          STK'lar için
+        <Link href="/api-documentation" className="p-6 text-sm font-semibold mr-4" >
+          Entegrasyon
+        </Link>
+        <Link href="/team" className="p-6 text-sm font-semibold mr-8" >
+          Ekibimiz
         </Link>
         {
           router.pathname == "/admin"
