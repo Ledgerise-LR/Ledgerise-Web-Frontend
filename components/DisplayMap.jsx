@@ -33,8 +33,8 @@ export default function DisplayMap({ center, visualVerifications, zoom, chainId,
     {
       city: "istanbul",
       topLeft: {
-        lat: 41.3202,
-        lng: 28.5983
+        lat: 41.4502,
+        lng: 28.1983
       },
       bottomRight: {
         lat: 40.8021,
@@ -98,7 +98,6 @@ export default function DisplayMap({ center, visualVerifications, zoom, chainId,
     return boundsObject[3]
   }
 
-  const randArr = [0.2, 0.1, 0.5, 0.6, 0.3, 0.4, 0.9, 0.8, 0.7, 1.0, 0.2, 0.4, 0.6]
   
   return <MapContainer className="w-full h-full" center={[center.latitude / 1000, center.longitude / 1000]} zoom={zoom} scrollWheelZoom={false}>
     <TileLayer
@@ -111,7 +110,7 @@ export default function DisplayMap({ center, visualVerifications, zoom, chainId,
       
         const city = getCity(verification.location.latitude, verification.location.longitude);
 
-        let widthMargin = i * 0.02;
+        let widthMargin = i * 0.015;
         
         let heightMargin = (parseInt(i.toString()[i.toString().length - 1]) * 0.02);
 

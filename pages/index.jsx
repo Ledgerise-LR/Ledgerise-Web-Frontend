@@ -219,7 +219,7 @@ export default function Home() {
         <div className='w-full flex justify-center text-center text-sm pt-12 text-yellow-500 font-bold'>Teslim edildi bile!</div>
         <div className='w-full flex justify-center text-center border-b mb-4 pb-12 text-3xl'>%100 şeffaf bağış ağımızı keşfedin!</div>
           <Map
-            center={{latitude: ((41.3202 + 40.8021) / 2) * 1000, longitude: ((29.4316 + 29.9983) / 2) * 1000}}
+            center={{latitude: ((41.3202 + 40.8021) / 2) * 1000, longitude: ((28.5316 + 29.5983) / 2) * 1000}}
             visualVerifications={visualVerifications}
             zoom={9}
           />
