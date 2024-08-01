@@ -169,9 +169,20 @@ export default function Home() {
                 <div>Şeffaf,</div>
                 <div>Değiştirilemez,</div>
               </div>
-              <div className='text-xl text-slate-500 mt-12 font-sans w-96 pl-8'>Bağışınızın ihtiyaç sahibine ulaştığından <strong>emin olun</strong></div>
+              <div className='text-xl text-slate-500 mt-8 font-sans w-96 pl-8'>Bağışınızın ihtiyaç sahibine ulaştığından <strong>emin olun</strong></div>
+              <div className='w-full h-24 mt-8 flex'>
+                <div className='w-1/2 flex items-center justify-center'>
+                  <div className='font-semibold mr-4 text-4xl flex text-gray-700'>5<div className='-mt-0.5'>+</div></div>
+                  <div className='font-light'>ŞİRKET</div>
+                </div>
+                <div className='h-full w-0.5 bg-gray-700 bg-opacity-50'></div>
+                <div className='w-1/2 flex items-center justify-center'>
+                  <div className='font-semibold mr-4 text-4xl flex text-gray-700'>120 <div className='-mt-0.5'>+</div></div>
+                  <div className='font-light'>KOLİ TRAFİĞİ</div>
+                </div>              
+              </div>
             </div>
-            <div className='w-1/2 mt-32 z-10 pl-8'>
+            <div className='w-1/2 mt-32 z-10'>
               <a href="/collections">
                 <Button
                   style={{
@@ -215,7 +226,9 @@ export default function Home() {
           </div>
         </div>
       </div>
-      <div className='w-full h-100 mt-16 mb-60'>
+      <div className='w-full h-100 mt-16 mb-60 relative'>
+        <div style={{ width: "150%", transform: "rotate(-20deg)" }} className='bg-[linear-gradient(0deg,rgba(255,153,0,0.5)_0%,rgba(184,129,255,0.5)_100%)] absolute z-10 h-24 mt-80 -ml-36'></div>
+        <div style={{background: "-webkit-linear-gradient(#FF9900, #B881FF)",}} className='absolute w-60 h-32 blur-3xl left-12 top-36 z-0'></div>
         <div className='w-full flex justify-center text-center text-sm pt-12 text-yellow-500 font-bold'>Teslim edildi bile!</div>
         <div className='w-full flex justify-center text-center border-b mb-4 pb-12 text-3xl'>%100 şeffaf bağış ağımızı keşfedin!</div>
           <Map
@@ -225,7 +238,7 @@ export default function Home() {
           />
       </div>
       <div className='mb-12 w-full h-fit'>
-        <div className='w-full flex justify-center text-center text-sm text-yellow-500 font-bold'>Güvenle bağış yapanlar</div>
+        <div className='w-full flex justify-center text-center text-sm text-yellow-500 font-bold'>Gönül rahatlığıyla...</div>
         <div className='w-full flex justify-center text-center border-b mb-4 pb-12 text-3xl'>Bağışçı gözünden Ledgerise...</div>
         <div className='w-fit h-fit flex pb-4' style={{transform: `translateX(${sliderTranslate}px)`, transition: "all 2s ease"}} id='slider'>
           {
