@@ -1,6 +1,7 @@
 import Head from 'next/head'
 import Image from 'next/image'
 import { useState, useEffect, useMemo } from 'react';
+import {Linkedin, Twitter, ExternalLink} from '@web3uikit/icons'
 import { useMoralis } from 'react-moralis';
 import { ethers } from 'ethers';
 import { getEthToUsdRate } from '@/utils/getEthToUsdRate';
@@ -147,6 +148,30 @@ export default function Home() {
     }
   }, [asset, asset.tokenUri])
 
+  const pressLinks = [
+    {
+      title: "Ledgerise, yardım kampanyalarında yerel yönetimler ile işbirliği içerisinde",
+      photo: "/basin_sosyalup.png",
+      link: "https://sosyalup.net/ledgerise-yardim-kampanyalarinda-yerel-yonetimler-ile-isbirligi-icerisinde/",
+      twitter: "https://x.com/SosyalUp/status/1808470752657850425",
+      linkedin: "https://www.linkedin.com/pulse/sosyalup-b%C3%BClten-sosyal-up-gjfbf/"
+    },
+    {
+      title: "Yerel yönetim yardım kampanyalarında Ledgerise",
+      photo: "/basin_ict.png",
+      link: "https://ictmedia.com.tr/haber/ledgerise-yardim-kampanyalarinda-yerel-yonetimler-ile-isbirligi-icerisinde",
+      twitter: "https://x.com/ictmedia_tr/status/1808489458607575041",
+      linkedin: "https://www.linkedin.com/posts/ictmedya_ledgerise-yard%C4%B1m-kampanyalar%C4%B1nda-yerel-y%C3%B6netimler-activity-7214255177443254273-VUDl/?originalSubdomain=tr"
+    },
+    {
+      title: "BASIN AÇIKLAMASI - Ledgerise: bağışları takip edilebilir kılan yenilikçi bir çözüm...",
+      photo: "/basin_matriks.png",
+      link: "https://www.matriksdata.com/website/matriks-haberler/sirket/5231423-ledgerise-bagislari-takip-edilebilir-kilan-yenilikci-bir-cozum-sunuyor-basin-aciklamasi",
+      twitter: "https://x.com/SosyalUp/status/1808470752657850425",
+      linkedin: "https://www.linkedin.com/pulse/sosyalup-b%C3%BClten-sosyal-up-gjfbf/"
+    }
+  ]
+
   return (
     <div className='w-full h-full py-28 px-10 overflow-hidden overflow-x-hidden'>
       <div className='w-64 left-0 top-36 h-64 bg-yellow-100 absolute z-0 rounded-full blur-3xl'></div>
@@ -256,6 +281,36 @@ export default function Home() {
                 </div>
               )
             })
+          }
+        </div>
+      </div>
+      <div>
+        <div className='text-3xl my-12 relative h-12'>
+          <div className='z-0 absolute w-52 h-52 -left-40 rounded-full bg-yellow-400'></div>
+          <div style={{color: "#343434"}} className='z-20 absolute'>
+            <div>BASINDA LEDGERISE</div>
+            <div className='text-lg'>Yerel yönetimlerin bağış kampanyalarına sağladığımız şeffaf takip hizmeti ile...</div>
+          </div>
+        </div>
+        <div className='w-full flex justify-center'>
+          {
+            pressLinks
+              ? pressLinks.map(eachPressLink => {
+                return(
+                  <a href={eachPressLink.link} target='_blank' className='w-96 aspect-square shadow-md mr-4 relative flex flex-col justify-end cursor-pointer hover:brightness-75 transition-all'>
+                    <img src={eachPressLink.photo} alt={eachPressLink.photo} className='w-full h-full absolute z-0' />
+                    <div className='z-20 w-full h-fit bg-[linear-gradient(0deg,rgba(255,100,0,0.60)_0%,rgba(20,50,150,0.60)_75%)] p-4'>
+                      <div className='text-gray-50 text-sm uppercase font-bold'>{eachPressLink.title}</div>
+                      <div className='flex w-full items-center'>
+                        <a className='mr-4' href={eachPressLink.linkedin}><Linkedin fontSize='20px'/></a>
+                        <a className='mr-4' href={eachPressLink.twitter}><Twitter fontSize='20px'/></a>
+                        <a className='mr-4' href={eachPressLink.link}><ExternalLink fontSize='20px'/></a>
+                      </div>
+                    </div>
+                  </a>
+                )
+              })
+              : ("")
           }
         </div>
       </div>
