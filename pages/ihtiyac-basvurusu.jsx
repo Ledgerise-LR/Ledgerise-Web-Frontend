@@ -8,8 +8,6 @@ export default function Home() {
   const inputClassName = "p-4 flex justify-center items-center bg-gray-50 w-108 shadow-md mb-2 rounded"
   const selectClassName = "transition-all cursor-pointer hover:bg-gray-100 p-4 w-64 mb-4 flex justify-center items-center shadow-lg text-gray-500 font-medium mx-4 rounded"
 
-  document.body.style.overflowY = "hidden"
-
   return (
     <div className="w-full h-screen overflow-x-hidden flex p-20 relative overflow-y-scroll">
       <div className="flex flex-col">
