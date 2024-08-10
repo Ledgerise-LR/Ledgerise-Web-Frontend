@@ -195,17 +195,30 @@ export default function Home() {
                 <input
                   className={`${checkboxClassName}`}
                   type="checkbox"
-                  value="0-0.01"
+                  value="0-200"
+                  checked={selectedPriceCategories.includes('0-200')}
                   onChange={handlePriceCategoryChange}
                 />
-                {" 0-500 ₺"}
+                {" 0-200 ₺"}
               </label>
               <br />
               <label>
                 <input
                   className={`${checkboxClassName}`}
                   type="checkbox"
-                  value="0.01-0.1"
+                  value="250-500"
+                  checked={selectedPriceCategories.includes('250-500')}
+                  onChange={handlePriceCategoryChange}
+                />
+                {" 250-500 ₺"}
+              </label>
+              <br />
+              <label>
+                <input
+                  className={`${checkboxClassName}`}
+                  type="checkbox"
+                  value="500-1000"
+                  checked={selectedPriceCategories.includes('500-1000')}
                   onChange={handlePriceCategoryChange}
                 />
                 {" 500-1000 ₺"}
@@ -215,30 +228,19 @@ export default function Home() {
                 <input
                   className={`${checkboxClassName}`}
                   type="checkbox"
-                  value="0.1-1"
-                  checked={selectedPriceCategories.includes('0.1-1')}
+                  value="1000-2000"
+                  checked={selectedPriceCategories.includes('1000-2000')}
                   onChange={handlePriceCategoryChange}
                 />
-                {" 1000-1500 ₺"}
+                {" 1000-2000 ₺"}
               </label>
               <br />
               <label>
                 <input
                   className={`${checkboxClassName}`}
                   type="checkbox"
-                  value="1-10"
-                  checked={selectedPriceCategories.includes('1-10')}
-                  onChange={handlePriceCategoryChange}
-                />
-                {" 1500-2000 ₺"}
-              </label>
-              <br />
-              <label>
-                <input
-                  className={`${checkboxClassName}`}
-                  type="checkbox"
-                  value="10-1000000"
-                  checked={selectedPriceCategories.includes('10-1000000')}
+                  value="2000-100000"
+                  checked={selectedPriceCategories.includes('2000-100000')}
                   onChange={handlePriceCategoryChange}
                 />
                 {" 2000+ ₺"}
@@ -320,7 +322,7 @@ export default function Home() {
             {!assets
               ? (<div>Loading...</div>)
               : (assets == ""
-                ? (<div className='text-slate-500 w-full h-36 flex flex-1 items-center justify-center'>No aid parcels found for the filters you provided.</div>)
+                ? (<div className='text-slate-500 w-full h-36 flex flex-1 items-center justify-center'>Uyguladığınız filtrelerde bağış kolisi bulunamadı.</div>)
                 : (assets.map((asset) => {
                   return (
                     <div className='w-72 ml-10 mb-5' key={`${asset.nftAddress}${asset.tokenId}`}>
