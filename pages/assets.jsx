@@ -1080,12 +1080,8 @@ export default function Home() {
             <div>
               <div className='text-3xl text-slate-900 mb-1'>Nasıl bağış yapılır?</div>
               <hr className='mb-3' />
-              <div className='text-xl mb-4'>Bağışınızı {company.name} IBAN'ına gönderebilirsiniz</div>
-              <div className='text-sm text-slate-500'>Bilgiler</div>
-              <div>{company.IBAN}</div>
-              <div>{company.receipientName}</div>
-              <div className='mb-4'>{company.bankName}</div>
-              <div><strong>Önemli:</strong> Açıklama kısmına rapor için email adresinizi yazmayı unutmayın.</div>
+              <div className='text-xl mb-4'>Bağışınızı Ledgerise IBAN'ına gönderebilirsiniz</div>
+              <div className='text-sm text-gray-600'>Bağış hakkında müşteri temsilcimizden bilgi almak için +90 530 349 75 38'i arayınız.</div>
             </div>
             {/* <div>
               <div className='text-3xl text-slate-900 mb-3'>Bağışların dağıtımı</div>
