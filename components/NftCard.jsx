@@ -48,6 +48,34 @@ export default function NFTBox({ price, nftAddress, tokenId, marketplaceAddress,
   }, [])
 
 
+  const getDonationType = (tokenName) => {
+
+    if (tokenName.includes("(") && tokenName.includes(")") && tokenName.includes("/")) {
+      tokenName = tokenName.split(")")[0].replace("(", "");
+      if (tokenName.split("/")[0] == "1" && parseInt(tokenName.split("/")[1]) <= 2) {
+        return {
+          name: "gold",
+          className: "bg-yellow-500 text-yellow-200 font-bold font-playfair"
+        }
+      } else if (tokenName.split("/")[0] == "1" && parseInt(tokenName.split("/")[1]) <= 5) {
+        return {
+          name: "venti",
+          className: "bg-stone-300 text-stone-50 font-bold font-playfair"
+        }
+      } else if (tokenName.split("/")[0] == "1" && parseInt(tokenName.split("/")[1]) <= 10) {
+        return {
+          name: "amare",
+          className: "bg-amber-800 text-amber-600 font-bold font-playfair"
+        }
+      }
+    } else {
+      return {
+        name: "diamante",
+        className: "bg-sky-300 text-sky-50 font-bold font-playfair"
+      }
+    }
+  }
+
   return (
     <div>
       <div>
@@ -55,8 +83,11 @@ export default function NFTBox({ price, nftAddress, tokenId, marketplaceAddress,
           <div>
             <div className="flex flex-col border-2">
               <div className="italic text-sm">
-                <div className="w-full aspect-square flex flex-1 justify-center border-b-2 relative overflow-hidden">
+                <div className="w-full aspect-square flex flex-col flex-1 justify-center border-b-2 relative overflow-hidden">
                   <img className="absolute" src={imageURI} />
+                  <div className={`absolute bottom-0 w-full text-center not-italic uppercase ${(tokenName && tokenName.length > 0) ? getDonationType(tokenName).className : ("")}`}>
+                    {(tokenName && tokenName.length > 0) ? getDonationType(tokenName).name : ("")}
+                  </div>
                 </div>
               </div>
               <div className="p-4">
