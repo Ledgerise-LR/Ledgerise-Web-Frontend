@@ -233,7 +233,7 @@ export default function Home() {
     const formData = new FormData();
     formData.append('image', selectedImage);
     formData.append('name', createCampaignName);
-    formData.append('description', createCampaignName);
+    formData.append('description', createCampaignDescription);
     formData.append('companyCode', companyCode);
 
     axios.post(`${URL}:${PORT}/subcollection/create-subcollection`, formData)

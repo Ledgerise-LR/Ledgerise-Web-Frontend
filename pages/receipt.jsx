@@ -34,7 +34,7 @@ export default function Home() {
   };
 
   const handleDownloadPDF = () => {
-    downloadAsPDF('main', 'UAAOAB Bağış Alındı Makbuzu.pdf');
+    downloadAsPDF('main', 'Ledgerise Bağış Alındı Makbuzu.pdf');
   };
 
   const getNumberAsWord = (number) => {
@@ -135,20 +135,20 @@ export default function Home() {
     <div>
       <div className='w-2/3 cursor-pointer m-auto my-2 flex justify-between items-center' onClick={() => { handleDownloadPDF() }}>
         <div>NAKDÎ BAĞIŞ MAKBUZU</div>
-        <div className='bg-slate-900 text-slate-50 p-2 rounded-lg'>Download ↓</div>
+        <div className='bg-slate-900 text-slate-50 p-2 rounded-lg'>İndir ↓</div>
       </div>
       <div id="main">
         <div className='w-screen h-full flex flex-col items-center justify-center font-serif'>
           <div className='w-2/3 border-2 p-12'>
             <div className='flex justify-end'>EK-1</div>
             <div>
-              <div className='flex justify-center'>OKUL-AİLE BİRLİĞİ AYNİ/ NAKDÎ BAĞIŞ ALINDI BELGESİ</div>
+              <div className='flex justify-center'>AYNİ/ NAKDÎ BAĞIŞ ALINDI BELGESİ</div>
               <div className='flex flex-col border border-black p-1'>
                 <div className='flex border'>
                   <div className='flex flex-col w-3/4 border'>
-                    <div className='p-1 border border-black'>Birliğin</div>
-                    <div className='p-1 border border-black'>Adı    : <strong className='uppercase'>Üsküdar Amerikan Lisesi Okul Aile Birliği</strong></div>
-                    <div className='p-1 border border-black h-24'>Adresi    : <strong>Selamiali, Vakıf Sk. No:1, 34664 Üsküdar/İstanbul</strong></div>
+                    <div className='p-1 border border-black'>Kurumun</div>
+                    <div className='p-1 border border-black'>Adı    : <strong className='uppercase'>LEDGERİSE TEKNOLOJİ</strong></div>
+                    <div className='p-1 border border-black h-24'>Adresi    : <strong>Reşitpaşa Mah. Katar Cad. İTÜ ARI Teknokent 3 Binası No:4 D:1101 SARIYER / İSTANBUL</strong></div>
                   </div>
                   <div className='flex flex-col w-1/4 border border-black p-1'>
                     <div className='mb-2 h-1/4'>Seri No : <strong className='uppercase'>LR-{history.subcollectionId}</strong></div>
@@ -158,8 +158,8 @@ export default function Home() {
                 </div>
                 <div className='flex justify-between'>
                   <div className='w-1/3 border border-black p-2'>Telefon No: <strong>0(212) 412 44 22</strong></div>
-                  <div className='w-1/3 border border-black p-2'>Faks No: <strong>0(212) 412 44 44</strong></div>
-                  <div className='w-1/3 border border-black p-2'>e-posta Adresi: <strong>okulailebirligi@my.uaa.k12.tr</strong></div>
+                  <div className='w-1/3 border border-black p-2'>Websitesi: <strong>ledgerise.org</strong></div>
+                  <div className='w-1/3 border border-black p-2'>e-posta Adresi: <strong>rise@ledgerise.org</strong></div>
                 </div>
               </div>
             </div>
@@ -202,16 +202,16 @@ export default function Home() {
                   <div className='flex flex-col w-5/12'>
                     <div className='border border-black flex justify-center p-2'>Teslim Eden</div>
                     <div className='flex'>
-                      <div className='border-x border-black flex justify-center p-2 w-5/12'>Adı Soyadı</div>
-                      <div className='border-r border-black flex justify-center p-2 w-full font-bold uppercase'>{donor.name} {donor.surname}</div>
+                      <div className='border-x border-black flex justify-center p-2 w-5/12'>E-posta adresi</div>
+                      <div className='border-r border-black flex justify-center p-2 w-full font-bold text-sm'>{history.buyer}</div>
                     </div>
                     <div className='flex'>
                       <div className='border border-black flex justify-center p-2 w-5/12'>T.C. Kimlik No</div>
-                      <div className='border-y border-r border-black flex justify-center p-2 w-full font-bold uppercase'>{donor.national_identification_number}</div>
+                      <div className='border-y border-r border-black flex justify-center p-2 w-full text-sm'>zorunlu değil</div>
                     </div>
                     <div className='flex h-24'>
                       <div className='border-l border-black flex justify-center p-2 w-5/12 items-center'>Adresi</div>
-                      <div className='border-x border-black flex justify-center p-2 w-full items-center'></div>
+                      <div className='border-x border-black flex justify-center p-2 w-full items-center text-sm'>zorunlu değil</div>
                     </div>
                     <div className='flex'>
                       <div className='border-y border-l border-black flex justify-center p-2 w-5/12 items-center'>Tarih-İmza</div>
@@ -222,11 +222,11 @@ export default function Home() {
                     <div className='border border-black flex justify-center p-2'>Teslim Alan</div>
                     <div className='flex'>
                       <div className='border-x border-black flex justify-center p-2 w-5/12'>Adı Soyadı</div>
-                      <div className='border-r border-black flex justify-center p-2 w-full font-bold'>John Doe</div>
+                      <div className='border-r border-black flex justify-center p-2 w-full font-bold'>Doğu Boran Şentürk</div>
                     </div>
                     <div className='flex'>
                       <div className='border border-black flex justify-center p-2 w-5/12'>Görevi</div>
-                      <div className='border-y border-r border-black flex justify-center p-2 w-full font-bold'>Yetkili</div>
+                      <div className='border-y border-r border-black flex justify-center p-2 w-full text-sm'>Bağışçı ilişkileri sorumlusu</div>
                     </div>
                     <div className='flex h-20'>
                       <div className='border-l border-black flex justify-center p-2 w-5/12 items-center'>T.C. Kimlik No</div>

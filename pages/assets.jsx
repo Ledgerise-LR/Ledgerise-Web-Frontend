@@ -615,7 +615,7 @@ export default function Home() {
                                   ? (<div>Bağış kolisinin üzerindeki <button className='underline hover:text-slate-700' target='blank' onClick={() => {
                                     retrieveQRCodeData(`${asset.tokenId}-[${event.openseaTokenId}]`);
                                   }}>QR kodu</button> görüntüle.
-                                    {/* Click <a className='underline cursor-pointer' href={`/receipt?id=${asset.tokenId}-${event.openseaTokenId}-${asset.nftAddress}`} target='_blank'>here</a> can download "Bağış Alındı Makbuzu". */}
+                                    Click <a className='underline cursor-pointer' href={`/receipt?id=${asset.tokenId}-${event.openseaTokenId}-${asset.nftAddress}`} target='_blank'>here</a> can download "Bağış Alındı Makbuzu".
                                     </div>)
 
                                   : (
@@ -641,11 +641,23 @@ export default function Home() {
                                                         collaboratorsDataArray.push(parseInt(eachCollaborator.split("_")[0]));
                                                       }
                                                       retrieveQRCodeData(`${asset.tokenId}-${JSON.stringify(collaboratorsDataArray)}`);
-                                                    }}>QR kodu</button> görüntüle. Bu bağışı <strong>{eachCollaboratorCluster.length - 1} kişi ile ortaklaşa gerçekleştirdiniz.</strong></div>
+                                                    }}>QR kodu</button> görüntüle. Bu bağışı <strong>{eachCollaboratorCluster.length - 1} kişi ile ortaklaşa gerçekleştirdiniz.</strong><div>
+                                                    <a className='underline cursor-pointer' href={`/receipt?id=${asset.tokenId}-${event.openseaTokenId}-${asset.nftAddress}`} target='_blank'>"Bağış alındı makbuzunu"</a>nu görüntülemek için tıklayın.
+                                                  </div></div>
                                                   )
                                                 } else {
-                                                  return (<div>Bu bağışın üretimi için <strong>{numberOfCollaborators - eachCollaboratorCluster.length} kişinin bağışı bekleniyor.</strong> Anlayışınız için teşekkür ederiz.</div>)
+                                                  return (
+                                                    <div>
+                                                      <div>
+                                                        Bu bağışın üretimi için <strong>{numberOfCollaborators - eachCollaboratorCluster.length} kişinin bağışı bekleniyor.</strong> Anlayışınız için teşekkür ederiz.
+                                                      </div>
+                                                      <div>
+                                                        <a className='underline cursor-pointer' href={`/receipt?id=${asset.tokenId}-${event.openseaTokenId}-${asset.nftAddress}`} target='_blank'>"Bağış alındı makbuzunu"</a>nu görüntülemek için tıklayın.
+                                                      </div>
+                                                    </div>
+                                                  )
                                                 }
+                                                
                                               }
                                             }
                                           })

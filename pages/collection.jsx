@@ -316,7 +316,8 @@ export default function Home() {
         </div >
        
         <div className='w-full h-full'>
-          <div className='text-4xl w-full h-full mb-4 text-center'>{collection.name}</div>
+          <div className='text-4xl w-full h-full mb-4 text-gray-700'>{collection.name}</div>
+          <div className='mb-4 w-full font-light tracking-tight text-gray-600 leading-5'>{collection.description}</div>
           <hr className='mb-4' />
           <div className='flex flex-1 flex-wrap h-max'>
             {!assets
