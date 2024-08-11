@@ -13,20 +13,6 @@ export default function Home() {
 
   const [collections, setCollections] = useState([]);
 
-  const router = useRouter();
-
-  const [ethToUsdRate, setEthToUsdRate] = useState(null);
-
-  useEffect(() => {
-    const fetchEthToUsdRate = async () => {
-      const rate = await getEthToUsdRate();
-      setEthToUsdRate(rate);
-    };
-
-    fetchEthToUsdRate();
-  }, []);
-
-
   useEffect(() => {
     axios.get(`${URL}:${PORT}/subcollection/get-all-collections`)
       .then(res => {
@@ -39,21 +25,26 @@ export default function Home() {
   const marketplaceAddress = networkMapping["Marketplace"][chainString];
 
   return (
-    <>
-      <div className='text-xl m-12'>Bağış Kampanyaları</div>
-      <div className='px-12 mb-20 w-full flex flex-1 flex-wrap'>
+    <div>
+      <div className='text-xl mt-4 w-full px-12 flex justify-between items-center'>
+        <div className='text-gray-700'>Bağış kampanyaları</div>
+        <div className='text-sm text-gray-700'>{collections ? collections.length : ("")} adet</div>
+      </div>
+      <div className='w-full border-b my-4'></div>
+      <div className='px-8 mb-20 w-full flex flex-1 flex-wrap'>
         {!collections
           ? (<div>Loading...</div>)
           : (
             collections.map((collection) => {
               return (
-                <a className='w-96 mr-4 mb-12' href={`/collection?id=${collection.itemId}&nftAddress=${collection.nftAddress}`}>
-                  <div className='mr-5 aspect-square border-2 rounded flex flex-col p-4' key={`${collection.itemId}`}>
-                    <div className='aspect-video border-2 flex items-center justify-center'>
+                <a className='mr-4 w-96 mb-12 bg-white hover:brightness-90 transition-all' href={`/collection?id=${collection.itemId}&nftAddress=${collection.nftAddress}`}>
+                  <div className='aspect-square shadow-md rounded flex flex-col p-4' key={`${collection.itemId}`}>
+                    <div className='w-full border flex items-center justify-center'>
                       <img className='h-36' src={`${collection.image}`} alt={collection.name} />
                     </div>
-                    <div className='text-slate-800 text-2xl my-3 flex flex-1 justify-between items-center'>
-                      <div>{collection.name}</div>
+                    <div className='my-3 flex flex-1 justify-center flex-col'>
+                      <div className='text-gray-700 text-lg mb-2 font-medium'>{collection.name}</div>
+                      <div className='text-gray-600 text-sm'>{collection.description}</div>
                       {/* <div className='w-2/3 px-4 rounded-full py-2 bg-black flex-col text-slate-50 flex items-baseline justify-center'>
                         <span className='text-lg mr-1 -mb-1'>{collection.totalRaised} ₺</span>
                         <span className='text-xs text-slate-300'>toplam bağış</span>
@@ -70,6 +61,6 @@ export default function Home() {
           )
         }
       </div>
-    </>
+    </div>
   )
 }

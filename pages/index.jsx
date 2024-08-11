@@ -292,12 +292,12 @@ export default function Home() {
             <div className='text-lg'>Yerel yönetimlerin bağış kampanyalarına sağladığımız şeffaf takip hizmeti ile...</div>
           </div>
         </div>
-        <div className='w-full flex justify-center'>
+        <div className='w-full flex justify-center flex-wrap'>
           {
             pressLinks
               ? pressLinks.map(eachPressLink => {
                 return(
-                  <a href={eachPressLink.link} target='_blank' className='w-96 aspect-square shadow-md mr-4 relative flex flex-col justify-end cursor-pointer hover:brightness-75 transition-all'>
+                  <a href={eachPressLink.link} target='_blank' className='w-96 aspect-square shadow-md mr-4 mt-8 relative flex flex-col justify-end cursor-pointer hover:brightness-75 transition-all'>
                     <img src={eachPressLink.photo} alt={eachPressLink.photo} className='w-full h-full absolute z-0' />
                     <div className='z-20 w-full h-fit bg-[linear-gradient(0deg,rgba(255,100,0,0.60)_0%,rgba(20,50,150,0.60)_75%)] p-4'>
                       <div className='text-gray-50 text-sm uppercase font-bold'>{eachPressLink.title}</div>
