@@ -37,8 +37,16 @@ export default function Home() {
     pdf.save(fileName);
   };
 
-  const handleDownloadPDF = (qrId, qrValue) => {
+  const handleDownloadPDF = (qrId, qrValue, eachQrData) => {
     downloadAsPDF(qrId, `LR_${qrValue}.pdf`);
+    axios.post(`${URL}:${PORT}/active-item/mark-qr-code-as-printed`, {
+      nftAddress: generalQrCodeData.nftAddress,
+      tokenId: generalQrCodeData.tokenId,
+      openseaTokenIdArray: eachQrData
+    }, (res) => {
+      if (res.data.success) return window.location.reload();
+      else alert("error");
+    })
   };
 
   const Map = useMemo(() => dynamic(
@@ -490,15 +498,7 @@ export default function Home() {
                         </div>
                         <div 
                           onClick={(e) => {
-                            handleDownloadPDF(e.target.previousSibling.id, e.target.previousSibling.id.toString());
-                            axios.post(`${URL}:${PORT}/active-item/mark-qr-code-as-printed`, {
-                              nftAddress: generalQrCodeData.nftAddress,
-                              tokenId: generalQrCodeData.tokenId,
-                              openseaTokenIdArray: eachQrData
-                            }, (res) => {
-                              if (res.data.success) return window.location.reload();
-                              else alert("error");
-                            })
+                            handleDownloadPDF(e.target.previousSibling.id, e.target.previousSibling.id.toString(), [eachQrData]);
                           }}
                           style={{ transition: "all 0.25s ease" }} className='z-100 absolute left-1/2 top-1/2 py-2 px-4 text-slate-100 cursor-pointer bg-opacity-40 bg-slate-950 hover:bg-opacity-70'>Yazdırın</div>
 
