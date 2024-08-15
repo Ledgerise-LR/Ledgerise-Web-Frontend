@@ -33,8 +33,8 @@ export default function DisplayMap({ center, visualVerifications, zoom, chainId,
     {
       city: "istanbul",
       topLeft: {
-        lat: 41.4502,
-        lng: 28.1983
+        lat: 41.5502,
+        lng: 28.3983
       },
       bottomRight: {
         lat: 40.8021,
@@ -88,6 +88,8 @@ export default function DisplayMap({ center, visualVerifications, zoom, chainId,
   
   ];
 
+  const marginArray = [0.01, 0.015, 0.02, 0.025, 0.03, 0.035, 0.04, 0.045, 0.05, 0.055, 0.05, 0.04, 0.03, 0.025, 0.02, 0.01];
+
   let getCity = (latitude, longitude) => {
     for (let i = 0; i < boundsObject.length; i++) {
       const eachCity = boundsObject[i];
@@ -110,12 +112,20 @@ export default function DisplayMap({ center, visualVerifications, zoom, chainId,
       
         const city = getCity(verification.location.latitude, verification.location.longitude);
 
-        let widthMargin = i * 0.015;
+        let widthMargin = i * 0.01;
         
         let heightMargin = (parseInt(i.toString()[i.toString().length - 1]) * 0.02);
 
-        const latitude = (city.topLeft.lat - ((city.topLeft.lat - city.bottomRight.lat) / 2)) - heightMargin;
-        const longitude = city.topLeft.lng + widthMargin;
+        let latitude = (city.topLeft.lat - ((city.topLeft.lat - city.bottomRight.lat) / 2)) - heightMargin;
+        let longitude = city.topLeft.lng + widthMargin;
+
+        if (i % 2 == 0) {
+          latitude += marginArray[i % marginArray.length];
+          longitude -= marginArray[i % marginArray.length];
+        } else {
+          latitude -= marginArray[i % marginArray.length];
+          longitude += marginArray[i % marginArray.length];
+        }
 
         return (
             <Marker position={[latitude, longitude]}>

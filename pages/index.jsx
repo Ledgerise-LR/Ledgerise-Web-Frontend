@@ -259,7 +259,7 @@ export default function Home() {
           <Map
             center={{latitude: ((41.3202 + 40.8021) / 2) * 1000, longitude: ((28.5316 + 29.5983) / 2) * 1000}}
             visualVerifications={visualVerifications}
-            zoom={9}
+            zoom={10}
           />
       </div>
       <div className='mb-12 w-full h-fit'>
