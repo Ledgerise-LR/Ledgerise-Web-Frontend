@@ -127,30 +127,30 @@ export default function Header(isApiHeader) {
       {
         windowSize.width > 800
           ? (
-            <div className={`p-2 z-0 bg-white border-b-2 flex flex-row justify-between items-center w-full overflow-x-hidden ${router.pathname == "/api-documentation" ? "h-16 overflow-y-hidden" : "h-16 overflow-y-hidden"}`}>
-      <h1 className={`pl-12 z-0 ${router.pathname == "/api-documentation" ? "w-36" : "w-36"}`}>
+            <div className={`p-2 px-24 items-center z-0 flex justify-between w-screen bg-white ${router.pathname == "/api-documentation" ? "h-16 overflow-y-hidden" : "h-16 overflow-y-hidden"}`}>
+      <h1 className={`z-0 h-full ${router.pathname == "/api-documentation" ? "aspect-video" : "aspect-video"}`}>
         <a href="/">
-          <img className="h-20" src="logo.svg" alt="Ledgerise | Bağış hiç olmadığı kadar şeffaf" />
+          <img src="logo.svg" alt="Ledgerise | Bağış hiç olmadığı kadar şeffaf" />
         </a>
       </h1>
       <div className="z-0 w-fit flex flex-row items-center" style={{color: "#343434"}}>
-        <Link href="/collections" className="p-6 text-sm font-semibold mr-4" >
+        <Link href="/collections" className="p-6 text-sm font-semibold mr-4 text-gray-600" >
           Kampanyalar
         </Link>
-        <Link href="/how-to-donate-collections" className="p-6 text-sm font-semibold mr-4" >
+        <Link href="/how-to-donate-collections" className="p-6 text-sm font-semibold mr-4 text-gray-600" >
           Nasıl bağış yapılır?
         </Link>
-        <Link href="/api-documentation" className="p-6 text-sm font-semibold mr-4" >
+        <Link href="/api-documentation" className="p-6 text-sm font-semibold mr-4 text-gray-600" >
           Entegrasyon
         </Link>
-        <Link href="/team" className="p-6 text-sm font-semibold mr-8" >
+        <Link href="/team" className="p-6 text-sm font-semibold mr-8 text-gray-600" >
           Ekibimiz
         </Link>
         {
           router.pathname == "/admin"
             ? <ConnectButton moralisAuth={false} />
             : router.pathname != "/company" 
-              ? (<div className="mr-36 h-fit">
+              ? (<div className="h-fit">
                 {
                   isAuthenticated
                     ? (<div className="flex items-center">
@@ -163,9 +163,15 @@ export default function Header(isApiHeader) {
                       </div>
                     </div>)
                     : (
-                      <div className="flex items-center border-2 rounded-full pr-2">
-                        <a href="/login" onClick={() => { setLastVisitedUrl() }} className="border-2 text-sm rounded-full px-12 py-2 mr-2 bg-blue-900 text-slate-100 cursor-pointer hover:bg-blue-800 transition-all">Login</a>
+                      <div className="flex">
+                        <div className="flex items-center">
+                          <a href="/login" onClick={() => { setLastVisitedUrl() }} className="text-sm px-4 py-2 mr-2 text-gray-800 cursor-pointer hover:bg-blue-800 transition-all">Giriş Yap</a>
+                        </div>
+                        <div className="flex items-center">
+                          <a href="/login" onClick={() => { setLastVisitedUrl() }} className="text-sm px-4 py-2 mr-2 bg-purple-700 rounded text-slate-100 cursor-pointer hover:bg-orange-700 transition-all">Kayıt Ol</a>
+                        </div>
                       </div>
+                      
                     )
                 }
             </div>)

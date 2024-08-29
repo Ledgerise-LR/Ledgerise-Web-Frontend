@@ -126,6 +126,30 @@ export default function Home() {
 
   const [sliderTranslate, setSliderTranslate] = useState(0);
 
+
+  const [windowSize, setWindowSize] = useState({
+    width: "",
+    height: ""
+  });
+  useEffect(() => {
+
+    const handleResize = () => {
+      const hamburgerMenu = document.getElementById("hamburger-menu");
+      hamburgerMenu.style.left = `-${window.innerWidth}px`;
+      hamburgerMenu.style.display = "block";
+      setWindowSize({
+        width: window.innerWidth,
+        height: window.innerHeight
+      });
+    };
+
+    window.addEventListener("resize", handleResize);
+
+    handleResize();
+
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
   useEffect(() => {
     setInterval(() => {
       setSliderTranslate(old => old - 100);
@@ -177,43 +201,42 @@ export default function Home() {
       <div className='w-64 left-0 top-36 h-64 bg-yellow-100 absolute z-0 rounded-full blur-3xl'></div>
       <div className='w-32 right-24 -mt-16 h-64 bg-yellow-200 absolute z-0 rounded-full'></div>
       <div className='w-96 right-0 mt-98 h-96 bg-yellow-400 absolute z-0 rounded-full'></div>
-      <div className='w-96 right-0 mr-96 -mt-12 h-24 bg-yellow-300 absolute z-0 rounded-full'></div>
       <div className='w-full h-full flex justify-center items-center'>
         <div className='flex flex-1 w-3/5 h-4/5 justify-center flex-wrap'>
-          <div className='flex-col w-128 mb-12 mr-8 z-10'>
+          <div className='flex-col w-128 mb-12 z-10'>
             <div className='w-full'>
               <div 
               style={{
-                background: "-webkit-linear-gradient(#FF9900, #B881FF)",
+                background: "-webkit-linear-gradient(#B881FF, #FF9900)",
                 WebkitBackgroundClip: "text",
                 WebkitTextFillColor: "transparent"
               }} 
-              className='text-5xl w-96 h-fit py-2 font-bold font-sans pl-8'
+              className={`text-5xl h-fit py-2 font-bold font-sans flex flex-col ${windowSize.width < 800 ? "text-4xl items-center" : ""}`}
               >
-                <div>Güvenilir,</div>
-                <div>Şeffaf,</div>
-                <div>Değiştirilemez,</div>
+                <div>Sürdürülebilir,</div>
+                <div>Sorumlu,</div>
+                <div>Kârlı.</div>
               </div>
-              <div className='text-xl text-slate-500 mt-8 font-sans w-96 pl-8'>Bağışınızın ihtiyaç sahibine ulaştığından <strong>emin olun</strong></div>
+              <div className={`text-lg text-gray-500 mt-8 font-sans w-100 ${windowSize.width < 800 ? "text-md text-center w-96" : "text-lg"}`}>Atıl olma potansiyeline sahip ürünler, %50'ye varan indirimli fiyatı üzerinden Ledgerise'da listelenir. Ürünleri ortaklaşa bağışlanarak ihtiyaç sahiplerine en güvenli şekilde ulaşır.</div>
               <div className='w-full h-24 mt-8 flex'>
                 <div className='w-1/2 flex items-center justify-center'>
                   <div className='font-semibold mr-4 text-4xl flex text-gray-700'>5<div className='-mt-0.5'>+</div></div>
-                  <div className='font-light'>ŞİRKET</div>
+                  <div className='font-light'>PAYDAŞ</div>
                 </div>
                 <div className='h-full w-0.5 bg-gray-700 bg-opacity-50'></div>
                 <div className='w-1/2 flex items-center justify-center'>
-                  <div className='font-semibold mr-4 text-4xl flex text-gray-700'>120 <div className='-mt-0.5'>+</div></div>
+                  <div className='font-semibold mr-4 text-4xl flex text-gray-700'>130 <div className='-mt-0.5'>+</div></div>
                   <div className='font-light'>KOLİ TRAFİĞİ</div>
                 </div>              
               </div>
             </div>
-            <div className='w-1/2 mt-32 z-10'>
+            <div className='w-1/2 mt-24 z-10'>
               <a href="/collections">
                 <Button
                   style={{
-                    backgroundColor: "#404040",
+                    backgroundColor: "#464646",
                     color: "#fefefe",
-                    borderRadius: "100px"
+                    borderRadius: "5px"
                   }}
                   customize={{
                     onHover: "lighten",
@@ -231,15 +254,15 @@ export default function Home() {
               <div id='showroom' className={`w-96 h-108 flex flex-1 transition-all flex-col justify-center border-2 p-2 rounded`}>
                 <img src={imageURI} alt={tokenName} className='border-b-2 rounded h-96' />
                 <div className='w-full h-max mt-2 p-2'>
-                  <div className='text-2xl text-slate-800 font-medium mb-1'>{asset.collectionName}</div>
+                  <div className='text-2xl text-gray-700 font-medium mb-1'>{asset.collectionName}</div>
                   <div className='flex flex-1 justify-between items-center'>
                     <div>
-                      <span className='text-sm text-slate-500'>#{asset.tokenId} </span>
-                      <span className='uppercase text-xl text-slate-700'>{tokenName}</span>
+                      <span className='text-sm text-gray-500'>#{asset.tokenId} </span>
+                      <span className='uppercase text-xl text-gray-600'>{tokenName}</span>
                     </div>
                     <div className='flex-col flex items-end'>
-                      <div className='text-xs text-slate-500'>Toplam Bağış:</div>
-                      <div style={{backgroundColor: "#343434"}} className='w-48 p-2 rounded-full text-slate-100 flex justify-end items-center px-5'>
+                      <div className='text-xs text-gray-500'>Toplam Bağış:</div>
+                      <div style={{backgroundColor: "#464646"}} className='w-36 p-2 rounded text-slate-100 flex justify-end items-center px-5'>
                         <span className='text-slate-200 mr-2 text-sm'>{Number(asset.totalDonated)} bağış kolisi</span>
                       </div>
                     </div>
@@ -299,7 +322,7 @@ export default function Home() {
                 return(
                   <a href={eachPressLink.link} target='_blank' className='w-96 aspect-square shadow-md mr-4 mt-8 relative flex flex-col justify-end cursor-pointer hover:brightness-75 transition-all'>
                     <img src={eachPressLink.photo} alt={eachPressLink.photo} className='w-full h-full absolute z-0' />
-                    <div className='z-20 w-full h-fit bg-[linear-gradient(0deg,rgba(255,100,0,0.60)_0%,rgba(20,50,150,0.60)_75%)] p-4'>
+                    <div className='z-20 w-full h-fit bg-opacity-50 bg-blue-500 p-4'>
                       <div className='text-gray-50 text-sm uppercase font-bold'>{eachPressLink.title}</div>
                       <div className='flex w-full items-center'>
                         <a className='mr-4' href={eachPressLink.linkedin}><Linkedin fontSize='20px'/></a>

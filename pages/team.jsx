@@ -19,7 +19,7 @@ export default function Home() {
     {
       name: "Nehir Öztürk",
       role: "Medya & PR",
-      image: "/nehir.jpeg",
+      image: "/nehir.png",
       bio: "Boş zamanlarında film izlemeyi, kitap okumayı, müzik dinlemeyi ve sanat üzerine aktiviteler yapan; sosyal bir insan olan Nehir, Ledgerise’ın marka imajını tasarlar."
     },
     {
