@@ -64,7 +64,7 @@ export default function Header(isApiHeader) {
   }
 
   return (
-    <nav className="overflow-x-hidden z-0 w-full bg-white">
+    <nav className="overflow-x-hidden z-0 w-full py-4 bg-white">
       <div id="hamburger-menu" className="hamburger-menu w-screen h-screen absolute bg-white z-20 p-8 transition-all hidden overflow-x-hidden">
         <div className="flex justify-between items-center overflow-x-hidden">
           <a href="/">
@@ -134,16 +134,16 @@ export default function Header(isApiHeader) {
         </a>
       </h1>
       <div className="z-0 w-fit flex flex-row items-center" style={{color: "#343434"}}>
-        <Link href="/collections" className="p-6 text-sm font-semibold mr-4 text-gray-600" >
+        <Link href="/collections" className="p-6 mr-4 text-gray-600" >
           Kampanyalar
         </Link>
-        <Link href="/how-to-donate-collections" className="p-6 text-sm font-semibold mr-4 text-gray-600" >
+        <Link href="/how-to-donate-collections" className="p-6 mr-4 text-gray-600" >
           Nasıl bağış yapılır?
         </Link>
-        <Link href="/api-documentation" className="p-6 text-sm font-semibold mr-4 text-gray-600" >
+        <Link href="/api-documentation" className="p-6 mr-4 text-gray-600" >
           Entegrasyon
         </Link>
-        <Link href="/team" className="p-6 text-sm font-semibold mr-8 text-gray-600" >
+        <Link href="/team" className="p-6 mr-8 text-gray-600" >
           Ekibimiz
         </Link>
         {
@@ -154,7 +154,7 @@ export default function Header(isApiHeader) {
                 {
                   isAuthenticated
                     ? (<div className="flex items-center">
-                      <div className="text-sm">{username}</div>
+                      <div>{username}</div>
                       <div className="w-6 ml-2 text-sm cursor-pointer hover:animate-pulse" onClick={() => { handleLogoutClick() }}>
                         <img src="/logout.png" alt="Logout" />
                       </div>
@@ -165,10 +165,10 @@ export default function Header(isApiHeader) {
                     : (
                       <div className="flex">
                         <div className="flex items-center">
-                          <a href="/login" onClick={() => { setLastVisitedUrl() }} className="text-sm px-4 py-2 mr-2 text-gray-800 cursor-pointer hover:bg-blue-800 transition-all">Giriş Yap</a>
+                          <a href="/login" onClick={() => { setLastVisitedUrl() }} className="px-4 py-2 mr-2 text-gray-800 cursor-pointer rounded hover:bg-purple-700 hover:bg-white transition-all">Giriş Yap</a>
                         </div>
                         <div className="flex items-center">
-                          <a href="/login" onClick={() => { setLastVisitedUrl() }} className="text-sm px-4 py-2 mr-2 bg-purple-700 rounded text-slate-100 cursor-pointer hover:bg-orange-700 transition-all">Kayıt Ol</a>
+                          <a href="/login" onClick={() => { setLastVisitedUrl() }} className="px-4 py-2 mr-2 bg-purple-700 rounded text-slate-100 cursor-pointer hover:bg-orange-700 transition-all">Kayıt Ol</a>
                         </div>
                       </div>
                       

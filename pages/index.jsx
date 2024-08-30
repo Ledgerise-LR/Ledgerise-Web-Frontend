@@ -197,17 +197,17 @@ export default function Home() {
   ]
 
   return (
-    <div className='w-full h-full py-28 px-10 overflow-hidden overflow-x-hidden'>
-      <div className='w-64 left-0 top-36 h-64 bg-yellow-100 absolute z-0 rounded-full blur-3xl'></div>
-      <div className='w-32 right-24 -mt-16 h-64 bg-yellow-200 absolute z-0 rounded-full'></div>
-      <div className='w-96 right-0 mt-98 h-96 bg-yellow-400 absolute z-0 rounded-full'></div>
+    <div className='w-full h-full pt-24 pb-28 px-10 overflow-hidden overflow-x-hidden'>
+      <div className='w-64 left-0 hidden top-72 h-64 bg-pink-100 absolute z-0 rounded-full blur-2xl'></div>
+      <div className='w-32 right-24 -mt-16 h-64 bg-pink-200 absolute z-0 rounded-full'></div>
+      <div className='w-96 right-0 mt-98 h-96 bg-pink-400 absolute z-0 rounded-full'></div>
       <div className='w-full h-full flex justify-center items-center'>
         <div className='flex flex-1 w-3/5 h-4/5 justify-center flex-wrap'>
           <div className='flex-col w-128 mb-12 z-10'>
             <div className='w-full'>
               <div 
               style={{
-                background: "-webkit-linear-gradient(#B881FF, #FF9900)",
+                background: "-webkit-linear-gradient(80deg, #B881FF, #FF9900)",
                 WebkitBackgroundClip: "text",
                 WebkitTextFillColor: "transparent"
               }} 
@@ -223,10 +223,10 @@ export default function Home() {
                   <div className='font-semibold mr-4 text-4xl flex text-gray-700'>5<div className='-mt-0.5'>+</div></div>
                   <div className='font-light'>PAYDAŞ</div>
                 </div>
-                <div className='h-full w-0.5 bg-gray-700 bg-opacity-50'></div>
+                <div className='h-full w-0.5 bg-gray-600 bg-opacity-50'></div>
                 <div className='w-1/2 flex items-center justify-center'>
                   <div className='font-semibold mr-4 text-4xl flex text-gray-700'>130 <div className='-mt-0.5'>+</div></div>
-                  <div className='font-light'>KOLİ TRAFİĞİ</div>
+                  <div className='font-light w-24'>KOLİ İŞLEM HACMİ</div>
                 </div>              
               </div>
             </div>
