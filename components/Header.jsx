@@ -128,23 +128,23 @@ export default function Header(isApiHeader) {
         windowSize.width > 800
           ? (
             <div className={`p-2 px-24 items-center z-0 flex justify-between w-screen bg-white ${router.pathname == "/api-documentation" ? "h-16 overflow-y-hidden" : "h-16 overflow-y-hidden"}`}>
-      <h1 className={`z-0 h-full ${router.pathname == "/api-documentation" ? "aspect-video" : "aspect-video"}`}>
+      <h1 className={`z-0 h-full w-28`}>
         <a href="/">
           <img src="logo.svg" alt="Ledgerise | Bağış hiç olmadığı kadar şeffaf" />
         </a>
       </h1>
       <div className="z-0 w-fit flex flex-row items-center" style={{color: "#343434"}}>
-        <Link href="/collections" className="p-6 mr-4 text-gray-600" >
+        <Link href="/collections" className="mx-8 text-gray-600 hover:border-b-2 w-fit border-orange-200" >
           Kampanyalar
         </Link>
-        <Link href="/how-to-donate-collections" className="p-6 mr-4 text-gray-600" >
+        <Link href="/how-to-donate-collections" className="mx-8 text-gray-600 hover:border-b-2 border-orange-200" >
           Nasıl bağış yapılır?
         </Link>
-        <Link href="/api-documentation" className="p-6 mr-4 text-gray-600" >
+        <Link href="/api-documentation" className="mx-8 text-gray-600 hover:border-b-2 border-orange-200" >
           Entegrasyon
         </Link>
-        <Link href="/team" className="p-6 mr-8 text-gray-600" >
-          Ekibimiz
+        <Link href="/team" className="mx-8 text-gray-600 hover:border-b-2 border-orange-200" >
+          Hakkımızda
         </Link>
         {
           router.pathname == "/admin"
