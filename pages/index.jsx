@@ -196,41 +196,41 @@ export default function Home() {
     }
   ]
 
+  const partnerImages = ["sancaktepe.png", "marjinalsosyal.png", "sevvakfi.png", "iparet.png"];
+
   return (
-    <div className='w-full h-full pt-24 pb-28 px-10 overflow-hidden overflow-x-hidden'>
-      <div className='w-64 left-0 hidden top-72 h-64 bg-pink-100 absolute z-0 rounded-full blur-2xl'></div>
-      <div className='w-32 right-24 -mt-16 h-64 bg-pink-100 absolute z-0 rounded-full'></div>
-      <div className='w-96 right-0 mt-98 h-96 bg-pink-300 absolute z-0 rounded-full'></div>
-      <div className='w-full h-full flex justify-center items-center'>
-        <div className='flex flex-1 w-3/5 h-4/5 justify-center flex-wrap'>
+    <div className={`w-full h-full pt-24 pb-28 ${windowSize.width < 800 ? "px-0" : "px-10"} overflow-hidden overflow-x-hidden`}>
+      <div className={`w-108 -right-72 -mt-24 h-64 bg-orange-400 absolute z-0 rounded-full ${windowSize.width < 800 ? "hidden" : ""}`}></div>
+      <div className={`w-108 -right-24 mt-96 h-108 bg-violet-900 absolute z-0 rounded-full ${windowSize.width < 800 ? "hidden" : ""}`}></div>
+      <div className={`w-full h-full flex ${windowSize.width < 800 ? "justify-center" : "justify-between"} items-center`}>
+        <div className={`flex flex-1 w-3/5 h-4/5 ${windowSize.width < 800 ? "justify-center" : "justify-between"} px-20 flex-wrap`}>
           <div className='flex-col w-128 mb-12 z-10'>
             <div className='w-full'>
               <div 
-              style={{
-                background: "-webkit-linear-gradient(80deg, #B881FF, #FF9900)",
+              className={`h-fit -mt-2 font-bold font-sans flex flex-col ${windowSize.width < 800 ? "text-4xl" : "text-6xl"}`}
+              >
+                <div className='mb-2 text-gray-900'>Stok Fazlalarını</div>
+                <div style={{
+                background: "-webkit-linear-gradient(45deg, #B881FF, #FF9900)",
                 WebkitBackgroundClip: "text",
                 WebkitTextFillColor: "transparent"
-              }} 
-              className={`text-5xl h-fit py-2 font-bold font-sans flex flex-col ${windowSize.width < 800 ? "text-4xl items-center" : ""}`}
-              >
-                <div>Sürdürülebilir,</div>
-                <div>Sorumlu,</div>
-                <div>Kârlı.</div>
+              }} className='pb-2 w-fit'>Değere</div>
+                <div className='text-gray-900'>Dönüştürüyoruz</div>
               </div>
-              <div className={`text-lg text-gray-500 mt-8 font-sans w-100 ${windowSize.width < 800 ? "text-md text-center w-96" : "text-lg"}`}>Atıl olma potansiyeline sahip ürünler, %50'ye varan indirimli fiyatı üzerinden Ledgerise'da listelenir. Ürünleri ortaklaşa bağışlanarak ihtiyaç sahiplerine en güvenli şekilde ulaşır.</div>
-              <div className='w-full h-24 mt-8 flex'>
+              <div className={`text-lg text-gray-500 mt-8 font-sans w-4/5 ${windowSize.width < 800 ? "text-md w-96" : "text-lg"}`}>Atıl olma potansiyeline sahip ürünler, %50'ye varan indirimli fiyatı üzerinden Ledgerise'da listelenir. Ürünleri ortaklaşa bağışlanarak ihtiyaç sahiplerine en güvenli şekilde ulaşır.</div>
+              <div className='w-full h-12 mt-8 flex'>
                 <div className='w-1/2 flex items-center justify-center'>
-                  <div className='font-semibold mr-4 text-4xl flex text-gray-700'>5<div className='-mt-0.5'>+</div></div>
+                  <div className='font-semibold mr-4 text-3xl flex text-gray-700'>5<div className='-mt-0.5'>+</div></div>
                   <div className='font-light'>PAYDAŞ</div>
                 </div>
                 <div className='h-full w-0.5 bg-gray-600 bg-opacity-50'></div>
                 <div className='w-1/2 flex items-center justify-center'>
-                  <div className='font-semibold mr-4 text-4xl flex text-gray-700'>130 <div className='-mt-0.5'>+</div></div>
+                  <div className='font-semibold mr-4 text-3xl flex text-gray-700'>130 <div className='-mt-0.5'>+</div></div>
                   <div className='font-light w-24'>KOLİ İŞLEM HACMİ</div>
                 </div>              
               </div>
             </div>
-            <div className='w-1/2 mt-24 z-10'>
+            <div className='w-1/2 mt-10 z-10'>
               <a href="/collections">
                 <Button
                   style={{
@@ -248,10 +248,24 @@ export default function Home() {
                 />
               </a>
             </div>
+            <div className='w-full h-20 mt-4'>
+              <div className='text-sm mb-2 text-gray-600 font-light'>Proje Paydaşlarımız</div>
+              <div className='flex w-full h-8'>
+                {
+                  partnerImages.map(eachPartnerImage => {
+                    return (
+                      <div className='w-fit h-full overflow-hidden mr-4'>
+                        <img className='w-full h-full' src={eachPartnerImage} alt={eachPartnerImage} />
+                      </div>
+                    )
+                  })
+                }
+              </div>
+            </div>
           </div>
           <div className={`w-fit h-max relative bg-white z-10`}>
             <a href={`/assets?id=${asset.tokenId}&subcollectionId=${asset.subcollectionId}&nftAddress=${asset.nftAddress}`}>
-              <div id='showroom' className={`w-96 h-108 flex flex-1 transition-all flex-col justify-center border-2 p-2 rounded`}>
+              <div id='showroom' className={`w-96 h-108 flex flex-1 transition-all bg-white flex-col justify-center border-2 p-2 rounded -mt-12`}>
                 <img src={imageURI} alt={tokenName} className='border-b-2 rounded h-96' />
                 <div className='w-full h-max mt-2 p-2'>
                   <div className='text-2xl text-gray-700 font-medium mb-1'>{asset.collectionName}</div>
