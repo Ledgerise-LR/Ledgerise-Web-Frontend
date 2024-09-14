@@ -133,17 +133,17 @@ export default function Header(isApiHeader) {
           <img className="h-full" src="logo.svg" alt="Ledgerise | Bağış hiç olmadığı kadar şeffaf" />
         </a>
       </div>
-      <div className="z-0 w-fit flex flex-row items-center text-sm font-semibold text-black">
-        <Link href="/collections" className="mx-8 hover:border-b-2 w-fit hover:mt-0.5 border-orange-200" >
+      <div className="z-0 w-fit flex flex-row items-center text-sm font-medium text-black">
+        <Link href="/collections" className="mx-4 hover:border-b-2 w-fit hover:mt-0.5 border-orange-200" >
           Kampanyalar
         </Link>
-        <Link href="/how-to-donate-collections" className="mx-8 hover:border-b-2 hover:mt-0.5 border-orange-200" >
+        <Link href="/how-to-donate-collections" className="mx-4 hover:border-b-2 hover:mt-0.5 border-orange-200" >
           Nasıl bağış yapılır?
         </Link>
-        <Link href="/api-documentation" className="mx-8 hover:border-b-2 hover:mt-0.5 border-orange-200" >
+        <Link href="/api-documentation" className="mx-4 hover:border-b-2 hover:mt-0.5 border-orange-200" >
           Entegrasyon
         </Link>
-        <Link href="/team" className="mx-8 hover:border-b-2 hover:mt-0.5 border-orange-200" >
+        <Link href="/team" className="mx-4 hover:border-b-2 hover:mt-0.5 border-orange-200" >
           Hakkımızda
         </Link>
         {
@@ -165,10 +165,10 @@ export default function Header(isApiHeader) {
                     : (
                       <div className="flex">
                         <div className="flex items-center">
-                          <a href="/login" onClick={() => { setLastVisitedUrl() }} className="px-4 py-2 mr-2 text-gray-800 cursor-pointer rounded hover:bg-purple-700 hover:text-white transition-all">Giriş Yap</a>
+                          <a href="/login" onClick={() => { setLastVisitedUrl() }} className="px-8 py-2 mr-2 text-gray-800 cursor-pointer rounded hover:bg-purple-700 hover:text-white transition-all">Giriş Yap</a>
                         </div>
                         <div className="flex items-center">
-                          <a href="/login" onClick={() => { setLastVisitedUrl() }} className="px-4 py-2 mr-2 bg-purple-700 rounded text-slate-100 cursor-pointer hover:bg-orange-700 transition-all">Kayıt Ol</a>
+                          <a href="/login" onClick={() => { setLastVisitedUrl() }} className="px-8 py-2 mr-2 bg-purple-700 rounded text-slate-100 cursor-pointer hover:bg-orange-700 transition-all">Kayıt Ol</a>
                         </div>
                       </div>
                       
