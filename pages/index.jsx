@@ -200,8 +200,8 @@ export default function Home() {
 
   return (
     <div className={`w-full h-full pt-24 pb-28 ${windowSize.width < 800 ? "px-0" : "px-10"} overflow-hidden overflow-x-hidden`}>
-      <div className={`w-36 right-12 -mt-24 h-64 bg-orange-100 absolute z-0 rounded-full ${windowSize.width < 800 ? "hidden" : ""}`}></div>
-      <div className={`w-108 -right-36 mt-98 h-72 bg-purple-900 absolute z-0 rounded-full ${windowSize.width < 1200 ? "hidden" : ""}`}></div>
+      <div className={`w-36 right-10 -mt-24 h-64 bg-orange-300 absolute z-0 rounded-lg ${windowSize.width < 800 ? "hidden" : ""}`}></div>
+      <div className={`w-108 -right-36 mt-98 h-72 bg-violet-900 absolute z-0 rounded-lg ${windowSize.width < 1200 ? "hidden" : ""}`}></div>
       <div className={`w-full h-full flex ${windowSize.width < 800 ? "justify-center" : "justify-between"} items-center`}>
         <div className={`flex flex-1 w-3/5 h-4/5 ${windowSize.width < 800 ? "justify-center" : "justify-between"} px-20 flex-wrap`}>
           <div className='flex-col w-128 mb-12 z-10'>
@@ -217,7 +217,7 @@ export default function Home() {
               }} className='pb-2 w-fit'>Değere</div>
                 <div className='text-slate-900'>Dönüştürüyoruz</div>
               </div>
-              <div className={`text-lg text-gray-500 mt-8 font-sans w-4/5 ${windowSize.width < 800 ? "text-md w-96" : "text-lg"}`}>Atıl olma potansiyeline sahip ürünler, %50'ye varan indirimli fiyatı üzerinden Ledgerise'da listelenir. Ürünleri ortaklaşa bağışlanarak ihtiyaç sahiplerine en güvenli şekilde ulaşır.</div>
+              <div className={`text-lg text-gray-500 mt-8 font-sans w-full ${windowSize.width < 800 ? "text-md w-96" : "text-lg"}`}>Atıl olma potansiyeline sahip ürünler, %50'ye varan indirimli fiyatı üzerinden Ledgerise'da listelenir. Ürünleri ortaklaşa bağışlanarak ihtiyaç sahiplerine en güvenli şekilde ulaşır.</div>
               <div className='w-full h-12 mt-8 flex'>
                 <div className='w-1/2 flex items-center justify-center'>
                   <div className='font-semibold mr-4 text-3xl flex text-gray-700'>5<div className='-mt-0.5'>+</div></div>
