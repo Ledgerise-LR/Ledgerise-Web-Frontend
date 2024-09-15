@@ -196,6 +196,30 @@ export default function Home() {
     }
   ]
 
+  const RetailChain = [
+    {
+      photo: "supplyChain1.svg",
+      alt: "donate",
+      span: "Güvenle",
+      title: "BAĞIŞLA",
+      description: "“Nasıl bağış yapılır?” sekmesinden bağış yapmak istediğiniz kampanyaya tıklayın. Bağışınızı yaparken kampanyayı yürüten kuruluşa e-posta adresinizi belirtmeniz gerekir."
+    },
+    {
+      photo: "supplyChain2.svg",
+      alt: "match",
+      span: "Anında",
+      title: "EŞLENDİ",
+      description: "Siz bağış yapar yapmaz adınıza bir karekod oluşturulur. Bu karekod bağışınızın üzerinde yer alır ve dağıtım görevlileri tarafından üretim, depo ve teslimatta taratılır."
+    },
+    {
+      photo: "supplyChain3.svg",
+      alt: "delivery",
+      span: "%100 Şeffaf",
+      title: "TESLİMAT",
+      description: "Taratılma gerçekleştiği anda kolinin görüntüsü, lokasyonu ve zaman damgası anında blokzincire kaydedilir. Size gelen mailler üzerinden bağışınızın ihtiyaç sahibine ulaştığından emin olursunuz."
+    }
+  ]
+
   return (
     <div className='w-full h-full pt-24 pb-28 px-10 overflow-hidden overflow-x-hidden'>
       <div className='w-64 left-0 hidden top-72 h-64 bg-pink-100 absolute z-0 rounded-full blur-2xl'></div>
@@ -315,7 +339,7 @@ export default function Home() {
             <div className='text-lg'>Yerel yönetimlerin bağış kampanyalarına sağladığımız şeffaf takip hizmeti ile...</div>
           </div>
         </div>
-        <div className='w-full flex justify-center flex-wrap'>
+        <div className='w-full flex justify-around flex-wrap'>
           {
             pressLinks
               ? pressLinks.map(eachPressLink => {
@@ -337,12 +361,32 @@ export default function Home() {
           }
         </div>
       </div>
-      <div className='text-3xl my-12 relative h-12'>
-        <div className='z-0 absolute w-52 h-52 -left-40 rounded-full bg-yellow-400'></div>
-        <div style={{color: "#343434"}} className='z-20 absolute'>ADIM ADIM LEDGERISE</div>
+      <div className='text-3xl mt-4'>
+        ADIM ADIM LEDGERISE
       </div>
-      <div className='w-screen -ml-12 overflow-hidden'>
-        <img className='w-screen' src="supplyChain.svg" alt="Supply chain" />
+      <div className='bg-gradient-to-b from-blue-300 via-pink-300 to-orange-300'>
+        {
+          RetailChain.map((item, index) => {
+            const isEven = index % 2 === 0; 
+            
+            return (
+              <div className={`flex items-center gap-8 ${isEven ? 'flex-row' : 'flex-row-reverse'} max-w-7xl mx-auto my-4 items-stretch p-4`} key={index}>
+                <div className='w-1/2'>
+                  <img src={item.photo} alt={item.alt} />
+                </div>
+                <div className='w-1/2 p-4 flex flex-col justify-center gap-5'>
+                  <div className=''>
+                    <span className='text-xl text-white'>{item.span}</span>
+                    <h2 className='text-6xl font-bold text-white'>{item.title}</h2>
+                  </div>
+                  <div className='text-2xl text-neutral-700 bg-white p-8 rounded-md'>
+                    {item.description}
+                  </div>
+                </div>
+              </div>
+            );
+          })
+        }
       </div>
     </div >
   )
