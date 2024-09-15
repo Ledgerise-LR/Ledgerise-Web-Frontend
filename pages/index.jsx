@@ -378,7 +378,7 @@ export default function Home() {
       <div className='text-3xl mt-4'>
         ADIM ADIM LEDGERISE
       </div>
-      <div className='bg-gradient-to-b from-blue-300 via-pink-300 to-orange-300'>
+      <div style={{ background: "-webkit-linear-gradient(90deg, #B881FF, #FF9900)" }}>
         {
           RetailChain.map((item, index) => {
             const isEven = index % 2 === 0; 
