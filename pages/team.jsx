@@ -28,6 +28,12 @@ export default function Home() {
       image: "/ilayda.png",
       bio: "Satış sürecini yönetir. Kurumsal dünyanın disiplinini ve genç girişim ruhunu eşzamanlı taşıyarak ürünü, pazara en uygun hale getirir."
     },
+    {
+      name: "Harun Yahya Demirpençe",
+      role: "Yazılım Geliştirme",
+      image: "/harun.jpg",
+      bio: "Ledgerise'da yazılım geliştirici olarak görev yapar. Ürünümüzün sorunsuz bir şekilde yönetilmesi için çalışır."
+    },
   ]
 
   return (
