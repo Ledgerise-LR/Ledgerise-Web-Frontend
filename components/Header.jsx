@@ -64,7 +64,7 @@ export default function Header(isApiHeader) {
   }
 
   return (
-    <nav className="overflow-x-hidden z-0 w-full py-4 bg-white">
+    <nav className="overflow-x-hidden z-0 w-full mb-4 bg-white">
       <div id="hamburger-menu" className="hamburger-menu w-screen h-screen absolute bg-white z-20 p-8 transition-all hidden overflow-x-hidden">
         <div className="flex justify-between items-center overflow-x-hidden">
           <a href="/">
@@ -127,23 +127,23 @@ export default function Header(isApiHeader) {
       {
         windowSize.width > 800
           ? (
-            <div className={`p-2 px-24 items-center z-0 flex justify-between w-screen bg-white ${router.pathname == "/api-documentation" ? "h-16 overflow-y-hidden" : "h-16 overflow-y-hidden"}`}>
-      <h1 className={`z-0 h-full w-28`}>
+            <div className={`px-24 py-10 items-center z-0 flex justify-between w-screen bg-white ${router.pathname == "/api-documentation" ? "h-16 overflow-y-hidden" : "h-16 overflow-y-hidden"}`}>
+      <div className={`h-10 w-fit overflow-hidden`}>
         <a href="/">
-          <img src="logo.svg" alt="Ledgerise | Bağış hiç olmadığı kadar şeffaf" />
+          <img className="h-full" src="logo.svg" alt="Ledgerise | Bağış hiç olmadığı kadar şeffaf" />
         </a>
-      </h1>
-      <div className="z-0 w-fit flex flex-row items-center" style={{color: "#343434"}}>
-        <Link href="/collections" className="mx-8 text-gray-600 hover:border-b-2 w-fit border-orange-200" >
+      </div>
+      <div className="z-0 w-fit flex flex-row items-center text-sm font-medium text-black">
+        <Link href="/collections" className="mx-4 hover:border-b-2 w-fit hover:mt-0.5 border-orange-200" >
           Kampanyalar
         </Link>
-        <Link href="/how-to-donate-collections" className="mx-8 text-gray-600 hover:border-b-2 border-orange-200" >
+        <Link href="/how-to-donate-collections" className="mx-4 hover:border-b-2 hover:mt-0.5 border-orange-200" >
           Nasıl bağış yapılır?
         </Link>
-        <Link href="/api-documentation" className="mx-8 text-gray-600 hover:border-b-2 border-orange-200" >
+        <Link href="/api-documentation" className="mx-4 hover:border-b-2 hover:mt-0.5 border-orange-200" >
           Entegrasyon
         </Link>
-        <Link href="/team" className="mx-8 text-gray-600 hover:border-b-2 border-orange-200" >
+        <Link href="/team" className="mx-4 hover:border-b-2 hover:mt-0.5 border-orange-200" >
           Hakkımızda
         </Link>
         {
@@ -165,10 +165,10 @@ export default function Header(isApiHeader) {
                     : (
                       <div className="flex">
                         <div className="flex items-center">
-                          <a href="/login" onClick={() => { setLastVisitedUrl() }} className="px-4 py-2 mr-2 text-gray-800 cursor-pointer rounded hover:bg-purple-700 hover:text-white transition-all">Giriş Yap</a>
+                          <a href="/login" onClick={() => { setLastVisitedUrl() }} className="px-8 py-2 mr-2 text-gray-800 cursor-pointer rounded hover:bg-purple-700 hover:text-white transition-all">Giriş Yap</a>
                         </div>
                         <div className="flex items-center">
-                          <a href="/login" onClick={() => { setLastVisitedUrl() }} className="px-4 py-2 mr-2 bg-purple-700 rounded text-slate-100 cursor-pointer hover:bg-orange-700 transition-all">Kayıt Ol</a>
+                          <a href="/login" onClick={() => { setLastVisitedUrl() }} className="px-8 py-2 mr-2 bg-purple-700 rounded text-slate-100 cursor-pointer hover:bg-orange-700 transition-all">Kayıt Ol</a>
                         </div>
                       </div>
                       
