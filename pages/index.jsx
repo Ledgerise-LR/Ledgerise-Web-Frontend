@@ -378,22 +378,26 @@ export default function Home() {
       <div className='text-3xl mt-4'>
         ADIM ADIM LEDGERISE
       </div>
-      <div style={{ background: "-webkit-linear-gradient(90deg, #B881FF, #FF9900)" }}>
+      <div style={{ background: "-webkit-linear-gradient(90deg, #B881FF, #FF9900)" }}>        
         {
           RetailChain.map((item, index) => {
-            const isEven = index % 2 === 0; 
-            
+            const isEven = index % 2 === 0;
+
             return (
-              <div className={`flex items-center gap-8 ${isEven ? 'flex-row' : 'flex-row-reverse'} max-w-7xl mx-auto my-4 items-stretch p-4`} key={index}>
-                <div className='w-1/2'>
-                  <img src={item.photo} alt={item.alt} />
+              <div className={`flex flex-col sm:flex-row items-center gap-2 sm:gap-8 ${isEven ? 'sm:flex-row' : 'sm:flex-row-reverse'} max-w-7xl mx-auto my-4 p-4`} key={index}>
+                <div className='w-full md:w-1/2'>
+                  <img 
+                    src={item.photo} 
+                    alt={item.alt} 
+                    className="w-full h-auto max-h-80 md:max-h-96"
+                  />
                 </div>
-                <div className='w-1/2 p-4 flex flex-col justify-center gap-5'>
+                <div className='w-full md:w-1/2 p-4 flex flex-col justify-center gap-1 md:gap-5'>
                   <div className=''>
-                    <span className='text-xl text-white'>{item.span}</span>
-                    <h2 className='text-6xl font-bold text-white'>{item.title}</h2>
+                    <span className='text-base md:text-xl text-white'>{item.span}</span>
+                    <h2 className='text-3xl md:text-5xl font-bold text-white'>{item.title}</h2>
                   </div>
-                  <div className='text-2xl text-neutral-700 bg-white p-8 rounded-md'>
+                  <div className='text-base md:text-2xl text-neutral-700 bg-white p-4 md:p-8 rounded-md'>
                     {item.description}
                   </div>
                 </div>
