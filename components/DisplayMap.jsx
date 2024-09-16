@@ -34,7 +34,7 @@ export default function DisplayMap({ center, visualVerifications, zoom, chainId,
       city: "istanbul",
       topLeft: {
         lat: 41.5502,
-        lng: 28.3983
+        lng: 28.4983
       },
       bottomRight: {
         lat: 40.8021,
@@ -112,7 +112,7 @@ export default function DisplayMap({ center, visualVerifications, zoom, chainId,
       
         const city = getCity(verification.location.latitude, verification.location.longitude);
 
-        let widthMargin = i * 0.01;
+        let widthMargin = i * 0.008;
         
         let heightMargin = (parseInt(i.toString()[i.toString().length - 1]) * 0.02);
 
