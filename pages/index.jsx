@@ -223,11 +223,11 @@ export default function Home() {
   const partnerImages = ["sancaktepe.png", "marjinalsosyal.png", "sevvakfi.png", "iparet.png"];
 
   return (
-    <div className={`w-full h-full pt-24 pb-28 ${windowSize.width < 800 ? "px-0" : "px-10"} overflow-hidden overflow-x-hidden`}>
+    <div className={`w-full h-full pb-28 ${windowSize.width < 800 ? "px-0 pt-40" : "px-20 pt-24"} overflow-hidden overflow-x-hidden`}>
       <div className={`w-36 right-10 -mt-24 h-64 bg-orange-300 absolute z-0 rounded-lg ${windowSize.width < 800 ? "hidden" : ""}`}></div>
       <div className={`w-108 -right-36 mt-98 h-72 bg-violet-900 absolute z-0 rounded-lg ${windowSize.width < 1200 ? "hidden" : ""}`}></div>
       <div className={`w-full h-full flex ${windowSize.width < 800 ? "justify-center" : "justify-between"} items-center`}>
-        <div className={`flex flex-1 w-3/5 h-4/5 ${windowSize.width < 800 ? "justify-center" : "justify-between"} px-20 flex-wrap`}>
+        <div className={`flex flex-1 w-3/5 h-4/5 ${windowSize.width < 800 ? "justify-center" : "justify-between"} px-10 flex-wrap`}>
           <div className='flex-col w-128 mb-12 z-10'>
             <div className='w-full'>
               <div 
@@ -287,7 +287,7 @@ export default function Home() {
               </div>
             </div>
           </div>
-          <div className={`w-96 h-fit relative bg-white z-10`}>
+          <div className={`w-96 h-fit relative bg-white z-10 ${windowSize.width < 800 ? "mt-20" : ""}`}>
             <a href={`/assets?id=${asset.tokenId}&subcollectionId=${asset.subcollectionId}&nftAddress=${asset.nftAddress}`}>
               <div id='showroom' className={`w-96 h-fit flex flex-1 transition-all bg-white flex-col justify-center border-2 p-2 rounded -mt-12`}>
                 <img src={imageURI} alt={tokenName} className='border-b-2 rounded h-96' />
@@ -353,15 +353,15 @@ export default function Home() {
             <div className='text-lg'>Yerel yönetimlerin bağış kampanyalarına sağladığımız şeffaf takip hizmeti ile...</div>
           </div>
         </div>
-        <div className='w-full flex justify-around flex-wrap'>
+        <div className={`w-full flex justify-around flex-wrap ${windowSize.width < 800 ? "px-10" : ""}`}>
           {
             pressLinks
               ? pressLinks.map(eachPressLink => {
                 return(
                   <a href={eachPressLink.link} target='_blank' className='w-96 aspect-square shadow-md mr-4 mt-8 relative flex flex-col justify-end cursor-pointer hover:brightness-75 transition-all'>
                     <img src={eachPressLink.photo} alt={eachPressLink.photo} className='w-full h-full absolute z-0' />
-                    <div className='z-20 w-full h-fit bg-opacity-50 bg-blue-500 p-4'>
-                      <div className='text-gray-50 text-sm uppercase font-bold'>{eachPressLink.title}</div>
+                    <div className='z-20 w-full h-fit bg-opacity-50 bg-gray-900 p-4'>
+                      <div className='text-gray-50 text-sm uppercase font-bold mb-2'>{eachPressLink.title}</div>
                       <div className='flex w-full items-center'>
                         <a className='mr-4' href={eachPressLink.linkedin}><Linkedin fontSize='20px'/></a>
                         <a className='mr-4' href={eachPressLink.twitter}><Twitter fontSize='20px'/></a>
