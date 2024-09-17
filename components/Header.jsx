@@ -151,7 +151,7 @@ export default function Header(isApiHeader) {
           Hakkımızda
         </Link>
       </div>
-      <div className="z-20 w-fit flex flex-row items-center text-sm font-medium text-black ml-auto">
+      <div className="z-20 w-fit flex flex-row items-center font-medium text-black ml-auto">
         {
           router.pathname == "/admin"
             ? <ConnectButton moralisAuth={false} />
@@ -171,10 +171,10 @@ export default function Header(isApiHeader) {
                     : (
                       <div className="flex">
                         <div className="flex items-center">
-                          <a href="/login" onClick={() => { setLastVisitedUrl() }} className="px-8 py-2 mr-2 text-gray-800 cursor-pointer rounded hover:bg-purple-700 hover:text-white transition-all">Giriş Yap</a>
+                          <a href="/login" onClick={() => { setLastVisitedUrl() }} className="p-3.5 mr-2 text-gray-800 cursor-pointer rounded hover:bg-[rgb(255,168,82)] transition-all text-sm">Giriş Yap</a>
                         </div>
                         <div className="flex items-center">
-                          <a href="/login" onClick={() => { setLastVisitedUrl() }} className="bg-[linear-gradient(20deg,rgba(60,0,70,1)_0%,rgba(60,30,0,1)_75%)] px-8 py-2 mr-2 rounded text-slate-100 cursor-pointer hover:bg-orange-700 transition-all">Kayıt Ol</a>
+                          <a href="/login" onClick={() => { setLastVisitedUrl() }} className="bg-[rgb(255,168,82)] p-4 mr-2 rounded text-black cursor-pointer text-xs font-bold transition-all">Hesap Oluştur</a>
                         </div>
                       </div>
                       
