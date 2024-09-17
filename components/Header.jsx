@@ -131,13 +131,13 @@ export default function Header(isApiHeader) {
       {
         windowSize.width > 800
           ? (
-            <div className={`px-24 py-10 items-center z-20 flex justify-between w-screen bg-white ${router.pathname == "/api-documentation" ? "h-16 overflow-y-hidden" : "h-16 overflow-y-hidden"}`}>
+            <div className={`px-24 border-b py-10 items-center z-20 flex w-screen bg-white ${router.pathname == "/api-documentation" ? "h-16 overflow-y-hidden" : "h-16 overflow-y-hidden"}`}>
       <div className={`h-10 w-fit overflow-hidden`}>
         <a href="/">
           <img className="h-full" src="logo.svg" alt="Ledgerise | Bağış hiç olmadığı kadar şeffaf" />
         </a>
       </div>
-      <div className="z-20 w-fit flex flex-row items-center text-sm font-medium text-black">
+      <div className="z-20 w-fit ml-12 flex flex-row items-center text-sm font-medium text-black">
         <Link href="/collections" className="mx-4 hover:border-b-2 w-fit hover:mt-0.5 border-orange-200" >
           Kampanyalar
         </Link>
@@ -150,6 +150,8 @@ export default function Header(isApiHeader) {
         <Link href="/team" className="mx-4 hover:border-b-2 hover:mt-0.5 border-orange-200" >
           Hakkımızda
         </Link>
+      </div>
+      <div className="z-20 w-fit flex flex-row items-center text-sm font-medium text-black ml-auto">
         {
           router.pathname == "/admin"
             ? <ConnectButton moralisAuth={false} />
@@ -172,7 +174,7 @@ export default function Header(isApiHeader) {
                           <a href="/login" onClick={() => { setLastVisitedUrl() }} className="px-8 py-2 mr-2 text-gray-800 cursor-pointer rounded hover:bg-purple-700 hover:text-white transition-all">Giriş Yap</a>
                         </div>
                         <div className="flex items-center">
-                          <a href="/login" onClick={() => { setLastVisitedUrl() }} className="px-8 py-2 mr-2 bg-purple-700 rounded text-slate-100 cursor-pointer hover:bg-orange-700 transition-all">Kayıt Ol</a>
+                          <a href="/login" onClick={() => { setLastVisitedUrl() }} className="bg-[linear-gradient(20deg,rgba(60,0,70,1)_0%,rgba(60,30,0,1)_75%)] px-8 py-2 mr-2 rounded text-slate-100 cursor-pointer hover:bg-orange-700 transition-all">Kayıt Ol</a>
                         </div>
                       </div>
                       
