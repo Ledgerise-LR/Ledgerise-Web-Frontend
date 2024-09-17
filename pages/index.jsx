@@ -9,6 +9,7 @@ import { Button } from 'web3uikit'
 import blockExplorerMapping from "../constants/blockExplorerMapping.json";
 import { URL, PORT } from '@/serverConfig';
 import dynamic from 'next/dynamic';
+import {Trending} from '@web3uikit/icons'
 
 export default function Home() {
 
@@ -247,15 +248,19 @@ export default function Home() {
               }} className='pb-2 w-fit'>Değere</div>
                 <div className='text-slate-900'>Dönüştürüyoruz</div>
               </div>
-              <div className={`text-lg text-gray-500 mt-8 font-sans w-full ${windowSize.width < 800 ? "text-md w-96" : "text-lg"}`}>Atıl olma potansiyeline sahip ürünler, %50'ye varan indirimli fiyatı üzerinden Ledgerise'da listelenir. Ürünleri ortaklaşa bağışlanarak ihtiyaç sahiplerine en güvenli şekilde ulaşır.</div>
+              <div className={`text-lg text-black mt-8 font-sans w-full ${windowSize.width < 800 ? "text-md w-96" : "text-lg"}`}>
+                <div className='flex items-center'><div className='p-1 bg-[rgb(50,0,20)] text-white rounded-full mr-2'><Trending fontSize='16px'/></div> Stokların %5'i, %50'ye varan indirimli fiyatı üzerinden listelenir.</div>
+                <div className='flex items-center'><div className='p-1 bg-[rgb(50,0,20)] text-white rounded-full mr-2'><Trending fontSize='16px'/></div>Ürünleri pay bazlı olarak ortaklaşa bağışlanır.</div>
+                <div className='flex items-center'><div className='p-1 bg-[rgb(50,0,20)] text-white rounded-full mr-2'><Trending fontSize='16px'/></div>Bağışçıların ürünlerin doğru ihtiyaç sahiplerine ulaştığından emin olması sağlanır.</div>
+              </div>
               <div className='w-full h-12 mt-8 flex'>
                 <div className='w-1/2 flex items-center justify-center'>
-                  <div className='font-semibold mr-4 text-3xl flex text-gray-700'>5<div className='-mt-0.5'>+</div></div>
+                  <div className='font-semibold mr-4 text-3xl flex text-black'>5<div className='-mt-0.5'>+</div></div>
                   <div className='font-light text-xs'>PAYDAŞ</div>
                 </div>
                 <div className='h-full w-0.5 bg-gray-600 bg-opacity-50'></div>
                 <div className='w-1/2 flex items-center justify-center'>
-                  <div className='font-semibold mr-4 text-3xl flex text-gray-700'>130 <div className='-mt-0.5'>+</div></div>
+                  <div className='font-semibold mr-4 text-3xl flex text-black'>180 <div className='-mt-0.5'>+</div></div>
                   <div className='font-light w-fit text-xs'>KOLİ İŞLEM HACMİ</div>
                 </div>              
               </div>
@@ -316,14 +321,14 @@ export default function Home() {
         <div className='w-full flex justify-center text-center text-sm pt-12 text-yellow-500 font-bold'>Teslim edildi bile!</div>
         <div className='w-full flex justify-center text-center border-b mb-4 pb-12 text-3xl'>%100 şeffaf ve güvenilir bağış ağını keşfedin!</div>
           <Map
-            center={{latitude: ((41.3202 + 40.8021) / 2) * 1000, longitude: ((28.5316 + 29.5983) / 2) * 1000}}
+            center={{latitude: ((41.4202 + 40.8021) / 2) * 1000, longitude: ((28.4316 + 29.5983) / 2) * 1000}}
             visualVerifications={visualVerifications}
             zoom={10}
           />
       </div>
       <div className='mb-12 w-full h-fit'>
         <div className='w-full flex justify-center text-center text-sm text-yellow-500 font-bold'>Gönül rahatlığıyla...</div>
-        <div className='w-full flex justify-center text-center border-b mb-4 pb-12 text-3xl'>Bağışçı gözünden Ledgerise...</div>
+        <div className='w-full flex justify-center text-center border-b mb-4 pb-12 text-3xl'>Bağışçı gözünden...</div>
         <div className='w-fit h-fit flex pb-4' style={{transform: `translateX(${sliderTranslate}px)`, transition: "all 2s ease"}} id='slider'>
           {
             testimonials.map(eachTestimonial => {
