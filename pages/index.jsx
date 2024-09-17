@@ -37,24 +37,28 @@ export default function Home() {
   const [visualVerifications, setVisualVerifications] = useState([]);
 
   const [testimonials, setTestimonials] = useState([{
-    name: "Ö*** K****",
-    description: "Pazarlama uzmanı, Hepsiburada, Türkiye",
-    testimonial: "Ledgerise sayesinde bu ramazanda yaptığım bağışın güvenle teslim edildiğini görebildim."
+    name: "Özge K.",
+    description: "Pazarlama Uzmanı, Türkiye",
+    testimonial: "Ledgerise sayesinde bu ramazanda yaptığım bağışın güvenle teslim edildiğini görebildim.",
+    photo: "ozge.png"
   },
   {
-    name: "E*** K****",
-    description: "Bankacı, BNP Paribas, Almanya",
-    testimonial: "Ülke fark etmeksizin, bireysel rapor üzerinden tüm süreci takip edebiliyorum."
+    name: "Esen K.",
+    description: "Bankacı, Almanya",
+    testimonial: "Ülke fark etmeksizin, bireysel rapor üzerinden tüm süreci takip edebiliyorum.",
+    photo: "esen.png"
   },
   {
-    name: "O*** S*******",
-    description: "Avukat, Honeywell, Ukrayna",
-    testimonial: "Yaptığım bağışları takip ederek teslimatın gerçekleşteğini görmek beni mutlu etti."
+    name: "Olga S.",
+    description: "Avukat, Ukrayna",
+    testimonial: "Yaptığım bağışları takip ederek teslimatın gerçekleşteğini görmek beni mutlu etti.",
+    photo: "olga.png"
   },
   {
-    name: "U**** D******",
-    description: "CEO, Türkiye",
-    testimonial: "Mükemmel bir insiyatif. Bağışımın doğru yerde kullanılması benim için farklı bir deneyim."
+    name: "Uygar D.",
+    description: "İş İnsanı, Türkiye",
+    testimonial: "Mükemmel bir insiyatif. Bağışımın doğru yerde kullanılması benim için farklı bir deneyim.",
+    photo: "uygarbey.png"
   }
   ]);
 
@@ -176,6 +180,7 @@ export default function Home() {
     {
       title: "Ledgerise, yardım kampanyalarında yerel yönetimler ile işbirliği içerisinde",
       photo: "/basin_sosyalup.png",
+      source: "SosyalUp Magazini",
       link: "https://sosyalup.net/ledgerise-yardim-kampanyalarinda-yerel-yonetimler-ile-isbirligi-icerisinde/",
       twitter: "https://x.com/SosyalUp/status/1808470752657850425",
       linkedin: "https://www.linkedin.com/pulse/sosyalup-b%C3%BClten-sosyal-up-gjfbf/"
@@ -183,6 +188,7 @@ export default function Home() {
     {
       title: "Yerel yönetim yardım kampanyalarında Ledgerise",
       photo: "/basin_ict.png",
+      source: "ICT Media",
       link: "https://ictmedia.com.tr/haber/ledgerise-yardim-kampanyalarinda-yerel-yonetimler-ile-isbirligi-icerisinde",
       twitter: "https://x.com/ictmedia_tr/status/1808489458607575041",
       linkedin: "https://www.linkedin.com/posts/ictmedya_ledgerise-yard%C4%B1m-kampanyalar%C4%B1nda-yerel-y%C3%B6netimler-activity-7214255177443254273-VUDl/?originalSubdomain=tr"
@@ -190,6 +196,7 @@ export default function Home() {
     {
       title: "BASIN AÇIKLAMASI - Ledgerise: bağışları takip edilebilir kılan yenilikçi bir çözüm...",
       photo: "/basin_matriks.png",
+      source: "Matriks",
       link: "https://www.matriksdata.com/website/matriks-haberler/sirket/5231423-ledgerise-bagislari-takip-edilebilir-kilan-yenilikci-bir-cozum-sunuyor-basin-aciklamasi",
       twitter: "https://x.com/SosyalUp/status/1808470752657850425",
       linkedin: "https://www.linkedin.com/pulse/sosyalup-b%C3%BClten-sosyal-up-gjfbf/"
@@ -223,11 +230,11 @@ export default function Home() {
   const partnerImages = ["sancaktepe.png", "marjinalsosyal.png", "sevvakfi.png", "iparet.png"];
 
   return (
-    <div className={`w-full h-full pt-24 pb-28 ${windowSize.width < 800 ? "px-0" : "px-10"} overflow-hidden overflow-x-hidden`}>
-      <div className={`w-36 right-12 -mt-24 h-64 bg-orange-100 absolute z-0 rounded-full ${windowSize.width < 800 ? "hidden" : ""}`}></div>
-      <div className={`w-108 -right-36 mt-98 h-72 bg-purple-900 absolute z-0 rounded-full ${windowSize.width < 1200 ? "hidden" : ""}`}></div>
+    <div className={`w-full h-full pb-28 ${windowSize.width < 800 ? "px-0 pt-40" : "px-20 pt-24"} overflow-hidden overflow-x-hidden`}>
+      <div className={`w-36 right-10 -mt-24 h-64 bg-orange-300 absolute z-0 rounded-lg ${windowSize.width < 800 ? "hidden" : ""}`}></div>
+      <div className={`w-108 -right-36 mt-98 h-72 bg-violet-900 absolute z-0 rounded-lg ${windowSize.width < 1200 ? "hidden" : ""}`}></div>
       <div className={`w-full h-full flex ${windowSize.width < 800 ? "justify-center" : "justify-between"} items-center`}>
-        <div className={`flex flex-1 w-3/5 h-4/5 ${windowSize.width < 800 ? "justify-center" : "justify-between"} px-20 flex-wrap`}>
+        <div className={`flex flex-1 w-3/5 h-4/5 ${windowSize.width < 800 ? "justify-center" : "justify-between"} px-10 flex-wrap`}>
           <div className='flex-col w-128 mb-12 z-10'>
             <div className='w-full'>
               <div 
@@ -235,13 +242,13 @@ export default function Home() {
               >
                 <div className='mb-2 text-slate-900'>Stok Fazlalarını</div>
                 <div style={{
-                background: "-webkit-linear-gradient(90deg, #B881FF, #FF9900)",
+                background: "-webkit-linear-gradient(30deg, #B881FF, #FF9900)",
                 WebkitBackgroundClip: "text",
                 WebkitTextFillColor: "transparent"
               }} className='pb-2 w-fit'>Değere</div>
                 <div className='text-slate-900'>Dönüştürüyoruz</div>
               </div>
-              <div className={`text-lg text-gray-500 mt-8 font-sans w-4/5 ${windowSize.width < 800 ? "text-md w-96" : "text-lg"}`}>Atıl olma potansiyeline sahip ürünler, %50'ye varan indirimli fiyatı üzerinden Ledgerise'da listelenir. Ürünleri ortaklaşa bağışlanarak ihtiyaç sahiplerine en güvenli şekilde ulaşır.</div>
+              <div className={`text-lg text-gray-500 mt-8 font-sans w-full ${windowSize.width < 800 ? "text-md w-96" : "text-lg"}`}>Atıl olma potansiyeline sahip ürünler, %50'ye varan indirimli fiyatı üzerinden Ledgerise'da listelenir. Ürünleri ortaklaşa bağışlanarak ihtiyaç sahiplerine en güvenli şekilde ulaşır.</div>
               <div className='w-full h-12 mt-8 flex'>
                 <div className='w-1/2 flex items-center justify-center'>
                   <div className='font-semibold mr-4 text-3xl flex text-gray-700'>5<div className='-mt-0.5'>+</div></div>
@@ -287,7 +294,7 @@ export default function Home() {
               </div>
             </div>
           </div>
-          <div className={`w-96 h-fit relative bg-white z-10`}>
+          <div className={`w-96 h-fit relative bg-white z-10 ${windowSize.width < 800 ? "mt-20" : ""}`}>
             <a href={`/assets?id=${asset.tokenId}&subcollectionId=${asset.subcollectionId}&nftAddress=${asset.nftAddress}`}>
               <div id='showroom' className={`w-96 h-fit flex flex-1 transition-all bg-white flex-col justify-center border-2 p-2 rounded -mt-12`}>
                 <img src={imageURI} alt={tokenName} className='border-b-2 rounded h-96' />
@@ -313,10 +320,8 @@ export default function Home() {
         </div>
       </div>
       <div className='w-full h-100 mt-16 mb-60 relative'>
-        <div style={{ width: "150%", transform: "rotate(-20deg)" }} className='bg-[linear-gradient(0deg,rgba(255,153,0,0.5)_0%,rgba(184,129,255,0.5)_100%)] absolute z-10 h-24 mt-80 -ml-36'></div>
-        <div style={{background: "-webkit-linear-gradient(#FF9900, #B881FF)",}} className='absolute w-60 h-32 blur-3xl left-12 top-36 z-0'></div>
         <div className='w-full flex justify-center text-center text-sm pt-12 text-yellow-500 font-bold'>Teslim edildi bile!</div>
-        <div className='w-full flex justify-center text-center border-b mb-4 pb-12 text-3xl'>%100 şeffaf bağış ağımızı keşfedin!</div>
+        <div className='w-full flex justify-center text-center border-b mb-4 pb-12 text-3xl'>%100 şeffaf ve güvenilir bağış ağını keşfedin!</div>
           <Map
             center={{latitude: ((41.3202 + 40.8021) / 2) * 1000, longitude: ((28.5316 + 29.5983) / 2) * 1000}}
             visualVerifications={visualVerifications}
@@ -337,7 +342,9 @@ export default function Home() {
                       <div className='text-end text-slate-600'>{eachTestimonial.name}</div>
                       <div className='text-end text-slate-400'>{eachTestimonial.description}</div>
                     </div>
-                    <div className='w-12 h-12 ml-4 rounded-full bg-slate-400'></div>
+                    <div className='w-12 h-12 ml-4 rounded-full overflow-hidden'>
+                      <img className='w-full h-full' src={eachTestimonial.photo} />
+                    </div>
                   </div>
                 </div>
               )
@@ -345,38 +352,9 @@ export default function Home() {
           }
         </div>
       </div>
-      <div>
-        <div className='text-3xl my-12 relative h-12'>
-          <div className='z-0 absolute w-52 h-52 -left-40 rounded-full bg-yellow-400'></div>
-          <div style={{color: "#343434"}} className='z-20 absolute'>
-            <div>BASINDA LEDGERISE</div>
-            <div className='text-lg'>Yerel yönetimlerin bağış kampanyalarına sağladığımız şeffaf takip hizmeti ile...</div>
-          </div>
-        </div>
-        <div className='w-full flex justify-around flex-wrap'>
-          {
-            pressLinks
-              ? pressLinks.map(eachPressLink => {
-                return(
-                  <a href={eachPressLink.link} target='_blank' className='w-96 aspect-square shadow-md mr-4 mt-8 relative flex flex-col justify-end cursor-pointer hover:brightness-75 transition-all'>
-                    <img src={eachPressLink.photo} alt={eachPressLink.photo} className='w-full h-full absolute z-0' />
-                    <div className='z-20 w-full h-fit bg-opacity-50 bg-blue-500 p-4'>
-                      <div className='text-gray-50 text-sm uppercase font-bold'>{eachPressLink.title}</div>
-                      <div className='flex w-full items-center'>
-                        <a className='mr-4' href={eachPressLink.linkedin}><Linkedin fontSize='20px'/></a>
-                        <a className='mr-4' href={eachPressLink.twitter}><Twitter fontSize='20px'/></a>
-                        <a className='mr-4' href={eachPressLink.link}><ExternalLink fontSize='20px'/></a>
-                      </div>
-                    </div>
-                  </a>
-                )
-              })
-              : ("")
-          }
-        </div>
-      </div>
-      <div className='text-3xl mt-4'>
-        ADIM ADIM LEDGERISE
+      <div style={{color: "#343434"}} className='z-20 mt-20'>
+        <div className='w-full flex justify-center text-center text-sm pt-12 text-yellow-500 font-bold'>İÇİNİZ RAHAT OLSUN!</div>
+        <div className='w-full flex justify-center text-center border-b mb-4 pb-12 text-3xl'>Bağışınızın doğru ihtiyaç sahibine ulaştığından emin olmanızı sağlıyoruz.</div>
       </div>
       <div style={{ background: "-webkit-linear-gradient(90deg, #B881FF, #FF9900)" }}>        
         {
@@ -405,6 +383,36 @@ export default function Home() {
             );
           })
         }
+      </div>
+      <div>
+        <div className='text-3xl my-12 relative h-12 mb-24'>
+          <div style={{color: "#343434"}} className='z-20 mb-12'>
+            <div className='w-full flex justify-center text-center text-sm pt-12 text-yellow-500 font-bold'>GÜNCEL HABERLER</div>
+            <div className='w-full flex justify-center text-center mb-4 pb-12 text-3xl'>Popüler teknoloji basını gündeminde</div>
+          </div>
+        </div>
+        <div className={`w-full flex justify-around flex-wrap ${windowSize.width < 800 ? "px-10" : ""}`}>
+          {
+            pressLinks
+              ? pressLinks.map(eachPressLink => {
+                return(
+                  <a href={eachPressLink.link} target='_blank' className='w-96 aspect-square mr-4 mt-8 relative flex flex-col justify-end cursor-pointer hover:scale-105 transition-all'>
+                    <img src={eachPressLink.photo} alt={eachPressLink.photo} className='w-full h-full absolute z-0' />
+                    <div className='z-20 w-full h-fit bg-gray-100 p-4'>
+                      <div className='text-sm'>{eachPressLink.source}</div>
+                      <div className='text-gray-700 font-semibold text-lg mb-4'>{eachPressLink.title}</div>
+                      <div className='flex w-full items-center'>
+                        <a className='mr-4 text-blue-800' href={eachPressLink.linkedin}><Linkedin fontSize='20px'/></a>
+                        <a className='mr-4 text-blue-500' href={eachPressLink.twitter}><Twitter fontSize='20px'/></a>
+                        <a className='mr-4 text-black' href={eachPressLink.link}><ExternalLink fontSize='20px'/></a>
+                      </div>
+                    </div>
+                  </a>
+                )
+              })
+              : ("")
+          }
+        </div>
       </div>
     </div >
   )

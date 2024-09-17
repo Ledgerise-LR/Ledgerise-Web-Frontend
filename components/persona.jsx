@@ -2,7 +2,7 @@
 export default function AuctionBox({ image, name, role, bio }) {
 
   return (
-    <div className="w-60 mx-12 z-30 rounded-lg overflow-hidden">
+    <div className="w-60 mx-12 z-30 shadow-lg overflow-hidden">
       <div className="w-full relative">
         <img className="w-full" src={`${image}`} alt={name} />
         <div className="w-full absolute bottom-0 flex flex-col bg-gray-800 bg-opacity-40 p-2">

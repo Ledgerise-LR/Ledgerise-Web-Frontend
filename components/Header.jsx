@@ -64,7 +64,7 @@ export default function Header(isApiHeader) {
   }
 
   return (
-    <nav className="overflow-x-hidden z-0 w-full mb-4 bg-white">
+    <nav className={`overflow-x-hidden z-20 w-full mb-4 bg-white`}>
       <div id="hamburger-menu" className="hamburger-menu w-screen h-screen absolute bg-white z-20 p-8 transition-all hidden overflow-x-hidden">
         <div className="flex justify-between items-center overflow-x-hidden">
           <a href="/">
@@ -82,6 +82,10 @@ export default function Header(isApiHeader) {
           </a>
           <a href="/collections" className="flex justify-between items-center">
             <div className="text-2xl text-slate-700">Kampanyalar</div>
+            <img className="w-4" src="right-arrow.png" alt="right-arrow" />
+          </a>
+          <a href="/collections" className="flex justify-between items-center">
+            <div className="text-2xl text-slate-700">Hakkımızda</div>
             <img className="w-4" src="right-arrow.png" alt="right-arrow" />
           </a>
           <a href="/login" onClick={() => { setLastVisitedUrl() }} className="flex justify-between items-center">
@@ -127,13 +131,13 @@ export default function Header(isApiHeader) {
       {
         windowSize.width > 800
           ? (
-            <div className={`px-24 py-10 items-center z-0 flex justify-between w-screen bg-white ${router.pathname == "/api-documentation" ? "h-16 overflow-y-hidden" : "h-16 overflow-y-hidden"}`}>
+            <div className={`px-24 py-10 items-center z-20 flex justify-between w-screen bg-white ${router.pathname == "/api-documentation" ? "h-16 overflow-y-hidden" : "h-16 overflow-y-hidden"}`}>
       <div className={`h-10 w-fit overflow-hidden`}>
         <a href="/">
           <img className="h-full" src="logo.svg" alt="Ledgerise | Bağış hiç olmadığı kadar şeffaf" />
         </a>
       </div>
-      <div className="z-0 w-fit flex flex-row items-center text-sm font-medium text-black">
+      <div className="z-20 w-fit flex flex-row items-center text-sm font-medium text-black">
         <Link href="/collections" className="mx-4 hover:border-b-2 w-fit hover:mt-0.5 border-orange-200" >
           Kampanyalar
         </Link>
@@ -181,7 +185,7 @@ export default function Header(isApiHeader) {
             </div>
           )
           : (
-            <div className="flex z-20 justify-between px-8 w-full border-b-2 items-center h-16">
+            <div className="flex z-30 justify-between px-8 bg-white w-full border-b-2 items-center h-16 fixed">
               <div>
                 <h1 className="w-24 h-16">
                   <a href="/">
