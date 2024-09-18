@@ -10,10 +10,12 @@ module.exports = {
   ],
   theme: {
     screens: {
-      'xs': '400px',
-      'sm': '576px',
-      'md': '960px',
-      'lg': '1440px',
+      'xs': '480px',
+      'sm': '640px',
+      'md': '768px',
+      'lg': '960px',
+      'xl': '1280px',
+      '2xl': '1536px',
     },
     extend: {
       skew: {
