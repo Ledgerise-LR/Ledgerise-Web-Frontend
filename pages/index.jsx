@@ -9,6 +9,7 @@ import { Button } from 'web3uikit'
 import blockExplorerMapping from "../constants/blockExplorerMapping.json";
 import { URL, PORT } from '@/serverConfig';
 import dynamic from 'next/dynamic';
+import {Trending} from '@web3uikit/icons'
 
 export default function Home() {
 
@@ -66,7 +67,7 @@ export default function Home() {
     async function fetchAsset() {
       
       const showroom = document.getElementById("showroom");
-      showroom.style.opacity = 0.1;
+      showroom.style.filter = "opacity(0.8)";
 
         fetch(`${URL}:${PORT}/active-item/get-random-featured-asset?previousTokenId=${previousTokenId}`)
         .then(response => response.json())
@@ -84,7 +85,7 @@ export default function Home() {
           }
           setAsset(asset);
 
-          showroom.style.opacity = 1;
+          showroom.style.filter = "opacity(1)";
 
           if (window) {
             window.document.body.style.overflowX = "hidden";
@@ -231,8 +232,7 @@ export default function Home() {
 
   return (
     <div className={`w-full h-full pb-28 ${windowSize.width < 800 ? "px-0 pt-40" : "px-20 pt-24"} overflow-hidden overflow-x-hidden`}>
-      <div className={`w-36 right-10 -mt-24 h-64 bg-orange-300 absolute z-0 rounded-lg ${windowSize.width < 800 ? "hidden" : ""}`}></div>
-      <div className={`w-108 -right-36 mt-98 h-72 bg-violet-900 absolute z-0 rounded-lg ${windowSize.width < 1200 ? "hidden" : ""}`}></div>
+      <div className={`w-96 right-20 -mt-8 h-128 bg-[linear-gradient(20deg,rgba(80,0,100,1)_0%,rgba(80,40,0,1)_75%)] absolute z-0 rounded-lg ${windowSize.width < 1200 ? "hidden" : ""}`}></div>
       <div className={`w-full h-full flex ${windowSize.width < 800 ? "justify-center" : "justify-between"} items-center`}>
         <div className={`flex flex-1 w-3/5 h-4/5 ${windowSize.width < 800 ? "justify-center" : "justify-between"} px-10 flex-wrap`}>
           <div className='flex-col w-128 mb-12 z-10'>
@@ -248,39 +248,37 @@ export default function Home() {
               }} className='pb-2 w-fit'>Değere</div>
                 <div className='text-slate-900'>Dönüştürüyoruz</div>
               </div>
-              <div className={`text-lg text-gray-500 mt-8 font-sans w-full ${windowSize.width < 800 ? "text-md w-96" : "text-lg"}`}>Atıl olma potansiyeline sahip ürünler, %50'ye varan indirimli fiyatı üzerinden Ledgerise'da listelenir. Ürünleri ortaklaşa bağışlanarak ihtiyaç sahiplerine en güvenli şekilde ulaşır.</div>
+              <div className={`text-lg text-black mt-8 font-sans w-full ${windowSize.width < 800 ? "text-md w-96" : "text-lg"}`}>
+                <div className='flex items-center'><div className='p-1 bg-[rgb(50,0,20)] text-white rounded-full mr-2'><Trending fontSize='16px'/></div> Stokların %5'i, %50'ye varan indirimli fiyatı üzerinden listelenir.</div>
+                <div className='flex items-center'><div className='p-1 bg-[rgb(50,0,20)] text-white rounded-full mr-2'><Trending fontSize='16px'/></div>Ürünleri pay bazlı olarak ortaklaşa bağışlanır.</div>
+                <div className='flex items-center'><div className='p-1 bg-[rgb(50,0,20)] text-white rounded-full mr-2'><Trending fontSize='16px'/></div>Bağışçıların ürünlerin doğru ihtiyaç sahiplerine ulaştığından emin olması sağlanır.</div>
+              </div>
               <div className='w-full h-12 mt-8 flex'>
                 <div className='w-1/2 flex items-center justify-center'>
-                  <div className='font-semibold mr-4 text-3xl flex text-gray-700'>5<div className='-mt-0.5'>+</div></div>
+                  <div className='font-semibold mr-4 text-3xl flex text-black'>5<div className='-mt-0.5'>+</div></div>
                   <div className='font-light text-xs'>PAYDAŞ</div>
                 </div>
                 <div className='h-full w-0.5 bg-gray-600 bg-opacity-50'></div>
                 <div className='w-1/2 flex items-center justify-center'>
-                  <div className='font-semibold mr-4 text-3xl flex text-gray-700'>130 <div className='-mt-0.5'>+</div></div>
+                  <div className='font-semibold mr-4 text-3xl flex text-black'>180 <div className='-mt-0.5'>+</div></div>
                   <div className='font-light w-fit text-xs'>KOLİ İŞLEM HACMİ</div>
                 </div>              
               </div>
             </div>
-            <div className='w-1/2 mt-10 z-10'>
-              <a href="/collections">
-                <Button
-                  style={{
-                    backgroundColor: "#464646",
-                    color: "#fefefe",
-                    borderRadius: "5px"
-                  }}
-                  customize={{
-                    onHover: "lighten",
-                  }}
-                  isFullWidth="true"
-                  text='Kampanyaları görüntüleyin!'
-                  theme='custom'
-                  size='xl'
-                />
-              </a>
+            <div className='flex items-center'>
+              <div className='w-fit mr-6 mt-10 z-10'>
+                <a href="/collections">
+                  <div className={`p-4 bg-[rgb(255,168,82)] border-2 border-[rgb(255,168,82)] text-center text-black font-bold rounded tracking-wide ${windowSize.width < 800 ? "text-sm" : ""}`}>Kampanyaları Keşfet</div>
+                </a>
+              </div>
+              <div className='w-fit mt-10 z-10'>
+                <a href="/login">
+                  <div className={`p-4 bg-white border-2 text-center border-black text-black font-bold rounded tracking-wide ${windowSize.width < 800 ? "text-sm" : ""}`}>Bağış Raporunu Görüntüle</div>
+                </a>
+              </div>
             </div>
             <div className='w-full h-20 mt-4'>
-              <div className='text-sm mb-2 text-gray-600 font-light'>Proje Paydaşlarımız</div>
+              <div className='text-sm mb-2 text-gray-800 font-light'>Proje Paydaşlarımız</div>
               <div className='flex w-full h-8'>
                 {
                   partnerImages.map(eachPartnerImage => {
@@ -299,11 +297,11 @@ export default function Home() {
               <div id='showroom' className={`w-96 h-fit flex flex-1 transition-all bg-white flex-col justify-center border-2 p-2 rounded -mt-12`}>
                 <img src={imageURI} alt={tokenName} className='border-b-2 rounded h-96' />
                 <div className='w-full h-max mt-2 p-2'>
-                  <div className='text-2xl text-gray-700 font-medium mb-1'>{asset.collectionName}</div>
+                  <div className='text-2xl text-black mb-1 h-16 flex items-center'>{asset.collectionName}</div>
                   <div className='flex flex-1 justify-between items-center'>
                     <div>
                       <span className='text-sm text-gray-500'>#{asset.tokenId} </span>
-                      <span className='uppercase text-xl text-gray-600'>{tokenName}</span>
+                      <span className='uppercase text-gray-600 text-sm h-12'>{tokenName}</span>
                     </div>
                     <div className='flex-col flex items-end'>
                       <div className='text-xs text-gray-500'>Toplam Bağış:</div>
@@ -312,7 +310,7 @@ export default function Home() {
                       </div>
                     </div>
                   </div>
-                  <div className='text-sm my-4 p-2 bg-gray-50 text-gray-800'>{tokenDescription}</div>
+                  <div className='text-sm my-4 p-2 bg-gray-50 text-gray-800'>{tokenDescription.slice(0,80)}</div>
                 </div>
               </div>
             </a>
@@ -323,14 +321,14 @@ export default function Home() {
         <div className='w-full flex justify-center text-center text-sm pt-12 text-yellow-500 font-bold'>Teslim edildi bile!</div>
         <div className='w-full flex justify-center text-center border-b mb-4 pb-12 text-3xl'>%100 şeffaf ve güvenilir bağış ağını keşfedin!</div>
           <Map
-            center={{latitude: ((41.3202 + 40.8021) / 2) * 1000, longitude: ((28.5316 + 29.5983) / 2) * 1000}}
+            center={{latitude: ((41.4202 + 40.8021) / 2) * 1000, longitude: ((28.4316 + 29.5983) / 2) * 1000}}
             visualVerifications={visualVerifications}
             zoom={10}
           />
       </div>
       <div className='mb-12 w-full h-fit'>
         <div className='w-full flex justify-center text-center text-sm text-yellow-500 font-bold'>Gönül rahatlığıyla...</div>
-        <div className='w-full flex justify-center text-center border-b mb-4 pb-12 text-3xl'>Bağışçı gözünden Ledgerise...</div>
+        <div className='w-full flex justify-center text-center border-b mb-4 pb-12 text-3xl'>Bağışçı gözünden...</div>
         <div className='w-fit h-fit flex pb-4' style={{transform: `translateX(${sliderTranslate}px)`, transition: "all 2s ease"}} id='slider'>
           {
             testimonials.map(eachTestimonial => {

@@ -112,7 +112,7 @@ export default function DisplayMap({ center, visualVerifications, zoom, chainId,
       
         const city = getCity(verification.location.latitude, verification.location.longitude);
 
-        let widthMargin = i * 0.008;
+        let widthMargin = i * 0.006;
         
         let heightMargin = (parseInt(i.toString()[i.toString().length - 1]) * 0.02);
 
