@@ -1,10 +1,8 @@
-
 import { useEffect, useState } from "react";
 import blockExplorerMapping from "../constants/blockExplorerMapping";
 import networkMapping from "../constants/networkMapping";
 
 export default function Footer() {
-
   const [blockExplorer, setBlockExplorer] = useState("");
   const [marketplaceAddress, setMarketplaceAdress] = useState("");
   const [mainCollectionAddress, setMainCollectionAddress] = useState("");
@@ -33,8 +31,8 @@ export default function Footer() {
           Kampanyalar
         </a>
       </div>
-      <div className="flex flex-col justify-around md:w-1/2 lg:w-1/3 whitespace-nowrap">
-        <div className="flex justify-center gap-5 lg:gap-10 xl:gap-16">
+      <div className="flex flex-col justify-around md:w-1/2 lg:w-1/3 xs:whitespace-nowrap">
+        <div className="flex justify-center gap-5 lg:gap-10 xl:gap-16 max-xs:text-sm">
           <div>
             <div className="text-gray-200 font-semibold mb-2">Kaynaklar</div>
             <div className="text-gray-400 font-light">
