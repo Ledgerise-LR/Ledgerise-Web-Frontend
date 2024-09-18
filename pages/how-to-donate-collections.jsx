@@ -1,28 +1,11 @@
-import { useRouter } from 'next/router'
 import { useState, useEffect } from 'react'
-import { useMoralis } from 'react-moralis' // this
-import networkMapping from "../constants/networkMapping.json";
-import { getEthToUsdRate } from '@/utils/getEthToUsdRate';
 import { URL, PORT } from '@/serverConfig';
 import axios from 'axios';
 import { FaSpinner } from 'react-icons/fa';
 
 export default function Home() {
-  const { isWeb3Enabled, chainId } = useMoralis();  // this
   const [collections, setCollections] = useState([]);
-  const [ethToUsdRate, setEthToUsdRate] = useState(null); //this
   const [loading, setLoading] = useState(true); 
-
-  const router = useRouter(); //this
-
-  useEffect(() => {
-    const fetchEthToUsdRate = async () => {
-      const rate = await getEthToUsdRate();
-      setEthToUsdRate(rate);
-    };
-
-    fetchEthToUsdRate();
-  }, []); // this effect
 
   useEffect(() => {
     const fetchCollections = async () => {
@@ -39,9 +22,6 @@ export default function Home() {
 
     fetchCollections();
   }, []);
-
-  const chainString = chainId ? parseInt(chainId, 16).toString() : "5";  // This is not used
-  const marketplaceAddress = networkMapping["Marketplace"][chainString]; // and this
 
   return (
     <>
