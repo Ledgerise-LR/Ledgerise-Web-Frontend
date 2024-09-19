@@ -131,30 +131,6 @@ export default function Home() {
 
   const [sliderTranslate, setSliderTranslate] = useState(0);
 
-
-  const [windowSize, setWindowSize] = useState({
-    width: "",
-    height: ""
-  });
-  useEffect(() => {
-
-    const handleResize = () => {
-      const hamburgerMenu = document.getElementById("hamburger-menu");
-      hamburgerMenu.style.left = `-${window.innerWidth}px`;
-      hamburgerMenu.style.display = "block";
-      setWindowSize({
-        width: window.innerWidth,
-        height: window.innerHeight
-      });
-    };
-
-    window.addEventListener("resize", handleResize);
-
-    handleResize();
-
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
-
   useEffect(() => {
     setInterval(() => {
       setSliderTranslate(old => old - 100);
@@ -231,14 +207,14 @@ export default function Home() {
   const partnerImages = ["sancaktepe.png", "marjinalsosyal.png", "sevvakfi.png", "iparet.png"];
 
   return (
-    <div className={`w-full h-full pb-28 ${windowSize.width < 800 ? "px-0 pt-40" : "px-20 pt-24"} overflow-hidden overflow-x-hidden`}>
-      <div className={`w-96 right-20 -mt-8 h-128 bg-[linear-gradient(20deg,rgba(80,0,100,1)_0%,rgba(80,40,0,1)_75%)] absolute z-0 rounded-lg ${windowSize.width < 1200 ? "hidden" : ""}`}></div>
-      <div className={`w-full h-full flex ${windowSize.width < 800 ? "justify-center" : "justify-between"} items-center`}>
-        <div className={`flex flex-1 w-3/5 h-4/5 ${windowSize.width < 800 ? "justify-center" : "justify-between"} px-10 flex-wrap`}>
+    <div className="w-full h-full pb-28 px-0 pt-40 min-[800]:px-20 min-[800]:pt-24 overflow-hidden overflow-x-hidden">
+      {/* <div className="w-96 right-20 -mt-8 h-128 bg-[linear-gradient(20deg,rgba(80,0,100,1)_0%,rgba(80,40,0,1)_75%)] absolute z-0 rounded-lg max-xl:hidden"></div> */}
+      <div className="w-full h-full flex justify-center min-[1200]:justify-between items-center">
+        <div className="flex flex-1 w-3/5 h-4/5 justify-center min-[1200]:justify-between px-10 flex-wrap">
           <div className='flex-col w-128 mb-12 z-10'>
             <div className='w-full'>
               <div 
-              className={`h-fit -mt-2 font-bold font-sans flex flex-col ${windowSize.width < 800 ? "text-4xl" : "text-6xl"}`}
+              className="h-fit -mt-2 font-bold font-sans flex flex-col text-4xl min-[800]:text-6xl"
               >
                 <div className='mb-2 text-slate-900'>Stok Fazlalarını</div>
                 <div style={{
@@ -248,7 +224,7 @@ export default function Home() {
               }} className='pb-2 w-fit'>Değere</div>
                 <div className='text-slate-900'>Dönüştürüyoruz</div>
               </div>
-              <div className={`text-lg text-black mt-8 font-sans w-full ${windowSize.width < 800 ? "text-md w-96" : "text-lg"}`}>
+              <div className="text-black mt-8 font-sans text-md w-96 min-[800]:w-full min-[800]:text-lg">
                 <div className='flex items-center'><div className='p-1 bg-[rgb(50,0,20)] text-white rounded-full mr-2'><Trending fontSize='16px'/></div> Stokların %5'i, %50'ye varan indirimli fiyatı üzerinden listelenir.</div>
                 <div className='flex items-center'><div className='p-1 bg-[rgb(50,0,20)] text-white rounded-full mr-2'><Trending fontSize='16px'/></div>Ürünleri pay bazlı olarak ortaklaşa bağışlanır.</div>
                 <div className='flex items-center'><div className='p-1 bg-[rgb(50,0,20)] text-white rounded-full mr-2'><Trending fontSize='16px'/></div>Bağışçıların ürünlerin doğru ihtiyaç sahiplerine ulaştığından emin olması sağlanır.</div>
@@ -268,12 +244,12 @@ export default function Home() {
             <div className='flex items-center'>
               <div className='w-fit mr-6 mt-10 z-10'>
                 <a href="/collections">
-                  <div className={`p-4 bg-[rgb(255,168,82)] border-2 border-[rgb(255,168,82)] text-center text-black font-bold rounded tracking-wide ${windowSize.width < 800 ? "text-sm" : ""}`}>Kampanyaları Keşfet</div>
+                  <div className="p-4 bg-[rgb(255,168,82)] border-2 border-[rgb(255,168,82)] text-center text-black font-bold rounded tracking-wide max-[800]:text-sm">Kampanyaları Keşfet</div>
                 </a>
               </div>
               <div className='w-fit mt-10 z-10'>
                 <a href="/login">
-                  <div className={`p-4 bg-white border-2 text-center border-black text-black font-bold rounded tracking-wide ${windowSize.width < 800 ? "text-sm" : ""}`}>Bağış Raporunu Görüntüle</div>
+                  <div className="p-4 bg-white border-2 text-center border-black text-black font-bold rounded tracking-wide max-[800]:text-sm">Bağış Raporunu Görüntüle</div>
                 </a>
               </div>
             </div>
@@ -292,7 +268,7 @@ export default function Home() {
               </div>
             </div>
           </div>
-          <div className={`w-96 h-fit relative bg-white z-10 ${windowSize.width < 800 ? "mt-20" : ""}`}>
+          <div className="w-96 h-fit relative bg-white z-10 max-[800]:mt-20">
             <a href={`/assets?id=${asset.tokenId}&subcollectionId=${asset.subcollectionId}&nftAddress=${asset.nftAddress}`}>
               <div id='showroom' className={`w-96 h-fit flex flex-1 transition-all bg-white flex-col justify-center border-2 p-2 rounded -mt-12`}>
                 <img src={imageURI} alt={tokenName} className='border-b-2 rounded h-96' />
@@ -389,7 +365,7 @@ export default function Home() {
             <div className='w-full flex justify-center text-center mb-4 pb-12 text-3xl'>Popüler teknoloji basını gündeminde</div>
           </div>
         </div>
-        <div className={`w-full flex justify-around flex-wrap ${windowSize.width < 800 ? "px-10" : ""}`}>
+        <div className="w-full flex justify-around flex-wrap max-[800]:px-10">
           {
             pressLinks
               ? pressLinks.map(eachPressLink => {
