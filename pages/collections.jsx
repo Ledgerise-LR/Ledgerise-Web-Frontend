@@ -39,17 +39,20 @@ export default function Home() {
           : (
             collections.map((collection) => (
               <a key={collection.itemId} href={`/collection?id=${collection.itemId}&nftAddress=${collection.nftAddress}`} className='block'>
-                <div className='flex flex-col gap-4 border-2 rounded-2xl p-4'>
+                <div className='flex flex-col gap-4 border-2 rounded-2xl p-4 h-full'>
                   <img className='h-40 object-contain' src={`${collection.image}`} alt={collection.name} />
-                  <div className='text-lg sm:text-xl text-center text-slate-800 sm:truncate border-t-2'>
+                  <div className='text-lg sm:text-xl pt-2 text-slate-800 sm:truncate border-t-2'>
                     {collection.name}
                   </div>
-                  <div className='p-4 rounded-md bg-[#343434] text-center text-[#fefefe]'>
-                    Detayları Gör
+                  <div className=''>
+                    {collection.description}
                   </div>
-                  <div className='flex items-center'>
+                  <div className='flex items-center mt-auto'>
                     <img className='w-8 h-8 rounded-full' src={collection.companyImage} alt={collection.charityName} />
                     <span className='text-slate-700 text-sm ml-2 sm:truncate'><strong>{collection.charityName}</strong> kampanyasıdır</span>
+                  </div>
+                  <div className='w-max self-end p-2 rounded-2xl bg-[#343434] text-xs text-center text-[#fefefe]'>
+                    Bağış Yap
                   </div>
                 </div>
               </a>
