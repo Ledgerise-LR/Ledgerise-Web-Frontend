@@ -129,7 +129,7 @@ export default function Header(isApiHeader) {
             }
       </div>
       {
-        windowSize.width > 767
+        windowSize.width > 800
           ? (
             <div className={`px-24 border-b py-10 items-center z-20 flex w-screen bg-white ${router.pathname == "/api-documentation" ? "h-16 overflow-y-hidden" : "h-16 overflow-y-hidden"}`}>
       <div className={`h-10 w-fit overflow-hidden`}>
