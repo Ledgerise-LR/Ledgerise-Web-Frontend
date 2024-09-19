@@ -84,7 +84,7 @@ export default function Header(isApiHeader) {
             <div className="text-2xl text-slate-700">Kampanyalar</div>
             <img className="w-4" src="right-arrow.png" alt="right-arrow" />
           </a>
-          <a href="/collections" className="flex justify-between items-center">
+          <a href="/team" className="flex justify-between items-center">
             <div className="text-2xl text-slate-700">Hakkımızda</div>
             <img className="w-4" src="right-arrow.png" alt="right-arrow" />
           </a>
