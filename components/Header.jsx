@@ -171,7 +171,7 @@ export default function Header(isApiHeader) {
                     : (
                       <div className="flex">
                         <div className="flex items-center">
-                          <a href="/login" onClick={() => { setLastVisitedUrl() }} className="p-3.5 mr-2 text-gray-800 cursor-pointer rounded hover:bg-[rgb(255,168,82)] transition-all text-sm">Giriş Yap</a>
+                          <a href="/login" onClick={() => { setLastVisitedUrl() }} className="p-3.5 font-bold mr-2 text-gray-800 cursor-pointer rounded hover:bg-[rgb(255,168,82)] transition-all text-sm">Giriş Yap</a>
                         </div>
                         <div className="flex items-center">
                           <a href="/login" onClick={() => { setLastVisitedUrl() }} className="bg-[rgb(255,168,82)] p-4 mr-2 rounded text-black cursor-pointer text-xs font-bold transition-all">Hesap Oluştur</a>

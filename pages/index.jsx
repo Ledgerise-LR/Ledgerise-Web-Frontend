@@ -250,18 +250,18 @@ export default function Home() {
               </div>
               <div className={`text-lg text-black mt-8 font-sans w-full ${windowSize.width < 800 ? "text-md w-96" : "text-lg"}`}>
                 <div className='flex items-center'><div className='p-1 bg-[rgb(50,0,20)] text-white rounded-full mr-2'><Trending fontSize='16px'/></div> Stokların %5'i, %50'ye varan indirimli fiyatı üzerinden listelenir.</div>
-                <div className='flex items-center'><div className='p-1 bg-[rgb(50,0,20)] text-white rounded-full mr-2'><Trending fontSize='16px'/></div>Ürünleri pay bazlı olarak ortaklaşa bağışlanır.</div>
+                <div className='flex items-center'><div className='p-1 bg-[rgb(50,0,20)] text-white rounded-full mr-2'><Trending fontSize='16px'/></div>Ürünler pay bazlı olarak ortaklaşa bağışlanır.</div>
                 <div className='flex items-center'><div className='p-1 bg-[rgb(50,0,20)] text-white rounded-full mr-2'><Trending fontSize='16px'/></div>Bağışçıların ürünlerin doğru ihtiyaç sahiplerine ulaştığından emin olması sağlanır.</div>
               </div>
               <div className='w-full h-12 mt-8 flex'>
                 <div className='w-1/2 flex items-center justify-center'>
                   <div className='font-semibold mr-4 text-3xl flex text-black'>5<div className='-mt-0.5'>+</div></div>
-                  <div className='font-light text-xs'>PAYDAŞ</div>
+                  <div className='text-xs font-bold'>PARTNER</div>
                 </div>
                 <div className='h-full w-0.5 bg-gray-600 bg-opacity-50'></div>
                 <div className='w-1/2 flex items-center justify-center'>
-                  <div className='font-semibold mr-4 text-3xl flex text-black'>180 <div className='-mt-0.5'>+</div></div>
-                  <div className='font-light w-fit text-xs'>KOLİ İŞLEM HACMİ</div>
+                  <div className='font-semibold mr-4 text-3xl flex text-black'>100 <div className='-mt-0.5'>+</div></div>
+                  <div className='w-fit font-bold text-xs'>AYLIK KOLİ</div>
                 </div>              
               </div>
             </div>
@@ -279,7 +279,7 @@ export default function Home() {
             </div>
             <div className='w-full h-20 mt-4'>
               <div className='text-sm mb-2 text-gray-800 font-light'>Proje Paydaşlarımız</div>
-              <div className='flex w-full h-8'>
+              <div className='flex w-full h-6'>
                 {
                   partnerImages.map(eachPartnerImage => {
                     return (
@@ -292,25 +292,25 @@ export default function Home() {
               </div>
             </div>
           </div>
-          <div className={`w-96 h-fit relative bg-white z-10 ${windowSize.width < 800 ? "mt-20" : ""}`}>
+          <div className={`w-96 h-fit relative bg-white z-10 rounded ${windowSize.width < 800 ? "mt-20" : ""}`}>
             <a href={`/assets?id=${asset.tokenId}&subcollectionId=${asset.subcollectionId}&nftAddress=${asset.nftAddress}`}>
-              <div id='showroom' className={`w-96 h-fit flex flex-1 transition-all bg-white flex-col justify-center border-2 p-2 rounded -mt-12`}>
+              <div id='showroom' className={`w-96 h-fit flex flex-1 transition-all bg-white flex-col justify-center border-2 overflow-hidden border-black p-2 rounded -mt-12`}>
                 <img src={imageURI} alt={tokenName} className='border-b-2 rounded h-96' />
                 <div className='w-full h-max mt-2 p-2'>
                   <div className='text-2xl text-black mb-1 h-16 flex items-center'>{asset.collectionName}</div>
                   <div className='flex flex-1 justify-between items-center'>
                     <div>
-                      <span className='text-sm text-gray-500'>#{asset.tokenId} </span>
-                      <span className='uppercase text-gray-600 text-sm h-12'>{tokenName}</span>
+                      <div className='text-sm text-gray-500'>#{asset.tokenId} </div>
+                      <div className='uppercase text-black text-sm h-12'>{tokenName}</div>
                     </div>
                     <div className='flex-col flex items-end'>
-                      <div className='text-xs text-gray-500'>Toplam Bağış:</div>
-                      <div style={{backgroundColor: "#464646"}} className='w-36 p-2 rounded text-slate-100 flex justify-end items-center px-5'>
-                        <span className='text-slate-200 mr-2 text-sm'>{Number(asset.totalDonated)} bağış kolisi</span>
+                      <div className='text-xs text-black'>Toplam Bağış:</div>
+                      <div style={{backgroundColor: "#000"}} className='w-36 p-2 rounded text-white flex justify-end items-center px-5'>
+                        <span className='text-white mr-2 text-sm'>{Number(asset.totalDonated)} bağış kolisi</span>
                       </div>
                     </div>
                   </div>
-                  <div className='text-sm my-4 p-2 bg-gray-50 text-gray-800'>{tokenDescription.slice(0,80)}</div>
+                  <div className='text-sm my-4 p-2 bg-gray-50 rounded text-gray-800'>{tokenDescription.slice(0,80)}</div>
                 </div>
               </div>
             </a>
