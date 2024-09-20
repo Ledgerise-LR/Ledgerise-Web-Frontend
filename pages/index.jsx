@@ -295,7 +295,7 @@ export default function Home() {
           <div className={`w-96 h-fit relative bg-white z-10 rounded ${windowSize.width < 800 ? "mt-20" : ""}`}>
             <a href={`/assets?id=${asset.tokenId}&subcollectionId=${asset.subcollectionId}&nftAddress=${asset.nftAddress}`}>
               <div id='showroom' className={`w-96 h-fit flex flex-1 transition-all bg-white flex-col justify-center border-2 overflow-hidden border-black p-2 rounded -mt-12`}>
-                <img src={imageURI} alt={tokenName} className='border-b-2 rounded h-96' />
+                <img src={imageURI} alt={tokenName} className='border-b-2 border-b-black h-96' />
                 <div className='w-full h-max mt-2 p-2'>
                   <div className='text-2xl text-black mb-1 h-16 flex items-center'>{asset.collectionName}</div>
                   <div className='flex flex-1 justify-between items-center'>
@@ -310,14 +310,14 @@ export default function Home() {
                       </div>
                     </div>
                   </div>
-                  <div className='text-sm my-4 p-2 bg-gray-50 rounded text-gray-800'>{tokenDescription.slice(0,80)}</div>
+                  <div className='text-sm my-4 p-2 bg-gray-50 rounded text-black'>{tokenDescription.slice(0,80)}</div>
                 </div>
               </div>
             </a>
           </div>
         </div>
       </div>
-      <div className='w-full h-100 mt-16 mb-60 relative'>
+      <div className='w-[114%] -ml-[7%] h-100 mt-16 mb-60 relative'>
         <div className='w-full flex justify-center text-center text-sm pt-12 text-yellow-500 font-bold'>Teslim edildi bile!</div>
         <div className='w-full flex justify-center text-center border-b mb-4 pb-12 text-3xl'>%100 şeffaf ve güvenilir bağış ağını keşfedin!</div>
           <Map
