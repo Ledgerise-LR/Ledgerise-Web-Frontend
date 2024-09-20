@@ -25,7 +25,7 @@ export default function Home() {
 
   return (
     <>
-      <div className='w-full text-2xl flex flex-col items-center text-center max-md:pt-16 my-12'>
+      <div className='w-full text-2xl flex flex-col items-center text-center my-12'>
         <div>Bağış kampanyalarını keşfet</div>
         <div>Nasıl destek olabileceğini gör!</div>
       </div>

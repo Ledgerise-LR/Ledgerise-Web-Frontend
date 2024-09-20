@@ -93,7 +93,7 @@ export default function Header() {
 
 const navigationItems = [
   { desktop: true, mobile: true, href: "/collections", label: "Kampanyalar" },
-  { desktop: true, mobile: false, href: "/how-to-donate-collections", label: "Nasıl Bağış Yapılır" },
+  { desktop: true, mobile: true, href: "/how-to-donate-collections", label: "Nasıl Bağış Yapılır" },
   { desktop: true, mobile: false, href: "/api-documentation", label: "Entegrasyon" },
   { desktop: true, mobile: true, href: "/team", label: "Hakkımızda" },
   { desktop: false, mobile: true, href: "/login", label: "Giriş Yap" },
