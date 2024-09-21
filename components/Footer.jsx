@@ -18,16 +18,16 @@ export default function Footer() {
   }, []);
 
   return (
-    <div className="flex flex-col items-center md:flex-row flex-wrap justify-between lg:justify-around max-md:gap-8 p-6 lg:p-10 bg-[linear-gradient(20deg,rgba(20,0,63,1)_0%,rgba(40,24,0,1)_75%)]">
-      <div className="flex flex-col items-center w-4/5 md:w-2/5 lg:w-1/3">
-        <img className="mb-8" src="/whitelogo.svg" alt="Ledgerise logo" />
-        <div className="flex text-yellow-500 text-xl lg:text-2xl mb-1">
+    <div className="flex flex-col items-center md:flex-row flex-wrap justify-between max-md:gap-8 p-6 lg:p-10 bg-[linear-gradient(20deg,rgba(20,0,63,1)_0%,rgba(40,24,0,1)_75%)]">
+      <div className="flex flex-col max-md:items-center justify-start w-4/5 md:w-2/5 lg:w-1/3">
+        <img className="h-20 md:w-fit mb-8" src="/whitelogo.svg" alt="Ledgerise logo" />
+        <div className="flex w-3/4 text-yellow-500 text-xl lg:text-2xl mb-1">
           Sürdürülebilir gelecek için stok fazlalarını değere dönüştürüyoruz
         </div>
-        <div className="flex text-yellow-700 text-sm mb-8">
+        <div className="flex w-3/4 text-yellow-700 text-sm mb-8">
           STK'ların bağışçılarına, firmaların kaliteli stoklarını, ihtiyaç sahibine elleriyle teslim eder gibi ulaştırmalarını sağlıyoruz.
         </div>
-        <a href="collections" className="max-md:hidden py-4 px-8 rounded transition-all cursor-pointer border bg-orange-100 bg-opacity-10 shadow shadow-white text-white border-white">
+        <a href="collections" className="w-fit max-md:hidden py-4 px-8 rounded transition-all cursor-pointer border bg-orange-100 bg-opacity-10 shadow shadow-white text-white border-white">
           Kampanyalar
         </a>
       </div>
