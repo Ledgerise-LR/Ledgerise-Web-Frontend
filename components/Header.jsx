@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { useRouter } from "next/router";
 import { URL, PORT } from '@/serverConfig';
-import { FaBars, FaTimes } from "react-icons/fa";
+import { FaBars, FaTimes, FaAngleDown } from "react-icons/fa";
 
 export default function Header() {
   const router = useRouter();
@@ -94,23 +94,85 @@ export default function Header() {
 const navigationItems = [
   { desktop: true, mobile: true, href: "/collections", label: "Kampanyalar" },
   { desktop: true, mobile: true, href: "/how-to-donate-collections", label: "Nasıl Bağış Yapılır" },
+  { desktop: true, mobile: false, href: "/#", label: "Ürünler" },
   { desktop: true, mobile: false, href: "/api-documentation", label: "Entegrasyon" },
   { desktop: true, mobile: true, href: "/team", label: "Hakkımızda" },
   { desktop: false, mobile: true, href: "/login", label: "Giriş Yap" },
   { desktop: false, mobile: true, href: "/register", label: "Hesap Oluştur" }
 ];
 
-const NavigationLinks = ({ isDesktop, closeMenu }) => (
-  <>
-    {
-      navigationItems.map((item) => (
-        (isDesktop ? item.desktop : item.mobile) &&
-        <Link key={item.href} href={item.href} className="max-md:text-xl md:text-sm lg:text-lg font-medium hover:text-orange-500 transition" onClick={closeMenu}>
-          {item.label}
-        </Link>
-    ))}
-  </>
-);
+const dropdownMenu = [
+  { 
+    title: "Stok Yönetim", 
+    content: ["LR Dashboard", "LR Entegrasyon", "LR Collaborate"], 
+    description: ["Tek tıkla e-bağış pazaryeri.", "1 saatten kısa sürede entegrasyon.", "Ortak amaç, ortak bağış."], 
+    href: ["/dashboard", "/entegration", "collaborate"] 
+  },
+  { 
+    title: "Güvenilir Bağış", 
+    content: ["LR ESCROW", "LR Lens", "LR LensBot"], 
+    description: ["Paranız, ürün sahibine ulaşana kadar güvendedir.", "Gücünü NFT'den alan AI kamera.", "Kargo anlaşması şart değil."],
+    href: ["/deliverTrust", "/lens", "/lensBot"]
+  },
+  { 
+    title: "Gizlilik", 
+    content: ["SafeView"], 
+    description: ["İhtiyaç sahibi verileri gizlidir."],
+    href: ["/safeView"]
+  }
+]
+
+const NavigationLinks = ({ isDesktop, closeMenu }) => {
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+
+  return (
+    <>
+      {navigationItems.map((item) => {
+        if (isDesktop ? item.desktop : item.mobile) {
+          return (
+            <div 
+              key={item.href} 
+              className="relative"
+              onMouseLeave={() => item.label === "Ürünler" && setIsDropdownOpen(false)} // Close on mouse leave
+            >
+              <Link
+                href={item.href}
+                className="flex items-center max-md:text-xl md:text-sm lg:text-lg font-medium hover:text-orange-500 transition"
+                onMouseEnter={() => item.label === "Ürünler" && setIsDropdownOpen(true)}
+              >
+                {item.label} 
+                {item.label === "Ürünler" ? <FaAngleDown /> : ""}
+              </Link>
+
+              {item.label === "Ürünler" && isDropdownOpen && (
+                <div className="flex absolute left-0 mt-6 w-max bg-white border rounded-md shadow-lg z-50">
+                  {dropdownMenu.map((menu) => (
+                    <div key={menu.title} className="p-4 border-r">
+                      <div className="font-semibold">{menu.title}</div>
+                      <div className="flex flex-col gap-1">
+                        {menu.content.map((content, index) => (
+                          <div>
+                            <Link key={index} href="#solutions" onClick={closeMenu} className="text-sm hover:text-orange-500 transition">
+                              {content}
+                            </Link>
+                            <p className="text-xs text-gray-500">{menu.description[index]}</p>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+          );
+        }
+        return null;
+      })}
+    </>
+  );
+};
+
+
 
 
 const UserSection = ({ username, handleLogout }) => (

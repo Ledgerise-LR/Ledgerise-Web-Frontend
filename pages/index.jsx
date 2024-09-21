@@ -10,6 +10,7 @@ import blockExplorerMapping from "../constants/blockExplorerMapping.json";
 import { URL, PORT } from '@/serverConfig';
 import dynamic from 'next/dynamic';
 import {Trending} from '@web3uikit/icons'
+import { FaArrowRight, FaCheckCircle } from 'react-icons/fa';
 
 export default function Home() {
 
@@ -206,9 +207,91 @@ export default function Home() {
   
   const partnerImages = ["sancaktepe.png", "marjinalsosyal.png", "sevvakfi.png", "iparet.png"];
 
+  const [selectedSection, setSelectedSection] = useState('dashboard'); 
+
+  const sections = [
+    { 
+      id: 'dashboard', 
+      section: 'LR Dashboard',
+      title: 'Kolay Stok Yönetimi', 
+      content: 'Stokları kolayca listeleyin, güncelleyin ve yayınlayın',
+      list: [
+        'Hali hazırda bir e-ticaret altyapısı olmayan ve stok yönetimini manuel yapan firmalar için geliştirilir.',
+        'Firmalar kolaylıkla stok yönetimi, kargo takibi, QR kod oluşturma ve kampanya başlatma işlemlerini all-in-one bir panel üzerinden yapabilir.',
+        'Bu sayede kobilere ve yerel esnaflara bütünleyici, sade ve kullanımı kolay bir altyapı sistemi sunulur.'
+      ],
+      animationText: 'Tek tıkla listele'
+    },
+    { 
+      id: 'entegration', 
+      section: 'LR Entegration',
+      title: 'Jet Hızında Entegrasyon', 
+      content: 'Kendi sisteminizdeki ürünleri kolayca LR yönetim API’sinde tanımlayın.',
+      list: [
+        'Bir E-ticaret altyapısı veya bulut tabanlı sistemde stok yönetimi yapan firmalar içindir.',
+        '24/7 destek veren yazılım ekibimiz ile entegrasyon 1 saatten bile kısa bir sürede mümkün.',
+        'Başarılı penetration testlerimiz, 99.5124% uptime yüzdemiz ve 5 katmanlı sunucu güvenliğimiz ile gönül rahatlığıyla kullanın.'
+      ],
+      animationText: '1 saatte biten entegrasyon'
+    },
+    { 
+      id: 'collaborate', 
+      section: 'LR Collaborate',
+      title: 'LR Collaborate', 
+      content: 'Bir ürüne yüzdesel pay üzerinden ortak olun!',
+      list: [
+        'LR Collaborate ile bir ürünü tek başınıza bağışlamak yerine diğer bağışçılarla ortaklaşa bağışlayabilirsiniz. Ne kadar bağış yaparsanız yapın, LR size bağışınızla somut bir etki yarattığınızı gösterir'
+      ],
+      animationText: 'Ortak amaç, ortak bağış'
+    },
+    { 
+      id: 'deliverTrust', 
+      section: 'LR DeliverTrust',
+      title: 'LR ESCROW Modeli', 
+      content: 'Bağışınızın gerçek ihtiyaç sahibine ulaştığının garantörüdür.',
+      list: [
+        'Bağışınız Ledgerise üzerinde işlendiğinde, bağışladığınız parayı emanet aldığımıza dair sizin adınıza bir NFT yaratılır. Bu sayede bağışınız değiştirilemez bir emanet sertifikasıyla korunur.',
+        'Bağışınız yalnızca gerekli ürünün gerçek ihtiyaç sahibine ulaştığı fotoğraf ile doğrulandığında stok sahibi firmaya gönderilir.',
+        'Eğer bağışınız belli bir sebeple ihtiyaç sahibine ulaşamazsa, bağışınızın size geri iadesi sağlanır.'
+      ],
+      animationText: 'Bağışa yeni bir boyut getiriyoruz'
+    },
+    { 
+      id: 'lens', 
+      section: 'LR Lens',
+      title: 'LR Lens AI Kamera', 
+      content: 'Sağ salim teslim edildi bile',
+      list: [
+        'Lr Lens mobil cihazlara kolay entegre olabilen bir AI kameradır. Bağış ürünleri üretim, depo ve teslimat noktalarında LR Lens ile taratılır.',
+        'Eş zamanlı bir şekilde ürünün lokasyonu, zamanı ve görüntüsü NFT’leştirilir. ',
+        'Bu sayede bağışçılar bağışların gerçek ihtiyaç sahibine ulaştığından kesin olarak emin olur.'
+      ],
+      animationText: '%100 güvenilir ve şeffaf'
+    },
+    { 
+      id: 'safeView', 
+      section: 'LR SafeView',
+      title: 'LR SafeView', 
+      content: 'Kişisel veriler en yüksek hassasiyette koruma altında',
+      list: [
+        'Adaptif yapay zeka algoritmamız ile LR Safeview ihtiyaç sahibine ait kişisel görüntüleri tespit ederek buzlar. Risk arz etmeyen görüntüleri tespit ederek bağışçıya kendi elleriyle teslim etme deneyimi sunar.'
+      ],
+      animationText: 'Merak etmeyin, gizli ve korumalı'
+    },
+    { 
+      id: 'lensBot', 
+      section: 'LR LensBot',
+      title: 'LR Lens TelegramBot', 
+      content: 'Kargonun yetişemediği yerlerde bile mümkün.',
+      list: [
+        '50’nin altında ürün listeleyen işletmelerde kargo entegrasyonuna gerek kalmadan TelegramBot üzerinden bağışçı bildirimi mümkün.'
+      ],
+      animationText: 'Kargo anlaşmanız yoksa'
+    }
+  ];
+
   return (
     <div className="w-full h-full pb-28 px-0 pt-40 min-[800]:px-20 min-[800]:pt-24 overflow-hidden overflow-x-hidden">
-      {/* <div className="w-96 right-20 -mt-8 h-128 bg-[linear-gradient(20deg,rgba(80,0,100,1)_0%,rgba(80,40,0,1)_75%)] absolute z-0 rounded-lg max-xl:hidden"></div> */}
       <div className="w-full h-full flex justify-center min-[1200]:justify-between items-center">
         <div className="flex flex-1 w-3/5 h-4/5 justify-center min-[1200]:justify-between px-10 flex-wrap">
           <div className='flex-col w-128 mb-12 z-10'>
@@ -270,7 +353,7 @@ export default function Home() {
           </div>
           <div className="w-96 h-fit relative bg-white z-10 max-[800]:mt-20">
             <a href={`/assets?id=${asset.tokenId}&subcollectionId=${asset.subcollectionId}&nftAddress=${asset.nftAddress}`}>
-              <div id='showroom' className={`w-96 h-fit flex flex-1 transition-all bg-white flex-col justify-center border-2 overflow-hidden border-black p-2 rounded -mt-12`}>
+              <div id='showroom' className={`relative w-96 h-fit flex flex-1 transition-all bg-white flex-col justify-center border-2 overflow-hidden border-black p-2 rounded -mt-12 shadow-[30px_20px_0_0_rgba(80,0,100,0.5),30px_20px_0_0_rgba(80,40,0,0.7)]`}>
                 <img src={imageURI} alt={tokenName} className='border-b-2 rounded h-96' />
                 <div className='w-full h-max mt-2 p-2'>
                   <div className='text-2xl text-black mb-1 h-16 flex items-center'>{asset.collectionName}</div>
@@ -326,6 +409,78 @@ export default function Home() {
           }
         </div>
       </div>
+
+      <div id="solutions" className='w-1/2 text-lg text-center mx-auto bg-[#2c202b] text-white rounded-md font-extralight p-2 mb-4'>
+        Stok yönetiminden bağış kampanyalarına. Ledgerise firmalara, STK’lara ve bağışçılara <span className='text-[#FFA851]'>Kazan Kazan</span> durumu yaratıyor. <span className='bg-[#FFA851] text-[#2c202b] font-normal'>Fark yaratan teknolojilerimiz:</span>
+      </div>
+
+      <div className="flex xl:w-4/5 mx-auto bg-[#2c202b] rounded-md p-6">
+        <div className="w-1/4 text-[#b3b3b3] text-xl">
+          <ul>
+            {sections.map((section) => (
+              <li
+                key={section.id}
+                className={`py-5 pl-5 cursor-pointer flex items-center ${selectedSection === section.id ? 'text-white text-2xl' : ''}`}
+                onClick={() => setSelectedSection(section.id)}
+              >
+                <FaArrowRight className={`${selectedSection === section.id ? '' : 'hidden'} mr-3 text-[#FFA851]`}></FaArrowRight>{section.section}
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        <div className="w-px mx-4 bg-gradient-to-b from-[#383838] via-[#A4A4A4] to-[#383838]"></div>
+
+        <div className="w-3/4 p-8 text-white">
+          {sections.map((section, index) =>
+            selectedSection === section.id ? (
+              <div key={section.id}>
+                <div className=''>
+                  <div className="relative flex items-end w-full">
+                    <div className='mb-1 flex-grow'>{section.animationText}</div>
+                    <div 
+                      className='absolute' 
+                      style={{ width: `${16 + (index+1) * (84 / sections.length)}%` }} 
+                    >
+                      <img src='kargo.svg' alt='kargo arabası' 
+                        className="flex h-12 absolute -bottom-5 right-0 z-10" 
+                      />
+                    </div>
+                  </div>
+                  <div className='relative w-full h-8 bg-[#838383] rounded-full overflow-hidden'>
+                    <div className='absolute w-full h-full flex justify-evenly items-center'>
+                      {Array.from({ length: 10 }).map(() => (
+                        <div
+                          key={index}
+                          className='h-1 w-6 bg-white'
+                        ></div>
+                      ))}
+                    </div>
+                    <div 
+                      className='h-8 bg-black rounded-full'
+                      style={{ width: `${16 + (index+1) * (84 / sections.length)}%` }}
+                    >
+                    </div>
+                  </div>
+                </div>
+
+                <h2 className="mt-4 text-2xl font-semibold">{section.title}</h2>
+                <p className="mt-1 font-extralight italic">{section.content}</p>
+
+                <ul className="mt-4 space-y-3 font-extralight w-3/5">
+                  {Object.values(section.list).map((item, index) => (
+                    <li key={index} className=''>
+                      <FaCheckCircle className='my-auto mr-3 text-[#FFA851] inline'></FaCheckCircle>
+                      <span>{item}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ) : null
+          )}
+        </div>
+      </div>
+
       <div style={{color: "#343434"}} className='z-20 mt-20'>
         <div className='w-full flex justify-center text-center text-sm pt-12 text-yellow-500 font-bold'>İÇİNİZ RAHAT OLSUN!</div>
         <div className='w-full flex justify-center text-center border-b mb-4 pb-12 text-3xl'>Bağışınızın doğru ihtiyaç sahibine ulaştığından emin olmanızı sağlıyoruz.</div>
