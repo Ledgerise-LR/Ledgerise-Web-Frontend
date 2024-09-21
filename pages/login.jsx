@@ -13,10 +13,19 @@ export default function Home() {
   const [successText, setSuccessText] = useState("");
   const [isLogin, setIsLogin] = useState(true);
 
-  const handleClick = () => {
-    const encryptedPassword = AES.encrypt(password, 'secret_key').toString();  // encryption should be used 
+  useEffect(() => {
+    if (router.query.register !== undefined) {
+      setIsLogin(false); 
+    } else {
+      setIsLogin(true); 
+    }
+  }, [router.query]);
+  
 
-    axios.post(`${URL}:${PORT}/auth/${isLogin ? 'login' : 'register'}`, { // isLogin'e göre endpoint değişir
+  const handleClick = () => {
+    const encryptedPassword = AES.encrypt(password, 'secret_key').toString();  
+
+    axios.post(`${URL}:${PORT}/auth/${isLogin ? 'login' : 'register'}`, { 
       email: email,
       password: password
     })

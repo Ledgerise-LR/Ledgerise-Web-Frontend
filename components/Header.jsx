@@ -135,7 +135,7 @@ const AuthButtons = ({ setLastVisitedUrl }) => (
     <Link href="/login" onClick={setLastVisitedUrl} className="max-lg:text-sm py-2 px-4 text-gray-700 border rounded hover:bg-gray-100">
       Giriş Yap
     </Link>
-    <Link href="/register" onClick={setLastVisitedUrl} className="max-lg:text-sm py-2 px-4 bg-[rgb(255,168,82)] text-black rounded hover:bg-[rgb(255,145,65)]">
+    <Link href="/login?register" onClick={setLastVisitedUrl} className="max-lg:text-sm py-2 px-4 bg-[rgb(255,168,82)] text-black rounded hover:bg-[rgb(255,145,65)]">
       Hesap Oluştur
     </Link>
   </div>
