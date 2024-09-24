@@ -106,19 +106,19 @@ const dropdownMenu = [
     title: "Stok Yönetim", 
     content: ["LR Dashboard", "LR Entegrasyon", "LR Collaborate"], 
     description: ["Tek tıkla e-bağış pazaryeri.", "1 saatten kısa sürede entegrasyon.", "Ortak amaç, ortak bağış."], 
-    href: ["/dashboard", "/entegration", "collaborate"] 
+    href: ["dashboard", "entegration", "collaborate"] 
   },
   { 
     title: "Güvenilir Bağış", 
     content: ["LR ESCROW", "LR Lens", "LR LensBot"], 
     description: ["Paranız, ürün sahibine ulaşana kadar güvendedir.", "Gücünü NFT'den alan AI kamera.", "Kargo anlaşması şart değil."],
-    href: ["/deliverTrust", "/lens", "/lensBot"]
+    href: ["deliverTrust", "lens", "lensBot"]
   },
   { 
     title: "Gizlilik", 
     content: ["SafeView"], 
     description: ["İhtiyaç sahibi verileri gizlidir."],
-    href: ["/safeView"]
+    href: ["safeView"]
   }
 ]
 
@@ -145,14 +145,14 @@ const NavigationLinks = ({ isDesktop, closeMenu }) => {
               </Link>
 
               {item.label === "Ürünler" && isDropdownOpen && (
-                <div className="flex absolute left-0 mt-6 w-max bg-white border rounded-md shadow-lg z-50">
+                <div className="flex absolute left-0 w-max bg-white border rounded-md shadow-lg z-50">
                   {dropdownMenu.map((menu) => (
                     <div key={menu.title} className="p-4 border-r">
                       <div className="font-semibold">{menu.title}</div>
                       <div className="flex flex-col gap-1">
                         {menu.content.map((content, index) => (
                           <div>
-                            <Link key={index} href="#solutions" onClick={closeMenu} className="text-sm hover:text-orange-500 transition">
+                            <Link key={index} href={`/?section=${menu.href[index]}`} onClick={closeMenu} className="text-sm hover:text-orange-500 transition">
                               {content}
                             </Link>
                             <p className="text-xs text-gray-500">{menu.description[index]}</p>

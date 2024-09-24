@@ -11,8 +11,10 @@ import { URL, PORT } from '@/serverConfig';
 import dynamic from 'next/dynamic';
 import {Trending} from '@web3uikit/icons'
 import { FaArrowRight, FaCheckCircle } from 'react-icons/fa';
+import { useRouter } from 'next/router';
 
 export default function Home() {
+  const router = useRouter();
 
   const Map = useMemo(() => dynamic(
     () => import('@/components/DisplayMap'),
@@ -208,6 +210,17 @@ export default function Home() {
   const partnerImages = ["sancaktepe.png", "marjinalsosyal.png", "sevvakfi.png", "iparet.png"];
 
   const [selectedSection, setSelectedSection] = useState('dashboard'); 
+
+  useEffect(() => {
+    console.log(router.query);
+    if (router.query.section) {
+      setSelectedSection(router.query.section);
+      const element = document.getElementById("solutions");
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth' });
+      }
+    }
+  }, [router.query.section]);
 
   const sections = [
     { 
