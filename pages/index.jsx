@@ -11,6 +11,7 @@ import { URL, PORT } from '@/serverConfig';
 import dynamic from 'next/dynamic';
 import {Trending} from '@web3uikit/icons'
 import { FaArrowRight, FaCheckCircle } from 'react-icons/fa';
+import CargoCar from '@/components/CargoCar';
 
 export default function Home() {
 
@@ -417,11 +418,13 @@ export default function Home() {
       <div className="flex xl:w-4/5 mx-auto bg-[#2c202b] rounded-md p-6">
         <div className="w-1/4 text-[#b3b3b3] text-xl">
           <ul>
-            {sections.map((section) => (
+            {sections.map((section, index) => (
               <li
                 key={section.id}
                 className={`py-5 pl-5 cursor-pointer flex items-center ${selectedSection === section.id ? 'text-white text-2xl' : ''}`}
-                onClick={() => setSelectedSection(section.id)}
+                onClick={() => {
+                  setSelectedSection(section.id);
+                }}
               >
                 <FaArrowRight className={`${selectedSection === section.id ? '' : 'hidden'} mr-3 text-[#FFA851]`}></FaArrowRight>{section.section}
               </li>
@@ -432,36 +435,12 @@ export default function Home() {
         <div className="w-px mx-4 bg-gradient-to-b from-[#383838] via-[#A4A4A4] to-[#383838]"></div>
 
         <div className="w-3/4 p-8 text-white">
-          {sections.map((section, index) =>
+          {sections.map((section, index) => 
+
             selectedSection === section.id ? (
               <div key={section.id}>
                 <div className=''>
-                  <div className="relative flex items-end w-full">
-                    <div className='mb-1 flex-grow'>{section.animationText}</div>
-                    <div 
-                      className='absolute' 
-                      style={{ width: `${16 + (index+1) * (84 / sections.length)}%` }} 
-                    >
-                      <img src='kargo.svg' alt='kargo arabası' 
-                        className="flex h-12 absolute -bottom-5 right-0 z-10" 
-                      />
-                    </div>
-                  </div>
-                  <div className='relative w-full h-8 bg-[#838383] rounded-full overflow-hidden'>
-                    <div className='absolute w-full h-full flex justify-evenly items-center'>
-                      {Array.from({ length: 10 }).map(() => (
-                        <div
-                          key={index}
-                          className='h-1 w-6 bg-white'
-                        ></div>
-                      ))}
-                    </div>
-                    <div 
-                      className='h-8 bg-black rounded-full'
-                      style={{ width: `${16 + (index+1) * (84 / sections.length)}%` }}
-                    >
-                    </div>
-                  </div>
+                  <CargoCar index={index} animationText={section.animationText} previousWidth={`${16 + (index) * (84 / sections.length)}%`} nextWidth={`${16 + (index+1) * (84 / sections.length)}%`}/>
                 </div>
 
                 <h2 className="mt-4 text-2xl font-semibold">{section.title}</h2>
