@@ -145,17 +145,17 @@ const NavigationLinks = ({ isDesktop, closeMenu }) => {
               </Link>
 
               {item.label === "Ürünler" && isDropdownOpen && (
-                <div className="flex absolute left-0 w-max bg-white border rounded-md shadow-lg z-50">
+                <div className="flex w-100 absolute left-0 bg-white border rounded-md shadow-lg z-50">
                   {dropdownMenu.map((menu) => (
                     <div key={menu.title} className="p-4 border-r">
-                      <div className="font-semibold">{menu.title}</div>
-                      <div className="flex flex-col gap-1">
+                      <div className="font-semibold text-lg mb-2"><span></span>{menu.title}</div>
+                      <div className="flex flex-col gap-2">
                         {menu.content.map((content, index) => (
                           <div>
-                            <Link key={index} href={`/?section=${menu.href[index]}`} onClick={closeMenu} className="text-sm hover:text-orange-500 transition">
+                            <Link key={index} href={`/?section=${menu.href[index]}`} onClick={closeMenu} className="text-md hover:text-orange-500 transition">
                               {content}
                             </Link>
-                            <p className="text-xs text-gray-500">{menu.description[index]}</p>
+                            <p className="text-sm text-gray-500">{menu.description[index]}</p>
                           </div>
                         ))}
                       </div>

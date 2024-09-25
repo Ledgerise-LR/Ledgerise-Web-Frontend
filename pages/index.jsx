@@ -12,6 +12,7 @@ import dynamic from 'next/dynamic';
 import {Trending} from '@web3uikit/icons'
 import { FaArrowRight, FaCheckCircle } from 'react-icons/fa';
 import { useRouter } from 'next/router';
+import { images } from '@/next.config';
 
 export default function Home() {
   const router = useRouter();
@@ -233,7 +234,8 @@ export default function Home() {
         'Firmalar kolaylıkla stok yönetimi, kargo takibi, QR kod oluşturma ve kampanya başlatma işlemlerini all-in-one bir panel üzerinden yapabilir.',
         'Bu sayede kobilere ve yerel esnaflara bütünleyici, sade ve kullanımı kolay bir altyapı sistemi sunulur.'
       ],
-      animationText: 'Tek tıkla listele'
+      animationText: 'Tek tıkla listele',
+      images: ["solutions/dashboard.png"]
     },
     { 
       id: 'entegration', 
@@ -245,7 +247,8 @@ export default function Home() {
         '24/7 destek veren yazılım ekibimiz ile entegrasyon 1 saatten bile kısa bir sürede mümkün.',
         'Başarılı penetration testlerimiz, 99.5124% uptime yüzdemiz ve 5 katmanlı sunucu güvenliğimiz ile gönül rahatlığıyla kullanın.'
       ],
-      animationText: '1 saatte biten entegrasyon'
+      animationText: '1 saatte biten entegrasyon',
+      images: ["solutions/entegrasyon.png"]
     },
     { 
       id: 'collaborate', 
@@ -255,7 +258,8 @@ export default function Home() {
       list: [
         'LR Collaborate ile bir ürünü tek başınıza bağışlamak yerine diğer bağışçılarla ortaklaşa bağışlayabilirsiniz. Ne kadar bağış yaparsanız yapın, LR size bağışınızla somut bir etki yarattığınızı gösterir'
       ],
-      animationText: 'Ortak amaç, ortak bağış'
+      animationText: 'Ortak amaç, ortak bağış',
+      images: ["solutions/collaborate1.png", "solutions/collaborate2.png", "solutions/collaborate3.png"]
     },
     { 
       id: 'deliverTrust', 
@@ -279,7 +283,8 @@ export default function Home() {
         'Eş zamanlı bir şekilde ürünün lokasyonu, zamanı ve görüntüsü NFT’leştirilir. ',
         'Bu sayede bağışçılar bağışların gerçek ihtiyaç sahibine ulaştığından kesin olarak emin olur.'
       ],
-      animationText: '%100 güvenilir ve şeffaf'
+      animationText: '%100 güvenilir ve şeffaf',
+      images: ["solutions/lensAI.png"]
     },
     { 
       id: 'safeView', 
@@ -289,7 +294,8 @@ export default function Home() {
       list: [
         'Adaptif yapay zeka algoritmamız ile LR Safeview ihtiyaç sahibine ait kişisel görüntüleri tespit ederek buzlar. Risk arz etmeyen görüntüleri tespit ederek bağışçıya kendi elleriyle teslim etme deneyimi sunar.'
       ],
-      animationText: 'Merak etmeyin, gizli ve korumalı'
+      animationText: 'Merak etmeyin, gizli ve korumalı',
+      images: ["solutions/safeView1.png", "solutions/safeView2.png", "solutions/safeView3.png"]
     },
     { 
       id: 'lensBot', 
@@ -299,7 +305,8 @@ export default function Home() {
       list: [
         '50’nin altında ürün listeleyen işletmelerde kargo entegrasyonuna gerek kalmadan TelegramBot üzerinden bağışçı bildirimi mümkün.'
       ],
-      animationText: 'Kargo anlaşmanız yoksa'
+      animationText: 'Kargo anlaşmanız yoksa',
+      videoSrc: ["solutions/lensbot.mp4"]
     }
   ];
 
@@ -446,7 +453,7 @@ export default function Home() {
 
         <div className="w-3/4 p-8 text-white">
           {sections.map((section, index) =>
-            selectedSection === section.id ? (
+            selectedSection === section.id ? 
               <div key={section.id}>
                 <div className=''>
                   <div className="relative flex items-end w-full">
@@ -479,17 +486,31 @@ export default function Home() {
 
                 <h2 className="mt-4 text-2xl font-semibold">{section.title}</h2>
                 <p className="mt-1 font-extralight italic">{section.content}</p>
-
-                <ul className="mt-4 space-y-3 font-extralight w-3/5">
-                  {Object.values(section.list).map((item, index) => (
-                    <li key={index} className=''>
-                      <FaCheckCircle className='my-auto mr-3 text-[#FFA851] inline'></FaCheckCircle>
-                      <span>{item}</span>
-                    </li>
-                  ))}
-                </ul>
+                <div className={`${((section.id === 'collaborate') || (section.id === 'safeView')) ? '' : 'flex gap-3 items-end'}`}>
+                  <ul className="mt-4 space-y-3 font-extralight w-3/5 self-start">
+                    {Object.values(section.list).map((item, index) => (
+                      <li key={index} className=''>
+                        <FaCheckCircle className='my-auto mr-3 text-[#FFA851] inline'></FaCheckCircle>
+                        <span>{item}</span>
+                      </li>
+                    ))}
+                  </ul>
+                  <div 
+                  className={`${((section.id === 'collaborate') || (section.id === 'safeView')) ? 'flex gap-3 w-1/4 mt-4' : 'ml-4'}`}>
+                    {section.id === 'lensBot' ? (
+                      <video loop autoPlay className="w-64">
+                        <source src={section.videoSrc} type="video/mp4" />
+                        Tarayıcınız video etiketini desteklemiyor.
+                      </video>
+                    ) : (
+                      section.images && section.images.map((image, index) => (
+                        <img key={index} src={image} alt={image} className={`${index === 1 ? 'self-end' : 'self-start'}`} />
+                      ))
+                    )}
+                  </div>
+                </div>
               </div>
-            ) : null
+             : null
           )}
         </div>
       </div>
