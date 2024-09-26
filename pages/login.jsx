@@ -81,7 +81,7 @@ export default function Home() {
         <div className={`flex flex-col bg-[linear-gradient(0deg,rgba(255,100,0,0.75)_0%,rgba(20,50,150,0.75)_75%)] relative p-8 max-sm:h-1/2 w-full sm:w-1/2 ${isLogin ? "lg:rounded-l-2xl" : "lg:rounded-r-2xl max-sm:-translate-y-full sm:translate-x-full"} transition-all duration-700 z-10`}>
           <div id="stars-content" className='absolute top-0 left-0 z-0 w-full h-full animate-pulse'></div>
           <div className='w-full flex flex-col items-center gap-3 my-auto'>
-            <img className='h-24 xs:h-36 z-10' src="icon.svg" alt="Ledgerise" />
+            <img className='h-24 xs:h-36 z-10 rounded border-2' src="icon.png" alt="Ledgerise" />
             <div className='text-slate-50 text-2xl lg:text-3xl xl:text-4xl'>Ledgerise'a Hoşgeldiniz</div>
             <div className='text-slate-200 text-lg text-center px-0 max-sm:px-6'>
               {!isLogin ? "Halihazırda hesabınız var mı? Hemen bağış yapmak için giriş yapın." : "Hesabınız yok mu? İhtiyaç sahiplerine bağış yapabilmek için kayıt olun."}
@@ -90,7 +90,7 @@ export default function Home() {
               {isLogin ? "Kayıt Ol" : "Giriş Yap"}
             </a>
           </div>
-          <div className='ml-auto text-slate-100 z-10'>Ledgerise 2024</div>
+          <div className='ml-auto text-slate-100 z-10'>Ledgerise 2023</div>
         </div>
 
         <div className={`flex flex-col p-8 justify-center max-sm:h-1/2 w-full sm:w-1/2 lg:rounded-2xl ${isLogin ? "" : "max-sm:translate-y-full sm:-translate-x-full"} transition-all duration-700 z-0`}>
