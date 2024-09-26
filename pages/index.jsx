@@ -330,7 +330,7 @@ export default function Home() {
         '50’nin altında ürün listeleyen işletmelerde kargo entegrasyonuna gerek kalmadan TelegramBot üzerinden bağışçı bildirimi mümkün.'
       ],
       animationText: 'Kargo anlaşmanız yoksa',
-      images: ["solutions/lensbot.png"]
+      images: ["solutions/lensBot.png"]
     }
   ];
 
