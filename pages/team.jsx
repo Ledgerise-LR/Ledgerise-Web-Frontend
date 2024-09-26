@@ -6,31 +6,25 @@ export default function Home() {
   const team = [
     {
       name: "Doğu Boran Şentürk",
-      role: "Kurucu Ortak",
+      role: "Kurucu Ortak CEO",
       image: "/dogu.jpeg",
       bio: "Ledgerise'ın yazılımı üzerine çalışır. Boş zamanlarında fitness ve latin dans yapmanın yanı sıra baristalık ile uğraşır."
     },
     {
       name: "Dolunay Kaya",
-      role: "Pazarlama Asistanı",
+      role: "Kurucu Ortak CIO",
       image: "/dolunay.png",
       bio: "Ledgerise'ın müşteri ilişkilerini geliştirir. Gerektiğinde bir yaratıcı, gerektiğinde bir gözlemci olarak ürün geliştirilme sürecini yönetir."
     },
     {
-      name: "Nehir Öztürk",
-      role: "Medya Asistanı",
-      image: "/nehir.png",
-      bio: "Boş zamanlarında film izlemeyi, kitap okumayı, müzik dinlemeyi ve sanat üzerine aktiviteler yapan; sosyal bir insan olan Nehir, Ledgerise’ın marka imajını tasarlar."
-    },
-    {
       name: "İlayda Özer",
-      role: "Pazarlama Uzmanı",
+      role: "Kurucu Ortak CMO",
       image: "/ilayda.png",
       bio: "Satış sürecini yönetir. Kurumsal dünyanın disiplinini ve genç girişim ruhunu eşzamanlı taşıyarak ürünü, pazara en uygun hale getirir."
     },
     {
       name: "Harun Yahya Demirpençe",
-      role: "Yazılım Geliştirici",
+      role: "Kurucu Ortak CTO",
       image: "/harun.jpg",
       bio: "Ledgerise'da yazılım geliştirici olarak görev yapar. Ürünümüzün sorunsuz bir şekilde yönetilmesi için çalışır."
     },

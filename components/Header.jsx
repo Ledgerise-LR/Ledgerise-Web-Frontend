@@ -5,6 +5,7 @@ import axios from "axios";
 import { useRouter } from "next/router";
 import { URL, PORT } from '@/serverConfig';
 import { FaBars, FaTimes, FaAngleDown } from "react-icons/fa";
+import {Sandbox, Shield, EyeClosed} from '@web3uikit/icons'
 
 export default function Header() {
   const router = useRouter();
@@ -51,14 +52,14 @@ export default function Header() {
   };
 
   return (
-    <nav className="border-b-2 z-50 max-md:fixed top-0 left-0 w-full bg-white shadow-md">
-      <div className={`flex items-center justify-between mx-auto p-4 ${isMobileMenuOpen ? "border-b-2" : ""}`}>
+    <nav className="border-b z-50 max-md:fixed top-0 left-0 w-full px-10 bg-white">
+      <div className={`flex items-center p-4 ${isMobileMenuOpen ? "border-b-2" : ""}`}>
         <Link href="/">
           <img src="/logo.svg" alt="Ledgerise Logo" className="h-12 md:h-8 lg:h-12" />
         </Link>
 
         {/* Desktop Navigation */}
-        <div className="hidden md:flex flex-grow justify-center gap-3 lg:gap-6 items-center">
+        <div className="hidden md:flex ml-12 mr-auto justify-center gap-3 lg:gap-6 items-center">
           <NavigationLinks isDesktop={true}/>
         </div>
         <div className="hidden md:flex items-center">
@@ -93,7 +94,6 @@ export default function Header() {
 
 const navigationItems = [
   { desktop: true, mobile: true, href: "/collections", label: "Kampanyalar" },
-  { desktop: true, mobile: true, href: "/how-to-donate-collections", label: "Nasıl Bağış Yapılır" },
   { desktop: true, mobile: false, href: "/#", label: "Ürünler" },
   { desktop: true, mobile: false, href: "/api-documentation", label: "Entegrasyon" },
   { desktop: true, mobile: true, href: "/team", label: "Hakkımızda" },
@@ -126,7 +126,7 @@ const NavigationLinks = ({ isDesktop, closeMenu }) => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
   return (
-    <>
+    <div className="flex gap-6 font-medium text-black">
       {navigationItems.map((item) => {
         if (isDesktop ? item.desktop : item.mobile) {
           return (
@@ -137,7 +137,7 @@ const NavigationLinks = ({ isDesktop, closeMenu }) => {
             >
               <Link
                 href={item.href}
-                className="flex items-center max-md:text-xl md:text-sm lg:text-lg font-medium hover:text-orange-500 transition"
+                className="flex items-center text-sm hover:text-orange-500 transition"
                 onMouseEnter={() => item.label === "Ürünler" && setIsDropdownOpen(true)}
               >
                 {item.label} 
@@ -145,10 +145,25 @@ const NavigationLinks = ({ isDesktop, closeMenu }) => {
               </Link>
 
               {item.label === "Ürünler" && isDropdownOpen && (
-                <div className="flex w-100 absolute left-0 bg-white border rounded-md shadow-lg z-50">
-                  {dropdownMenu.map((menu) => (
+                <div className="flex w-128 absolute left-0 bg-white border rounded-md shadow-lg z-50">
+                  {dropdownMenu.map((menu, index) => (
                     <div key={menu.title} className="p-4 border-r">
-                      <div className="font-semibold text-lg mb-2"><span></span>{menu.title}</div>
+                      <div className="font-medium text-lg mb-2 flex items-center">
+                        <div className="text-purple-500 p-2 bg-purple-500 bg-opacity-10 border-purple-500 border rounded mr-2">
+                          {
+                            index == 0
+                              ? <Sandbox fontSize='16px'/>
+                              : index == 1
+                                ? <Shield fontSize='16px'/>
+                                : index == 2
+                                  ? <EyeClosed fontSize='16px'/>
+                                  : ("")
+                          }
+                        </div>
+                        <div>
+                          {menu.title}
+                        </div>
+                      </div>
                       <div className="flex flex-col gap-2">
                         {menu.content.map((content, index) => (
                           <div>
@@ -168,7 +183,7 @@ const NavigationLinks = ({ isDesktop, closeMenu }) => {
         }
         return null;
       })}
-    </>
+    </div>
   );
 };
 

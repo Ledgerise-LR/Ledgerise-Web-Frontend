@@ -11,6 +11,7 @@ import { URL, PORT } from '@/serverConfig';
 import dynamic from 'next/dynamic';
 import {Trending} from '@web3uikit/icons'
 import { FaArrowRight, FaCheckCircle } from 'react-icons/fa';
+import CargoCar from '@/components/CargoCar';
 import { useRouter } from 'next/router';
 import { images } from '@/next.config';
 
@@ -157,6 +158,29 @@ export default function Home() {
     }
   }, [asset, asset.tokenUri])
 
+
+  const [windowSize, setWindowSize] = useState({
+    width: "",
+    height: ""
+  })
+
+  useEffect(() => {
+
+    const handleResize = () => {
+      setWindowSize({
+        width: window.innerWidth,
+        height: window.innerHeight
+      });
+    };
+
+    window.addEventListener("resize", handleResize);
+
+    handleResize();
+
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+
   const pressLinks = [
     {
       title: "Ledgerise, yardım kampanyalarında yerel yönetimler ile işbirliği içerisinde",
@@ -284,7 +308,7 @@ export default function Home() {
         'Bu sayede bağışçılar bağışların gerçek ihtiyaç sahibine ulaştığından kesin olarak emin olur.'
       ],
       animationText: '%100 güvenilir ve şeffaf',
-      images: ["solutions/lensAI.png"]
+      videoSrc: ["solutions/lensAI.mp4"]
     },
     { 
       id: 'safeView', 
@@ -306,33 +330,33 @@ export default function Home() {
         '50’nin altında ürün listeleyen işletmelerde kargo entegrasyonuna gerek kalmadan TelegramBot üzerinden bağışçı bildirimi mümkün.'
       ],
       animationText: 'Kargo anlaşmanız yoksa',
-      videoSrc: ["solutions/lensbot.mp4"]
+      images: ["solutions/lensbot.png"]
     }
   ];
 
   return (
-    <div className="w-full h-full pb-28 px-0 pt-40 min-[800]:px-20 min-[800]:pt-24 overflow-hidden overflow-x-hidden">
+    <div className="w-full h-full pb-28 px-0 pt-28 min-[800]:px-20 min-[800]:pt-24 overflow-hidden overflow-x-hidden">
       <div className="w-full h-full flex justify-center min-[1200]:justify-between items-center">
-        <div className="flex flex-1 w-3/5 h-4/5 justify-center min-[1200]:justify-between px-10 flex-wrap">
+        <div className="flex flex-1 w-3/5 h-4/5 justify-evenly min-[1200]:justify-between px-10 flex-wrap">
           <div className='flex-col w-128 mb-12 z-10'>
             <div className='w-full'>
               <div 
-              className="h-fit -mt-2 font-bold font-sans flex flex-col text-4xl min-[800]:text-6xl"
+              className={`h-fit -mt-2 font-semibold font-sans flex flex-col ${windowSize.width < 800 ? "text-4xl px-8" : "text-6xl"} min-[800]:text-6xl`}
               >
-                <div className='mb-2 text-slate-900'>Stok Fazlalarını</div>
+                <div className='mb-2 text-slate-900'>Stok fazlalarını</div>  
                 <div style={{
                 background: "-webkit-linear-gradient(30deg, #B881FF, #FF9900)",
                 WebkitBackgroundClip: "text",
                 WebkitTextFillColor: "transparent"
-              }} className='pb-2 w-fit'>Değere</div>
-                <div className='text-slate-900'>Dönüştürüyoruz</div>
+              }} className='pb-2 w-fit'>değere</div>
+                <div className='text-slate-900'>dönüştürüyoruz</div>
               </div>
               <div className="text-black mt-8 font-sans text-md w-96 min-[800]:w-full min-[800]:text-lg">
                 <div className='flex items-center'><div className='p-1 bg-[rgb(50,0,20)] text-white rounded-full mr-2'><Trending fontSize='16px'/></div> Stokların %5'i, %50'ye varan indirimli fiyatı üzerinden listelenir.</div>
                 <div className='flex items-center'><div className='p-1 bg-[rgb(50,0,20)] text-white rounded-full mr-2'><Trending fontSize='16px'/></div>Ürünler pay bazlı olarak ortaklaşa bağışlanır.</div>
                 <div className='flex items-center'><div className='p-1 bg-[rgb(50,0,20)] text-white rounded-full mr-2'><Trending fontSize='16px'/></div>Bağışçıların ürünlerin doğru ihtiyaç sahiplerine ulaştığından emin olması sağlanır.</div>
               </div>
-              <div className='w-full h-12 mt-8 flex'>
+              <div className='w-full h-12 mt-4 flex'>
                 <div className='w-1/2 flex items-center justify-center'>
                   <div className='font-semibold mr-4 text-3xl flex text-black'>5<div className='-mt-0.5'>+</div></div>
                   <div className='text-xs font-bold'>PARTNER</div>
@@ -345,12 +369,12 @@ export default function Home() {
               </div>
             </div>
             <div className='flex items-center'>
-              <div className='w-fit mr-6 mt-10 z-10'>
+              <div className='w-fit mr-6 mt-4 z-10'>
                 <a href="/collections">
                   <div className="p-4 bg-[rgb(255,168,82)] border-2 border-[rgb(255,168,82)] text-center text-black font-bold rounded tracking-wide max-[800]:text-sm">Kampanyaları Keşfet</div>
                 </a>
               </div>
-              <div className='w-fit mt-10 z-10'>
+              <div className='w-fit mt-4 z-10'>
                 <a href="/login">
                   <div className="p-4 bg-white border-2 text-center border-black text-black font-bold rounded tracking-wide max-[800]:text-sm">Bağış Raporunu Görüntüle</div>
                 </a>
@@ -430,18 +454,20 @@ export default function Home() {
         </div>
       </div>
 
-      <div id="solutions" className='w-1/2 text-lg text-center mx-auto bg-[#2c202b] text-white rounded-md font-extralight p-2 mb-4'>
+      <div id="solutions" className={`w-1/2 text-lg text-center mx-auto bg-[#2c202b] text-white rounded-md font-extralight p-2 mb-4 ${windowSize.width < 800 ? "hidden" : ""}`}>
         Stok yönetiminden bağış kampanyalarına. Ledgerise firmalara, STK’lara ve bağışçılara <span className='text-[#FFA851]'>Kazan Kazan</span> durumu yaratıyor. <span className='bg-[#FFA851] text-[#2c202b] font-normal'>Fark yaratan teknolojilerimiz:</span>
       </div>
 
-      <div className="flex xl:w-4/5 mx-auto bg-[#2c202b] rounded-md p-6">
+      <div className={`flex xl:w-4/5 mx-auto bg-[#2c202b] rounded-md p-6 ${windowSize.width < 800 ? "hidden" : ""}`}>
         <div className="w-1/4 text-[#b3b3b3] text-xl">
           <ul>
-            {sections.map((section) => (
+            {sections.map((section, index) => (
               <li
                 key={section.id}
                 className={`py-5 pl-5 cursor-pointer flex items-center ${selectedSection === section.id ? 'text-white text-2xl' : ''}`}
-                onClick={() => setSelectedSection(section.id)}
+                onClick={() => {
+                  setSelectedSection(section.id);
+                }}
               >
                 <FaArrowRight className={`${selectedSection === section.id ? '' : 'hidden'} mr-3 text-[#FFA851]`}></FaArrowRight>{section.section}
               </li>
@@ -456,32 +482,7 @@ export default function Home() {
             selectedSection === section.id ? 
               <div key={section.id}>
                 <div className=''>
-                  <div className="relative flex items-end w-full">
-                    <div className='mb-1 flex-grow'>{section.animationText}</div>
-                    <div 
-                      className='absolute' 
-                      style={{ width: `${16 + (index+1) * (84 / sections.length)}%` }} 
-                    >
-                      <img src='kargo.svg' alt='kargo arabası' 
-                        className="flex h-12 absolute -bottom-5 right-0 z-10" 
-                      />
-                    </div>
-                  </div>
-                  <div className='relative w-full h-8 bg-[#838383] rounded-full overflow-hidden'>
-                    <div className='absolute w-full h-full flex justify-evenly items-center'>
-                      {Array.from({ length: 10 }).map(() => (
-                        <div
-                          key={index}
-                          className='h-1 w-6 bg-white'
-                        ></div>
-                      ))}
-                    </div>
-                    <div 
-                      className='h-8 bg-black rounded-full'
-                      style={{ width: `${16 + (index+1) * (84 / sections.length)}%` }}
-                    >
-                    </div>
-                  </div>
+                  <CargoCar index={index} animationText={section.animationText} previousWidth={`${16 + (index) * (84 / sections.length)}%`} nextWidth={`${16 + (index+1) * (84 / sections.length)}%`}/>
                 </div>
 
                 <h2 className="mt-4 text-2xl font-semibold">{section.title}</h2>
@@ -497,7 +498,7 @@ export default function Home() {
                   </ul>
                   <div 
                   className={`${((section.id === 'collaborate') || (section.id === 'safeView')) ? 'flex gap-3 w-1/4 mt-4' : 'ml-4'}`}>
-                    {section.id === 'lensBot' ? (
+                    {section.id === 'lens' ? (
                       <video loop autoPlay className="w-64">
                         <source src={section.videoSrc} type="video/mp4" />
                         Tarayıcınız video etiketini desteklemiyor.
