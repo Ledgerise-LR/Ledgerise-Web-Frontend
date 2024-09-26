@@ -295,7 +295,7 @@ export default function Home() {
         'Adaptif yapay zeka algoritmamız ile LR Safeview ihtiyaç sahibine ait kişisel görüntüleri tespit ederek buzlar. Risk arz etmeyen görüntüleri tespit ederek bağışçıya kendi elleriyle teslim etme deneyimi sunar.'
       ],
       animationText: 'Merak etmeyin, gizli ve korumalı',
-      images: ["solutions/safeview1.png", "solutions/safeview2.png", "solutions/safeview3.png"]
+      images: ["solutions/safeView1.png", "solutions/safeView2.png", "solutions/safeView3.png"]
     },
     { 
       id: 'lensBot', 
