@@ -2,6 +2,7 @@
 import { useEffect, useState } from "react";
 import blockExplorerMapping from "../constants/blockExplorerMapping";
 import networkMapping from "../constants/networkMapping";
+import {Mail, Pin} from '@web3uikit/icons'
 
 export default function Footer() {
 
@@ -20,7 +21,6 @@ export default function Footer() {
   }, []);
 
   return (
-<<<<<<< HEAD
     <div>
       <div>
         <div className="flex flex-col justify-between items-center bg-[linear-gradient(20deg,rgba(20,0,63,1)_0%,rgba(40,24,0,1)_75%)] w-full z-10">
@@ -30,44 +30,24 @@ export default function Footer() {
                 <div className="mb-8">
                   <img src="/whitelogo.svg" alt="Ledgerise logo" />
                 </div>
-                <div className="w-96 text-yellow-500 text-2xl mb-1 flex">
+                <div className="w-fit text-white text-2xl mb-1 font-light flex">
                   <div className="mr-1">{"Sürdürülebilir gelecek için stok fazlalarını değere dönüştürüyoruz"}</div>
                 </div>
-                <div className="text-yellow-700 text-sm mb-8 flex w-96">
+                <div className="text-gray-300 text-sm mb-8 flex w-96">
                   STK'ların bağışçılarına, firmaların kaliteli stoklarını, ihtiyaç sahibine elleriyle teslim eder gibi ulaştırmalarını sağlıyoruz.
                 </div>
-                <a href="collections" className="p-4 px-8 w-fit ml-auto rounded transition-all cursor-pointer border bg-orange-100 bg-opacity-10 shadow shadow-white text-white border-white">Kampanyalar</a>
-=======
-    <div className="flex flex-col items-center md:flex-row flex-wrap justify-between max-md:gap-8 p-6 lg:p-10 bg-[linear-gradient(20deg,rgba(20,0,63,1)_0%,rgba(40,24,0,1)_75%)]">
-      <div className="flex flex-col max-md:items-center justify-start w-4/5 md:w-2/5 lg:w-1/3">
-        <img className="h-20 md:w-fit mb-8" src="/whitelogo.svg" alt="Ledgerise logo" />
-        <div className="flex w-3/4 text-yellow-500 text-xl lg:text-2xl mb-1">
-          Sürdürülebilir gelecek için stok fazlalarını değere dönüştürüyoruz
-        </div>
-        <div className="flex w-3/4 text-yellow-700 text-sm mb-8">
-          STK'ların bağışçılarına, firmaların kaliteli stoklarını, ihtiyaç sahibine elleriyle teslim eder gibi ulaştırmalarını sağlıyoruz.
-        </div>
-        <a href="collections" className="w-fit max-md:hidden py-4 px-8 rounded transition-all cursor-pointer border bg-orange-100 bg-opacity-10 shadow shadow-white text-white border-white">
-          Kampanyalar
-        </a>
-      </div>
-      <div className="flex flex-col justify-around md:w-1/2 lg:w-1/3 xs:whitespace-nowrap">
-        <div className="flex justify-center gap-5 lg:gap-10 xl:gap-16 max-xs:text-sm">
-          <div>
-            <div className="text-gray-200 font-semibold mb-2">Kaynaklar</div>
-            <div className="text-gray-400 font-light">
-              <div className="mb-2">
-                <a href="/">Anasayfa</a>
-              </div>
-              <div className="mb-2">
-                <a href="/collections">Kampanyalar</a>
-              </div>
-              <div className="mb-2">
-                <a href="/login">Giriş yap</a>
-              </div>
-              <div className="mb-2">
-                <a href="/register">Kayıt ol</a>
->>>>>>> dev
+                <div className="contact-wrapper text-gray-400 font-light">
+                  İletişim
+                  <div className="flex items-center text-gray-500 gap-4">
+                    <Mail fontSize='16px'/>
+                    <div>admin@ledgerise.org</div>
+                  </div>
+                  <div className="flex items-center text-gray-500 gap-4">
+                    <Pin fontSize='16px'/>
+                    <div>Sarıyer, İstanbul/Türkiye</div>
+                  </div>
+                </div>
+                {/* <a href="collections" className="p-4 px-8 w-fit ml-auto rounded transition-all cursor-pointer border bg-orange-100 bg-opacity-10 shadow shadow-white text-white border-white">Kampanyalar</a> */}
               </div>
             </div>
             <div className="w-100 flex flex-col h-full">
