@@ -499,13 +499,13 @@ export default function Home() {
                   <div 
                   className={`${((section.id === 'collaborate') || (section.id === 'safeView')) ? 'flex gap-3 w-1/4 mt-4' : 'ml-4'}`}>
                     {section.id === 'lens' ? (
-                      <video loop autoPlay className="w-64">
+                      <video loop autoPlay className="w-64" style={{ boxShadow: "20px 20px 0 orange" }}>
                         <source src={section.videoSrc} type="video/mp4" />
                         Tarayıcınız video etiketini desteklemiyor.
                       </video>
                     ) : (
                       section.images && section.images.map((image, index) => (
-                        <img key={index} src={image} alt={image} className={`${index === 1 ? 'self-end' : 'self-start'}`} />
+                        <img key={index} src={image} alt={image} style={{ boxShadow: `${(section.id == "dashboard" || section.id == "entegration")  ? "20px 20px 0 orange" : ""}` }} className={`${index === 1 ? 'self-end' : 'self-start'}`} />
                       ))
                     )}
                   </div>
