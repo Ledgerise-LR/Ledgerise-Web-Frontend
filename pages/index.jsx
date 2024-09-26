@@ -12,8 +12,11 @@ import dynamic from 'next/dynamic';
 import {Trending} from '@web3uikit/icons'
 import { FaArrowRight, FaCheckCircle } from 'react-icons/fa';
 import CargoCar from '@/components/CargoCar';
+import { useRouter } from 'next/router';
+import { images } from '@/next.config';
 
 export default function Home() {
+  const router = useRouter();
 
   const Map = useMemo(() => dynamic(
     () => import('@/components/DisplayMap'),
@@ -155,6 +158,29 @@ export default function Home() {
     }
   }, [asset, asset.tokenUri])
 
+
+  const [windowSize, setWindowSize] = useState({
+    width: "",
+    height: ""
+  })
+
+  useEffect(() => {
+
+    const handleResize = () => {
+      setWindowSize({
+        width: window.innerWidth,
+        height: window.innerHeight
+      });
+    };
+
+    window.addEventListener("resize", handleResize);
+
+    handleResize();
+
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+
   const pressLinks = [
     {
       title: "Ledgerise, yardım kampanyalarında yerel yönetimler ile işbirliği içerisinde",
@@ -210,6 +236,17 @@ export default function Home() {
 
   const [selectedSection, setSelectedSection] = useState('dashboard'); 
 
+  useEffect(() => {
+    console.log(router.query);
+    if (router.query.section) {
+      setSelectedSection(router.query.section);
+      const element = document.getElementById("solutions");
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth' });
+      }
+    }
+  }, [router.query.section]);
+
   const sections = [
     { 
       id: 'dashboard', 
@@ -221,7 +258,8 @@ export default function Home() {
         'Firmalar kolaylıkla stok yönetimi, kargo takibi, QR kod oluşturma ve kampanya başlatma işlemlerini all-in-one bir panel üzerinden yapabilir.',
         'Bu sayede kobilere ve yerel esnaflara bütünleyici, sade ve kullanımı kolay bir altyapı sistemi sunulur.'
       ],
-      animationText: 'Tek tıkla listele'
+      animationText: 'Tek tıkla listele',
+      images: ["solutions/dashboard.png"]
     },
     { 
       id: 'entegration', 
@@ -233,7 +271,8 @@ export default function Home() {
         '24/7 destek veren yazılım ekibimiz ile entegrasyon 1 saatten bile kısa bir sürede mümkün.',
         'Başarılı penetration testlerimiz, 99.5124% uptime yüzdemiz ve 5 katmanlı sunucu güvenliğimiz ile gönül rahatlığıyla kullanın.'
       ],
-      animationText: '1 saatte biten entegrasyon'
+      animationText: '1 saatte biten entegrasyon',
+      images: ["solutions/entegrasyon.png"]
     },
     { 
       id: 'collaborate', 
@@ -243,7 +282,8 @@ export default function Home() {
       list: [
         'LR Collaborate ile bir ürünü tek başınıza bağışlamak yerine diğer bağışçılarla ortaklaşa bağışlayabilirsiniz. Ne kadar bağış yaparsanız yapın, LR size bağışınızla somut bir etki yarattığınızı gösterir'
       ],
-      animationText: 'Ortak amaç, ortak bağış'
+      animationText: 'Ortak amaç, ortak bağış',
+      images: ["solutions/collaborate1.png", "solutions/collaborate2.png", "solutions/collaborate3.png"]
     },
     { 
       id: 'deliverTrust', 
@@ -267,7 +307,8 @@ export default function Home() {
         'Eş zamanlı bir şekilde ürünün lokasyonu, zamanı ve görüntüsü NFT’leştirilir. ',
         'Bu sayede bağışçılar bağışların gerçek ihtiyaç sahibine ulaştığından kesin olarak emin olur.'
       ],
-      animationText: '%100 güvenilir ve şeffaf'
+      animationText: '%100 güvenilir ve şeffaf',
+      videoSrc: ["solutions/lensAI.mp4"]
     },
     { 
       id: 'safeView', 
@@ -277,7 +318,8 @@ export default function Home() {
       list: [
         'Adaptif yapay zeka algoritmamız ile LR Safeview ihtiyaç sahibine ait kişisel görüntüleri tespit ederek buzlar. Risk arz etmeyen görüntüleri tespit ederek bağışçıya kendi elleriyle teslim etme deneyimi sunar.'
       ],
-      animationText: 'Merak etmeyin, gizli ve korumalı'
+      animationText: 'Merak etmeyin, gizli ve korumalı',
+      images: ["solutions/safeView1.png", "solutions/safeView2.png", "solutions/safeView3.png"]
     },
     { 
       id: 'lensBot', 
@@ -287,33 +329,34 @@ export default function Home() {
       list: [
         '50’nin altında ürün listeleyen işletmelerde kargo entegrasyonuna gerek kalmadan TelegramBot üzerinden bağışçı bildirimi mümkün.'
       ],
-      animationText: 'Kargo anlaşmanız yoksa'
+      animationText: 'Kargo anlaşmanız yoksa',
+      images: ["solutions/lensbot.png"]
     }
   ];
 
   return (
-    <div className="w-full h-full pb-28 px-0 pt-40 min-[800]:px-20 min-[800]:pt-24 overflow-hidden overflow-x-hidden">
+    <div className="w-full h-full pb-28 px-0 pt-28 min-[800]:px-20 min-[800]:pt-24 overflow-hidden overflow-x-hidden">
       <div className="w-full h-full flex justify-center min-[1200]:justify-between items-center">
-        <div className="flex flex-1 w-3/5 h-4/5 justify-center min-[1200]:justify-between px-10 flex-wrap">
+        <div className="flex flex-1 w-3/5 h-4/5 justify-evenly min-[1200]:justify-between px-10 flex-wrap">
           <div className='flex-col w-128 mb-12 z-10'>
             <div className='w-full'>
               <div 
-              className="h-fit -mt-2 font-bold font-sans flex flex-col text-4xl min-[800]:text-6xl"
+              className={`h-fit -mt-2 font-semibold font-sans flex flex-col ${windowSize.width < 800 ? "text-4xl px-8" : "text-6xl"} min-[800]:text-6xl`}
               >
-                <div className='mb-2 text-slate-900'>Stok Fazlalarını</div>
+                <div className='mb-2 text-slate-900'>Stok fazlalarını</div>  
                 <div style={{
                 background: "-webkit-linear-gradient(30deg, #B881FF, #FF9900)",
                 WebkitBackgroundClip: "text",
                 WebkitTextFillColor: "transparent"
-              }} className='pb-2 w-fit'>Değere</div>
-                <div className='text-slate-900'>Dönüştürüyoruz</div>
+              }} className='pb-2 w-fit'>değere</div>
+                <div className='text-slate-900'>dönüştürüyoruz</div>
               </div>
               <div className="text-black mt-8 font-sans text-md w-96 min-[800]:w-full min-[800]:text-lg">
                 <div className='flex items-center'><div className='p-1 bg-[rgb(50,0,20)] text-white rounded-full mr-2'><Trending fontSize='16px'/></div> Stokların %5'i, %50'ye varan indirimli fiyatı üzerinden listelenir.</div>
                 <div className='flex items-center'><div className='p-1 bg-[rgb(50,0,20)] text-white rounded-full mr-2'><Trending fontSize='16px'/></div>Ürünler pay bazlı olarak ortaklaşa bağışlanır.</div>
                 <div className='flex items-center'><div className='p-1 bg-[rgb(50,0,20)] text-white rounded-full mr-2'><Trending fontSize='16px'/></div>Bağışçıların ürünlerin doğru ihtiyaç sahiplerine ulaştığından emin olması sağlanır.</div>
               </div>
-              <div className='w-full h-12 mt-8 flex'>
+              <div className='w-full h-12 mt-4 flex'>
                 <div className='w-1/2 flex items-center justify-center'>
                   <div className='font-semibold mr-4 text-3xl flex text-black'>5<div className='-mt-0.5'>+</div></div>
                   <div className='text-xs font-bold'>PARTNER</div>
@@ -326,12 +369,12 @@ export default function Home() {
               </div>
             </div>
             <div className='flex items-center'>
-              <div className='w-fit mr-6 mt-10 z-10'>
+              <div className='w-fit mr-6 mt-4 z-10'>
                 <a href="/collections">
                   <div className="p-4 bg-[rgb(255,168,82)] border-2 border-[rgb(255,168,82)] text-center text-black font-bold rounded tracking-wide max-[800]:text-sm">Kampanyaları Keşfet</div>
                 </a>
               </div>
-              <div className='w-fit mt-10 z-10'>
+              <div className='w-fit mt-4 z-10'>
                 <a href="/login">
                   <div className="p-4 bg-white border-2 text-center border-black text-black font-bold rounded tracking-wide max-[800]:text-sm">Bağış Raporunu Görüntüle</div>
                 </a>
@@ -411,11 +454,11 @@ export default function Home() {
         </div>
       </div>
 
-      <div id="solutions" className='w-1/2 text-lg text-center mx-auto bg-[#2c202b] text-white rounded-md font-extralight p-2 mb-4'>
+      <div id="solutions" className={`w-1/2 text-lg text-center mx-auto bg-[#2c202b] text-white rounded-md font-extralight p-2 mb-4 ${windowSize.width < 800 ? "hidden" : ""}`}>
         Stok yönetiminden bağış kampanyalarına. Ledgerise firmalara, STK’lara ve bağışçılara <span className='text-[#FFA851]'>Kazan Kazan</span> durumu yaratıyor. <span className='bg-[#FFA851] text-[#2c202b] font-normal'>Fark yaratan teknolojilerimiz:</span>
       </div>
 
-      <div className="flex xl:w-4/5 mx-auto bg-[#2c202b] rounded-md p-6">
+      <div className={`flex xl:w-4/5 mx-auto bg-[#2c202b] rounded-md p-6 ${windowSize.width < 800 ? "hidden" : ""}`}>
         <div className="w-1/4 text-[#b3b3b3] text-xl">
           <ul>
             {sections.map((section, index) => (
@@ -435,9 +478,8 @@ export default function Home() {
         <div className="w-px mx-4 bg-gradient-to-b from-[#383838] via-[#A4A4A4] to-[#383838]"></div>
 
         <div className="w-3/4 p-8 text-white">
-          {sections.map((section, index) => 
-
-            selectedSection === section.id ? (
+          {sections.map((section, index) =>
+            selectedSection === section.id ? 
               <div key={section.id}>
                 <div className=''>
                   <CargoCar index={index} animationText={section.animationText} previousWidth={`${16 + (index) * (84 / sections.length)}%`} nextWidth={`${16 + (index+1) * (84 / sections.length)}%`}/>
@@ -445,17 +487,31 @@ export default function Home() {
 
                 <h2 className="mt-4 text-2xl font-semibold">{section.title}</h2>
                 <p className="mt-1 font-extralight italic">{section.content}</p>
-
-                <ul className="mt-4 space-y-3 font-extralight w-3/5">
-                  {Object.values(section.list).map((item, index) => (
-                    <li key={index} className=''>
-                      <FaCheckCircle className='my-auto mr-3 text-[#FFA851] inline'></FaCheckCircle>
-                      <span>{item}</span>
-                    </li>
-                  ))}
-                </ul>
+                <div className={`${((section.id === 'collaborate') || (section.id === 'safeView')) ? '' : 'flex gap-3 items-end'}`}>
+                  <ul className="mt-4 space-y-3 font-extralight w-3/5 self-start">
+                    {Object.values(section.list).map((item, index) => (
+                      <li key={index} className=''>
+                        <FaCheckCircle className='my-auto mr-3 text-[#FFA851] inline'></FaCheckCircle>
+                        <span>{item}</span>
+                      </li>
+                    ))}
+                  </ul>
+                  <div 
+                  className={`${((section.id === 'collaborate') || (section.id === 'safeView')) ? 'flex gap-3 w-1/4 mt-4' : 'ml-4'}`}>
+                    {section.id === 'lens' ? (
+                      <video loop autoPlay className="w-64">
+                        <source src={section.videoSrc} type="video/mp4" />
+                        Tarayıcınız video etiketini desteklemiyor.
+                      </video>
+                    ) : (
+                      section.images && section.images.map((image, index) => (
+                        <img key={index} src={image} alt={image} className={`${index === 1 ? 'self-end' : 'self-start'}`} />
+                      ))
+                    )}
+                  </div>
+                </div>
               </div>
-            ) : null
+             : null
           )}
         </div>
       </div>
