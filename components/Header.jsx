@@ -1,211 +1,219 @@
-
 import { ConnectButton, Button } from "web3uikit";
 import Link from "next/link";
-import { AES, enc } from "crypto-js";
-import { useDeferredValue, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import { useRouter } from "next/router";
 import { URL, PORT } from '@/serverConfig';
+import { FaBars, FaTimes, FaAngleDown } from "react-icons/fa";
+import {Sandbox, Shield, EyeClosed} from '@web3uikit/icons'
 
-export default function Header(isApiHeader) {
-
+export default function Header() {
   const router = useRouter();
-
   const [username, setUsername] = useState("");
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
-  const [windowSize, setWindowSize] = useState({
-    width: "",
-    height: ""
-  });
+  const handleLogout = () => {
+    localStorage.removeItem("_id");
+    window.location.reload();
+  };
 
   const setLastVisitedUrl = () => {
     localStorage.setItem("lastVisitedUrl", window.location.href);
-  }
+  };
 
   useEffect(() => {
-
-    const handleResize = () => {
-      const hamburgerMenu = document.getElementById("hamburger-menu");
-      hamburgerMenu.style.left = `-${window.innerWidth}px`;
-      hamburgerMenu.style.display = "block";
-      setWindowSize({
-        width: window.innerWidth,
-        height: window.innerHeight
-      });
-    };
-
-    window.addEventListener("resize", handleResize);
-
-    handleResize();
-
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
-
-  useEffect(() => {
-    axios.post(`${URL}:${PORT}/auth/authenticate`, {
-      _id: localStorage.getItem("_id") || "null"
-    })
-      .then(data => {
-        if (!data.data.success && data.data.err == "authentication_failed") {
+    // Authentication check
+    const authenticateUser = async () => {
+      try {
+        const { data } = await axios.post(`${URL}:${PORT}/auth/authenticate`, {
+          _id: localStorage.getItem("_id") || "null",
+        });
+        if (data.success && data.donor) {
+          setUsername(data.donor.email.split("@")[0]);
+          setIsAuthenticated(true);
+        } else {
           setIsAuthenticated(false);
           setUsername("");
-        } else if (data.data.success && !data.data.err && data.data.donor) {
-          setIsAuthenticated(true);
-          setUsername(data.data.donor.email.split("@")[0])
         }
-      })
-
+      } catch (error) {
+        console.error("Authentication error:", error);
+      }
+    };
+    authenticateUser();
   }, []);
 
-  const handleLogoutClick = () => {
-    localStorage.setItem("_id", "");
-    window.location.reload();
-  }
+  const handleMobileMenuToggle = () => {
+    setIsMobileMenuOpen(!isMobileMenuOpen);
+  };
+
+  const closeMobileMenu = () => {
+    setIsMobileMenuOpen(false);
+  };
 
   return (
-    <nav className={`overflow-x-hidden z-20 w-full mb-4 bg-white`}>
-      <div id="hamburger-menu" className="hamburger-menu w-screen h-screen absolute bg-white z-20 p-8 transition-all hidden overflow-x-hidden">
-        <div className="flex justify-between items-center overflow-x-hidden">
-          <a href="/">
-            <img className="h-12" src="logo.svg" alt="Ledgerise | Bağış hiç olmadığı kadar şeffaf" />
-          </a>
-          <div className="text-3xl text-slate-700" onClick={() => {
-            const hamburgerMenu = document.getElementById("hamburger-menu");
-            hamburgerMenu.style.left = `-${windowSize.width}px`;
-          }}>✕</div>
+    <nav className="border-b z-50 max-md:fixed top-0 left-0 w-full px-10 bg-white">
+      <div className={`flex items-center p-4 ${isMobileMenuOpen ? "border-b-2" : ""}`}>
+        <Link href="/">
+          <img src="/logo.svg" alt="Ledgerise Logo" className="h-12 md:h-8 lg:h-12" />
+        </Link>
+
+        {/* Desktop Navigation */}
+        <div className="hidden md:flex ml-12 mr-auto justify-center gap-3 lg:gap-6 items-center">
+          <NavigationLinks isDesktop={true}/>
         </div>
-        <div className="flex flex-col pt-16 px-4 h-1/2 justify-between overflow-x-hidden">
-          <a href="/" className="flex justify-between items-center">
-            <div className="text-2xl text-slate-700">Anasayfa</div>
-            <img className="w-4" src="right-arrow.png" alt="right-arrow" />
-          </a>
-          <a href="/collections" className="flex justify-between items-center">
-            <div className="text-2xl text-slate-700">Kampanyalar</div>
-            <img className="w-4" src="right-arrow.png" alt="right-arrow" />
-          </a>
-          <a href="/team" className="flex justify-between items-center">
-            <div className="text-2xl text-slate-700">Hakkımızda</div>
-            <img className="w-4" src="right-arrow.png" alt="right-arrow" />
-          </a>
-          <a href="/login" onClick={() => { setLastVisitedUrl() }} className="flex justify-between items-center">
-            <div className="text-2xl text-slate-700">Giriş yap</div>
-            <img className="w-4" src="right-arrow.png" alt="right-arrow" />
-          </a>
-          <a href="/register" onClick={() => { setLastVisitedUrl() }} className="flex justify-between items-center">
-            <div className="text-2xl text-slate-700">Kayıt ol</div>
-            <img className="w-4" src="right-arrow.png" alt="right-arrow" />
-          </a>
+        <div className="hidden md:flex items-center">
+          {isAuthenticated ? 
+          (<UserSection username={username} handleLogout={handleLogout} />) 
+          : 
+          (<AuthButtons setLastVisitedUrl={setLastVisitedUrl} />)}
         </div>
-        <div className='w-6/7 mt-16 ml-auto mr-auto overflow-x-hidden'>
-              <a href="/collections">
-                <Button
-                  style={{
-                    backgroundColor: "black",
-                    color: "white"
-                  }}
-                  customize={{
-                    onHover: "lighten",
-                    color: "white"
-                  }}
-                  isFullWidth="true"
-                  text='Nereye bağış yapabilirim?'
-                  theme='custom'
-                  size='xl'
-                />
-              </a>
-            </div>
-            {
-              isAuthenticated
-                ? (
-                  <div className="flex absolute bottom-12 w-10/12 justify-between">
-                    <div>{username}</div>
-                    <div className="w-6 ml-2 cursor-pointer hover:animate-pulse" onClick={() => { handleLogoutClick() }}>
-                      <img src="/logout.png" alt="Logout" />
-                    </div>
-                  </div>
-                )
-                : ("")
-            }
+
+        {/* Mobile Menu Button */}
+        <button className="md:hidden" onClick={handleMobileMenuToggle}>
+          {isMobileMenuOpen ? <FaTimes className="text-3xl" /> : <FaBars className="text-3xl" />}
+        </button>
       </div>
-      {
-        windowSize.width > 800
-          ? (
-            <div className={`px-24 border-b py-10 items-center z-20 flex w-screen bg-white ${router.pathname == "/api-documentation" ? "h-16 overflow-y-hidden" : "h-16 overflow-y-hidden"}`}>
-      <div className={`h-10 w-fit overflow-hidden`}>
-        <a href="/">
-          <img className="h-full" src="logo.svg" alt="Ledgerise | Bağış hiç olmadığı kadar şeffaf" />
-        </a>
-      </div>
-      <div className="z-20 w-fit ml-12 flex flex-row items-center text-sm font-medium text-black">
-        <Link href="/collections" className="mx-4 hover:border-b-2 w-fit hover:mt-0.5 border-orange-200" >
-          Kampanyalar
-        </Link>
-        <Link href="/how-to-donate-collections" className="mx-4 hover:border-b-2 hover:mt-0.5 border-orange-200" >
-          Nasıl bağış yapılır?
-        </Link>
-        <Link href="/api-documentation" className="mx-4 hover:border-b-2 hover:mt-0.5 border-orange-200" >
-          Entegrasyon
-        </Link>
-        <Link href="/team" className="mx-4 hover:border-b-2 hover:mt-0.5 border-orange-200" >
-          Hakkımızda
-        </Link>
-      </div>
-      <div className="z-20 w-fit flex flex-row items-center font-medium text-black ml-auto">
-        {
-          router.pathname == "/admin"
-            ? <ConnectButton moralisAuth={false} />
-            : router.pathname != "/company" 
-              ? (<div className="h-fit">
-                {
-                  isAuthenticated
-                    ? (<div className="flex items-center">
-                      <div>{username}</div>
-                      <div className="w-6 ml-2 text-sm cursor-pointer hover:animate-pulse" onClick={() => { handleLogoutClick() }}>
-                        <img src="/logout.png" alt="Logout" />
-                      </div>
-                      <div>
-                        <img src="/user.png" alt="" />
-                      </div>
-                    </div>)
-                    : (
-                      <div className="flex">
-                        <div className="flex items-center">
-                          <a href="/login" onClick={() => { setLastVisitedUrl() }} className="p-3.5 font-bold mr-2 text-gray-800 cursor-pointer rounded hover:bg-[rgb(255,168,82)] transition-all text-sm">Giriş Yap</a>
-                        </div>
-                        <div className="flex items-center">
-                          <a href="/login" onClick={() => { setLastVisitedUrl() }} className="bg-[rgb(255,168,82)] p-4 mr-2 rounded text-black cursor-pointer text-xs font-bold transition-all">Hesap Oluştur</a>
-                        </div>
-                      </div>
-                      
-                    )
-                }
-            </div>)
-            : ("")
-        }
-      </div>
-            </div>
-          )
-          : (
-            <div className="flex z-30 justify-between px-8 bg-white w-full border-b-2 items-center h-16 fixed">
-              <div>
-                <h1 className="w-24 h-16">
-                  <a href="/">
-                    <img className="h-16" src="logo.svg" alt="Ledgerise | Bağış hiç olmadığı kadar şeffaf" />
-                  </a>
-                </h1>
-              </div>
-              <div onClick={() => {
-                const hamburgerMenu = document.getElementById("hamburger-menu");
-                hamburgerMenu.style.left = "0";
-              }}>
-                <div className="w-8 border border-black"></div>
-                <div className="w-8 border border-black my-1"></div>
-                <div className="w-8 border border-black"></div>
-              </div>
-            </div>
-          )
-      }
+
+      {/* Mobile Navigation */}
+      {isMobileMenuOpen && (
+        <div className="md:hidden py-6 px-8 z-40 bg-white shadow-md">
+          <div className="flex flex-col gap-6">
+            <NavigationLinks isDesktop={false} closeMenu={closeMobileMenu}/>
+            {isAuthenticated ? (
+              <UserSection username={username} handleLogout={handleLogout} />
+            ) : (
+              ""
+            )}
+          </div>
+        </div>
+      )}
     </nav>
-  )
+  );
 }
+
+const navigationItems = [
+  { desktop: true, mobile: true, href: "/collections", label: "Kampanyalar" },
+  { desktop: true, mobile: false, href: "/#", label: "Ürünler" },
+  { desktop: true, mobile: false, href: "/api-documentation", label: "Entegrasyon" },
+  { desktop: true, mobile: true, href: "/team", label: "Hakkımızda" },
+  { desktop: false, mobile: true, href: "/login", label: "Giriş Yap" },
+  { desktop: false, mobile: true, href: "/register", label: "Hesap Oluştur" }
+];
+
+const dropdownMenu = [
+  { 
+    title: "Stok Yönetim", 
+    content: ["LR Dashboard", "LR Entegrasyon", "LR Collaborate"], 
+    description: ["Tek tıkla e-bağış pazaryeri.", "1 saatten kısa sürede entegrasyon.", "Ortak amaç, ortak bağış."], 
+    href: ["dashboard", "entegration", "collaborate"] 
+  },
+  { 
+    title: "Güvenilir Bağış", 
+    content: ["LR ESCROW", "LR Lens", "LR LensBot"], 
+    description: ["Paranız, ürün sahibine ulaşana kadar güvendedir.", "Gücünü NFT'den alan AI kamera.", "Kargo anlaşması şart değil."],
+    href: ["deliverTrust", "lens", "lensBot"]
+  },
+  { 
+    title: "Gizlilik", 
+    content: ["SafeView"], 
+    description: ["İhtiyaç sahibi verileri gizlidir."],
+    href: ["safeView"]
+  }
+]
+
+const NavigationLinks = ({ isDesktop, closeMenu }) => {
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+
+  return (
+    <div className="flex gap-6 font-medium text-black">
+      {navigationItems.map((item) => {
+        if (isDesktop ? item.desktop : item.mobile) {
+          return (
+            <div 
+              key={item.href} 
+              className="relative"
+              onMouseLeave={() => item.label === "Ürünler" && setIsDropdownOpen(false)} // Close on mouse leave
+            >
+              <Link
+                href={item.href}
+                className="flex items-center text-sm hover:text-orange-500 transition"
+                onMouseEnter={() => item.label === "Ürünler" && setIsDropdownOpen(true)}
+              >
+                {item.label} 
+                {item.label === "Ürünler" ? <FaAngleDown /> : ""}
+              </Link>
+
+              {item.label === "Ürünler" && isDropdownOpen && (
+                <div className="flex w-128 absolute left-0 bg-white border rounded-md shadow-lg z-50">
+                  {dropdownMenu.map((menu, index) => (
+                    <div key={menu.title} className="p-4 border-r">
+                      <div className="font-medium text-lg mb-2 flex items-center">
+                        <div className="text-purple-500 p-2 bg-purple-500 bg-opacity-10 border-purple-500 border rounded mr-2">
+                          {
+                            index == 0
+                              ? <Sandbox fontSize='16px'/>
+                              : index == 1
+                                ? <Shield fontSize='16px'/>
+                                : index == 2
+                                  ? <EyeClosed fontSize='16px'/>
+                                  : ("")
+                          }
+                        </div>
+                        <div>
+                          {menu.title}
+                        </div>
+                      </div>
+                      <div className="flex flex-col gap-2">
+                        {menu.content.map((content, index) => (
+                          <div>
+                            <Link key={index} href={`/?section=${menu.href[index]}`} onClick={closeMenu} className="text-md hover:text-orange-500 transition">
+                              {content}
+                            </Link>
+                            <p className="text-sm text-gray-500">{menu.description[index]}</p>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+          );
+        }
+        return null;
+      })}
+    </div>
+  );
+};
+
+
+
+
+const UserSection = ({ username, handleLogout }) => (
+  <div 
+    className="flex items-center gap-4 p-2 rounded-lg max-md:bg-gray-200 max-md:border max-md:border-gray-300 bg-transparent"
+  >
+    <span className="font-medium text-gray-600 max-md:text-gray-800">
+      {username}
+    </span>
+    <button 
+      onClick={handleLogout} 
+      className="text-red-500 hover:underline max-md:text-red-600"
+    >
+      Çıkış Yap
+    </button>
+  </div>
+);
+
+
+const AuthButtons = ({ setLastVisitedUrl }) => (
+  <div className="flex items-center space-x-4">
+    <Link href="/login" onClick={setLastVisitedUrl} className="max-lg:text-sm py-2 px-4 text-gray-700 border rounded hover:bg-gray-100">
+      Giriş Yap
+    </Link>
+    <Link href="/login?register" onClick={setLastVisitedUrl} className="max-lg:text-sm py-2 px-4 bg-[rgb(255,168,82)] text-black rounded hover:bg-[rgb(255,145,65)]">
+      Hesap Oluştur
+    </Link>
+  </div>
+);

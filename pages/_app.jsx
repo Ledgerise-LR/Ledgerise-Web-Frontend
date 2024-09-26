@@ -13,7 +13,7 @@ export default function App({ Component, pageProps }) {
   const router = useRouter();
 
   return (
-    <div>
+    <div className={`${(router.pathname === "/login" || router.pathname === "/register") ? "" : "max-md:pt-20"}`}>
       <Head>
         <title>Ledgerise</title>
         <meta name="description" content="Bağış hiç olmadığı kadar şeffaf" />
