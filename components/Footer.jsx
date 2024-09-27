@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import blockExplorerMapping from "../constants/blockExplorerMapping";
 import networkMapping from "../constants/networkMapping";
+import { FaEnvelope, FaMapPin, FaInstagram, FaLinkedin } from "react-icons/fa";
 
 export default function Footer() {
   const [blockExplorer, setBlockExplorer] = useState("");
@@ -27,9 +28,25 @@ export default function Footer() {
         <div className="flex w-3/4 text-yellow-700 text-sm mb-8">
           STK'ların bağışçılarına, firmaların kaliteli stoklarını, ihtiyaç sahibine elleriyle teslim eder gibi ulaştırmalarını sağlıyoruz.
         </div>
-        <a href="collections" className="w-fit max-md:hidden py-4 px-8 rounded transition-all cursor-pointer border bg-orange-100 bg-opacity-10 shadow shadow-white text-white border-white">
-          Kampanyalar
-        </a>
+        <div className="contact-wrapper text-sm text-gray-200 font-light">
+          İletişim
+          <div className="flex items-center text-gray-500 gap-4">
+            <FaEnvelope fontSize='16px' />
+            <a href="mailto:info@ledgerise.org" target="_blank">info@ledgerise.org</a>
+          </div>
+          <div className="flex items-center text-gray-500 gap-4">
+            <FaMapPin fontSize='16px' />
+            <div>Sancaktepe, İstanbul/Türkiye</div>
+          </div>
+          <div className="flex items-center text-gray-500 gap-4">
+            <FaInstagram fontSize='16px' />
+            <a href="https://www.instagram.com/ledgerise" target="_blank">ledgerise</a>
+          </div>
+          <div className="flex items-center text-gray-500 gap-4">
+            <FaLinkedin fontSize='16px' />
+            <a href="https://www.linkedin.com/company/ledgerise-lr" target="_blank">Ledgerise (LR)</a>
+          </div>
+        </div>
       </div>
       <div className="flex flex-col justify-around md:w-1/2 lg:w-1/3 xs:whitespace-nowrap">
         <div className="flex justify-center gap-5 lg:gap-10 xl:gap-16 max-xs:text-sm">
@@ -74,7 +91,7 @@ export default function Footer() {
         </div>
         <div className="flex flex-col items-center">
           <div className="flex flex-col xl:flex-row items-center">
-            <img className="h-1/2 lg:h-3/4" src="itucekirdek.png" alt="itu-cekirdek-logo"/>
+            <img className="h-1/2 lg:h-3/4" src="itucekirdek.png" alt="itu-cekirdek-logo" />
             <div className="text-gray-300 text-sm ml-2">
               Ön Kuluçka Girişimidir
             </div>
