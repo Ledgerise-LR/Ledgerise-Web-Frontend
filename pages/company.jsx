@@ -11,7 +11,7 @@ import QrCode from "react-qr-code";
 import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
 import { useRouter } from 'next/router';
-import NFTSlateBox from '@/components/NFTSlateBox';
+import NFTSlateBox from '@/components/NftSlateBox';
 import NFTCardPreview from '@/components/NftCardPreview';
 
 
