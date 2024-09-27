@@ -2,7 +2,7 @@
 import { useEffect, useState } from "react";
 import blockExplorerMapping from "../constants/blockExplorerMapping";
 import networkMapping from "../constants/networkMapping";
-import {Mail, Pin} from '@web3uikit/icons'
+import {Mail, Pin, Linkedin, Instagram} from '@web3uikit/icons'
 
 export default function Footer() {
 
@@ -36,15 +36,23 @@ export default function Footer() {
                 <div className="text-gray-300 text-sm mb-8 flex w-96">
                   STK'ların bağışçılarına, firmaların kaliteli stoklarını, ihtiyaç sahibine elleriyle teslim eder gibi ulaştırmalarını sağlıyoruz.
                 </div>
-                <div className="contact-wrapper text-gray-400 font-light">
+                <div className="contact-wrapper text-sm text-gray-200 font-light">
                   İletişim
                   <div className="flex items-center text-gray-500 gap-4">
                     <Mail fontSize='16px'/>
-                    <div>admin@ledgerise.org</div>
+                    <a href="mailto:info@ledgerise.org" target="_blank">info@ledgerise.org</a>
                   </div>
                   <div className="flex items-center text-gray-500 gap-4">
                     <Pin fontSize='16px'/>
-                    <div>Sarıyer, İstanbul/Türkiye</div>
+                    <div>Sancaktepe, İstanbul/Türkiye</div>
+                  </div>
+                  <div className="flex items-center text-gray-500 gap-4">
+                    <Instagram fontSize='16px'/>
+                    <a href="https://www.instagram.com/ledgerise" target="_blank">ledgerise</a>
+                  </div>
+                  <div className="flex items-center text-gray-500 gap-4">
+                    <Linkedin fontSize='16px'/>
+                    <a href="https://www.linkedin.com/company/ledgerise-lr" target="_blank">Ledgerise (LR)</a>
                   </div>
                 </div>
                 {/* <a href="collections" className="p-4 px-8 w-fit ml-auto rounded transition-all cursor-pointer border bg-orange-100 bg-opacity-10 shadow shadow-white text-white border-white">Kampanyalar</a> */}
