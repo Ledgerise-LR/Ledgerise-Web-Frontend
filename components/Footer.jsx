@@ -1,9 +1,11 @@
+
 import { useEffect, useState } from "react";
 import blockExplorerMapping from "../constants/blockExplorerMapping";
 import networkMapping from "../constants/networkMapping";
 import { FaEnvelope, FaMapPin, FaInstagram, FaLinkedin } from "react-icons/fa";
 
 export default function Footer() {
+
   const [blockExplorer, setBlockExplorer] = useState("");
   const [marketplaceAddress, setMarketplaceAdress] = useState("");
   const [mainCollectionAddress, setMainCollectionAddress] = useState("");
@@ -66,25 +68,55 @@ export default function Footer() {
                 <a href="/register">Kayıt ol</a>
               </div>
             </div>
-          </div>
-          <div>
-            <div className="text-gray-200 font-semibold mb-2">İlgili</div>
-            <div className="text-gray-400 font-light">
-              <div className="mb-2">Şartlar & Koşullar</div>
-              <div className="mb-2">Gizlilik Politikası</div>
-            </div>
-          </div>
-          <div>
-            <div className="text-gray-200 font-semibold mb-2">Şeffaflık</div>
-            <div className="text-gray-400 font-light">
-              <div className="mb-2">
-                <a href={`https://${blockExplorer}/address/${marketplaceAddress}`}>Bağış Platformu</a>
+            <div className="w-100 flex flex-col h-full">
+              <div className="w-full flex">
+                <div className="w-1/3 h-full ml-12">
+                  <div className="text-gray-200 font-light mb-2">Kaynaklar</div>
+                  <div className="text-gray-400 font-light">
+                    <div className="mb-2">
+                      <a href="/">Anasayfa</a>
+                    </div>
+                    <div className="mb-2">
+                      <a href="/collections">Kampanyalar</a>
+                    </div>
+                    <div className="mb-2">
+                      <a href="/login">Giriş yap</a>
+                    </div>
+                    <div className="mb-2">
+                      <a href="/register">Kayıt ol</a>
+                    </div>
+                  </div>
+                </div>
+                <div className="w-1/3 h-full ml-12">
+                  <div className="text-gray-200 font-light mb-2">İlgili</div>
+                  <div className="text-gray-400 font-light">
+                    <div className="mb-2">Şartlar & Koşullar</div>
+                    <div className="mb-2">Gizlilik Politikası</div>
+                  </div>
+                </div>
+                <div className="w-1/3 h-full ml-12">
+                  <div className="text-gray-200 font-light mb-2">Şeffaflık</div>
+                  <div className="text-gray-400 font-light">
+                    <div className="mb-2">
+                      <a href={`https://${blockExplorer}/address/${marketplaceAddress}`}>Bağış Platformu</a>
+                    </div>
+                    <div className="mb-2">
+                      <a href={`https://${blockExplorer}/address/${mainCollectionAddress}`}>Ana kampanya</a>
+                    </div>
+                    <div className="mb-2">
+                      <a href={`https://${blockExplorer}/address/${ledgeriseLensAddress}`}>Lens</a>
+                    </div>
+                  </div>
+                </div>
               </div>
-              <div className="mb-2">
-                <a href={`https://${blockExplorer}/address/${mainCollectionAddress}`}>Ana kampanya</a>
-              </div>
-              <div className="mb-2">
-                <a href={`https://${blockExplorer}/address/${ledgeriseLensAddress}`}>Lens</a>
+              <div className="flex flex-col justify-end items-end mt-28">
+                <div className="flex items-center">
+                  <div className="h-16 w-fit">
+                    <img className="w-full h-full" src="itucekirdek.png" alt="" />
+                  </div>
+                  <div className="text-gray-300 text-sm ml-2">Ön Kuluçka Girişimidir</div>
+                </div>
+                <div className="text-gray-600 font-light text-sm">© Ledgerise Teknoloji 2023. Tüm Hakları Saklıdır</div>
               </div>
             </div>
           </div>

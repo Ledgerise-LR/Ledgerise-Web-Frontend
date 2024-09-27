@@ -430,12 +430,12 @@ export default function Home() {
 
 
   return (
-    <div className='w-screen h-fit py-8 px-12 bg-slate-50 scroll-smooth'>
+    <div className='w-screen h-fit py-8 px-4 bg-gray-50 scroll-smooth'>
         {
           isLabelModalOpen
             ? (<Modal title={"Etiketlerinizi görüntüleyin, indirin ve yazdırın"} okText='İleri' cancelText='geri' isCancelDisabled={true} width='100%' onCancel={() => hideLabelModal()}  onOk={() => hideLabelModal()} onCloseButtonPressed={() => hideLabelModal()}>
 
-              <div className='w-full flex flex-wrap'>
+              <div className='w-full flex flex-wrap z-20'>
                 {
                    qrCodesArray
                     ? qrCodesArray.map(eachQrData => {
@@ -500,11 +500,11 @@ export default function Home() {
                           onClick={(e) => {
                             handleDownloadPDF(e.target.previousSibling.id, e.target.previousSibling.id.toString(), [eachQrData]);
                           }}
-                          style={{ transition: "all 0.25s ease" }} className='z-100 absolute left-1/2 top-1/2 py-2 px-4 text-slate-100 cursor-pointer bg-opacity-40 bg-slate-950 hover:bg-opacity-70'>Yazdırın</div>
+                          style={{ transition: "all 0.25s ease" }} className='z-200 absolute left-1/2 top-1/2 py-2 px-4 text-gray-100 cursor-pointer bg-opacity-40 bg-gray-950 hover:bg-opacity-70'>Yazdırın</div>
 
                           {
                             eachQrData && generalQrCodeData.openseaTokenIdToIsPrintedMapping[typeof eachQrData == "number" ? eachQrData : eachQrData[0]]
-                              ? <div className='w-12 h-12 bg-green-600 absolute right-0 top-4 rounded-full flex justify-center items-center text-slate-50 text-xl'>✓</div>
+                              ? <div className='w-12 h-12 bg-green-600 absolute right-0 top-4 rounded-full flex justify-center items-center text-gray-50 text-xl'>✓</div>
                               : ("")
                           }
                         </div>
@@ -517,11 +517,11 @@ export default function Home() {
             </Modal>)
             : isCreateActiveItemModalOpen
               ? (<Modal title={"Bir bağış ürünü oluşturun"} okText='İleri' cancelText='geri' isCancelDisabled={true} width='100%' onCancel={() => hideCreateAssetModal()}  onOk={() => hideCreateAssetModal()} onCloseButtonPressed={() => hideCreateAssetModal()}>
-                <div className='mb-12 w-full h-fit bg-white'>
+                <div className='mb-12 w-full h-fit bg-white z-20'>
                   <div className='w-full h-fit flex flex-col justify-center'>
                     <div className='text-gray-600 border-b w-full px-12'>ÖNİZLEME</div>
                     <div className='w-full flex h-fit my-4 justify-center relative items-center'>
-                      <div className='h-full w-1/5 bg-white z-10'>
+                      <div className='h-full w-1/5 bg-white z-20'>
                         <NFTCardPreview
                           price={""}
                           charityAddress={company.charityAddress}
@@ -532,7 +532,7 @@ export default function Home() {
                           tokenImage={""}
                         />
                       </div>
-                      <div className='h-full w-1/5 mx-8 bg-white z-10'>
+                      <div className='h-full w-1/5 mx-8 bg-white z-20'>
                         <NFTCardPreview
                           price={createAssetPrice}
                           charityAddress={company.charityAddress}
@@ -544,7 +544,7 @@ export default function Home() {
                         />
                       </div>
                       <div className='w-72 h-4/5 bg-yellow-200 bg-opacity-70 rounded-full blur-xl absolute z-0'></div>
-                      <div className='h-full w-1/5 bg-white z-10'>
+                      <div className='h-full w-1/5 bg-white z-20'>
                         <NFTCardPreview
                           price={""}
                           charityAddress={company.charityAddress}
@@ -582,7 +582,7 @@ export default function Home() {
                             const tempCreateAssetProperties = createAssetProperties.concat(`${e.target.previousSibling.previousSibling.value}:${e.target.previousSibling.value},`)
                             setCreateAssetProperties(tempCreateAssetProperties);
                           }
-                        }} className='w-1/6 mx-4 rounded-lg flex justify-center border p-2 bg-blue-600 text-slate-100'>ekle</div>
+                        }} className='w-1/6 mx-4 rounded-lg flex justify-center border p-2 bg-blue-600 text-gray-100'>ekle</div>
                       </div>
                       <div className='flex overflow-x-auto mb-2'>
                         {
@@ -595,7 +595,7 @@ export default function Home() {
                                     <div onClick={(e) => {
                                       const tempCreateAssetProperties = createAssetProperties.replace(`${e.target.previousSibling.innerHTML},`, "");
                                       setCreateAssetProperties(tempCreateAssetProperties)
-                                    }} className='cursor-pointer ml-2 w-6 h-6 rounded-full text-slate-50 bg-red-500 bg-opacity-50 flex items-center justify-center'>x</div>
+                                    }} className='cursor-pointer ml-2 w-6 h-6 rounded-full text-gray-50 bg-red-500 bg-opacity-50 flex items-center justify-center'>x</div>
                                   </div>
                                 )
                               }                            
@@ -608,9 +608,9 @@ export default function Home() {
                   <textarea className='w-full p-2 border' type="text" placeholder='Ürünün açıklamasını yazınız' onChange={(e) => {setCreateAssetDescription(e.target.value)}} />
                   <div>
                     <div className='w-full flex'>
-                      <div className={`p-4 cursor-pointer bg-slate-500 ${currentSelectingEvent == "stamp" ? "text-green-500" : "text-slate-50"}`} onClick={() => setCurrectSelectingEvent("stamp")}>Üretim Yeri</div>
-                      <div className={`p-4 cursor-pointer bg-slate-500 ${currentSelectingEvent == "shipped" ? "text-green-500" : "text-slate-50"}`} onClick={() => setCurrectSelectingEvent("shipped")}>Dağıtım Merkezi (ara depo)</div>
-                      <div className={`p-4 cursor-pointer bg-slate-500 ${currentSelectingEvent == "delivered" ? "text-green-500" : "text-slate-50"}`} onClick={() => setCurrectSelectingEvent("delivered")}>Teslimat yeri</div>
+                      <div className={`p-4 cursor-pointer bg-gray-500 ${currentSelectingEvent == "stamp" ? "text-green-500" : "text-gray-50"}`} onClick={() => setCurrectSelectingEvent("stamp")}>Üretim Yeri</div>
+                      <div className={`p-4 cursor-pointer bg-gray-500 ${currentSelectingEvent == "shipped" ? "text-green-500" : "text-gray-50"}`} onClick={() => setCurrectSelectingEvent("shipped")}>Dağıtım Merkezi (ara depo)</div>
+                      <div className={`p-4 cursor-pointer bg-gray-500 ${currentSelectingEvent == "delivered" ? "text-green-500" : "text-gray-50"}`} onClick={() => setCurrectSelectingEvent("delivered")}>Teslimat yeri</div>
                     </div>
                     <div className='h-96 w-full'>
                       <Map
@@ -627,7 +627,7 @@ export default function Home() {
                       />
                     </div>
                   </div>
-                  <div className='py-2 px-8 uppercase font-semibold bg-blue-700 bg-opacity-90 w-fit text-slate-50 mt-8 cursor-pointer' onClick={() => {
+                  <div className='py-2 px-8 uppercase font-semibold bg-blue-700 bg-opacity-90 w-fit text-gray-50 mt-8 cursor-pointer' onClick={() => {
                     if (createAssetAvailableEditions != "" && createAssetDescription != "" && createAssetName != "" && createAssetPrice != "" && createAssetProperties != "" && tempDeliveredLocation != "" && tempStampLocation != "" && tempShippedLocation != "") {
                       handleActiveItemCreate();
                     } else {
@@ -644,18 +644,18 @@ export default function Home() {
               : isCampaignModalOpen
                   ? (
                     <Modal title={"Bağış ürününü güncelleyin"} okText='İleri' cancelText='geri' isCancelDisabled={true} width='100%' onCancel={() => hideCampaignModal()}  onOk={() => hideCampaignModal()} onCloseButtonPressed={() => hideCampaignModal()}>
-                      <div className='flex'>
+                      <div className='flex z-20'>
                         <div className='w-1/2 pr-12'>
                           <div className='mb-4'>Kampanyanızı tasarlayın</div>
-                          <input className='p-2 mb-4 w-full bg-slate-50 border rounded' type="text" placeholder='Kampanyanıza bir isim verin' onChange={(e) => {setCreateCampaignName(e.target.value)}} />
-                          <input className='p-2 mb-4 w-full bg-slate-50 border rounded' type="text" placeholder='Kampanyanıza bir açıklama yazın' onChange={(e) => {setCreateCampaignDescription(e.target.value)}} />
+                          <input className='p-2 mb-4 w-full bg-gray-50 border rounded' type="text" placeholder='Kampanyanıza bir isim verin' onChange={(e) => {setCreateCampaignName(e.target.value)}} />
+                          <input className='p-2 mb-4 w-full bg-gray-50 border rounded' type="text" placeholder='Kampanyanıza bir açıklama yazın' onChange={(e) => {setCreateCampaignDescription(e.target.value)}} />
 
                           <div className='relative w-full'>
                             <input className='w-full p-1 px-2 border mb-2' type="file" onChange={handleImageChange}/>
                             <div className='h-fit p-2 flex justify-center items-center px-12 border absolute right-0 top-0 bg-white'>Kampanya fotoğrafı</div>
                           </div>  
                         </div>
-                        <div className='w-2 h-full bg-slate-900'></div>
+                        <div className='w-2 h-full bg-gray-900'></div>
                         <div className='w-1/2 mb-12'>
                           <div>Önizleme</div>
                           <hr />
@@ -676,7 +676,7 @@ export default function Home() {
                                 createCampaignName.length > 0 && createCampaignDescription.length > 0 && selectedImage
                                   ? (
                                     <div className='bg-white w-full mt-4 flex justify-center h-12 absolute'>
-                                      <div onClick={() => handleSubcollectionCreate()} className='cursor-pointer w-72 h-full uppercase font-semibold flex items-center justify-center text-slate-50 border-neutral-700 rounded-md border-opacity-55 border bg-blue-700 bg-opacity-50 hover:bg-opacity-90 transition-all'>Yayınla</div>
+                                      <div onClick={() => handleSubcollectionCreate()} className='cursor-pointer w-72 h-full uppercase font-semibold flex items-center justify-center text-gray-50 border-neutral-700 rounded-md border-opacity-55 border bg-blue-700 bg-opacity-50 hover:bg-opacity-90 transition-all'>Yayınla</div>
                                     </div>
                                   )
                                   : ("")
@@ -689,13 +689,13 @@ export default function Home() {
                   )
                   : isUpdateModalOpen
                     ? <Modal title={"Bağış ürününü güncelleyin"} okText='İleri' cancelText='geri' isCancelDisabled={true} width='100%' onCancel={() => hideUpdateModal()}  onOk={() => hideUpdateModal()} onCloseButtonPressed={() => hideUpdateModal()}>
-                        <div className='w-full h-full flex'>
+                        <div className='w-full h-full flex z-20'>
                         <div className='w-1/2'>
                           <div className='w-full mb-4'>
-                            <input className='p-2 bg-slate-50 w-full' type="text" placeholder='Bağış ürünü açıklaması' onChange={(e) => {setUpdateAssetDescription(e.target.value)}} />
+                            <input className='p-2 bg-gray-50 w-full' type="text" placeholder='Bağış ürünü açıklaması' onChange={(e) => {setUpdateAssetDescription(e.target.value)}} />
                           </div>
                           <div className='w-full relative mb-4'>
-                            <input className='w-full p-2 px-2 border mb-2 bg-slate-50' type="file" onChange={handleImageChange}/>
+                            <input className='w-full p-2 px-2 border mb-2 bg-gray-50' type="file" onChange={handleImageChange}/>
                             <div className='h-fit p-2 flex justify-center items-center px-12 border absolute right-0 top-0 bg-white'>Ürün fotoğrafı</div>
                           </div>  
                           <div>
@@ -707,7 +707,7 @@ export default function Home() {
                             const tempCreateAssetProperties = updateAssetProperties.concat(`${e.target.previousSibling.previousSibling.value}:${e.target.previousSibling.value},`)
                             setUpdateAssetProperties(tempCreateAssetProperties);
                           }
-                        }} className='w-1/6 mx-4 rounded-lg flex justify-center border p-2 bg-blue-600 text-slate-100'>ekle</div>
+                        }} className='w-1/6 mx-4 rounded-lg flex justify-center border p-2 bg-blue-600 text-gray-100'>ekle</div>
                       </div>
                       <div className='flex overflow-x-auto mb-2'>
                         {
@@ -720,7 +720,7 @@ export default function Home() {
                                     <div onClick={(e) => {
                                       const tempCreateAssetProperties = updateAssetProperties.replace(`${e.target.previousSibling.innerHTML},`, "");
                                       setUpdateAssetProperties(tempCreateAssetProperties)
-                                    }} className='cursor-pointer ml-2 w-6 h-6 rounded-full text-slate-50 bg-red-500 bg-opacity-50 flex items-center justify-center'>x</div>
+                                    }} className='cursor-pointer ml-2 w-6 h-6 rounded-full text-gray-50 bg-red-500 bg-opacity-50 flex items-center justify-center'>x</div>
                                   </div>
                                 )
                               }                            
@@ -730,9 +730,9 @@ export default function Home() {
                       </div>
                             </div>
                               <div className='w-full mt-4'>
-                                <input className='p-2 bg-slate-50 w-full' type="number" placeholder='Bağış ürünü yeni fiyatı' onChange={(e) => {setUpdateAssetPrice(e.target.value)}} />
+                                <input className='p-2 bg-gray-50 w-full' type="number" placeholder='Bağış ürünü yeni fiyatı' onChange={(e) => {setUpdateAssetPrice(e.target.value)}} />
                               </div>
-                              <div onClick={() => handleUpdateAsset()} className='p-2 px-12 flex justify-center items-center w-1/3 mt-4 cursor-pointer bg-blue-500 text-slate-100 rounded bg-opacity-90 hover:bg-blue-600 transition-all'>
+                              <div onClick={() => handleUpdateAsset()} className='p-2 px-12 flex justify-center items-center w-1/3 mt-4 cursor-pointer bg-blue-500 text-gray-100 rounded bg-opacity-90 hover:bg-blue-600 transition-all'>
                                 Kaydet
                               </div>
                             </div>
@@ -757,7 +757,7 @@ export default function Home() {
                           <Modal title={"Manuel bağış ekleyin"} okText='İleri' cancelText='geri' isCancelDisabled={true} width='50%' onCancel={() => hideDonateModal()}  onOk={() => hideDonateModal()} onCloseButtonPressed={() => hideDonateModal()}>
                             {
                               donateAsset
-                                ? <div className='w-full'>
+                                ? <div className='w-full z-20'>
                                 <div className='mb-4'>
                                   <Input
                                     onChange={(e) => {setDonateAssetDonorEmail(e.target.value)}}
@@ -782,7 +782,7 @@ export default function Home() {
                                     onChange={(e) => {setDonateAssetIsApprovalChecked(e.target.value.toString() == "false")}}
                                   />
                                 </div>
-                                <div className='px-4 flex justify-center items-center bg-blue-500 w-fit text-slate-50 font-semibold py-2 rounded-lg my-4 cursor-pointer' onClick={() => { handleDonateAsset() }}>
+                                <div className='px-4 flex justify-center items-center bg-blue-500 w-fit text-gray-50 font-semibold py-2 rounded-lg my-4 cursor-pointer' onClick={() => { handleDonateAsset() }}>
                                   Bağışı kaydet
                                 </div>
                               </div>
@@ -793,17 +793,19 @@ export default function Home() {
                         : ("")
         }
         <div className='w-full h-full scroll-smooth'>
-          <div className='flex w-full'>
+          <div className='flex w-full scroll-smooth'>
             <div className='w-3/4 h-80 border pb-4 bg-white rounded-xl overflow-hidden mr-4'>
-              <div className='w-full h-24 bg-[linear-gradient(0deg,rgba(255,100,0,0.2)_0%,rgba(20,50,150,0.2)_75%)]'></div>
+              <div className='w-full relative h-24 bg-[linear-gradient(0deg,rgba(255,100,0,0.2)_0%,rgba(20,50,150,0.2)_75%)]'>
+                <img className='h-full w-full brightness-75 z-0' src="https://img.freepik.com/premium-photo/blue-paper-linkedin-abstract-background_608068-5080.jpg" alt="background-company" />
+                <div className='right-4 bottom-2 text-white uppercase text-sm absolute'>{company.code}</div>
+              </div>
               <div className='flex w-full px-24 mb-8'>
-                <div className='h-32 aspect-square shadow-md mr-4 -mt-12'>
-                  <img className='w-full h-full' src={company.image} alt={company.name} />
+                <div className='h-32 relative min-w-32 shadow-md mr-4 -mt-12 z-0 rounded-full overflow-hidden'>
+                  <img className='w-full h-full absolute' src={company.image} alt={company.name} />
                 </div>
                 <div>
-                  <div className='text-slate-600 uppercase text-4xl font-semibold'>{company.name}</div>
-                  <div className='text-sm text-slate-500 -mt-2'>{company.code}</div>
-                  <div className='text-sm text-slate-600'>{company.receipientName} • {(company.charityAddress || "")} • {company.IBAN} </div>
+                  <div className='text-black uppercase text-4xl font-semibold'>{company.name}</div>
+                  <div className='text-sm text-gray-600'>{company.receipientName} • {(company.charityAddress || "")} • {company.IBAN} </div>
                 </div>
               </div>
               <div className='w-full flex justify-end text-gray-700 px-4'>
@@ -814,7 +816,7 @@ export default function Home() {
               </div>
             </div>
             <div className='w-1/4 bg-white rounded-xl border p-4 h-80 overflow-y-auto'>
-              <div className='text-sm uppercase font-semibold text-gray-600 border-b mb-4'>Kampanyalar</div>
+              <div className='text-sm uppercase font-semibold text-gray-600 border-b mb-4'>Kategoriler</div>
               {
                 collections && collections.length
                   ? collections.map(collection => {
@@ -837,12 +839,12 @@ export default function Home() {
               <div className='flex w-full items-center'>
                 <div className='mr-4'><img className="w-3" src="right-arrow.png" alt="right-arrow" /></div>
                 <div className='w-3/5 bg-gray-100 h-8 mr-4'></div>
-                <div className='w-8 flex justify-center items-center text-slate-100 bg-opacity-90 hover:bg-opacity-100 transition-all cursor-pointer rounded-full aspect-square bg-green-500 mr-4' onClick={() => {showCreateCampaignModal()}}>+</div>
+                <div className='w-8 flex justify-center items-center text-gray-100 bg-opacity-90 hover:bg-opacity-100 transition-all cursor-pointer rounded-full aspect-square bg-green-500 mr-4' onClick={() => {showCreateCampaignModal()}}>+</div>
               </div>
             </div>
           </div>
         <div className='w-full h-full'>
-          <div className='uppercase font-semibold text-lg text-gray-600 mb-4'>Kampanyalarım</div>
+          <div className='uppercase font-semibold text-lg text-gray-600 mb-4'>Kategoriler</div>
           <div className='bg-white rounded-lg'>
             {
               collections && collections.length > 0
@@ -907,15 +909,15 @@ export default function Home() {
                             subcollectionId: collection.subcollectionId
                           })
                           showCreateAssetModal();
-                        }} className='bg-green-600 bg-opacity-80 hover:bg-opacity-90 cursor-pointer transition-all text-slate-50 w-8 h-8 text-xl flex justify-center rounded-full'>+</div>
-                        <div>Bağış ürünü ekleyin</div>
+                        }} className='bg-green-600 bg-opacity-80 hover:bg-opacity-90 cursor-pointer transition-all text-gray-50 w-8 h-8 text-xl flex justify-center rounded-full'>+</div>
+                        <div>Ürün listele</div>
                       </div>
                     </div>
                   </div>
                 )
               })
               : (
-                <div className='w-full h-24 text-slate-900 flex items-center justify-center'>
+                <div className='w-full h-24 text-gray-900 flex items-center justify-center'>
                   <Loading spinnerColor='navy' />
                 </div>
               )
@@ -923,8 +925,8 @@ export default function Home() {
             <div className='w-full mt-4 h-24 border border-dashed flex justify-center items-center'>
               <div onClick={() => {
                   showCreateCampaignModal();
-                }} className='bg-green-600 mr-4 bg-opacity-80 hover:bg-opacity-90 cursor-pointer transition-all text-slate-50 w-8 h-8 text-xl flex justify-center items-baseline rounded-full'>+</div>
-              <div>Bir kampanya başlatın</div>
+                }} className='bg-green-600 mr-4 bg-opacity-80 hover:bg-opacity-90 cursor-pointer transition-all text-gray-50 w-8 h-8 text-xl flex justify-center items-baseline rounded-full'>+</div>
+              <div>Kategori oluştur</div>
             </div>
           </div>
         </div>

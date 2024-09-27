@@ -145,7 +145,7 @@ const NavigationLinks = ({ isDesktop, closeMenu }) => {
               </Link>
 
               {item.label === "Ürünler" && isDropdownOpen && (
-                <div className="flex w-128 absolute left-0 bg-white border rounded-md shadow-lg z-50">
+                <div className="flex w-fit absolute left-0 bg-white border rounded-md shadow-lg z-50">
                   {dropdownMenu.map((menu, index) => (
                     <div key={menu.title} className="p-4 border-r">
                       <div className="font-semibold text-lg mb-2 flex items-center">
@@ -164,9 +164,9 @@ const NavigationLinks = ({ isDesktop, closeMenu }) => {
                           {menu.title}
                         </div>
                       </div>
-                      <div className="flex flex-col gap-2">
+                      <div className="flex flex-col gap-2 p-4 w-64">
                         {menu.content.map((content, index) => (
-                          <div>
+                          <div className="mb-4">
                             <Link key={index} href={`/?section=${menu.href[index]}`} onClick={closeMenu} className="text-md hover:text-orange-500 transition">
                               {content}
                             </Link>

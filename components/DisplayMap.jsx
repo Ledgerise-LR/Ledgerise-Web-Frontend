@@ -88,7 +88,7 @@ export default function DisplayMap({ center, visualVerifications, zoom, chainId,
   
   ];
 
-  const marginArray = [0.01, 0.015, 0.02, 0.025, 0.03, 0.035, 0.04, 0.045, 0.05, 0.055, 0.05, 0.04, 0.03, 0.025, 0.02, 0.01];
+  const marginArray = [0.0495, 0.0683, 0.0287, 0.0383, 0.0836, 0.0234, 0.0022, 0.0094, 0.0620, 0.0200, 0.0238, 0.0551, 0.0208, 0.0985, 0.0383, 0.0314, 0.0487, 0.0488, 0.0121, 0.0801, 0.0919, 0.0625, 0.0044, 0.0519, 0.0579, 0.0817, 0.0669, 0.0433, 0.0461, 0.0810, 0.0959, 0.0910, 0.0232, 0.0976, 0.0664, 0.0715, 0.0098, 0.0005, 0.0963, 0.0511, 0.0902, 0.0793, 0.0708, 0.0385, 0.0884, 0.0582, 0.0442, 0.0885];
 
   let getCity = (latitude, longitude) => {
     for (let i = 0; i < boundsObject.length; i++) {
@@ -119,12 +119,14 @@ export default function DisplayMap({ center, visualVerifications, zoom, chainId,
         let latitude = (city.topLeft.lat - ((city.topLeft.lat - city.bottomRight.lat) / 2)) - heightMargin;
         let longitude = city.topLeft.lng + widthMargin;
 
+        const multiplierConstant = 1.2;
+        
         if (i % 2 == 0) {
-          latitude += marginArray[i % marginArray.length];
-          longitude -= marginArray[i % marginArray.length];
+          latitude +=  marginArray[i % marginArray.length];
+          longitude -= multiplierConstant * marginArray[i % marginArray.length];
         } else {
           latitude -= marginArray[i % marginArray.length];
-          longitude += marginArray[i % marginArray.length];
+          longitude += multiplierConstant * marginArray[i % marginArray.length];
         }
 
         return (

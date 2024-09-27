@@ -330,7 +330,7 @@ export default function Home() {
         '50’nin altında ürün listeleyen işletmelerde kargo entegrasyonuna gerek kalmadan TelegramBot üzerinden bağışçı bildirimi mümkün.'
       ],
       animationText: 'Kargo anlaşmanız yoksa',
-      images: ["solutions/lensbot.png"]
+      images: ["solutions/lensBot.png"]
     }
   ];
 
@@ -413,14 +413,14 @@ export default function Home() {
                       </div>
                     </div>
                   </div>
-                  <div className='text-sm my-4 p-2 bg-gray-50 rounded text-gray-800'>{tokenDescription.slice(0,80)}</div>
+                  <div className='text-sm my-4 p-2 bg-gray-50 rounded text-black'>{tokenDescription.slice(0,80)}</div>
                 </div>
               </div>
             </a>
           </div>
         </div>
       </div>
-      <div className='w-full h-100 mt-16 mb-60 relative'>
+      <div className='w-[114%] -ml-[7%] h-100 mt-16 mb-60 relative'>
         <div className='w-full flex justify-center text-center text-sm pt-12 text-yellow-500 font-bold'>Teslim edildi bile!</div>
         <div className='w-full flex justify-center text-center border-b mb-4 pb-12 text-3xl'>%100 şeffaf ve güvenilir bağış ağını keşfedin!</div>
           <Map
@@ -499,13 +499,13 @@ export default function Home() {
                   <div 
                   className={`${((section.id === 'collaborate') || (section.id === 'safeView')) ? 'flex gap-3 w-1/4 mt-4' : 'ml-4'}`}>
                     {section.id === 'lens' ? (
-                      <video loop autoPlay className="w-64">
+                      <video loop autoPlay className="w-64" style={{ boxShadow: "20px 20px 0 orange" }}>
                         <source src={section.videoSrc} type="video/mp4" />
                         Tarayıcınız video etiketini desteklemiyor.
                       </video>
                     ) : (
                       section.images && section.images.map((image, index) => (
-                        <img key={index} src={image} alt={image} className={`${index === 1 ? 'self-end' : 'self-start'}`} />
+                        <img key={index} src={image} alt={image} style={{ boxShadow: `${(section.id == "dashboard" || section.id == "entegration")  ? "20px 20px 0 orange" : ""}` }} className={`${index === 1 ? 'self-end' : 'self-start'}`} />
                       ))
                     )}
                   </div>
