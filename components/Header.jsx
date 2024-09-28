@@ -98,7 +98,7 @@ const navigationItems = [
   { desktop: true, mobile: false, href: "/api-documentation", label: "Entegrasyon" },
   { desktop: true, mobile: true, href: "/team", label: "Hakkımızda" },
   { desktop: false, mobile: true, href: "/login", label: "Giriş Yap" },
-  { desktop: false, mobile: true, href: "/register", label: "Hesap Oluştur" }
+  { desktop: false, mobile: true, href: "/login?register", label: "Hesap Oluştur" }
 ];
 
 const dropdownMenu = [
