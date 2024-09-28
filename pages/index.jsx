@@ -348,8 +348,8 @@ export default function Home() {
                 background: "-webkit-linear-gradient(30deg, #B881FF, #FF9900)",
                 WebkitBackgroundClip: "text",
                 WebkitTextFillColor: "transparent"
-              }} className='pb-2 w-fit'>değere</div>
-                <div className='text-slate-900'>dönüştürüyoruz</div>
+              }} className='pb-2 w-fit'>değere dönüştüren</div>
+                <div className='text-slate-900'>ihtiyaç pazaryeri</div>
               </div>
               <div className="text-black mt-8 font-sans text-md w-96 min-[800]:w-full min-[800]:text-lg">
                 <div className='flex items-center'><div className='p-1 bg-[rgb(50,0,20)] text-white rounded-full mr-2'><Trending fontSize='16px'/></div> Stokların %5'i, %50'ye varan indirimli fiyatı üzerinden listelenir.</div>
@@ -381,13 +381,13 @@ export default function Home() {
               </div>
             </div>
             <div className='w-full h-20 mt-4'>
-              <div className='text-sm mb-2 text-gray-800 font-light'>Proje Paydaşlarımız</div>
+              <div className='text-sm mb-2 text-gray-800 font-light'>İşbirlikçi Paydaşlarımız</div>
               <div className='flex w-full h-6'>
                 {
                   partnerImages.map(eachPartnerImage => {
                     return (
-                      <div className='w-fit h-full overflow-hidden mr-4'>
-                        <img className='w-full h-full' src={eachPartnerImage} alt={eachPartnerImage} />
+                      <div className='h-full overflow-hidden mr-4'>
+                        <img className='h-full' src={eachPartnerImage} alt={eachPartnerImage} />
                       </div>
                     )
                   })

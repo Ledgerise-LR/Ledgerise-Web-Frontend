@@ -867,7 +867,7 @@ export default function Home() {
                                   tokenUri={asset.tokenUri}
                                   availableEditions={asset.availableEditions}
                                   handleViewLabelsClick={() => {
-                                    setQrCodesArray(asset.qrCodesArray);
+                                    setQrCodesArray(asset.qrCodesArray || []);
 
                                     const generalQrCodeData = {
                                       tokenId: asset.tokenId,
