@@ -232,7 +232,7 @@ export default function Home() {
     }
   ]
   
-  const partnerImages = ["sancaktepe.png", "marjinalsosyal.png", "sevvakfi.png", "iparet.png"];
+  const partnerImages = ["sancaktepe.png", "marjinalsosyal.png", "sevvakfi.png", "iparet.png", "sarigazi.png"];
 
   const [selectedSection, setSelectedSection] = useState('dashboard'); 
 
@@ -358,7 +358,7 @@ export default function Home() {
               </div>
               <div className='w-full h-12 mt-4 flex'>
                 <div className='w-1/2 flex items-center justify-center'>
-                  <div className='font-semibold mr-4 text-3xl flex text-black'>5<div className='-mt-0.5'>+</div></div>
+                  <div className='font-semibold mr-4 text-3xl flex text-black'>7<div className='-mt-0.5'>+</div></div>
                   <div className='text-xs font-bold'>PARTNER</div>
                 </div>
                 <div className='h-full w-0.5 bg-gray-600 bg-opacity-50'></div>
@@ -420,13 +420,13 @@ export default function Home() {
           </div>
         </div>
       </div>
-      <div className='w-[114%] -ml-[7%] h-100 mt-16 mb-60 relative'>
+      <div className='w-full h-100 mt-16 mb-60 relative'>
         <div className='w-full flex justify-center text-center text-sm pt-12 text-yellow-500 font-bold'>Teslim edildi bile!</div>
         <div className='w-full flex justify-center text-center border-b mb-4 pb-12 text-3xl'>%100 şeffaf ve güvenilir bağış ağını keşfedin!</div>
           <Map
             center={{latitude: ((41.4202 + 40.8021) / 2) * 1000, longitude: ((28.4316 + 29.5983) / 2) * 1000}}
             visualVerifications={visualVerifications}
-            zoom={10}
+            zoom={11}
           />
       </div>
       <div className='mb-12 w-full h-fit'>

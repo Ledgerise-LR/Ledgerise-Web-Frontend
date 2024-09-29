@@ -112,14 +112,14 @@ export default function DisplayMap({ center, visualVerifications, zoom, chainId,
       
         const city = getCity(verification.location.latitude, verification.location.longitude);
 
-        let widthMargin = i * 0.006;
+        let widthMargin = i * 0.0045;
         
         let heightMargin = (parseInt(i.toString()[i.toString().length - 1]) * 0.02);
 
         let latitude = (city.topLeft.lat - ((city.topLeft.lat - city.bottomRight.lat) / 2)) - heightMargin;
         let longitude = city.topLeft.lng + widthMargin;
 
-        const multiplierConstant = 1.2;
+        const multiplierConstant = 1;
         
         if (i % 2 == 0) {
           latitude +=  marginArray[i % marginArray.length];
