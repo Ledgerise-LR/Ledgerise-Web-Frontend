@@ -10,7 +10,7 @@ import blockExplorerMapping from "../constants/blockExplorerMapping.json";
 import { URL, PORT } from '@/serverConfig';
 import dynamic from 'next/dynamic';
 import {Trending} from '@web3uikit/icons'
-import { FaArrowRight, FaCheckCircle } from 'react-icons/fa';
+import { FaArrowRight, FaCheckCircle, FaUser, FaBox, FaBoxOpen, FaDropbox, FaParachuteBox, FaBoxTissue, FaToolbox, FaHandsHelping } from 'react-icons/fa';
 import CargoCar from '@/components/CargoCar';
 import { useRouter } from 'next/router';
 import { images } from '@/next.config';
@@ -351,22 +351,12 @@ export default function Home() {
               }} className='pb-2 w-fit'>değere dönüştüren</div>
                 <div className='text-slate-900'>ihtiyaç pazaryeri</div>
               </div>
-              <div className="text-black mt-8 font-sans text-md w-96 min-[800]:w-full min-[800]:text-lg">
+              <div className="text-black flex flex-col gap-2 mt-12 font-sans text-lg min-[800]:w-full min-[800]:text-lg">
                 <div className='flex items-center'><div className='p-1 bg-[rgb(50,0,20)] text-white rounded-full mr-2'><Trending fontSize='16px'/></div> Stokların %5'i, %50'ye varan indirimli fiyatı üzerinden listelenir.</div>
                 <div className='flex items-center'><div className='p-1 bg-[rgb(50,0,20)] text-white rounded-full mr-2'><Trending fontSize='16px'/></div>Ürünler pay bazlı olarak ortaklaşa bağışlanır.</div>
                 <div className='flex items-center'><div className='p-1 bg-[rgb(50,0,20)] text-white rounded-full mr-2'><Trending fontSize='16px'/></div>Bağışçıların ürünlerin doğru ihtiyaç sahiplerine ulaştığından emin olması sağlanır.</div>
               </div>
-              <div className='w-full h-12 mt-4 flex'>
-                <div className='w-1/2 flex items-center justify-center'>
-                  <div className='font-semibold mr-4 text-3xl flex text-black'>7<div className='-mt-0.5'>+</div></div>
-                  <div className='text-xs font-bold'>PARTNER</div>
-                </div>
-                <div className='h-full w-0.5 bg-gray-600 bg-opacity-50'></div>
-                <div className='w-1/2 flex items-center justify-center'>
-                  <div className='font-semibold mr-4 text-3xl flex text-black'>100 <div className='-mt-0.5'>+</div></div>
-                  <div className='w-fit font-bold text-xs'>AYLIK KOLİ</div>
-                </div>              
-              </div>
+              <div className='h-12'></div>
             </div>
             <div className='flex items-center'>
               <div className='w-fit mr-6 mt-4 z-10'>
@@ -398,7 +388,7 @@ export default function Home() {
           <div className="w-96 h-fit relative bg-white z-10 max-[800]:mt-20">
             <a href={`/assets?id=${asset.tokenId}&subcollectionId=${asset.subcollectionId}&nftAddress=${asset.nftAddress}`}>
               <div id='showroom' className={`relative w-96 h-fit flex flex-1 transition-all bg-white flex-col justify-center border-2 overflow-hidden border-black rounded -mt-12 shadow-[30px_20px_0_0_rgba(80,0,100,0.5),30px_20px_0_0_rgba(80,40,0,0.7)]`}>
-                <img src={imageURI} alt={tokenName} className='border-b-2 rounded h-96' />
+                <img src={imageURI} alt={tokenName} className='border-b-2 border-black h-96' />
                 <div className='w-full h-max mt-2 p-4'>
                   <div className='text-2xl text-black mb-1 h-16 flex items-center'>{asset.collectionName}</div>
                   <div className='flex flex-1 justify-between items-center'>
@@ -419,6 +409,29 @@ export default function Home() {
             </a>
           </div>
         </div>
+      </div>
+      <div className='h-12 w-full mt-24 flex justify-center gap-12 bg-orange-100 py-20'>
+      <div className='flex items-center'>
+          <div className='text-orange-900'><FaHandsHelping size={"48px"}/></div>
+          <div className='flex items-center flex-col justify-center'>
+            <div className='font-semibold mr-4 text-5xl flex text-orange-900 ml-4'>7 <div className='-mt-0.5'>+</div></div>
+            <div className='w-fit font-bold text-base'>PAYDAŞ</div>
+          </div>  
+        </div> 
+        <div className='flex items-center'>
+          <div className='text-orange-900'><FaParachuteBox size={"48px"}/></div>
+          <div className='flex items-center flex-col justify-center ml-4'>
+            <div className='font-semibold mr-4 text-5xl flex text-orange-900'>100 <div className='-mt-0.5'>+</div></div>
+            <div className='w-fit font-bold text-base'>AYLIK KOLİ</div>
+          </div>  
+        </div> 
+        <div className='flex items-center'>
+          <div className='text-orange-900'><FaUser size={"48px"}/></div>
+          <div className='flex items-center flex-col justify-center'>
+            <div className='font-semibold mr-4 text-5xl flex text-orange-900 ml-4'>1000 <div className='-mt-0.5'>+</div></div>
+            <div className='w-fit font-bold text-base'>İHTİYAÇ SAHİBİ</div>
+          </div>  
+        </div> 
       </div>
       <div className='w-full h-100 mt-16 mb-60 relative'>
         <div className='w-full flex justify-center text-center text-sm pt-12 text-yellow-500 font-bold'>Teslim edildi bile!</div>
@@ -555,7 +568,7 @@ export default function Home() {
             <div className='w-full flex justify-center text-center mb-4 pb-12 text-3xl'>Popüler teknoloji basını gündeminde</div>
           </div>
         </div>
-        <div className="w-full flex justify-around flex-wrap max-[800]:px-10">
+        <div id='newsroom' className="w-full flex justify-around flex-wrap max-[800]:px-10">
           {
             pressLinks
               ? pressLinks.map(eachPressLink => {

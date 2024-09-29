@@ -101,29 +101,48 @@ const navigationItems = [
   { desktop: false, mobile: true, href: "/register", label: "Hesap Oluştur" }
 ];
 
-const dropdownMenu = [
-  {
-    title: "Stok Yönetim",
-    content: ["LR Dashboard", "LR Entegrasyon", "LR Collaborate"],
-    description: ["Tek tıkla e-bağış pazaryeri.", "1 saatten kısa sürede entegrasyon.", "Ortak amaç, ortak bağış."],
-    href: ["dashboard", "entegration", "collaborate"]
-  },
-  {
-    title: "Güvenilir Bağış",
-    content: ["LR ESCROW", "LR Lens", "LR LensBot"],
-    description: ["Paranız, ürün sahibine ulaşana kadar güvendedir.", "Gücünü NFT'den alan AI kamera.", "Kargo anlaşması şart değil."],
-    href: ["deliverTrust", "lens", "lensBot"]
-  },
-  {
-    title: "Gizlilik",
-    content: ["SafeView"],
-    description: ["İhtiyaç sahibi verileri gizlidir."],
-    href: ["safeView"]
-  }
-]
+const dropdownMenu = {
+  "Ürünler": [
+    {
+      title: "Stok Yönetim",
+      content: ["LR Dashboard", "LR Entegrasyon", "LR Collaborate"],
+      description: ["Tek tıkla e-bağış pazaryeri.", "1 saatten kısa sürede entegrasyon.", "Ortak amaç, ortak bağış."],
+      href: ["dashboard", "entegration", "collaborate"]
+    },
+    {
+      title: "Güvenilir Bağış",
+      content: ["LR ESCROW", "LR Lens", "LR LensBot"],
+      description: ["Paranız, ürün sahibine ulaşana kadar güvendedir.", "Gücünü NFT'den alan AI kamera.", "Kargo anlaşması şart değil."],
+      href: ["deliverTrust", "lens", "lensBot"]
+    },
+    {
+      title: "Gizlilik",
+      content: ["SafeView"],
+      description: ["İhtiyaç sahibi verileri gizlidir."],
+      href: ["safeView"]
+    }
+  ],
+  "Hakkımızda": [
+    {
+      title: "Hakkımızda",
+      content: ["Hikayemiz", "Newsroom"],
+      description: ["Sürdürülebilir stok yönetimi için çalışıyoruz. Detaylı bilgi ve yönetim kurulunu görüntülemek için tıklayınız.", "Teknoloji gündemine konu olan haberleri görüntülemek için tıklayın."],
+      href: ["team", "#newsroom"]
+    }
+  ],
+  "Entegrasyon": [
+    {
+      title: "Firmalar için",
+      content: ["Dashboard", "API Dökümentasyonu"],
+      description: ["Tek tıkla e-ticaret altyapısı ile Ledgerise ihtiyaç pazaryerinde ürünlerinizi indirimli fiyatına listeleyebilirsiniz.", "E-ticaret altyapınız hazırsa, API dökümentasyonu üzerinden ürün listeleme işlemlerinizi hali hazırdaki sisteminize entegre edebilirsiniz."],
+      href: ["company", "api-documentation"]
+    }
+  ]
+}
 
 const NavigationLinks = ({ isDesktop, closeMenu }) => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [dropdownLabel, setDropDownLabel] = useState("");
 
   return (
     <>
@@ -133,20 +152,26 @@ const NavigationLinks = ({ isDesktop, closeMenu }) => {
             <div
               key={item.href}
               className="relative"
-              onMouseLeave={() => item.label === "Ürünler" && setIsDropdownOpen(false)} // Close on mouse leave
+              onMouseLeave={() => {
+                setDropDownLabel("")
+                setIsDropdownOpen(false)
+              }} // Close on mouse leave
             >
               <Link
                 href={item.href}
                 className="flex items-center max-md:text-xl md:text-sm lg:text-base hover:text-orange-500 transition"
-                onMouseEnter={() => item.label === "Ürünler" && setIsDropdownOpen(true)}
+                onMouseEnter={() => {
+                  setDropDownLabel(item.label)
+                  setIsDropdownOpen(true)
+                }}
               >
                 {item.label}
-                {item.label === "Ürünler" ? <FaAngleDown /> : ""}
+                {(item.label === "Ürünler" || item.label === "Hakkımızda" || item.label === "Entegrasyon") ? <FaAngleDown /> : ""}
               </Link>
 
-              {item.label === "Ürünler" && isDropdownOpen && (
+              {((item.label === "Ürünler" || item.label === "Hakkımızda" || item.label === "Entegrasyon") && (item.label === dropdownLabel) && isDropdownOpen) && (
                 <div className="flex w-fit absolute left-0 bg-white border rounded-md shadow-lg z-50">
-                  {dropdownMenu.map((menu, index) => (
+                  {dropdownMenu[item.label].map((menu, index) => (
                     <div key={menu.title} className="p-4 border-r">
                       <div className="font-semibold text-lg mb-2 flex items-center">
                         <div className="text-purple-500 p-2 bg-purple-500 bg-opacity-10 border-purple-500 border rounded mr-2">
@@ -167,7 +192,7 @@ const NavigationLinks = ({ isDesktop, closeMenu }) => {
                       <div className="flex flex-col gap-2 p-4 w-64">
                         {menu.content.map((content, index) => (
                           <div className="mb-4">
-                            <Link key={index} href={`/?section=${menu.href[index]}`} onClick={closeMenu} className="text-md hover:text-orange-500 transition">
+                            <Link key={index} href={`${item.label == "Ürünler" ? `/?section=${menu.href[index]}`: `/${menu.href[index]}`}`} onClick={closeMenu} className="text-md hover:text-orange-500 transition">
                               {content}
                             </Link>
                             <p className="text-sm text-gray-500">{menu.description[index]}</p>
