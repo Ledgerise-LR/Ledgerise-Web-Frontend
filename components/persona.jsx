@@ -4,7 +4,7 @@ export default function AuctionBox({ image, name, role, bio }) {
   return (
     <div className="w-72 mx-4 z-30 shadow-lg overflow-hidden rounded">
       <div className="w-full relative">
-        <div className="flex justify-center items-baseline min-h-60 max-h-60 overflow-hidden bg-[linear-gradient(45deg,rgba(169,71,0,1)_0%,rgba(0,0,0,1)_50%,rgba(70,0,100,1)_100%)]">
+        <div className="flex justify-center items-baseline min-h-60 max-h-60 overflow-hidden bg-gray-100">
           <img className="w-full" src={`${image}`} alt={name} />
         </div>
         <div className="w-full bottom-0 flex flex-col bg-gray-200 p-2">

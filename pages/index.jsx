@@ -345,7 +345,7 @@ export default function Home() {
               >
                 <div className='mb-2 text-slate-900'>Stok fazlalarını</div>  
                 <div style={{
-                background: "-webkit-linear-gradient(30deg, #B881FF, #FF9900)",
+                background: "-webkit-linear-gradient(60deg, rgba(240,150,0,1), rgba(120,0,150,1))",
                 WebkitBackgroundClip: "text",
                 WebkitTextFillColor: "transparent"
               }} className='pb-2 w-fit'>değere dönüştüren</div>
@@ -397,9 +397,9 @@ export default function Home() {
           </div>
           <div className="w-96 h-fit relative bg-white z-10 max-[800]:mt-20">
             <a href={`/assets?id=${asset.tokenId}&subcollectionId=${asset.subcollectionId}&nftAddress=${asset.nftAddress}`}>
-              <div id='showroom' className={`relative w-96 h-fit flex flex-1 transition-all bg-white flex-col justify-center border-2 overflow-hidden border-black p-2 rounded -mt-12 shadow-[30px_20px_0_0_rgba(80,0,100,0.5),30px_20px_0_0_rgba(80,40,0,0.7)]`}>
+              <div id='showroom' className={`relative w-96 h-fit flex flex-1 transition-all bg-white flex-col justify-center border-2 overflow-hidden border-black rounded -mt-12 shadow-[30px_20px_0_0_rgba(80,0,100,0.5),30px_20px_0_0_rgba(80,40,0,0.7)]`}>
                 <img src={imageURI} alt={tokenName} className='border-b-2 rounded h-96' />
-                <div className='w-full h-max mt-2 p-2'>
+                <div className='w-full h-max mt-2 p-4'>
                   <div className='text-2xl text-black mb-1 h-16 flex items-center'>{asset.collectionName}</div>
                   <div className='flex flex-1 justify-between items-center'>
                     <div>

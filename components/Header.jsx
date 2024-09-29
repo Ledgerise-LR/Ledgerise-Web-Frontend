@@ -52,7 +52,7 @@ export default function Header() {
   };
 
   return (
-    <nav className="border-b-2 z-50 max-md:fixed top-0 left-0 w-full bg-white shadow-md">
+    <nav className="border-b z-50 max-md:fixed top-0 left-0 w-full bg-white">
       <div className={`flex items-center justify-between mx-auto p-4 ${isMobileMenuOpen ? "border-b-2" : ""}`}>
         <Link href="/">
           <img src="/logo.svg" alt="Ledgerise Logo" className="h-12 md:h-8 lg:h-12" />
@@ -137,7 +137,7 @@ const NavigationLinks = ({ isDesktop, closeMenu }) => {
             >
               <Link
                 href={item.href}
-                className="flex items-center max-md:text-xl md:text-sm lg:text-lg font-medium hover:text-orange-500 transition"
+                className="flex items-center max-md:text-xl md:text-sm lg:text-base hover:text-orange-500 transition"
                 onMouseEnter={() => item.label === "Ürünler" && setIsDropdownOpen(true)}
               >
                 {item.label}
