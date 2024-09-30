@@ -55,7 +55,7 @@ export default function Header() {
     <nav className="border-b z-50 max-md:fixed top-0 left-0 w-full bg-white">
       <div className={`flex items-center justify-between mx-auto p-4 ${isMobileMenuOpen ? "border-b-2" : ""}`}>
         <Link href="/">
-          <img src="/logo.svg" alt="Ledgerise Logo" className="h-12 md:h-8 lg:h-12" />
+          <img src="/logo.svg" alt="Ledgerise Logo" className="h-8 md:h-8 lg:h-10" />
         </Link>
 
         {/* Desktop Navigation */}
