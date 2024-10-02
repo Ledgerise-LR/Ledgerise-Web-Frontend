@@ -29,6 +29,21 @@ export default function App({ Component, pageProps }) {
         <MoralisProvider initializeOnMount={false}>
           <NotificationProvider>
             {
+              router.pathname == "/"
+              ? <div className='relative w-full flex items-center justify-center m-1 p-1 bg-purple-400 text-white'>
+                  <a className='underline' href="/collections">Kız çocukları eğitim kampanyası devam ediyor. Destek olmak için tıklayınız.</a>
+                  <div 
+                    className='absolute right-8 text-white cursor-pointer'
+                    onClick={(e) => {
+                      e.target.parentNode.remove()
+                    }}
+                  >
+                    ✖
+                  </div>
+                </div>
+              : ("")
+            }
+            {
               router.pathname != "/login" && router.pathname != "/register"
                 ? <Header />
                 : <div></div>

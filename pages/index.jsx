@@ -5,7 +5,6 @@ import {Linkedin, Twitter, ExternalLink} from '@web3uikit/icons'
 import { useMoralis } from 'react-moralis';
 import { ethers } from 'ethers';
 import { getEthToUsdRate } from '@/utils/getEthToUsdRate';
-import { Button } from 'web3uikit'
 import blockExplorerMapping from "../constants/blockExplorerMapping.json";
 import { URL, PORT } from '@/serverConfig';
 import dynamic from 'next/dynamic';
@@ -335,8 +334,8 @@ export default function Home() {
   ];
 
   return (
-    <div className="w-full h-full pb-28 px-0 pt-28 min-[800]:px-20 min-[800]:pt-24 overflow-hidden overflow-x-hidden">
-      <div className="w-full h-full flex justify-center min-[1200]:justify-between items-center">
+    <div className="w-full h-full pb-28 px-0 pt-28 relative min-[800]:px-20 min-[800]:pt-24 overflow-hidden overflow-x-hidden">
+      <div className="w-full h-full flex justify-center min-[1200]:justify-between items-center"> 
         <div className="flex flex-1 w-3/5 h-4/5 justify-evenly min-[1200]:justify-between px-10 flex-wrap">
           <div className='flex-col w-128 mb-12 z-10'>
             <div className='w-full'>
@@ -388,8 +387,10 @@ export default function Home() {
           <div className="w-96 h-fit relative bg-white z-10 max-[800]:mt-20">
             <a href={`/assets?id=${asset.tokenId}&subcollectionId=${asset.subcollectionId}&nftAddress=${asset.nftAddress}`}>
               <div id='showroom' className={`relative w-96 h-fit flex flex-1 transition-all bg-white flex-col justify-center border-2 overflow-hidden border-black rounded -mt-12 shadow-[30px_20px_0_0_rgba(80,0,100,0.5),30px_20px_0_0_rgba(80,40,0,0.7)]`}>
-                <img src={imageURI} alt={tokenName} className='border-b-2 border-black h-96' />
-                <div className='w-full h-max mt-2 p-4'>
+                <div className='border-b-2 border-black h-80 w-full flex justify-center overflow-hidden items-center'>
+                  <img src={imageURI} alt={tokenName} className='w-full' />
+                </div>
+                <div className='w-full h-max p-4'>
                   <div className='text-2xl text-black mb-1 h-16 flex items-center'>{asset.collectionName}</div>
                   <div className='flex flex-1 justify-between items-center'>
                     <div>
@@ -403,14 +404,14 @@ export default function Home() {
                       </div>
                     </div>
                   </div>
-                  <div className='text-sm my-4 p-2 bg-gray-50 rounded text-black'>{tokenDescription.slice(0,80)}</div>
+                  <div className='text-sm my-4 rounded text-black'>{tokenDescription.slice(0,80)}</div>
                 </div>
               </div>
             </a>
           </div>
         </div>
       </div>
-      <div className='h-12 w-full mt-24 flex justify-center gap-12 bg-orange-100 py-20'>
+      <div className='h-12 w-full flex justify-center gap-12 bg-orange-100 py-20'>
       <div className='flex items-center'>
           <div className='text-orange-900'><FaHandsHelping size={"48px"}/></div>
           <div className='flex items-center flex-col justify-center'>

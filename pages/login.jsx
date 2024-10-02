@@ -101,12 +101,12 @@ export default function Home() {
           <div className='text-2xl mb-8 flex items-center'><img className='h-10' src="/logo.svg" alt="Logo" />&nbsp; | &nbsp;{isLogin ? "Giriş Yap" : "Kayıt Ol"}</div>
           {/* <div className='mb-2'>
             {isLogin ? (
-              <div><strong>Güvenli</strong> ve <strong>%100 şeffaf</strong>, <strong>uçtan uca</strong> bağış takip sistemine katılın.</div>
+             e <div><strong>Güvenli</strong> ve <strong>%100 şeffaf</strong>, <strong>uçtan uca</strong> bağış takip sistemine katılın.</div>
             ) : (
               "Şeffaf bağış sistemimize katılmak için aşağıdaki bilgileri doldurun."
             )}
           </div> */}
-          <div className='mb-4'>
+          {/* <div className='mb-4'>
             <GoogleLogin
               onSuccess={(credentialResponse) => {
                 console.log(credentialResponse)
@@ -116,21 +116,21 @@ export default function Home() {
                 console.log("Login failed.")
               }}
             />
-          </div>
+          </div> */}
           <div className='flex flex-col mb-4'>
             <input className='bg-gray-50 rounded p-2 mb-4' type="text" placeholder='E-posta adresi'
               onChange={(e) => setEmail(e.target.value)} />
-            <div>
+            {/* <div>
               <PhoneInput 
                 className='p-2 bg-slate-50 mb-4'
                 placeholder="Enter phone number"
                 value={telephone}
                 onChange={setTelephone}
               />
-            </div>
+            </div> */}
+            {/* <input className='bg-gray-50 rounded p-2 mb-4' type="password" placeholder='Şifre'
+              onChange={(e) => setPassword(e.target.value)} /> */}
             <input className='bg-gray-50 rounded p-2 mb-4' type="password" placeholder='Şifre'
-              onChange={(e) => setPassword(e.target.value)} />
-            <input className='bg-gray-50 rounded p-2 mb-4' type="password" placeholder='Şifre tekrar'
               onChange={(e) => setPassword(e.target.value)} />
             {success !== null && (
               <div className={`${success ? "text-green-600" : "text-red-600"} mb-2`}>
