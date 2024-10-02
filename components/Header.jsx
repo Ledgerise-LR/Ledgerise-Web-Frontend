@@ -59,7 +59,7 @@ export default function Header() {
         </Link>
 
         {/* Desktop Navigation */}
-        <div className="hidden md:flex ml-12 mr-auto justify-center gap-3 lg:gap-6 items-center">
+        <div className="hidden md:flex ml-12 justify-center gap-3 lg:gap-6 items-center">
           <NavigationLinks isDesktop={true} />
         </div>
         <div className="hidden md:flex items-center">
