@@ -53,7 +53,7 @@ export default function Header() {
 
   return (
     <nav className="border-b z-50 max-md:fixed top-0 left-0 w-full bg-white">
-      <div className={`flex items-center justify-between mx-auto p-4 ${isMobileMenuOpen ? "border-b-2" : ""}`}>
+      <div className={`flex items-center px-8 justify-between mx-auto p-4 ${isMobileMenuOpen ? "border-b-2" : ""}`}>
         <Link href="/">
           <img src="/logo.svg" alt="Ledgerise Logo" className="h-8 md:h-8 lg:h-10" />
         </Link>
@@ -234,10 +234,10 @@ const UserSection = ({ username, handleLogout }) => (
 
 const AuthButtons = ({ setLastVisitedUrl }) => (
   <div className="flex items-center space-x-4">
-    <Link href="/login" onClick={setLastVisitedUrl} className="max-lg:text-sm py-2 px-4 text-gray-700 border rounded hover:bg-gray-100">
+    <Link href="/login" onClick={setLastVisitedUrl} className="font-semibold text-sm py-2 px-4 text-gray-700 border rounded hover:bg-gray-100">
       Giriş Yap
     </Link>
-    <Link href="/login?register" onClick={setLastVisitedUrl} className="max-lg:text-sm py-2 px-4 bg-[rgb(255,168,82)] text-black rounded hover:bg-[rgb(255,145,65)]">
+    <Link href="/login?register" onClick={setLastVisitedUrl} className="font-semibold text-sm py-2 px-4 bg-[rgb(255,168,82)] text-black rounded hover:bg-[rgb(255,145,65)]">
       Hesap Oluştur
     </Link>
   </div>

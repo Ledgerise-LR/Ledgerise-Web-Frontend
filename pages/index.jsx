@@ -71,7 +71,7 @@ export default function Home() {
     async function fetchAsset() {
       
       const showroom = document.getElementById("showroom");
-      showroom.style.filter = "opacity(0.8)";
+      showroom.style.filter = "opacity(1)";
 
         fetch(`${URL}:${PORT}/active-item/get-random-featured-asset?previousTokenId=${previousTokenId}`)
         .then(response => response.json())
@@ -340,8 +340,14 @@ export default function Home() {
           <div className='flex-col w-128 mb-12 z-10'>
             <div className='w-full'>
               <div 
-              className={`h-fit -mt-2 font-semibold font-sans flex flex-col ${windowSize.width < 800 ? "text-4xl px-8" : "text-6xl"} min-[800]:text-6xl`}
+              className={`h-fit -mt-12 font-semibold font-sans flex flex-col ${windowSize.width < 800 ? "text-4xl px-8" : "text-6xl"} min-[800]:text-6xl`}
               >
+                <div className='text-sm flex items-center mb-4'>
+                  <div className='h-10 w-fit mr-2'>
+                    <img className='h-full' src="/itucekirdek.png" alt="itucekirdek" />
+                  </div>
+                  <div className='text-sm font-normal'>girişimidir</div>
+                </div>
                 <div className='mb-2 text-slate-900'>Stok fazlalarını</div>  
                 <div style={{
                 background: "-webkit-linear-gradient(60deg, rgba(240,150,0,1), rgba(120,0,150,1))",
@@ -355,7 +361,7 @@ export default function Home() {
                 <div className='flex items-center'><div className='p-1 bg-[rgb(50,0,20)] text-white rounded-full mr-2'><Trending fontSize='16px'/></div>Ürünler pay bazlı olarak ortaklaşa bağışlanır.</div>
                 <div className='flex items-center'><div className='p-1 bg-[rgb(50,0,20)] text-white rounded-full mr-2'><Trending fontSize='16px'/></div>Bağışçıların ürünlerin doğru ihtiyaç sahiplerine ulaştığından emin olması sağlanır.</div>
               </div>
-              <div className='h-12'></div>
+              <div className='h-10'></div>
             </div>
             <div className='flex items-center'>
               <div className='w-fit mr-6 mt-4 z-10'>
@@ -370,7 +376,7 @@ export default function Home() {
               </div>
             </div>
             <div className='w-full h-20 mt-4'>
-              <div className='text-sm mb-2 text-gray-800 font-light'>İşbirlikçi Paydaşlarımız</div>
+              <div className='text-sm mb-4 text-gray-800 font-light'>İşbirlikçi Paydaşlarımız</div>
               <div className='flex w-full h-6'>
                 {
                   partnerImages.map(eachPartnerImage => {
