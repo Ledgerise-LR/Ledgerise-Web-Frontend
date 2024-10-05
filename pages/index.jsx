@@ -336,11 +336,11 @@ export default function Home() {
   return (
     <div className="w-full h-full pb-28 px-0 pt-28 relative min-[800]:px-20 min-[800]:pt-24 overflow-hidden overflow-x-hidden">
       <div className="w-full h-full flex justify-center min-[1200]:justify-between items-center"> 
-        <div className="flex flex-1 w-3/5 h-4/5 justify-evenly min-[1200]:justify-between px-10 flex-wrap">
+        <div className="flex flex-1 w-3/5 h-4/5 justify-around min-[1200]:justify-between px-4 flex-wrap">
           <div className='flex-col w-128 mb-12 z-10'>
             <div className='w-full'>
               <div 
-              className={`h-fit -mt-12 font-semibold font-sans flex flex-col ${windowSize.width < 800 ? "text-4xl px-8" : "text-6xl"} min-[800]:text-6xl`}
+              className={`h-fit -mt-12 font-semibold font-sans flex flex-col ${windowSize.width < 800 ? "text-4xl" : "text-6xl"} min-[800]:text-6xl`}
               >
                 <div className='text-sm flex items-center mb-4'>
                   <div className='h-10 w-fit mr-2'>
@@ -390,9 +390,9 @@ export default function Home() {
               </div>
             </div>
           </div>
-          <div className="w-96 h-fit relative bg-white z-10 max-[800]:mt-20">
+          <div className="w-96 h-fit relative bg-white z-10 max-[800]:mt-20 mt-4">
             <a href={`/assets?id=${asset.tokenId}&subcollectionId=${asset.subcollectionId}&nftAddress=${asset.nftAddress}`}>
-              <div id='showroom' className={`relative w-96 h-fit flex flex-1 transition-all bg-white flex-col justify-center border-2 overflow-hidden border-black rounded -mt-12 shadow-[30px_20px_0_0_rgba(80,0,100,0.5),30px_20px_0_0_rgba(80,40,0,0.7)]`}>
+              <div id='showroom' className={`relative w-96 h-fit flex flex-1 transition-all bg-white flex-col justify-center border-2 overflow-hidden border-black rounded -mt-12`}>
                 <div className='border-b-2 border-black h-80 w-full flex justify-center overflow-hidden items-center'>
                   <img src={imageURI} alt={tokenName} className='w-full' />
                 </div>
@@ -417,7 +417,7 @@ export default function Home() {
           </div>
         </div>
       </div>
-      <div className='h-12 w-full flex justify-center gap-12 bg-orange-100 py-20'>
+      <div className='w-full flex justify-center gap-12 bg-gray-50 py-10 mt-12 flex-wrap h-fit'>
       <div className='flex items-center'>
           <div className='text-orange-900'><FaHandsHelping size={"48px"}/></div>
           <div className='flex items-center flex-col justify-center'>
@@ -442,12 +442,14 @@ export default function Home() {
       </div>
       <div className='w-full h-100 mt-16 mb-60 relative'>
         <div className='w-full flex justify-center text-center text-sm pt-12 text-yellow-500 font-bold'>Teslim edildi bile!</div>
-        <div className='w-full flex justify-center text-center border-b mb-4 pb-12 text-3xl'>%100 şeffaf ve güvenilir bağış ağını keşfedin!</div>
+        <div className='w-full flex justify-center text-center border-b mb-4 pb-2 text-3xl'>%100 şeffaf ve güvenilir bağış ağını keşfedin!</div>
+        <div className='w-full h-108'>
           <Map
-            center={{latitude: ((41.47202 + 40.7021) / 2) * 1000, longitude: ((28.46316 + 29.5983) / 2) * 1000}}
-            visualVerifications={visualVerifications}
-            zoom={11}
-          />
+              center={{latitude: ((41.47202 + 40.7021) / 2) * 1000, longitude: ((28.46316 + 29.5983) / 2) * 1000}}
+              visualVerifications={visualVerifications}
+              zoom={11}
+            />
+        </div>
       </div>
       <div className='mb-12 w-full h-fit'>
         <div className='w-full flex justify-center text-center text-sm text-yellow-500 font-bold'>Gönül rahatlığıyla...</div>
@@ -581,7 +583,9 @@ export default function Home() {
               ? pressLinks.map(eachPressLink => {
                 return(
                   <a href={eachPressLink.link} target='_blank' className='w-96 aspect-square mr-4 mt-8 relative flex flex-col justify-end cursor-pointer hover:scale-105 transition-all'>
-                    <img src={eachPressLink.photo} alt={eachPressLink.photo} className='w-full h-full absolute z-0' />
+                    <div className='w-full h-full absolute z-0 flex justify-center pt-12'>
+                      <img className='w-full h-fit' src={eachPressLink.photo} alt={eachPressLink.photo} />
+                    </div>
                     <div className='z-20 w-full h-fit bg-gray-100 p-4'>
                       <div className='text-sm'>{eachPressLink.source}</div>
                       <div className='text-gray-700 font-semibold text-lg mb-4'>{eachPressLink.title}</div>
