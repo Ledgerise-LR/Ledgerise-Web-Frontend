@@ -1,7 +1,7 @@
 
 import { useEffect, useState } from "react";
 
-export default function CargoCar({ index, animationText, previousWidth, nextWidth }) {
+export default function CargoCar({ index, animationText, previousWidth, nextWidth, width }) {
 
 
   const [progressBarWidth, setProgressBarWidth] = useState("");
@@ -19,7 +19,7 @@ export default function CargoCar({ index, animationText, previousWidth, nextWidt
   return (
     <div>
       <div className="relative flex items-end w-full">
-        <div className='mb-1 flex-grow'>{animationText}</div>
+        <div className={`mb-1 flex-grow ${width < 800 ? "mb-8" : ""}`}>{animationText}</div>
         <div 
           className='absolute' 
           style={{ width: progressBarWidth, transition: "all 0.5s ease 0s" }} 
@@ -31,10 +31,10 @@ export default function CargoCar({ index, animationText, previousWidth, nextWidt
       </div>
       <div className='relative w-full h-8 bg-[#838383] rounded-full overflow-hidden'>
         <div className='absolute w-full h-full flex justify-evenly items-center'>
-          {Array.from({ length: 10 }).map(() => (
+          {Array.from({ length: 8 }).map(() => (
             <div
               key={index}
-              className='h-1 w-6 bg-white'
+              className='h-1 w-1/12 bg-white'
             ></div>
           ))}
         </div>

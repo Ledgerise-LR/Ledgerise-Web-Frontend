@@ -476,13 +476,13 @@ export default function Home() {
         </div>
       </div>
 
-      <div id="solutions" className={`w-1/2 text-lg text-center mx-auto bg-[#2c202b] text-white rounded-md font-extralight p-2 mb-4 ${windowSize.width < 800 ? "hidden" : ""}`}>
+      <div id="solutions" className={`w-1/2 text-lg text-center mx-auto bg-[#2c202b] text-white rounded-md font-extralight p-2 mb-4 ${windowSize.width < 800 ? "w-3/4" : ""}`}>
         Stok yönetiminden bağış kampanyalarına. Ledgerise firmalara, STK’lara ve bağışçılara <span className='text-[#FFA851]'>Kazan Kazan</span> durumu yaratıyor. <span className='bg-[#FFA851] text-[#2c202b] font-normal'>Fark yaratan teknolojilerimiz:</span>
       </div>
 
-      <div className={`flex xl:w-4/5 mx-auto bg-[#2c202b] rounded-md p-6 ${windowSize.width < 800 ? "hidden" : ""}`}>
-        <div className="w-1/4 text-[#b3b3b3] text-xl">
-          <ul>
+      <div className={`flex xl:w-4/5 mx-auto bg-[#2c202b] rounded-md p-6 ${windowSize.width < 800 ? "flex-col" : ""}`}>
+        <div className={`w-1/4 text-[#b3b3b3] text-xl ${windowSize.width < 800 ? "flex w-full text-sm overflow-x-scroll" : ""}`}>
+          <ul className={`${windowSize.width < 800 ? "flex w-full" : ""}`}>
             {sections.map((section, index) => (
               <li
                 key={section.id}
@@ -499,18 +499,18 @@ export default function Home() {
 
         <div className="w-px mx-4 bg-gradient-to-b from-[#383838] via-[#A4A4A4] to-[#383838]"></div>
 
-        <div className="w-3/4 p-8 text-white">
+        <div className={`w-3/4 p-8 text-white ${windowSize.width < 800 ? "w-full" : ""}`}>
           {sections.map((section, index) =>
             selectedSection === section.id ? 
               <div key={section.id}>
                 <div className=''>
-                  <CargoCar index={index} animationText={section.animationText} previousWidth={`${16 + (index) * (84 / sections.length)}%`} nextWidth={`${16 + (index+1) * (84 / sections.length)}%`}/>
+                  <CargoCar width={windowSize.width} index={index} animationText={section.animationText} previousWidth={`${16 + (index) * (84 / sections.length)}%`} nextWidth={`${16 + (index+1) * (84 / sections.length)}%`}/>
                 </div>
 
                 <h2 className="mt-4 text-2xl font-semibold">{section.title}</h2>
                 <p className="mt-1 font-extralight italic">{section.content}</p>
-                <div className={`${((section.id === 'collaborate') || (section.id === 'safeView')) ? '' : 'flex gap-3 items-end'}`}>
-                  <ul className="mt-4 space-y-3 font-extralight w-3/5 self-start">
+                <div className={`${windowSize.width < 800 ? "flex-col" : ""} ${((section.id === 'collaborate') || (section.id === 'safeView')) ? '' : 'flex gap-3 items-end'}`}>
+                  <ul className={`${windowSize.width < 800 ? "w-full" : ""} mt-4 space-y-3 font-extralight w-3/5 self-start`}>
                     {Object.values(section.list).map((item, index) => (
                       <li key={index} className=''>
                         <FaCheckCircle className='my-auto mr-3 text-[#FFA851] inline'></FaCheckCircle>
