@@ -1,4 +1,5 @@
 import { FaSpinner, FaShoppingCart, FaStar } from 'react-icons/fa';
+import { useBasket } from 'utils/BasketContext';
 
 const products = [
     {
@@ -94,15 +95,22 @@ const products = [
 ];
 
 export default function Home() {
+    const { addToBasket } = useBasket(); // Access the addToBasket function
+
     return (
         <>
             <header className='w-full bg-[rgb(255,168,82)] py-4 shadow-md'>
-                <div className='container mx-auto'>
+                <div className='container mx-auto flex justify-between items-center'>
                     <h1 className='text-3xl font-bold italic text-center text-white'>
                         İHTİYAÇ PAZARYERİ
                     </h1>
+                    <a href="/basket" className='flex items-center bg-white text-[#34495e] px-2 py-1 rounded-md hover:bg-gray-200 transition'>
+                        <FaShoppingCart className='mr-3' />
+                        <span>Sepetim</span>
+                    </a>
                 </div>
             </header>
+
             <main className='mx-auto px-4 xs:px-6 sm:px-8 md:px-10 lg:px-12 py-6'>
                 <div className='grid xs:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6'>
                     {products.map((product) => (
@@ -116,7 +124,7 @@ export default function Home() {
                                 />
                             </a>
                             <div className='p-4 flex flex-col flex-1'>
-                                <a href={`/product?id=${product.itemId}`} className='text-lg font-semibold text-gray-800 hover:text-indigo-600'>
+                                <a href={`/product?id=${product.itemId}`} className='text-lg font-semibold text-gray-800 hover:text-[#34495e]'>
                                     {product.name}
                                 </a>
                                 <p className='text-gray-600 mt-2 flex-1 text-sm'>
@@ -135,10 +143,13 @@ export default function Home() {
                                 </div>
 
                                 <div className='mt-4 flex items-center justify-between'>
-                                    <span className='text-md font-bold text-indigo-600'>
+                                    <span className='text-md font-bold text-[#34495e]'>
                                         {product.price ? `${product.price} TL` : 'Fiyat Belirtilmemiş'}
                                     </span>
-                                    <button className='flex items-center bg-indigo-600 text-white px-2 py-1 rounded-md hover:bg-indigo-700 transition'>
+                                    <button
+                                        className='flex items-center bg-[#34495e] text-white px-2 py-1 rounded-md hover:bg-indigo-700 transition'
+                                        onClick={() => addToBasket({ id: product.itemId, name: product.name, price: product.price, image: product.image })}
+                                    >
                                         <FaShoppingCart className='mr-1' />
                                     </button>
                                 </div>
@@ -153,9 +164,6 @@ export default function Home() {
                     ))}
                 </div>
             </main>
-            <footer className='w-full bg-gray-800 text-white py-4 text-center'>
-                © {new Date().getFullYear()} İHTİYAÇ PAZARYERİ. Tüm hakları saklıdır.
-            </footer>
         </>
     );
 }
