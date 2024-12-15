@@ -93,48 +93,48 @@ export default function Header() {
 }
 
 const navigationItems = [
-  { desktop: true, mobile: true, href: "/collections", label: "Kampanyalar" },
-  { desktop: true, mobile: false, href: "/#", label: "Ürünler" },
-  { desktop: true, mobile: false, href: "/api-documentation", label: "Entegrasyon" },
-  { desktop: true, mobile: true, href: "/team", label: "Hakkımızda" },
-  { desktop: false, mobile: true, href: "/login", label: "Giriş Yap" },
-  { desktop: false, mobile: true, href: "/register", label: "Hesap Oluştur" }
+  { desktop: true, mobile: true, href: "/collections", label: "Campaigns" },
+  { desktop: true, mobile: false, href: "/#", label: "Solutions" },
+  { desktop: true, mobile: false, href: "/api-documentation", label: "Integration" },
+  { desktop: true, mobile: true, href: "/team", label: "About Us" },
+  { desktop: false, mobile: true, href: "/login", label: "Log In" },
+  { desktop: false, mobile: true, href: "/register", label: "Create Account" }
 ];
 
 const dropdownMenu = {
-  "Ürünler": [
+  "Solutions": [
     {
-      title: "Stok Yönetim",
-      content: ["LR Dashboard", "LR Entegrasyon", "LR Collaborate"],
-      description: ["Tek tıkla e-bağış pazaryeri.", "1 saatten kısa sürede entegrasyon.", "Ortak amaç, ortak bağış."],
+      title: "Stock Management",
+      content: ["LR Dashboard", "LR Entegration", "LR Collaborate"],
+      description: ["One-click e-donation marketplace.", "Integration in less than 1 hour.", "Common goal, common donation."],
       href: ["dashboard", "entegration", "collaborate"]
     },
     {
-      title: "Güvenilir Bağış",
+      title: "Reliable Donation",
       content: ["LR ESCROW", "LR Lens", "LR LensBot"],
-      description: ["Paranız, ürün sahibine ulaşana kadar güvendedir.", "Gücünü NFT'den alan AI kamera.", "Kargo anlaşması şart değil."],
+      description: ["Your money is safe until the product reaches its owner.", "AI camera powered by NFT.", "Shipping agreement not required."],
       href: ["deliverTrust", "lens", "lensBot"]
     },
     {
-      title: "Gizlilik",
+      title: "Privacy",
       content: ["SafeView"],
-      description: ["İhtiyaç sahibi verileri gizlidir."],
+      description: ["The data of beneficiaries remain confidential."],
       href: ["safeView"]
     }
   ],
-  "Hakkımızda": [
+  "About Us": [
     {
-      title: "Hakkımızda",
-      content: ["Hikayemiz", "Newsroom"],
-      description: ["Sürdürülebilir stok yönetimi için çalışıyoruz. Detaylı bilgi ve yönetim kurulunu görüntülemek için tıklayınız.", "Teknoloji gündemine konu olan haberleri görüntülemek için tıklayın."],
+      title: "About Us",
+      content: ["Our Story", "Newsroom"],
+      description: ["We work for sustainable stock management. Click here for detailed information and to view the board of directors.", "Click here to view the news on the technology agenda."],
       href: ["team", "#newsroom"]
     }
   ],
-  "Entegrasyon": [
+  "Integration": [
     {
-      title: "Firmalar için",
-      content: ["Dashboard", "API Dökümentasyonu"],
-      description: ["Tek tıkla e-ticaret altyapısı ile Ledgerise ihtiyaç pazaryerinde ürünlerinizi indirimli fiyatına listeleyebilirsiniz.", "E-ticaret altyapınız hazırsa, API dökümentasyonu üzerinden ürün listeleme işlemlerinizi hali hazırdaki sisteminize entegre edebilirsiniz."],
+      title: "For companies",
+      content: ["Dashboard", "API Documentation"],
+      description: ["With one click, you can list your products at a discounted price on the Ledgerise marketplace with e-commerce infrastructure.", "If your e-commerce infrastructure is ready, you can integrate your product listing processes into your existing system via API documentation."],
       href: ["company", "api-documentation"]
     }
   ]
@@ -166,10 +166,10 @@ const NavigationLinks = ({ isDesktop, closeMenu }) => {
                 }}
               >
                 {item.label}
-                {(item.label === "Ürünler" || item.label === "Hakkımızda" || item.label === "Entegrasyon") ? <FaAngleDown /> : ""}
+                {(item.label === "Solutions" || item.label === "About Us" || item.label === "Integration") ? <FaAngleDown /> : ""}
               </Link>
 
-              {((item.label === "Ürünler" || item.label === "Hakkımızda" || item.label === "Entegrasyon") && (item.label === dropdownLabel) && isDropdownOpen) && (
+              {((item.label === "Solutions" || item.label === "About Us" || item.label === "Integration") && (item.label === dropdownLabel) && isDropdownOpen) && (
                 <div className="flex w-fit absolute left-0 bg-white border rounded-md shadow-lg z-50">
                   {dropdownMenu[item.label].map((menu, index) => (
                     <div key={menu.title} className="p-4 border-r">
@@ -192,7 +192,7 @@ const NavigationLinks = ({ isDesktop, closeMenu }) => {
                       <div className="flex flex-col gap-2 p-4 w-64">
                         {menu.content.map((content, index) => (
                           <div className="mb-4">
-                            <Link key={index} href={`${item.label == "Ürünler" ? `/?section=${menu.href[index]}`: `/${menu.href[index]}`}`} onClick={closeMenu} className="text-md hover:text-orange-500 transition">
+                            <Link key={index} href={`${item.label == "Solutions" ? `/?section=${menu.href[index]}`: `/${menu.href[index]}`}`} onClick={closeMenu} className="text-md hover:text-orange-500 transition">
                               {content}
                             </Link>
                             <p className="text-sm text-gray-500">{menu.description[index]}</p>
@@ -226,7 +226,7 @@ const UserSection = ({ username, handleLogout }) => (
       onClick={handleLogout}
       className="text-red-500 hover:underline max-md:text-red-600"
     >
-      Çıkış Yap
+      Log Out
     </button>
   </div>
 );
@@ -235,10 +235,10 @@ const UserSection = ({ username, handleLogout }) => (
 const AuthButtons = ({ setLastVisitedUrl }) => (
   <div className="flex items-center space-x-4">
     <Link href="/login" onClick={setLastVisitedUrl} className="font-semibold text-sm py-2 px-4 text-gray-700 border rounded hover:bg-gray-100">
-      Giriş Yap
+      Log In
     </Link>
     <Link href="/login?register" onClick={setLastVisitedUrl} className="font-semibold text-sm py-2 px-4 bg-[rgb(255,168,82)] text-black rounded hover:bg-[rgb(255,145,65)]">
-      Hesap Oluştur
+      Create Account
     </Link>
   </div>
 );

@@ -57,7 +57,7 @@ export default function App({ Component, pageProps }) {
             }
           </NotificationProvider>
         </MoralisProvider>
-      </GoogleOAuthProvider>;
+      </GoogleOAuthProvider>
     </div>
   )
 }

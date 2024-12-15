@@ -11,9 +11,9 @@ import { URL, PORT } from '@/serverConfig';
 export default function DisplayMap({ center, visualVerifications, zoom, chainId, ledgeriseLensNftAddress }) {
 
   const keyToStringMapping = {
-    "stamp": "Üretildi",
-    "shipped": "Depoya ulaştı",
-    "delivered": "Teslim edildi"
+    "stamp": "Produced",
+    "shipped": "Shipped",
+    "delivered": "Delivered"
   }
 
   function prettyDate(timestamp) {
@@ -133,7 +133,7 @@ export default function DisplayMap({ center, visualVerifications, zoom, chainId,
             <Marker position={[latitude, longitude]}>
               <Popup>
                 <div className="w-36 items-end h-50 relative">
-                  <a href="/login" target="_blank" style={{ transition: "all 0.5s ease-in" }} className="absolute w-full h-full bg-slate-50 z-10 bg-opacity-20 flex justify-center items-center text-center opacity-0 hover:opacity-50 cursor-pointer">Tam raporu görüntülemek için giriş yapınız</a>
+                  <a href="/login" target="_blank" style={{ transition: "all 0.5s ease-in" }} className="absolute w-full h-full font-bold bg-slate-50 z-10 bg-opacity-20 flex justify-center items-center text-center opacity-0 hover:opacity-50 cursor-pointer">Log in to see full report!</a>
                   <img className="w-full blur-md" src={`https://ipfs.io/ipfs/${verification.tokenUri}`} alt="" />
                   <div className="ml-4 w-full flex flex-col">
                     <div className="mb-2 mt-1 text-base text-bold text-slate-800">{keyToStringMapping[verification.key]} <span className="text-xs text-slate-500"></span></div>

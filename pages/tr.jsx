@@ -43,26 +43,26 @@ export default function Home() {
 
   const [testimonials, setTestimonials] = useState([{
     name: "Özge K.",
-    description: "Marketing Specialist, Türkiye 🇹🇷",
-    testimonial: "Thanks to Ledgerise, I could view that all my donations during Ramadan met the beneficiary.",
+    description: "Pazarlama Uzmanı, Türkiye",
+    testimonial: "Ledgerise sayesinde bu ramazanda yaptığım bağışın güvenle teslim edildiğini görebildim.",
     photo: "ozge.png"
   },
   {
     name: "Esen K.",
-    description: "Bank Officer, Germany 🇩🇪",
-    testimonial: "Regardless of geography, I can trace all the process through personalized reports.",
+    description: "Bankacı, Almanya",
+    testimonial: "Ülke fark etmeksizin, bireysel rapor üzerinden tüm süreci takip edebiliyorum.",
     photo: "esen.png"
   },
   {
     name: "Olga S.",
-    description: "Lawyer, Ukraine 🇺🇦",
-    testimonial: "Seeing my donations delivered made me truly happy!",
+    description: "Avukat, Ukrayna",
+    testimonial: "Yaptığım bağışları takip ederek teslimatın gerçekleşteğini görmek beni mutlu etti.",
     photo: "olga.png"
   },
   {
     name: "Uygar D.",
-    description: "Businessman, Türkiye 🇹🇷",
-    testimonial: "A wonderful initiative. It is an extraordinary experience for me seeing my donation used for the right people.",
+    description: "İş İnsanı, Türkiye",
+    testimonial: "Mükemmel bir insiyatif. Bağışımın doğru yerde kullanılması benim için farklı bir deneyim.",
     photo: "uygarbey.png"
   }
   ]);
@@ -182,15 +182,15 @@ export default function Home() {
 
   const pressLinks = [
     {
-      title: "Ledgerise collaborating with local authorities in aid campaigns!",
+      title: "Ledgerise, yardım kampanyalarında yerel yönetimler ile işbirliği içerisinde",
       photo: "/basin_sosyalup.png",
-      source: "SosyalUp Journal",
+      source: "SosyalUp Magazini",
       link: "https://sosyalup.net/ledgerise-yardim-kampanyalarinda-yerel-yonetimler-ile-isbirligi-icerisinde/",
       twitter: "https://x.com/SosyalUp/status/1808470752657850425",
       linkedin: "https://www.linkedin.com/pulse/sosyalup-b%C3%BClten-sosyal-up-gjfbf/"
     },
     {
-      title: "Ledgerise in local authorities' social campaigns!",
+      title: "Yerel yönetim yardım kampanyalarında Ledgerise",
       photo: "/basin_ict.png",
       source: "ICT Media",
       link: "https://ictmedia.com.tr/haber/ledgerise-yardim-kampanyalarinda-yerel-yonetimler-ile-isbirligi-icerisinde",
@@ -198,7 +198,7 @@ export default function Home() {
       linkedin: "https://www.linkedin.com/posts/ictmedya_ledgerise-yard%C4%B1m-kampanyalar%C4%B1nda-yerel-y%C3%B6netimler-activity-7214255177443254273-VUDl/?originalSubdomain=tr"
     },
     {
-      title: "PRESS RELEASE - Ledgerise: an innovative solution that make donations tracable...",
+      title: "BASIN AÇIKLAMASI - Ledgerise: bağışları takip edilebilir kılan yenilikçi bir çözüm...",
       photo: "/basin_matriks.png",
       source: "Matriks",
       link: "https://www.matriksdata.com/website/matriks-haberler/sirket/5231423-ledgerise-bagislari-takip-edilebilir-kilan-yenilikci-bir-cozum-sunuyor-basin-aciklamasi",
@@ -211,23 +211,23 @@ export default function Home() {
     {
       photo: "supplyChain1.svg",
       alt: "donate",
-      span: "Trustfully",
-      title: "DONATE",
-      description: "Click on the campaign you want to donate to from the 'How to donate?' tab. When making your donation, you must provide your email address to the organization running the campaign."
+      span: "Güvenle",
+      title: "BAĞIŞLA",
+      description: "“Nasıl bağış yapılır?” sekmesinden bağış yapmak istediğiniz kampanyaya tıklayın. Bağışınızı yaparken kampanyayı yürüten kuruluşa e-posta adresinizi belirtmeniz gerekir."
     },
     {
       photo: "supplyChain2.svg",
       alt: "match",
-      span: "Instantly",
-      title: "PAIRED",
-      description: "As soon as you make a donation, a QR code is created in your name. This QR code is located on your donation and is scanned by distribution staff during production, storage and delivery."
+      span: "Anında",
+      title: "EŞLENDİ",
+      description: "Siz bağış yapar yapmaz adınıza bir karekod oluşturulur. Bu karekod bağışınızın üzerinde yer alır ve dağıtım görevlileri tarafından üretim, depo ve teslimatta taratılır."
     },
     {
       photo: "supplyChain3.svg",
       alt: "delivery",
-      span: "%100 Transparent",
-      title: "DELIVERY",
-      description: "Once scanned, the image, location and timestamp of the parcel are instantly recorded on the blockchain. You can be sure that your donation reaches the person in need through the emails you receive."
+      span: "%100 Şeffaf",
+      title: "TESLİMAT",
+      description: "Taratılma gerçekleştiği anda kolinin görüntüsü, lokasyonu ve zaman damgası anında blokzincire kaydedilir. Size gelen mailler üzerinden bağışınızın ihtiyaç sahibine ulaştığından emin olursunuz."
     }
   ]
   
@@ -250,85 +250,85 @@ export default function Home() {
     { 
       id: 'dashboard', 
       section: 'LR Dashboard',
-      title: 'Easy Stock Management', 
-      content: 'Easily list, update and publish stocks',
+      title: 'Kolay Stok Yönetimi', 
+      content: 'Stokları kolayca listeleyin, güncelleyin ve yayınlayın',
       list: [
-        'It is developed for companies that do not currently have an e-commerce infrastructure and who perform manual inventory management.',
-        'Companies can easily manage stock, track cargo, create QR codes and start campaigns via an all-in-one panel.',
-        'In this way, an integrative, simple and easy-to-use infrastructure system is offered to SMEs and local tradesmen.'
+        'Hali hazırda bir e-ticaret altyapısı olmayan ve stok yönetimini manuel yapan firmalar için geliştirilir.',
+        'Firmalar kolaylıkla stok yönetimi, kargo takibi, QR kod oluşturma ve kampanya başlatma işlemlerini all-in-one bir panel üzerinden yapabilir.',
+        'Bu sayede kobilere ve yerel esnaflara bütünleyici, sade ve kullanımı kolay bir altyapı sistemi sunulur.'
       ],
-      animationText: 'List with one click',
+      animationText: 'Tek tıkla listele',
       images: ["solutions/dashboard.png"]
     },
     { 
       id: 'entegration', 
       section: 'LR Entegration',
-      title: 'Integration at Jet Speed', 
-      content: 'Easily define products from your own system in the LR management API.',
+      title: 'Jet Hızında Entegrasyon', 
+      content: 'Kendi sisteminizdeki ürünleri kolayca LR yönetim API’sinde tanımlayın.',
       list: [
-        'It is for companies that manage inventory in an e-commerce infrastructure or cloud-based system.',
-        'With our software team providing 24/7 support, integration is possible in less than 1 hour.',
-        'Use it with peace of mind with our successful penetration tests, 99.5124% uptime percentage and 5-layer system security.'
+        'Bir E-ticaret altyapısı veya bulut tabanlı sistemde stok yönetimi yapan firmalar içindir.',
+        '24/7 destek veren yazılım ekibimiz ile entegrasyon 1 saatten bile kısa bir sürede mümkün.',
+        'Başarılı penetration testlerimiz, 99.5124% uptime yüzdemiz ve 5 katmanlı sunucu güvenliğimiz ile gönül rahatlığıyla kullanın.'
       ],
-      animationText: 'Integration completed in 1 hour',
+      animationText: '1 saatte biten entegrasyon',
       images: ["solutions/entegrasyon.png"]
     },
     { 
       id: 'collaborate', 
       section: 'LR Collaborate',
       title: 'LR Collaborate', 
-      content: 'Donate a percentage share of a product!',
+      content: 'Bir ürüne yüzdesel pay üzerinden ortak olun!',
       list: [
-        'With LR Collaborate, you can donate an item in partnership with other donors instead of donating it on your own. No matter how much you donate, LR shows you that your donation is making a tangible impact.'
+        'LR Collaborate ile bir ürünü tek başınıza bağışlamak yerine diğer bağışçılarla ortaklaşa bağışlayabilirsiniz. Ne kadar bağış yaparsanız yapın, LR size bağışınızla somut bir etki yarattığınızı gösterir'
       ],
-      animationText: 'Common purpose, common donation',
+      animationText: 'Ortak amaç, ortak bağış',
       images: ["solutions/collaborate1.png", "solutions/collaborate2.png", "solutions/collaborate3.png"]
     },
     { 
       id: 'deliverTrust', 
       section: 'LR DeliverTrust',
-      title: 'LR ESCROW Model', 
-      content: 'It is a guarantee that your donation reaches the real needy.',
+      title: 'LR ESCROW Modeli', 
+      content: 'Bağışınızın gerçek ihtiyaç sahibine ulaştığının garantörüdür.',
       list: [
-        'When your donation is processed on Ledgerise, an NFT is created in your name, acknowledging that we have escrowed your donation. This way, your donation is protected by an immutable escrow certificate.',
-        'Your donation will only be sent to the stocking company when it is verified with a photo that the required product has reached the real person in need.',
-        'If your donation does not reach the person in need for a certain reason, your donation will be refunded to you.'
+        'Bağışınız Ledgerise üzerinde işlendiğinde, bağışladığınız parayı emanet aldığımıza dair sizin adınıza bir NFT yaratılır. Bu sayede bağışınız değiştirilemez bir emanet sertifikasıyla korunur.',
+        'Bağışınız yalnızca gerekli ürünün gerçek ihtiyaç sahibine ulaştığı fotoğraf ile doğrulandığında stok sahibi firmaya gönderilir.',
+        'Eğer bağışınız belli bir sebeple ihtiyaç sahibine ulaşamazsa, bağışınızın size geri iadesi sağlanır.'
       ],
-      animationText: 'We bring a new dimension to donation'
+      animationText: 'Bağışa yeni bir boyut getiriyoruz'
     },
     { 
       id: 'lens', 
       section: 'LR Lens',
-      title: 'LR Lens AI Camera', 
-      content: 'It was already delivered safe and sound',
+      title: 'LR Lens AI Kamera', 
+      content: 'Sağ salim teslim edildi bile',
       list: [
-        'Lr Lens is an AI camera that can be easily integrated into mobile devices. Donated products are scanned with LR Lens at production, warehouse and delivery points.',
-        'The location, time and image of the product are simultaneously NFTed.',
-        'In this way, donors can be absolutely sure that their donations reach the real needy.'
+        'Lr Lens mobil cihazlara kolay entegre olabilen bir AI kameradır. Bağış ürünleri üretim, depo ve teslimat noktalarında LR Lens ile taratılır.',
+        'Eş zamanlı bir şekilde ürünün lokasyonu, zamanı ve görüntüsü NFT’leştirilir. ',
+        'Bu sayede bağışçılar bağışların gerçek ihtiyaç sahibine ulaştığından kesin olarak emin olur.'
       ],
-      animationText: '100% reliable and transparent',
+      animationText: '%100 güvenilir ve şeffaf',
       videoSrc: ["solutions/lensAI.mp4"]
     },
     { 
       id: 'safeView', 
       section: 'LR SafeView',
       title: 'LR SafeView', 
-      content: 'Personal data is protected with the highest sensitivity.',
+      content: 'Kişisel veriler en yüksek hassasiyette koruma altında',
       list: [
-        'With our adaptive artificial intelligence algorithm, LR Safeview detects and freezes personal images belonging to those in need. It detects images that do not pose a risk and offers the donor the experience of handing them over to them.'
+        'Adaptif yapay zeka algoritmamız ile LR Safeview ihtiyaç sahibine ait kişisel görüntüleri tespit ederek buzlar. Risk arz etmeyen görüntüleri tespit ederek bağışçıya kendi elleriyle teslim etme deneyimi sunar.'
       ],
-      animationText: "Don't worry, it's private and protected.",
+      animationText: 'Merak etmeyin, gizli ve korumalı',
       images: ["solutions/safeview1.png", "solutions/safeview2.png", "solutions/safeview3.png"]
     },
     { 
       id: 'lensBot', 
       section: 'LR LensBot',
       title: 'LR Lens TelegramBot', 
-      content: 'It is possible even in places where cargo cannot reach.',
+      content: 'Kargonun yetişemediği yerlerde bile mümkün.',
       list: [
-        'For businesses listing less than 50 products, donor notification is possible via TelegramBot without the need for cargo integration.'
+        '50’nin altında ürün listeleyen işletmelerde kargo entegrasyonuna gerek kalmadan TelegramBot üzerinden bağışçı bildirimi mümkün.'
       ],
-      animationText: 'If you do not have a cargo agreement.',
+      animationText: 'Kargo anlaşmanız yoksa',
       images: ["solutions/lensBot.png"]
     }
   ];
@@ -346,37 +346,37 @@ export default function Home() {
                   <div className='h-10 w-fit mr-2'>
                     <img className='h-full' src="/itucekirdek.png" alt="itucekirdek" />
                   </div>
-                  <div className='text-sm font-normal'>acceleration program start-up</div>
+                  <div className='text-sm font-normal'>girişimidir</div>
                 </div>
-                <div className='mb-2 text-slate-900'>Technology that makes</div>  
+                <div className='mb-2 text-slate-900'>Stok fazlalarını</div>  
                 <div style={{
                 background: "-webkit-linear-gradient(60deg, rgba(240,150,0,1), rgba(120,0,150,1))",
                 WebkitBackgroundClip: "text",
                 WebkitTextFillColor: "transparent"
-              }} className='pb-2 w-fit'>100% transparent</div>
-                <div className='text-slate-900'>donation possible</div>
+              }} className='pb-2 w-fit'>değere dönüştüren</div>
+                <div className='text-slate-900'>ihtiyaç pazaryeri</div>
               </div>
               <div className="text-black flex flex-col gap-2 mt-12 font-sans text-lg min-[800]:w-full min-[800]:text-lg">
-                <div className='flex items-center'><div className='p-1 bg-[rgb(50,0,20)] text-white rounded-full mr-2'><Trending fontSize='16px'/></div>Companies list their excess stock in our system with a single click.</div>
-                <div className='flex items-center'><div className='p-1 bg-[rgb(50,0,20)] text-white rounded-full mr-2'><Trending fontSize='16px'/></div>Products are donated by donors jointly on a share basis.</div>
-                <div className='flex items-center'><div className='p-1 bg-[rgb(50,0,20)] text-white rounded-full mr-2'><Trending fontSize='16px'/></div>Donors are assured that the products reach the right people in need.</div>
+                <div className='flex items-center'><div className='p-1 bg-[rgb(50,0,20)] text-white rounded-full mr-2'><Trending fontSize='16px'/></div> Stokların %5'i, %50'ye varan indirimli fiyatı üzerinden listelenir.</div>
+                <div className='flex items-center'><div className='p-1 bg-[rgb(50,0,20)] text-white rounded-full mr-2'><Trending fontSize='16px'/></div>Ürünler pay bazlı olarak ortaklaşa bağışlanır.</div>
+                <div className='flex items-center'><div className='p-1 bg-[rgb(50,0,20)] text-white rounded-full mr-2'><Trending fontSize='16px'/></div>Bağışçıların ürünlerin doğru ihtiyaç sahiplerine ulaştığından emin olması sağlanır.</div>
               </div>
               <div className='h-10'></div>
             </div>
             <div className='flex items-center'>
               <div className='w-fit mr-6 mt-4 z-10'>
                 <a href="/collections">
-                  <div className="p-4 bg-[rgb(255,168,82)] border-2 border-[rgb(255,168,82)] text-center text-black font-bold rounded tracking-wide max-[800]:text-sm">Explore Campaigns</div>
+                  <div className="p-4 bg-[rgb(255,168,82)] border-2 border-[rgb(255,168,82)] text-center text-black font-bold rounded tracking-wide max-[800]:text-sm">Kampanyaları Keşfet</div>
                 </a>
               </div>
               <div className='w-fit mt-4 z-10'>
                 <a href="/login">
-                  <div className="p-4 bg-white border-2 text-center border-black text-black font-bold rounded tracking-wide max-[800]:text-sm">View Donation Report</div>
+                  <div className="p-4 bg-white border-2 text-center border-black text-black font-bold rounded tracking-wide max-[800]:text-sm">Bağış Raporunu Görüntüle</div>
                 </a>
               </div>
             </div>
             <div className='w-full h-20 mt-4'>
-              <div className='text-sm mb-4 text-gray-800 font-light'>Collaborative Partners</div>
+              <div className='text-sm mb-4 text-gray-800 font-light'>İşbirlikçi Paydaşlarımız</div>
               <div className='flex w-full h-6'>
                 {
                   partnerImages.map(eachPartnerImage => {
@@ -404,9 +404,9 @@ export default function Home() {
                       <div className='uppercase text-black text-sm h-12'>{tokenName}</div>
                     </div>
                     <div className='flex-col flex items-end'>
-                      <div className='text-xs text-black'>Total donation:</div>
+                      <div className='text-xs text-black'>Toplam Bağış:</div>
                       <div style={{backgroundColor: "#000"}} className='w-36 p-2 rounded text-white flex justify-end items-center px-5'>
-                        <span className='text-white mr-2 text-sm'>{Number(asset.totalDonated)} aid parcel</span>
+                        <span className='text-white mr-2 text-sm'>{Number(asset.totalDonated)} bağış kolisi</span>
                       </div>
                     </div>
                   </div>
@@ -422,27 +422,27 @@ export default function Home() {
           <div className='text-orange-900'><FaHandsHelping size={"48px"}/></div>
           <div className='flex items-center flex-col justify-center'>
             <div className='font-semibold mr-4 text-5xl flex text-orange-900 ml-4'>7 <div className='-mt-0.5'>+</div></div>
-            <div className='w-fit font-bold text-base'>Partner</div>
+            <div className='w-fit font-bold text-base'>PAYDAŞ</div>
           </div>  
         </div> 
         <div className='flex items-center'>
           <div className='text-orange-900'><FaParachuteBox size={"48px"}/></div>
           <div className='flex items-center flex-col justify-center ml-4'>
             <div className='font-semibold mr-4 text-5xl flex text-orange-900'>100 <div className='-mt-0.5'>+</div></div>
-            <div className='w-fit font-bold text-base'>Monthly parcel traffic</div>
+            <div className='w-fit font-bold text-base'>AYLIK KOLİ</div>
           </div>  
         </div> 
         <div className='flex items-center'>
           <div className='text-orange-900'><FaUser size={"48px"}/></div>
           <div className='flex items-center flex-col justify-center'>
             <div className='font-semibold mr-4 text-5xl flex text-orange-900 ml-4'>1000 <div className='-mt-0.5'>+</div></div>
-            <div className='w-fit font-bold text-base'>Beneficiary</div>
+            <div className='w-fit font-bold text-base'>İHTİYAÇ SAHİBİ</div>
           </div>  
         </div> 
       </div>
       <div className='w-full h-100 mt-16 mb-60 relative'>
-        <div className='w-full flex justify-center text-center text-sm pt-12 text-yellow-500 font-bold'>Explore the 100% transparent and reliable donation network!</div>
-        <div className='w-full flex justify-center text-center border-b mb-4 pb-2 text-3xl'>Click on the pins to see the magic!</div>
+        <div className='w-full flex justify-center text-center text-sm pt-12 text-yellow-500 font-bold'>Teslim edildi bile!</div>
+        <div className='w-full flex justify-center text-center border-b mb-4 pb-2 text-3xl'>%100 şeffaf ve güvenilir bağış ağını keşfedin!</div>
         <div className='w-full h-108'>
           <Map
               center={{latitude: ((41.47202 + 40.7021) / 2) * 1000, longitude: ((28.46316 + 29.5983) / 2) * 1000}}
@@ -452,8 +452,8 @@ export default function Home() {
         </div>
       </div>
       <div className='mb-12 w-full h-fit'>
-        <div className='w-full flex justify-center text-center text-sm text-yellow-500 font-bold'>With a piece of mind...</div>
-        <div className='w-full flex justify-center text-center border-b mb-4 pb-12 text-3xl'>Through the eyes of donors...</div>
+        <div className='w-full flex justify-center text-center text-sm text-yellow-500 font-bold'>Gönül rahatlığıyla...</div>
+        <div className='w-full flex justify-center text-center border-b mb-4 pb-12 text-3xl'>Bağışçı gözünden...</div>
         <div className='w-fit h-fit flex pb-4' style={{transform: `translateX(${sliderTranslate}px)`, transition: "all 2s ease"}} id='slider'>
           {
             testimonials.map(eachTestimonial => {
@@ -477,7 +477,7 @@ export default function Home() {
       </div>
 
       <div id="solutions" className={`w-1/2 text-lg text-center mx-auto bg-[#2c202b] text-white rounded-md font-extralight p-2 mb-4 ${windowSize.width < 800 ? "w-3/4" : ""}`}>
-        From stock management to fundraising campaigns. Ledgerise provides companies, NGOs and donors <span className='text-[#FFA851]'>a Win Win</span> relation. <span className='bg-[#FFA851] text-[#2c202b] font-normal'>Our technologies that make difference:</span>
+        Stok yönetiminden bağış kampanyalarına. Ledgerise firmalara, STK’lara ve bağışçılara <span className='text-[#FFA851]'>Kazan Kazan</span> durumu yaratıyor. <span className='bg-[#FFA851] text-[#2c202b] font-normal'>Fark yaratan teknolojilerimiz:</span>
       </div>
 
       <div className={`flex xl:w-4/5 mx-auto bg-[#2c202b] rounded-md p-6 ${windowSize.width < 800 ? "flex-col" : ""}`}>
@@ -539,8 +539,8 @@ export default function Home() {
       </div>
 
       <div style={{color: "#343434"}} className='z-20 mt-20'>
-        <div className='w-full flex justify-center text-center text-sm pt-12 text-yellow-500 font-bold'>Reach the hearts of the beneficiaries!</div>
-        <div className='w-full flex justify-center text-center border-b mb-4 pb-12 text-3xl'>We make sure your donation reaches the right person in need.</div>
+        <div className='w-full flex justify-center text-center text-sm pt-12 text-yellow-500 font-bold'>İÇİNİZ RAHAT OLSUN!</div>
+        <div className='w-full flex justify-center text-center border-b mb-4 pb-12 text-3xl'>Bağışınızın doğru ihtiyaç sahibine ulaştığından emin olmanızı sağlıyoruz.</div>
       </div>
       <div style={{ background: "-webkit-linear-gradient(90deg, #B881FF, #FF9900)" }}>        
         {
@@ -573,8 +573,8 @@ export default function Home() {
       <div>
         <div className='text-3xl my-12 relative h-12 mb-24'>
           <div style={{color: "#343434"}} className='z-20 mb-12'>
-            <div className='w-full flex justify-center text-center text-sm pt-12 text-yellow-500 font-bold'>Featured News</div>
-            <div className='w-full flex justify-center text-center mb-4 pb-12 text-3xl'>In The Agenda Of Popular Technology Press</div>
+            <div className='w-full flex justify-center text-center text-sm pt-12 text-yellow-500 font-bold'>GÜNCEL HABERLER</div>
+            <div className='w-full flex justify-center text-center mb-4 pb-12 text-3xl'>Popüler teknoloji basını gündeminde</div>
           </div>
         </div>
         <div id='newsroom' className="w-full flex justify-around flex-wrap max-[800]:px-10">

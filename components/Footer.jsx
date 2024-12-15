@@ -24,20 +24,20 @@ export default function Footer() {
         <img className="h-20 md:w-fit mb-8" src="/whitelogo.svg" alt="Ledgerise logo" />
         <div>
           <div className="text-white text-xl lg:text-2xl mb-1">
-            Sürdürülebilir gelecek için stok fazlalarını değere dönüştürüyoruz
+            We transform excess stock into value for a sustainable future
           </div>
           <div className="text-[#aaa] text-sm mb-8">
-            STK'ların bağışçılarına, firmaların kaliteli stoklarını, ihtiyaç sahibine elleriyle teslim eder gibi ulaştırmalarını sağlıyoruz.
+            We enable NGOs and companies to deliver quality stocks to their donors, as if they were delivering them to those in need.
           </div>
           <div className="text-sm text-gray-200 font-light">
-            İletişim
+            Contact Info
             <div className="flex items-center text-gray-500 gap-4">
               <FaEnvelope fontSize='16px' />
               <a href="mailto:info@ledgerise.org" target="_blank">info@ledgerise.org</a>
             </div>
             <div className="flex items-center text-gray-500 gap-4">
               <FaMapPin fontSize='16px' />
-              <div>Sancaktepe, İstanbul/Türkiye</div>
+              <div>Sancaktepe, Istanbul/Türkiye</div>
             </div>
             <div className="flex items-center text-gray-500 gap-4">
               <FaInstagram fontSize='16px' />
@@ -53,37 +53,37 @@ export default function Footer() {
       <div className="flex flex-col justify-around md:w-1/2 lg:w-1/3 xs:whitespace-nowrap">
         <div className="flex justify-center gap-5 lg:gap-10 xl:gap-16 max-xs:text-sm">
           <div>
-            <div className="text-gray-200 font-semibold mb-2">Kaynaklar</div>
+            <div className="text-gray-200 font-semibold mb-2">Resources</div>
             <div className="text-gray-400 font-light">
               <div className="mb-2">
-                <a href="/">Anasayfa</a>
+                <a href="/">Home</a>
               </div>
               <div className="mb-2">
-                <a href="/collections">Kampanyalar</a>
+                <a href="/collections">Campaigns</a>
               </div>
               <div className="mb-2">
-                <a href="/login">Giriş yap</a>
+                <a href="/login">Log In</a>
               </div>
               <div className="mb-2">
-                <a href="/register">Kayıt ol</a>
+                <a href="/register">Create Account</a>
               </div>
             </div>
           </div>
           <div>
-            <div className="text-gray-200 font-semibold mb-2">İlgili</div>
+            <div className="text-gray-200 font-semibold mb-2">Related</div>
             <div className="text-gray-400 font-light">
-              <div className="mb-2">Şartlar & Koşullar</div>
-              <div className="mb-2">Gizlilik Politikası</div>
+              <div className="mb-2">Terms & Conditions</div>
+              <div className="mb-2">Privacy Policy</div>
             </div>
           </div>
           <div>
-            <div className="text-gray-200 font-semibold mb-2">Şeffaflık</div>
+            <div className="text-gray-200 font-semibold mb-2">Transparency</div>
             <div className="text-gray-400 font-light">
               <div className="mb-2">
-                <a href={`https://${blockExplorer}/address/${marketplaceAddress}`}>Bağış Platformu</a>
+                <a href={`https://${blockExplorer}/address/${marketplaceAddress}`}>Donation</a>
               </div>
               <div className="mb-2">
-                <a href={`https://${blockExplorer}/address/${mainCollectionAddress}`}>Ana kampanya</a>
+                <a href={`https://${blockExplorer}/address/${mainCollectionAddress}`}>Main Campaign</a>
               </div>
               <div className="mb-2">
                 <a href={`https://${blockExplorer}/address/${ledgeriseLensAddress}`}>Lens</a>
@@ -95,11 +95,11 @@ export default function Footer() {
           <div className="flex flex-col xl:flex-row items-center">
             <img className="h-1/2 lg:h-3/4" src="itucekirdek.png" alt="itu-cekirdek-logo" />
             <div className="text-gray-300 text-sm ml-2">
-              Ön Kuluçka Girişimidir
+              Pre Seed Start-up
             </div>
           </div>
           <div className="text-gray-600 font-light text-sm">
-            © Ledgerise Teknoloji 2023. Tüm Hakları Saklıdır
+            © Ledgerise Technology 2023. All rights reserved.
           </div>
         </div>
       </div>
